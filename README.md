@@ -1,288 +1,349 @@
+<div align="center">
+
 # Vibe Design MD Architect
 
-[![Install with skills CLI](https://img.shields.io/badge/skills.sh-install-5B21B6?style=flat-square&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0id2hpdGUiIGQ9Ik0xMiAyQzYuNDggMiAyIDYuNDggMiAxMnM0LjQ4IDEwIDEwIDEwIDEwLTQuNDggMTAtMTBTMTcuNTIgMiAxMiAyek0xMCAxN2wtNS01IDEuNDEtMS40MUwxMCAxNC4xN2w3LjU5LTcuNTlMMTkgOGwtOSA5eiIvPjwvc3ZnPg==)](https://skills.sh/imMamdouhaboammar/vibe-design-md-architect/vibe-design-md-architect)
-[![Version](https://img.shields.io/badge/version-1.7.0-22C55E?style=flat-square)](./CHANGELOG.md)
-[![Gates](https://img.shields.io/badge/gates-23-F59E0B?style=flat-square)](./SKILL.md)
-[![License](https://img.shields.io/badge/license-MIT-3B82F6?style=flat-square)](./LICENSE)
+### Stop your AI from building generic UI slop.
 
-A packaged Claude Skill for creating, auditing, and amplifying `PRODUCT.md` and `DESIGN.md` before UI implementation. Blocks generic AI-looking frontend before a single line of code is written.
+**23 hard-blocking design gates** that run before your agent writes a single line of frontend code.
+
+[![npm](https://img.shields.io/npm/v/vibe-design-md-architect?style=flat-square&color=5B21B6&label=npm)](https://www.npmjs.com/package/vibe-design-md-architect)
+[![skills.sh](https://img.shields.io/badge/skills.sh-install-5B21B6?style=flat-square)](https://skills.sh/imMamdouhaboammar/vibe-design-md-architect/vibe-design-md-architect)
+[![Gates](https://img.shields.io/badge/gates-23-F59E0B?style=flat-square)](./SKILL.md)
+[![License: MIT](https://img.shields.io/badge/license-MIT-22C55E?style=flat-square)](./LICENSE)
+[![Version](https://img.shields.io/badge/version-1.7.0-3B82F6?style=flat-square)](./CHANGELOG.md)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-EC4899?style=flat-square)](./CONTRIBUTING.md)
+
+[**Quick Start**](#-quick-start) · [**CLI**](#%EF%B8%8F-cli-reference) · [**What it blocks**](#-what-it-blocks) · [**All 23 Gates**](#-23-hard-blocking-gates) · [**Changelog**](./CHANGELOG.md)
+
+</div>
 
 ---
 
-## Quick Install
+## The problem
 
+AI coding agents skip design. Every time.
+
+They pick purple-to-blue gradients. They use `Inter` by default. They stack feature cards with identical rounded corners. They forget RTL. They ignore accessibility. They ship `alert()`. They create 500px modals on 568px screens.
+
+Then you spend hours fixing something that looked fine in the first screenshot.
+
+**Vibe Design MD Architect blocks all of that — before the first line of CSS is written.**
+
+---
+
+## How it works
+
+```
+Your prompt
+   ↓
+Design System Baseline Gate    ← First mandatory question
+   ↓
+Intake Session Gate             ← Product context, user, job, localization
+   ↓
+2026 Standards Search Gate      ← WCAG 2.2, MDN Baseline, web.dev, framework docs
+   ↓
+Impeccable Install Gate         ← npx impeccable skills install
+   ↓
+PRODUCT.md Gate                 ← Product strategy artifact created and validated
+   ↓
+DESIGN.md Gate (6 sections)     ← Colors, Typography, Elevation, Components, Rules
+   ↓
+Anti-AI-Slop Visual Gate        ← No purple gradients, no sparkle icons, no fake cards
+   ↓
+Accessibility + Directionality  ← WCAG AA contrast, keyboard, RTL/LTR, ARIA
+   ↓
+Viewport + Modal + Overlay      ← scroll governance, focus trapping, z-index tokens
+   ↓
+Popup Positioning Gate          ← flip/shift/size middleware, portal mounting (Gate 23)
+   ↓
+IMPLEMENTATION ALLOWED ✓
+```
+
+---
+
+## ⚡ Quick Start
+
+**Option A — npx (no install required):**
+```bash
+npx vibe-design-md-architect init
+npx vibe-design-md-architect preflight
+```
+
+**Option B — Install into your project:**
+```bash
+npm install --save-dev vibe-design-md-architect
+npx vdma preflight
+```
+
+**Option C — skills CLI (for Claude Code):**
 ```bash
 npx skills add imMamdouhaboammar/vibe-design-md-architect
 ```
 
-Or install a specific skill from this repository:
-
+**Option D — Copy into Claude skills folder:**
 ```bash
-npx skills add https://github.com/imMamdouhaboammar/vibe-design-md-architect --skill vibe-design-md-architect
-```
-
-After at least one install, skills.sh discovers the repository through CLI telemetry and creates the public skill page.
-
----
-
-## What it does
-
-Vibe Design MD Architect is a design-planning gate that runs **before** any frontend code. It forces a structured design decision process, blocks generic AI UI defaults, and produces two authoritative artifacts:
-
-- **`PRODUCT.md`** — product strategy, user context, brand register, accessibility and localization needs.
-- **`DESIGN.md`** — six-section design system: overview, colors, typography, elevation, components, do's and don'ts.
-
-It is built for vibe coding workflows where the agent often starts producing generic AI-looking frontend, skips intake, ignores RTL, misses accessibility, or invents visual defaults during coding.
-
----
-
-## Structure
-
-```text
-vibe-design-md-architect/
-  SKILL.md              ← skill trigger and workflow instructions
-  scripts/              ← validation, scanning, gate runner, amplify, viewport
-  references/           ← design rules, RTL guidance, overlay system, dashboards
-  assets/               ← reusable templates for PRODUCT.md, DESIGN.md, prompts
-  evals/                ← test prompts and scoring rubric
-  CHANGELOG.md
-  PUBLISHING.md
-  CONTRIBUTING.md
-```
-
----
-
-## Install into a project
-
-For Claude Code project-level usage:
-
-```bash
+# Project-level
 mkdir -p .claude/skills
-cp -R vibe-design-md-architect .claude/skills/
+cp -R node_modules/vibe-design-md-architect .claude/skills/
+
+# User-level (all projects)
+npx vdma init --global
 ```
 
-For user-level usage:
+---
+
+## 🖥️ CLI Reference
+
+```
+npx vibe-design-md-architect <command> [args]
+```
+
+| Command | What it does |
+|---------|-------------|
+| `init` | Install skill into `.claude/skills/` (project) or `~/.claude/skills/` (global) |
+| `preflight` | **Autopilot**: Impeccable → intake → standards → validate → gates → scan |
+| `gates` | Run all 23 hard-blocking gates `[DESIGN.md] [PRODUCT.md] [src/]` |
+| `validate` | Validate DESIGN.md six-section contract |
+| `score` | Score DESIGN.md quality against the rubric |
+| `scan` | Scan frontend source for AI slop and a11y issues `[src/]` |
+| `scan:a11y` | Deep ARIA/landmark/semantics audit (WCAG 2.2 mapped) `[--strict]` |
+| `scan:viewport` | Playwright-based viewport fit scan at 8 breakpoints |
+| `amplify` | Repair an old or weak DESIGN.md into a gate-passing version |
+| `intake` | Interactive intake session → `INTAKE.session.md` |
+| `standards` | Generate 2026 standards search brief |
+
+**Short alias:** `vdma` works everywhere `vibe-design-md-architect` does.
 
 ```bash
-mkdir -p ~/.claude/skills
-cp -R vibe-design-md-architect ~/.claude/skills/
+npx vdma preflight         # full autopilot run
+npx vdma scan src/         # scan for slop
+npx vdma gates             # run all 23 gates
+npx vdma amplify           # repair your DESIGN.md
 ```
 
 ---
 
-## Mandatory Impeccable setup
+## 🛑 What it blocks
 
-Run this from the project root before generating or implementing UI when shell access exists:
+### Visual slop (before a line of CSS)
+
+| Pattern | What the agent does without this skill |
+|---------|---------------------------------------|
+| Purple → blue gradient | Default gradient identity every AI picks |
+| Gradient text headings | "AI-made" tell every developer sees |
+| Generic glass cards | Decoration without hierarchy reason |
+| Identical feature cards | Same radius, same spacing, no differentiation |
+| Sparkle / magic wand icons | AI's default "smart feature" icon language |
+| Emoji as UI icons | Nav, buttons, cards, pricing — all emoji |
+| Generic dark cyber look | Every "SaaS" AI agent defaults to this |
+| Default `Inter` font | Uncurated font choice with zero brand intent |
+| Purple/indigo as brand | Default Tailwind accent shipped as identity |
+
+### Structural failures (before implementation)
+
+| Failure | Impact |
+|---------|--------|
+| Clickable `<div>` instead of `<button>` | Keyboard broken, screen readers silent |
+| No focus ring | Keyboard users navigate blind |
+| Missing landmarks (`main`, `nav`) | Screen reader structure destroyed |
+| `alert()` / `confirm()` for product flows | Modal broken on mobile, no styling possible |
+| Placeholder as the only field label | Label disappears when user types |
+| `height: 100vh` on auth pages | Breaks on mobile keyboards, clips on small screens |
+| `overflow: hidden` to fix scroll | Hides layout bug, breaks keyboard, locks zoom |
+| Hardcoded hex colors | Token drift guaranteed after second iteration |
+| Lorem ipsum shipped | Real users see fake data |
+
+### Overlay / interaction failures
+
+| Failure | Impact |
+|---------|--------|
+| Modal without focus trap | Tab escapes into background |
+| Background scrolls behind modal | Disorienting on mobile |
+| Toast built manually in page | Impossible to position centrally, z-index chaos |
+| Dropdown clipped by `overflow: hidden` parent | User cannot see options |
+| Popup hardcoded single direction | Clips viewport at page bottom |
+| Magic z-index numbers | Overlaps break randomly |
+| API key shown in full in table | Security UX failure |
+
+---
+
+## 🚦 23 Hard-Blocking Gates
+
+Implementation is blocked until all gates pass.
+
+| # | Gate | What it enforces |
+|---|------|-----------------|
+| 1 | Design System Baseline | Select Atlassian / Polaris / Material / HIG / Custom before any design work |
+| 2 | Intake Session | Product context, user, job, localization, RTL/LTR, risk level |
+| 3 | 2026 Standards Search | WCAG 2.2, MDN Baseline, web.dev, framework docs |
+| 4 | Impeccable Install | `npx impeccable skills install` before UI |
+| 5 | PRODUCT.md | Strategy artifact exists and passes contract |
+| 6 | DESIGN.md Six-Section | Exactly: Overview, Colors, Typography, Elevation, Components, Do's and Don'ts |
+| 7 | Rules Engine | All gate checks pass |
+| 8 | Accessibility + Directionality | WCAG AA contrast, focus, ARIA, LTR by default, RTL when confirmed |
+| 9 | UX-CRX Logic | Primary action, secondary, recovery, decision point per screen |
+| 10 | Mobile + Responsive | Mobile designed, not stacked from desktop |
+| 11 | Popup + Feedback System | In-app modal/toast/banner/inline; no `alert()` / `confirm()` |
+| 12 | Implementation Scan | `scan-ui-implementation.mjs` blockers cleared |
+| 13 | Amplify Preservation | (Amplify Mode) Strong decisions kept, generic patterns removed |
+| 14 | Semantic HTML + Interaction | No clickable divs, keyboard ops, landmarks, labeled icons |
+| 15 | Realistic Content | No lorem ipsum, John Doe, example.com, Item 1/2/3 |
+| 16 | Design Tokens | No hardcoded hex, fixed padding, or magic numbers |
+| 17 | Drift Control | Single source of truth, gates re-run per merge |
+| 18 | Viewport Governance | Scroll ownership per route; `dvh` fallback; no `overflow:hidden` |
+| 19 | Modal + Dialog | Focus trap, scroll lock, backdrop, viewport-safe sizing, inert background |
+| 20 | Dashboard Shell | Declared grid, scroll ownership, auth hierarchy, form quality |
+| 21 | Overlay Stack | Centralized overlay system, toast construction ban, collision handling |
+| 22 | Sensitive Data Display | Tokens masked, secure creation via modal, destructive confirmation |
+| 23 | Popup + Floating Positioning | Strategy A/B/C declared; flip/shift/size; portal mounting; z-index tokens |
+
+---
+
+## 🔧 Scanners
+
+Three static and runtime scanners run automatically with `preflight`:
 
 ```bash
-npx impeccable skills install
+npx vdma scan src/              # AI slop + functional failures
+npx vdma scan:a11y src/         # WCAG 2.2 ARIA/landmark audit
+npx vdma scan:a11y src/ --strict   # fail on warnings too
+npx vdma scan:viewport http://localhost:3000   # 8 viewport sizes (Playwright)
 ```
 
-Alternative:
+**`scan-ui-implementation.mjs`** — flags:
+- 🔴 Blockers: clickable divs, native popups, lorem ipsum/fake data, blanket `overflow:hidden`, exposed API keys, manual toast in page components
+- 🟡 Warnings: default Inter font, generic gradients, hardcoded hex, emoji icons, blind `h-screen`, fixed auth card widths
+
+**`scan-accessibility.mjs`** — maps each finding to a WCAG 2.2 criterion:
+- Multiple/missing `<main>`, heading order jumps, multiple `<h1>`
+- `<img>` without `alt`, `aria-hidden` on interactive elements, positive tabindex
+- Icon-only controls with no accessible name, missing `lang`/`dir` on `<html>`
+- Clickable non-interactive elements, empty links or buttons
+
+**`scan-viewport-fit.mjs`** (Playwright) — tests `single-screen-fit` routes at:
+`320×568 → 360×640 → 390×844 → 414×896 → 768×720 → 1024×768 → 1280×720 → 1440×900`
+
+---
+
+## 📦 What you get
+
+After running `preflight`, your project has:
+
+```
+INTAKE.session.md          ← product context, user, risks, localization
+STANDARDS.search-notes.md  ← verified WCAG 2.2, MDN, web.dev, framework docs
+PRODUCT.md                 ← product strategy, brand, accessibility needs
+DESIGN.md                  ← full six-section design system (colors, type, components…)
+```
+
+Your Claude Code agent reads these files automatically and:
+- ✅ Picks the right design system baseline
+- ✅ Uses semantic tokens, not hardcoded values
+- ✅ Respects keyboard navigation and ARIA
+- ✅ Implements the right scroll governance per route
+- ✅ Builds modals with focus trapping and scroll lock
+- ✅ Uses the centralized overlay system
+- ✅ Masks sensitive tokens by default
+- ✅ Positions dropdowns with flip/shift/size
+
+---
+
+## 🔁 Amplify Mode
+
+Have an old or weak `DESIGN.md`? Run Amplify Mode:
 
 ```bash
-npx skills add pbakaus/impeccable
+npx vdma amplify DESIGN.md PRODUCT.md
+```
+
+Amplify Mode:
+1. Reads your old design file completely
+2. Preserves product-specific decisions that are strong
+3. Removes generic AI patterns, weak adjectives, vague color names
+4. Converts colors to semantic tokens with hex values
+5. Converts components to full implementation contracts
+6. Adds missing contrast, RTL, responsive, modal, and overlay rules
+7. Produces `DESIGN.amplification-report.md` + `DESIGN.amplified.md`
+8. Scores the result. If below 90, revises before final output.
+
+---
+
+## 🔗 Companion tools
+
+| Tool | Role | Install |
+|------|------|---------|
+| **Impeccable** *(mandatory)* | Frontend design intelligence, slop detection during build | `npx impeccable skills install` |
+| **Vibe Driven Dev** *(recommended)* | Pre-execution layer: PRD, scope, stack decisions before design | `npx vibe-driven-dev install claude-code --project` |
+
+Run them in this order: **VDD → this skill → Impeccable**.
+
+---
+
+## 📁 Repository structure
+
+```
+vibe-design-md-architect/
+├── bin/
+│   └── cli.mjs                          ← autopilot CLI (npx vdma)
+├── scripts/
+│   ├── run-gates.mjs                    ← all 23 gates runner
+│   ├── scan-ui-implementation.mjs       ← AI slop + functional scanner
+│   ├── scan-accessibility.mjs           ← WCAG 2.2 ARIA audit
+│   ├── scan-viewport-fit.mjs            ← Playwright viewport scanner
+│   ├── validate-design-md.mjs           ← six-section contract validator
+│   ├── score-design-md.mjs              ← quality rubric scorer
+│   ├── amplify-design-md.mjs            ← Amplify Mode engine
+│   ├── intake-session.mjs               ← intake session generator
+│   ├── standards-search-brief.mjs       ← 2026 standards brief
+│   ├── bootstrap-design-artifacts.mjs   ← scaffold starter files
+│   └── impeccable-preflight.sh          ← bash preflight
+├── references/
+│   ├── ai-failure-patterns.md           ← 24 evidence-based AI UI failures
+│   ├── non-negotiable-ui-rules.md       ← hard UI rules
+│   ├── overlay-system-rules.md          ← toast, modal, dropdown rules
+│   ├── dashboard-shell-rules.md         ← dashboard layout governance
+│   ├── sensitive-data-rules.md          ← token masking rules
+│   ├── anti-ai-ui-slop.md               ← visual slop patterns
+│   └── ...                             ← 12 more reference files
+├── assets/
+│   ├── DESIGN.template.md               ← full DESIGN.md template
+│   ├── PRODUCT.template.md
+│   ├── qa-checklist.md
+│   ├── implementation-prompt.template.md
+│   └── ...                             ← 6 more templates
+├── evals/
+│   └── eval-cases.json                  ← test prompts and rubric
+├── SKILL.md                             ← Claude skill instruction file
+├── CONTRIBUTING.md
+├── CHANGELOG.md
+└── package.json
 ```
 
 ---
 
-## Recommended companion: Vibe Driven Dev (VDD)
+## 🤝 Contributing
 
-Install [Vibe Driven Dev](https://github.com/OpenOps-Studio/vibe-driven-dev) (`vibe-driven-dev`, by OpenOps Studio) alongside Impeccable. VDD is the pre-execution layer that turns a vague idea into structured artifacts (PRD, scope, architecture, stack decisions) and prepares a clean handoff into systems such as Spec Kit.
-
-| Tool | Responsibility |
-|------|---------------|
-| **VDD** | Product truth, scope, stack, architecture, audit, handoff — the layer before design |
-| **This skill** | `PRODUCT.md`, `DESIGN.md`, design context, rules engine, anti-slop gates |
-| **Impeccable** | Frontend design intelligence, slop detection, live iteration during build |
-
-Recommended order: VDD first when scope or stack is unclear → this skill for `PRODUCT.md`/`DESIGN.md` → Impeccable for the build.
-
-```bash
-npm install -g vibe-driven-dev
-# or, per project:
-npx vibe-driven-dev install claude-code --project
-vdd doctor
-vdd run /vibe.start
-```
-
-VDD is recommended, not a hard gate. Impeccable remains the mandatory design-intelligence setup.
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for the gate addition workflow, template update guide, scanner rule guide, and PR checklist.
 
 ---
 
-## Design System Baseline — first mandatory intake question
+## 🔖 Versioning
 
-The first question the skill asks before any design work:
+See [CHANGELOG.md](./CHANGELOG.md) for the full history.
 
-```text
-Which design system baseline should guide this project?
-
-1. Atlassian Design System
-2. Lightning Design System (Salesforce)
-3. Polaris (Shopify)
-4. Material Design
-5. Human Interface Guidelines (Apple)
-6. Custom / hybrid, with a short explanation
-```
-
-The selection is recorded in `INTAKE.session.md`, `PRODUCT.md`, `DESIGN.md`, `STANDARDS.search-notes.md`, and the implementation prompt. It guides component behavior, interaction logic, density, and platform conventions without copying another company's brand skin.
+**Current: v1.7.0**
+- Gate 23: Popup and Floating Element Positioning (Strategy A/B/C, portal mounting, z-index tokens)
+- Directionality is now conditional: LTR default, RTL only when intake confirms RTL-primary language
+- Modal centering hardened: `align-self: safe center` pattern, transform ban without height clamp
 
 ---
 
-## 23 Hard-Blocking Gates
+<div align="center">
 
-Implementation is blocked until all required gates are attempted and blockers are repaired.
+**Made for AI-first development workflows.**
 
-| # | Gate | Purpose |
-|---|------|---------|
-| 1 | Design System Baseline Gate | First mandatory intake question — select a baseline before any design work |
-| 2 | Intake Session Gate | Extract product context, user, job-to-be-done, risks, and localization before design |
-| 3 | 2026 Standards Search Gate | Verify WCAG 2.2, MDN Baseline, web.dev, and framework docs before finalizing rules |
-| 4 | Impeccable Install Gate | Run `npx impeccable skills install` before UI work |
-| 5 | PRODUCT.md Gate | `PRODUCT.md` must exist and pass the contract before design or code |
-| 6 | DESIGN.md Six-Section Gate | Exactly six top-level sections: Overview, Colors, Typography, Elevation, Components, Do's and Don'ts |
-| 7 | Strict Rules Engine Gate | All gate checks pass before `DESIGN.md` is considered valid |
-| 8 | Accessibility & Directionality Gate | Contrast, focus, ARIA, RTL/LTR rules declared and correct |
-| 9 | UX-CRX Gate | Primary action, secondary action, recovery path, and decision point declared per screen |
-| 10 | Mobile & Responsive Gate | Mobile designed, not stacked; container/content-driven breakpoints |
-| 11 | Popup & Feedback System Gate | In-app modal/drawer/toast/banner/inline validation; no native browser popups |
-| 12 | Implementation Scan Gate | `scan-ui-implementation.mjs` blockers cleared |
-| 13 | Amplify Preservation Gate | (Amplify Mode) Preserves strong product-specific decisions; removes generic AI patterns |
-| 14 | Semantic HTML & Interaction Gate | No clickable divs; keyboard operability; landmarks; labeled icons |
-| 15 | Realistic Content Gate | No lorem ipsum, John Doe, example.com, fake metrics, Item 1/2/3 |
-| 16 | Design Token Gate | No hardcoded hex, fixed padding, or magic numbers; use documented tokens |
-| 17 | Drift Control Gate | Single source of truth; no invented tokens; gates re-run per merge |
-| 18 | Viewport Governance Gate | Scroll ownership declared per route; no false `overflow:hidden` fixes; `dvh` fallback |
-| 19 | Modal, Dialog & Overlay Governance Gate | Full modal contract: focus trap, scroll lock, backdrop, viewport-safe sizing |
-| 20 | Dashboard Shell & Layout Governance Gate | Declared grid, explicit scroll ownership, auth action hierarchy, form quality |
-| 21 | Overlay Stack & Collision Governance Gate | Centralized overlay system; toast construction ban; collision-aware placement |
-| 22 | Sensitive Data Display Governance Gate | Tokens masked; secure creation via modal; destructive actions require confirmation |
-| 23 | Popup & Floating Element Positioning Gate | Declared Strategy A/B/C; flip/shift/size middleware required; portal mounting; z-index tokens |
+If this saved your project from shipping AI slop, consider starring ⭐ and sharing.
 
----
+[GitHub](https://github.com/imMamdouhaboammar/vibe-design-md-architect) · [npm](https://www.npmjs.com/package/vibe-design-md-architect) · [skills.sh](https://skills.sh/imMamdouhaboammar/vibe-design-md-architect/vibe-design-md-architect) · [Issues](https://github.com/imMamdouhaboammar/vibe-design-md-architect/issues)
 
-## Preflight
-
-From the project root:
-
-```bash
-bash .claude/skills/vibe-design-md-architect/scripts/impeccable-preflight.sh
-```
-
-Or, if running from this skill folder:
-
-```bash
-bash scripts/impeccable-preflight.sh
-```
-
-The preflight creates or checks: `INTAKE.session.md`, `STANDARDS.search-notes.md`, `PRODUCT.md`, `DESIGN.md`, Impeccable setup, validation, scoring, rules engine gates, and implementation scan when `src/` exists.
-
----
-
-## Main commands
-
-```bash
-node scripts/intake-session.mjs
-node scripts/standards-search-brief.mjs PRODUCT.md DESIGN.md
-node scripts/bootstrap-design-artifacts.mjs
-node scripts/validate-design-md.mjs DESIGN.md
-node scripts/score-design-md.mjs DESIGN.md PRODUCT.md
-node scripts/run-gates.mjs DESIGN.md PRODUCT.md src
-node scripts/scan-ui-implementation.mjs src
-node scripts/scan-accessibility.mjs src
-node scripts/scan-viewport-fit.mjs http://localhost:3000
-```
-
-Or use the npm scripts:
-
-```bash
-npm run validate:design
-npm run score:design
-npm run gates
-npm run scan:ui
-npm run scan:a11y
-npm run scan:viewport
-```
-
----
-
-## Amplify Mode
-
-Use Amplify Mode when you have an old or weak `design.md` and want the skill to repair it.
-
-```bash
-node scripts/amplify-design-md.mjs DESIGN.md PRODUCT.md
-node scripts/validate-design-md.mjs DESIGN.amplified.md
-node scripts/score-design-md.mjs DESIGN.amplified.md PRODUCT.md
-```
-
-The script creates a diagnostic report and a scaffold. Claude completes the actual amplification using `SKILL.md` and `references/amplify-workflow.md`.
-
-Suggested prompt:
-
-```text
-Use vibe-design-md-architect in Amplify Mode. Read my old design.md, preserve what is strong,
-remove what is generic or AI-looking, run the intake and standards gates, then produce
-DESIGN.amplification-report.md plus DESIGN.amplified.md. Do not start implementation.
-```
-
----
-
-## Code scanners
-
-Three static/runtime scanners run on the frontend source:
-
-| Scanner | Invoked by | What it flags |
-|---------|-----------|---------------|
-| `scan-ui-implementation.mjs` | `run-gates.mjs` | AI UI slop, native popups, clickable divs, lorem ipsum, blanket `overflow:hidden`, exposed secrets, modal issues, toast misuse |
-| `scan-accessibility.mjs` | `run-gates.mjs` | ARIA, landmark, semantics audit (WCAG 2.2 mapped). Use `--strict` to fail on warnings too |
-| `scan-viewport-fit.mjs` | Manual / CI | Playwright-based runtime scanner at 8 viewport sizes; checks horizontal overflow and unnecessary scroll |
-
-The viewport scanner requires `npx playwright install chromium` and a running dev server.
-
----
-
-## Hard UI rules added in this version
-
-- **Contrast discipline** — every text, border, focus, chart, and control state defined.
-- **AI color ban** — no purple/blue/teal/neon defaults; every color is a named semantic token.
-- **Icon integrity** — no sparkle, magic, robot, or emoji icons as core UI language.
-- **Directionality** — LTR by default; RTL only when product confirms Arabic/Hebrew/RTL primary language.
-- **UX-CRX logic** — primary action, secondary action, recovery path declared per screen.
-- **Responsive first-class** — mobile designed, not stacked from desktop.
-- **Semantic HTML baseline** — keyboard access, visible focus, reduced motion, accessible feedback.
-- **In-app popup system** — no native `alert()`, `confirm()`, or `prompt()`; use modal/drawer/toast/banner/inline.
-- **Viewport ownership** — every route declares scroll governance; auth pages = `single-screen-fit`; ban on false `overflow:hidden`.
-- **Modal governance** — complete interaction system: focus trapping, scroll lock, inert background, viewport-safe sizing.
-- **Overlay stack governance** — centralized overlay system; toast construction ban; collision-aware feedback.
-- **Dashboard shell governance** — declared grid, scroll ownership, auth hierarchy, form quality gate.
-- **Sensitive data governance** — tokens masked by default; secure creation; destructive confirmation.
-- **Popup positioning** — Strategy A (CSS Anchor), B (Floating UI), or C (CSS clamp); portal mounting; z-index token scale.
-
----
-
-## Core files
-
-- **`SKILL.md`** — skill trigger and full workflow instructions (23 gates, all rules).
-- **`scripts/`** — intake, standards search, bootstrap, validate, score, gate runner, amplify, UI scan, a11y scan, viewport scan.
-- **`references/`** — design rules, intake protocol, standards search, rules engine, RTL guidance, component contracts, anti-AI UI guidance, `ai-failure-patterns.md` (evidence-based AI UI failures with WCAG mapping), overlay system rules, dashboard shell rules, sensitive data rules.
-- **`assets/`** — templates for `INTAKE.session.md`, `STANDARDS.search-notes.md`, `PRODUCT.md`, `DESIGN.md`, implementation prompts, QA checklists.
-- **`evals/`** — test prompts and scoring rubric.
-
----
-
-## Versioning
-
-See [`CHANGELOG.md`](./CHANGELOG.md). Current version: **v1.7**. Latest additions: Generic Directionality (conditional, not Arabic-assumed), Popup and Floating Element Positioning Gate (Gate 23), viewport-safe modal centering, portal mounting rules, and expanded overlay failure checks.
-
----
-
-## DESIGN.md setup requirement
-
-The generated `DESIGN.md` must visibly include `npx impeccable skills install` under the Overview setup gate and in the Do's and Don'ts implementation guardrails. The coding agent must attempt the command before UI implementation when shell access exists.
-
----
-
-## Contributing
-
-See [`CONTRIBUTING.md`](./CONTRIBUTING.md) for how to add a gate, update a template, or improve a scanner rule.
+</div>

@@ -1,9 +1,12 @@
 {
-  "name": "vibe-design-md-architect-skill",
+  "name": "vibe-design-md-architect",
   "version": "1.7.0",
-  "private": true,
+  "description": "Autopilot design quality gates for AI-assisted UI — 23 hard-blocking gates that create, audit, and amplify PRODUCT.md and DESIGN.md before implementation. Stops generic AI-looking frontend before it starts.",
   "type": "module",
-  "description": "Agent skill for PRODUCT.md and DESIGN.md generation, auditing, amplification, and UI quality gates.",
+  "bin": {
+    "vibe-design-md-architect": "./bin/cli.mjs",
+    "vdma": "./bin/cli.mjs"
+  },
   "scripts": {
     "evals": "node scripts/run-evals.mjs",
     "validate:design": "node scripts/validate-design-md.mjs DESIGN.md",
@@ -11,8 +14,64 @@
     "gates": "node scripts/run-gates.mjs DESIGN.md PRODUCT.md src",
     "scan:ui": "node scripts/scan-ui-implementation.mjs src",
     "scan:a11y": "node scripts/scan-accessibility.mjs src",
-    "scan:viewport": "node scripts/scan-viewport-fit.mjs http://localhost:3000"
+    "scan:viewport": "node scripts/scan-viewport-fit.mjs http://localhost:3000",
+    "preflight": "node bin/cli.mjs preflight",
+    "cli": "node bin/cli.mjs"
   },
+  "keywords": [
+    "claude",
+    "claude-code",
+    "skill",
+    "skills-sh",
+    "design-system",
+    "design-md",
+    "product-md",
+    "ui-quality",
+    "ai-coding",
+    "vibe-coding",
+    "anti-slop",
+    "impeccable",
+    "accessibility",
+    "wcag",
+    "rtl",
+    "design-tokens",
+    "ux",
+    "frontend-quality",
+    "ai-agent",
+    "code-agent",
+    "design-gates",
+    "web-design",
+    "saas-design",
+    "dashboard"
+  ],
+  "author": "imMamdouhaboammar",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/imMamdouhaboammar/vibe-design-md-architect.git"
+  },
+  "homepage": "https://github.com/imMamdouhaboammar/vibe-design-md-architect#readme",
+  "bugs": {
+    "url": "https://github.com/imMamdouhaboammar/vibe-design-md-architect/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "bin/",
+    "scripts/",
+    "references/",
+    "assets/",
+    "evals/",
+    "SKILL.md",
+    "README.md",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md",
+    "skills.sh.json"
+  ],
   "optionalDependencies": {
     "playwright": "latest"
   }
