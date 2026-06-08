@@ -146,15 +146,26 @@ npx vibe-design-md-architect init
 npx vibe-design-md-architect preflight
 ```
 
-**Option B — Install into your project:**
+**Option B — Install globally (Claude Code / Terminal):**
+```bash
+npm install -g vibe-design-md-architect
+```
+
+**Option C — Install as a Claude Skill:**
+```bash
+npx skills add https://github.com/imMamdouhaboammar/vibe-design-md-architect --skill vibe-design-md-architect
+```
+*Or shorthand:*
+```bash
+npx skills add imMamdouhaboammar/vibe-design-md-architect
+```
+
+**Option D — Install into your project:**
 ```bash
 npm install --save-dev vibe-design-md-architect
 npx vdma preflight
 ```
 
-**Option C — skills CLI (for Claude Code):**
-```bash
-npx skills add imMamdouhaboammar/vibe-design-md-architect
 ```
 
 **Option D — Copy into Claude skills folder:**

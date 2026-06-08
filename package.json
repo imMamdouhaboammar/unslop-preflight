@@ -4,21 +4,21 @@
   "description": "Autopilot design quality gates for AI-assisted UI — 23 hard-blocking gates that create, audit, and amplify PRODUCT.md and DESIGN.md before implementation. Stops generic AI-looking frontend before it starts.",
   "type": "module",
   "bin": {
-    "vibe-design-md-architect": "./bin/cli.mjs",
-    "vdma": "./bin/cli.mjs"
+    "vibe-design-md-architect": "bin/cli.mjs",
+    "vdma": "bin/cli.mjs"
   },
   "scripts": {
-    "autopilot":      "node bin/cli.mjs autopilot",
-    "repair":         "node bin/cli.mjs repair",
-    "evals":          "node scripts/run-evals.mjs",
-    "validate:design":"node scripts/validate-design-md.mjs DESIGN.md",
-    "score:design":   "node scripts/score-design-md.mjs DESIGN.md PRODUCT.md",
-    "gates":          "node scripts/run-gates.mjs DESIGN.md PRODUCT.md src",
-    "scan:ui":        "node scripts/scan-ui-implementation.mjs src",
-    "scan:a11y":      "node scripts/scan-accessibility.mjs src",
-    "scan:viewport":  "node scripts/scan-viewport-fit.mjs http://localhost:3000",
-    "preflight":      "node bin/cli.mjs preflight",
-    "cli":            "node bin/cli.mjs"
+    "autopilot": "node bin/cli.mjs autopilot",
+    "repair": "node bin/cli.mjs repair",
+    "evals": "node scripts/run-evals.mjs",
+    "validate:design": "node scripts/validate-design-md.mjs DESIGN.md",
+    "score:design": "node scripts/score-design-md.mjs DESIGN.md PRODUCT.md",
+    "gates": "node scripts/run-gates.mjs DESIGN.md PRODUCT.md src",
+    "scan:ui": "node scripts/scan-ui-implementation.mjs src",
+    "scan:a11y": "node scripts/scan-accessibility.mjs src",
+    "scan:viewport": "node scripts/scan-viewport-fit.mjs http://localhost:3000",
+    "preflight": "node bin/cli.mjs preflight",
+    "cli": "node bin/cli.mjs"
   },
   "keywords": [
     "claude",
@@ -50,7 +50,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/imMamdouhaboammar/vibe-design-md-architect.git"
+    "url": "git+https://github.com/imMamdouhaboammar/vibe-design-md-architect.git"
   },
   "homepage": "https://github.com/imMamdouhaboammar/vibe-design-md-architect#readme",
   "bugs": {
