@@ -46,8 +46,8 @@ check('DESIGN.md missing Intake Session Gate', /Intake Session Gate/i.test(desig
 check('DESIGN.md missing Rules Engine Gate', /Rules Engine Gate/i.test(design));
 check('DESIGN.md missing Design System Baseline', /Design System Baseline|Selected baseline|atlassian|salesforce-lightning|shopify-polaris|material-design|apple-human-interface|custom-hybrid/i.test(design));
 check('DESIGN.md missing baseline fit rationale', /Why this baseline fits|What to borrow|What not to copy|borrowed patterns/i.test(design));
-check('missing STANDARDS.search-notes.md', exists(standardsFile), 'major');
-check('standards notes missing selected design system docs', /Atlassian Design System|Lightning Design System|Salesforce|Polaris|Shopify|Material Design|Human Interface Guidelines|Apple|Selected Design System Baseline/i.test(standards), 'major');
+check('missing STANDARDS.search-notes.md', exists(standardsFile));
+check('standards notes missing selected design system docs', /Atlassian Design System|Lightning Design System|Salesforce|Polaris|Shopify|Material Design|Human Interface Guidelines|Apple|Selected Design System Baseline/i.test(standards));
 check('missing contrast rules', /4\.5:1|contrast/i.test(design));
 check('missing directionality rules', /rtl|ltr|directionality|text-align:\s*start|logical/i.test(design));
 check('missing responsive rules', /responsive|mobile|viewport|container quer|320|360|390|414/i.test(design));
@@ -55,11 +55,11 @@ check('missing popup system rules', /alert\(\)|confirm\(\)|prompt\(\)|modal|draw
 check('missing UX-CRX rules', /ux-crx|primary action|secondary action|decision point|recovery path/i.test(design));
 check('missing icon system rules', /sparkle|magic wand|emoji|icon system|starburst/i.test(design));
 
-check('Gate 14: DESIGN.md missing semantic HTML / button-vs-div rule', /semantic html|<button>|button>.*<a|div onclick|real button|element is a `?<button/i.test(design), 'major');
-check('Gate 14: DESIGN.md missing keyboard operability rule', /keyboard|focus-visible|tabindex|onkeydown|enter\/space|operable by keyboard/i.test(design), 'major');
-check('Gate 15: DESIGN.md missing realistic-content rule (no placeholder slop)', /realistic (content|data|example)|no placeholder|lorem ipsum|fake data|placeholder.*never/i.test(design), 'major');
-check('Gate 16: DESIGN.md missing design-token rule (no hardcoded values)', /token|do not invent tokens|no undocumented|hardcoded/i.test(design), 'major');
-check('Gate 17: implementation prompt should name DESIGN.md as single source of truth', /single source of truth|do not invent tokens|re-run.*gates|source of truth/i.test(all), 'major');
+check('Gate 14: DESIGN.md missing semantic HTML / button-vs-div rule', /semantic html|<button>|button>.*<a|div onclick|real button|element is a `?<button/i.test(design));
+check('Gate 14: DESIGN.md missing keyboard operability rule', /keyboard|focus-visible|tabindex|onkeydown|enter\/space|operable by keyboard/i.test(design));
+check('Gate 15: DESIGN.md missing realistic-content rule (no placeholder slop)', /realistic (content|data|example)|no placeholder|lorem ipsum|fake data|placeholder.*never/i.test(design));
+check('Gate 16: DESIGN.md missing design-token rule (no hardcoded values)', /token|do not invent tokens|no undocumented|hardcoded/i.test(design));
+check('Gate 17: implementation prompt should name DESIGN.md as single source of truth', /single source of truth|do not invent tokens|re-run.*gates|source of truth/i.test(all));
 
 const validateScript = resolveSkillScript('validate-design-md.mjs');
 if (exists(validateScript) && exists(designFile)) {

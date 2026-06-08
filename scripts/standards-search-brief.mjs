@@ -5,6 +5,12 @@ import path from 'node:path';
 const out = 'STANDARDS.search-notes.md';
 const productFile = process.argv[2] || 'PRODUCT.md';
 const designFile = process.argv[3] || 'DESIGN.md';
+
+if (fs.existsSync(out)) {
+  console.log(`${out} already exists, skipping.`);
+  process.exit(0);
+}
+
 const now = new Date().toISOString().slice(0, 10);
 const product = fs.existsSync(productFile) ? fs.readFileSync(productFile, 'utf8') : '';
 const design = fs.existsSync(designFile) ? fs.readFileSync(designFile, 'utf8') : '';
