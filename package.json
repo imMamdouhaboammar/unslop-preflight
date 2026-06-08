@@ -1,0 +1,19 @@
+{
+  "name": "vibe-design-md-architect-skill",
+  "version": "1.7.0",
+  "private": true,
+  "type": "module",
+  "description": "Agent skill for PRODUCT.md and DESIGN.md generation, auditing, amplification, and UI quality gates.",
+  "scripts": {
+    "evals": "node scripts/run-evals.mjs",
+    "validate:design": "node scripts/validate-design-md.mjs DESIGN.md",
+    "score:design": "node scripts/score-design-md.mjs DESIGN.md PRODUCT.md",
+    "gates": "node scripts/run-gates.mjs DESIGN.md PRODUCT.md src",
+    "scan:ui": "node scripts/scan-ui-implementation.mjs src",
+    "scan:a11y": "node scripts/scan-accessibility.mjs src",
+    "scan:viewport": "node scripts/scan-viewport-fit.mjs http://localhost:3000"
+  },
+  "optionalDependencies": {
+    "playwright": "latest"
+  }
+}
