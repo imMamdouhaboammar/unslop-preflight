@@ -114,7 +114,7 @@ Delete, revoke, and rotate actions require destructive-action confirmation modal
 
 ### Intake Session Gate
 
-Before this `DESIGN.md` was created or amplified, the agent must complete an intake session and record what was inferred, what was missing, and what assumptions were used. Implementation is blocked until intake is complete.
+Before this `DESIGN.md` was created or expanded, the agent must complete an intake session and record what was inferred, what was missing, and what assumptions were used. Implementation is blocked until intake is complete.
 
 - Intake artifact: `INTAKE.session.md`
 - Maximum intake questions: 7
@@ -190,19 +190,19 @@ If the command has already been run, the agent must confirm it. If it cannot run
 
 ### Palette
 
-- Background: `#[hex]`
-- Surface: `#[hex]`
-- Surface raised: `#[hex]`
-- Text primary: `#[hex]`
-- Text secondary: `#[hex]`
-- Border subtle: `#[hex]`
-- Border strong: `#[hex]`
-- Accent: `#[hex]`
-- Accent soft: `#[hex]`
-- Success: `#[hex]`
-- Warning: `#[hex]`
-- Error: `#[hex]`
-- Info: `#[hex]`
+- Background: `#000000`
+- Surface: `#000000`
+- Surface raised: `#000000`
+- Text primary: `#000000`
+- Text secondary: `#000000`
+- Border subtle: `#000000`
+- Border strong: `#000000`
+- Accent: `#000000`
+- Accent soft: `#000000`
+- Success: `#000000`
+- Warning: `#000000`
+- Error: `#000000`
+- Info: `#000000`
 
 ### Usage rules
 

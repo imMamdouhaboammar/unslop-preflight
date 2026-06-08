@@ -79,14 +79,14 @@ The autopilot runs every gate in sequence, auto-repairs every failure it can fix
 ```
 Pass 1
  [ 1/9]  Impeccable setup          → attempts npx impeccable skills install
- [ 2/9]  Bootstrap artifacts       → creates DESIGN.md + PRODUCT.md if missing
- [ 3/9]  Repair DESIGN.md          → patches missing sections + required fields
- [ 4/9]  Validate DESIGN.md        → checks six-section contract → repairs + retries
- [ 5/9]  Score DESIGN.md           → checks quality score → repairs if below threshold
- [ 6/9]  Run 23 gates              → runs all gates → repairs DESIGN.md failures → retries
- [ 7/9]  Scan UI implementation    → scans src/ for slop + accessibility blockers
- [ 8/9]  Scan accessibility        → WCAG 2.2 audit on src/
- [ 9/9]  Intake + standards brief  → scaffolds INTAKE.session.md (first pass only)
+ [ 2/9]  Bootstrap + repair artifacts → creates/repairs DESIGN.md + PRODUCT.md
+ [ 3/9]  Intake session            → scaffolds INTAKE.session.md if missing
+ [ 4/9]  Standards search brief    → scaffolds STANDARDS.search-notes.md if missing
+ [ 5/9]  Validate DESIGN.md        → checks six-section contract → repairs + retries
+ [ 6/9]  Score DESIGN.md           → checks quality score → repairs if below threshold
+ [ 7/9]  Run 23 gates              → runs all gates → repairs DESIGN.md failures → retries
+ [ 8/9]  Scan UI implementation    → scans src/ for slop + accessibility blockers
+ [ 9/9]  Scan accessibility        → WCAG 2.2 audit on src/
 
 Repairs applied → Pass 2 → …
 
