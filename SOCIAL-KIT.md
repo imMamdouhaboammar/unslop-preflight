@@ -1,183 +1,196 @@
-# Social Kit — Vibe Design MD Architect
+# SOCIAL-KIT — Spread the Word
 
-Use these templates to share the tool on every platform. Copy, paste, adapt.
+> **For the community, by the community.**
+>
+> This skill helped your project. Here's how to pay it forward and help more developers find it.
+>
+> Copy any template below, make it your own, and share. The more developers who know it exists, the less AI slop ships.
+
+---
+
+## Why share this?
+
+You used this tool. It made your project better.
+
+There are thousands of developers right now dealing with the same thing — their AI agent just shipped purple gradient cards, forgot keyboard navigation, used `alert()` for a checkout flow, or created a 500px modal on a 568px screen.
+
+You know how to fix that. One share might save someone a full day of cleanup.
+
+**The reciprocity loop:**
+1. You found this through someone else's share
+2. You ran `npx vdma autopilot` and it caught something real
+3. Now someone else needs to find it
 
 ---
 
 ## 🐦 Twitter / X
 
-### Thread (main launch — 7 tweets)
+### If autopilot caught a bug in your project
 
-**Tweet 1 (hook)**
 ```
-Your AI coding agent is about to generate UI slop.
+My AI just generated this modal:
 
-Purple gradient. Default Inter. Identical rounded cards.
-No RTL. No keyboard nav. No focus rings.
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;  /* no max constraint */
 
-There's now a tool that blocks it before the first line of CSS.
+On a 568px screen.
 
-🧵 Thread on Vibe Design MD Architect 👇
-```
-
-**Tweet 2 (problem)**
-```
-AI agents skip design every time.
-
-They pick generic colors. They forget accessibility.
-They ship alert(). They create 500px modals on 568px screens.
-They use sparkle icons for "smart" features.
-
-Then you spend hours "fixing" what looked fine in the screenshot.
-```
-
-**Tweet 3 (what it does)**
-```
-Vibe Design MD Architect is a Claude skill that runs before your agent touches frontend code.
-
-It forces:
-• Design System Baseline selection
-• Product intake session
-• WCAG 2.2 verification
-• 23 hard-blocking quality gates
-
-No DESIGN.md = no implementation.
-```
-
-**Tweet 4 (demo)**
-```
-One command. Full autopilot:
-
-npx vibe-design-md-architect preflight
-
-It runs:
-✓ Intake session
-✓ Standards search (WCAG 2.2, MDN, web.dev)
-✓ Impeccable setup
-✓ PRODUCT.md + DESIGN.md generation
-✓ All 23 gates
-✓ UI scanner (slop + a11y)
-```
-
-**Tweet 5 (what it blocks)**
-```
-It blocks:
-🔴 Purple/blue gradient as brand identity
-🔴 Clickable <div> instead of <button>
-🔴 Native alert() for product flows
-🔴 Dropdown that clips at viewport edge
-🔴 Modal without focus trap
-🔴 API key shown in full text
-🔴 Lorem ipsum shipped to users
-🔴 h-screen on mobile that breaks on keyboard open
-```
-
-**Tweet 6 (call to action)**
-```
-Install in 10 seconds:
-
-npx skills add imMamdouhaboammar/vibe-design-md-architect
-
-Or:
-
-npx vibe-design-md-architect init
-
-Works with Claude Code, Cursor, Windsurf — any AI coding agent that reads skill files.
-```
-
-**Tweet 7 (star CTA)**
-```
-If this saves your next project from shipping AI slop:
-
-⭐ Star the repo
-🔁 Retweet the thread
-💬 Tell me what gate saved your project
+npx vdma autopilot caught it before I shipped it.
 
 → github.com/imMamdouhaboammar/vibe-design-md-architect
 
-#AIcoding #ClaudeCode #VibeCoding #WebDesign #UX
+#ClaudeCode #VibeCoding #WebDev
 ```
 
 ---
 
-### Single-tweet options
-
-**Option A — short hook:**
 ```
-Your AI just picked purple gradient, default Inter, and identical rounded cards. Again.
+Ran this on my project before starting UI:
 
-npx vibe-design-md-architect preflight
+npx vibe-design-md-architect autopilot
 
-23 gates. Runs before the first line of CSS.
+It created DESIGN.md, ran 23 gates, found 4 issues I would have shipped.
 
-github.com/imMamdouhaboammar/vibe-design-md-architect
+Worth the 2 minutes.
 
-#ClaudeCode #VibeCoding #AIcoding
+→ github.com/imMamdouhaboammar/vibe-design-md-architect
 ```
 
-**Option B — problem/solution:**
+---
+
 ```
-The problem with AI-generated UI:
-• Generic colors
-• No keyboard navigation  
-• overflow:hidden on everything
+Things my AI agent stopped doing after I installed this skill:
+
+• Purple gradient as brand identity
+• height: 100vh on mobile (breaks when keyboard opens)
+• alert() for product confirmation flows
 • Modals with no focus trap
+• Hardcoded hex values instead of design tokens
 
-Vibe Design MD Architect: 23 hard-blocking gates that run before your agent touches frontend code.
+One command:
+npx vdma autopilot
 
-npx vdma preflight
-
-→ GitHub link in bio
+#AIcoding #ClaudeCode #frontend
 ```
 
-**Option C — minimal:**
+---
+
+### If the scan caught slop in existing code
+
 ```
-Stop your AI from shipping design slop.
+Just scanned my existing frontend with:
 
-npx vibe-design-md-architect init
+npx vdma scan src/
 
-23 gates. Auto-pilot. Works with Claude Code.
+Found 6 blockers I had no idea about:
+• clickable <div> instead of <button> in 3 places
+• overflow: hidden on body (hiding a layout bug)
+• icon-only buttons with no accessible name
 
-#WebDev #UX #AIcoding
+This is a free tool. No install needed.
+
+→ github.com/imMamdouhaboammar/vibe-design-md-architect
+```
+
+---
+
+### Minimal / casual
+
+```
+free tool that stops your AI from shipping ugly frontend
+
+npx vdma autopilot
+
+[no install, one command, works with Claude Code/Cursor/Windsurf]
+
+#VibeCoding
+```
+
+---
+
+```
+accidentally discovered this scans for AI UI slop before you implement
+
+npx vibe-design-md-architect scan src/
+
+flagged 4 things my AI put in that I would have shipped
+
+→ github.com/imMamdouhaboammar/vibe-design-md-architect
+```
+
+---
+
+### For developers who use Claude Code specifically
+
+```
+If you use Claude Code, this is worth knowing:
+
+1. npx vibe-design-md-architect init
+2. npx vdma autopilot
+
+It installs a skill that forces Claude to do proper design intake before UI.
+23 gates. Auto-repairs failures. Writes VDMA-FIXES.md for the rest.
+
+No more "generic AI look"
+→ github.com/imMamdouhaboammar/vibe-design-md-architect
 ```
 
 ---
 
 ## 💼 LinkedIn
 
-**Post (professional angle):**
+### After using it on a real project
 
 ```
-I've been watching AI coding agents make the same UI mistakes on repeat:
+I've been using an open-source tool called Vibe Design MD Architect on my last two projects, and wanted to share it.
 
-→ Purple-to-blue gradient as brand identity
-→ No keyboard navigation
-→ Modals that don't trap focus
-→ API keys displayed in full text
-→ Mobile that's just desktop stacked vertically
+It runs before the AI touches any frontend code. One command:
 
-These aren't aesthetic preferences. They're accessibility failures, security UX failures, and interaction bugs that cost real hours to fix.
+npx vibe-design-md-architect autopilot
 
-I built Vibe Design MD Architect to block all of this before a line of frontend code is written.
+In about 90 seconds it:
+→ Creates PRODUCT.md and DESIGN.md if you don't have them
+→ Runs 23 quality gates on your design artifacts  
+→ Auto-repairs everything it can fix automatically
+→ Writes a fix list for things that need a human or AI agent
 
-It's a Claude skill (works with Claude Code, Cursor, Windsurf) that runs 23 hard-blocking quality gates:
+What it caught on my last project:
+• Modals without focus trapping (WCAG failure)
+• API key field showing full token value in a table
+• height: 100vh on mobile auth pages (breaks when keyboard opens)
+• Overflow: hidden masking a layout bug
 
-1. Forces design system baseline selection (Atlassian / Material / Polaris / HIG / Custom)
-2. Runs an intake session — product context, user, localization, RTL/LTR requirement
-3. Verifies current WCAG 2.2, MDN Baseline, and web.dev standards
-4. Produces PRODUCT.md + DESIGN.md that the agent reads as design truth
-5. Scans frontend source for slop, accessibility failures, and viewport bugs
+All of these would have shipped. None of them are things I would have noticed in a code review without prompting for them specifically.
 
-One command:
-npx vibe-design-md-architect preflight
+It's MIT licensed, no dependencies beyond Node.js, works with Claude Code, Cursor, and Windsurf.
 
-It's open-source and free.
+Worth trying on your current project.
 
 → https://github.com/imMamdouhaboammar/vibe-design-md-architect
 
-If you're building with AI agents and care about design quality, try it and let me know what you think.
+#AI #WebDevelopment #Accessibility #FrontendEngineering #ClaudeCode
+```
 
-#AI #WebDevelopment #UX #Accessibility #FrontendDevelopment #ClaudeAI #VibeCoding
+---
+
+### Shorter / casual LinkedIn
+
+```
+Quick tip for anyone using AI coding agents:
+
+Before your agent writes any frontend code, run:
+npx vibe-design-md-architect autopilot
+
+It's a free CLI that creates your design system artifacts and blocks 23 common AI UI failures — including accessibility issues, overflow bugs, insecure data display, and broken mobile behavior.
+
+Saved me from shipping at least 4 real problems last week.
+
+Open source: github.com/imMamdouhaboammar/vibe-design-md-architect
+
+#AI #Frontend #UX
 ```
 
 ---
@@ -188,59 +201,37 @@ If you're building with AI agents and care about design quality, try it and let 
 
 **Title:**
 ```
-I built a Claude skill that runs 23 quality gates before your agent touches frontend code — stops generic AI UI slop before it starts
+This free CLI stopped my Claude agent from generating another generic dark SaaS with purple gradients and no keyboard nav
 ```
 
 **Post:**
 ```
-I got tired of Claude generating:
-- Purple gradient as brand identity
-- Identical rounded feature cards
-- Modals with no focus trap
-- Native alert() for product flows
-- height: 100vh that breaks on mobile keyboards
-- API keys in full text inside tables
+Been using Claude Code for about 3 months and kept running into the same problem — Claude picks the same visual defaults every time. Purple/indigo gradients, identical rounded cards, Inter font, no RTL, missing focus rings.
 
-So I built Vibe Design MD Architect — a Claude skill that blocks all of this before implementation.
+Found this tool last week: Vibe Design MD Architect
 
-**How it works:**
+One command before any UI work:
 
-The skill installs into `.claude/skills/` and runs before any frontend generation:
+npx vibe-design-md-architect autopilot
 
-1. Asks for the design system baseline (Atlassian, Material, Polaris, HIG, or custom)
-2. Runs a structured intake session — product, user, localization, RTL requirements
-3. Verifies current WCAG 2.2 and MDN Baseline specs
-4. Creates PRODUCT.md and DESIGN.md as source of truth
-5. Runs 23 hard-blocking gates — if any fail, implementation is blocked
-6. Scans frontend source for slop patterns and accessibility failures
+What it does:
+1. Creates PRODUCT.md and DESIGN.md if you don't have them
+2. Runs your design artifacts through 23 quality gates
+3. Auto-patches anything it can fix directly (missing sections, design tokens, modal contract, z-index scale, viewport rules)
+4. For source issues, writes VDMA-FIXES.md with exact fixes for Claude to apply
 
-**One command autopilot:**
+On my current project it caught:
+- No focus trap in my modals
+- height: 100vh on login page (clips on iOS keyboard)
+- overflow: hidden on body (was hiding a layout bug I knew about but hadn't fixed)
+- 3 clickable divs instead of buttons
+- No accessible name on icon-only nav buttons
 
-```
-npx vibe-design-md-architect preflight
-```
+None of that would have failed CI. All of it would have shipped.
 
-Or install it as a skill:
+Free, MIT, works completely offline, no API calls.
 
-```
-npx skills add imMamdouhaboammar/vibe-design-md-architect
-```
-
-**What the 23 gates cover:**
-- Contrast discipline (WCAG AA for every text/control/chart state)
-- No clickable divs — only `<button>` and `<a>`
-- No native popups — only in-app modal/toast/banner/inline
-- Viewport governance — scroll ownership per route, no overflow:hidden hack
-- Modal governance — focus trap, scroll lock, backdrop, viewport-safe sizing
-- Overlay stack governance — centralized overlay system, no ad-hoc fixed toast
-- Popup positioning — flip/shift/size middleware, portal mounting, z-index tokens
-- Sensitive data display — tokens masked, secure creation via modal
-
-It works with Claude Code, Cursor, and any AI agent that reads skill files.
-
-GitHub: https://github.com/imMamdouhaboammar/vibe-design-md-architect
-
-Happy to answer questions about how any specific gate works.
+→ https://github.com/imMamdouhaboammar/vibe-design-md-architect
 ```
 
 ---
@@ -249,49 +240,45 @@ Happy to answer questions about how any specific gate works.
 
 **Title:**
 ```
-Built an open-source tool that blocks AI agents from generating generic UI slop — 23 design gates, CLI autopilot, works with Claude Code
+Free CLI that scans AI-generated frontend for the patterns everyone hates — clickable divs, overflow:hidden hacks, modal without focus trap, hardcoded colors
 ```
 
 **Post:**
 ```
-AI coding agents make the same frontend mistakes every time. I catalogued 24 of them with WCAG mappings and evidence from 2026 accessibility audits, then built gates that block them before implementation.
+I know "here's a tool" posts can be annoying, but this one is legitimately useful and I want more people to know it exists.
 
-The tool is called Vibe Design MD Architect.
+It's called Vibe Design MD Architect. It runs static analysis on your frontend code for patterns that AI coding agents keep introducing.
 
-**What it blocks (before code):**
-
-Structural failures:
-- Clickable `<div>` instead of `<button>` (keyboard broken)
-- `height: 100vh` on auth pages (clips on mobile keyboard)
-- `overflow: hidden` to fix scroll (hides the bug, breaks zoom)
-- Missing focus rings
-- Native `alert()` / `confirm()` for product flows
-- Hardcoded hex colors (token drift after second iteration)
-
-Visual failures:
-- Purple/blue gradient identity (every AI's default)
-- Default Inter font with zero brand intent
-- Identical rounded feature cards
-- Sparkle/magic wand icons as "smart" UI language
-- Emoji in navigation and buttons
-
-Overlay/interaction failures:
-- Modal without focus trap
-- Background scrolls behind open modal
-- Dropdown clipped by `overflow: hidden` parent
-- Popup hardcoded single direction (clips at viewport bottom)
-- Toast built manually with `position: fixed` in page component
-
-**CLI:**
 ```
-npx vibe-design-md-architect preflight    # full autopilot
-npx vibe-design-md-architect scan src/   # scan for slop
-npx vibe-design-md-architect gates       # run all 23 gates
+npx vdma scan src/
 ```
 
-Open source, MIT, no dependencies beyond Node.js.
+What it flags:
 
-https://github.com/imMamdouhaboammar/vibe-design-md-architect
+🔴 Blockers (gates hard-fail):
+- Clickable `<div>` / `<span>` instead of `<button>`
+- `alert()` / `confirm()` / `prompt()` for product flows
+- `overflow: hidden` on `html`, `body`, or `#root`
+- `height: 100vh` without `dvh` fallback
+- Icon-only buttons with no accessible name
+- API keys / tokens displayed in full text in tables
+
+🟡 Warnings (flagged, not blocked):
+- Default Inter font with no explicit brand choice
+- Hardcoded hex values instead of design tokens
+- Generic purple/indigo color as brand identity
+- Gradient text headings
+- Lorem ipsum in any file
+
+It also has an "autopilot" mode that runs the full loop — creates design artifacts, gates, scans, auto-repairs what it can, writes a fix list for the rest:
+
+```
+npx vibe-design-md-architect autopilot
+```
+
+MIT licensed. No install required. Works with Claude Code, Cursor, Windsurf.
+
+→ https://github.com/imMamdouhaboammar/vibe-design-md-architect
 ```
 
 ---
@@ -300,7 +287,22 @@ https://github.com/imMamdouhaboammar/vibe-design-md-architect
 
 **Title:**
 ```
-Open-source tool: 23 design quality gates that run before AI agents write frontend code — blocks the generic slop patterns
+Tool for stopping local LLM agents from generating generic AI-looking frontend — 23 gates, CLI autopilot, MIT
+```
+
+**Post:**
+```
+If you run local coding agents (Ollama, LM Studio, etc.) you've probably seen the same frontend outputs I have.
+
+The models pick the same defaults: purple gradient hero, identical feature cards, Inter everywhere, no accessibility, overflow:hidden to fix whatever's broken.
+
+This tool creates a design context file (DESIGN.md) that the agent reads before touching frontend code. The autopilot mode scaffolds it, validates it, and blocks implementation until 23 quality gates pass.
+
+npx vibe-design-md-architect autopilot
+
+It works with any coding agent that reads skill files — Claude Code, but also any model you've set up with a skill/context folder.
+
+Source: https://github.com/imMamdouhaboammar/vibe-design-md-architect
 ```
 
 ---
@@ -309,157 +311,118 @@ Open-source tool: 23 design quality gates that run before AI agents write fronte
 
 **Title:**
 ```
-Show HN: Vibe Design MD Architect – 23-gate design quality enforcer for AI coding agents
+Show HN: I used this tool to catch 6 accessibility failures in my AI-generated UI before shipping
 ```
 
-**Text:**
+**Comment-style post (to put in the thread):**
 ```
-I built a tool called Vibe Design MD Architect that enforces design quality gates before AI agents write frontend code.
+I've been running AI coding agents for my side project and wanted to share a tool I found that's been genuinely useful: Vibe Design MD Architect.
 
-The problem it solves: AI coding agents (Claude Code, Cursor, Windsurf, etc.) consistently produce the same failure patterns:
-- Purple gradient identity
-- Modals without focus trapping
-- `height: 100vh` that breaks on mobile keyboards
-- `overflow: hidden` used to hide layout bugs
-- Native `alert()` for product flows
-- API keys displayed in full text in tables
-- Hardcoded hex values that drift after iteration
+It runs before any frontend code is written. One command:
 
-These aren't aesthetic problems. Several are accessibility failures (WCAG 2.2 violations), some are security UX failures, and all of them require manual cleanup that erodes the productivity gains of AI coding.
+  npx vibe-design-md-architect autopilot
 
-The tool runs 23 hard-blocking "gates" before implementation is allowed. If any gate fails, the agent must repair the artifact before writing code.
+What actually happened when I ran it on my current project:
 
-Gates include:
-- Design system baseline selection (first mandatory question)
-- Structured intake session (product, user, localization, RTL/LTR requirement)
-- 2026 standards verification (WCAG 2.2, MDN Baseline, web.dev, framework docs)
-- Viewport governance (scroll ownership per route, dvh fallback, no overflow:hidden hack)
-- Modal governance (focus trap, scroll lock, inert background, viewport-safe sizing)
-- Popup positioning (must declare Strategy A/B/C: CSS Anchor, Floating UI, or CSS clamp)
-- Overlay stack governance (centralized overlay system, toast construction ban)
-- Sensitive data display (tokens masked by default, secure creation via modal)
+1. It created PRODUCT.md and DESIGN.md scaffolds (I had neither)
+2. It ran 23 quality gates and failed 8 of them
+3. It auto-patched 5 (missing sections in design artifacts, added viewport contract, modal contract, z-index token scale)
+4. It wrote VDMA-FIXES.md with the remaining 3 source-level issues
 
-The tool also includes three static/runtime scanners:
-- `scan-ui-implementation.mjs`: flags slop patterns and accessibility failures with severity levels
-- `scan-accessibility.mjs`: ARIA/landmark/semantics audit mapped to WCAG 2.2 criteria
-- `scan-viewport-fit.mjs`: Playwright-based test at 8 viewport sizes
+The source issues it found: no focus trap in my modals (WCAG 2.4.3), icon buttons with no accessible name (WCAG 4.1.2), and height: 100vh on my login page (clips on iOS when keyboard opens).
 
-CLI autopilot (no install required):
-`npx vibe-design-md-architect preflight`
+These are exactly the things that pass code review and fail real users.
 
-It's a Claude skill that works with any AI coding agent reading skill files. MIT licensed.
-
+The tool is MIT, no dependencies beyond Node.js, works offline. Source at:
 https://github.com/imMamdouhaboammar/vibe-design-md-architect
-
-I'm interested in feedback on the gate design, particularly Gates 21-23 (overlay stack, sensitive data, popup positioning) which are the newest additions.
 ```
 
 ---
 
-## 💬 Discord (Claude / AI coding communities)
+## 💬 Discord (Claude / AI dev communities)
 
-**Short drop (Claude Discord / Anthropic community):**
+### Short drop
+
 ```
-Built a Claude skill that blocks AI UI slop before it's generated.
+if you use AI coding agents and haven't run this yet, worth doing:
 
-23 hard-blocking design gates — intake session, WCAG 2.2 verification, modal/overlay governance, popup positioning.
+npx vibe-design-md-architect autopilot
 
-npx vibe-design-md-architect init
+caught 4 things in my project I was about to ship
+works with Claude Code, Cursor, Windsurf — no install needed
 
 → github.com/imMamdouhaboammar/vibe-design-md-architect
-
-Full autopilot with: npx vdma preflight
 ```
 
-**Longer drop (web dev Discords):**
+---
+
+### Longer explanation
+
 ```
-Anyone else exhausted by AI agents defaulting to purple gradient + identical rounded cards every time?
+hey, sharing this because it helped my project and I think others would find it useful
 
-I catalogued 24 evidence-based AI UI failure patterns (with WCAG 2.2 mappings) and built a tool that gates on them before any CSS is written.
+it's called Vibe Design MD Architect — a CLI that runs before your AI writes any frontend
 
-CLI autopilot:
-`npx vibe-design-md-architect preflight`
+what it does:
+• creates DESIGN.md + PRODUCT.md if you don't have them
+• runs 23 quality gates (accessibility, viewport governance, modal contract, design tokens, anti-slop)
+• auto-repairs everything it can fix in the design artifacts
+• writes VDMA-FIXES.md for source issues that need the agent to fix
 
-It forces:
-• Design system baseline selection upfront
-• Structured intake (product, user, RTL, localization)
-• WCAG 2.2 verification
-• 23 hard-blocking quality gates
-• UI scanner (slop + accessibility)
+autopilot mode (full run):
+npx vibe-design-md-architect autopilot
 
-MIT, no runtime dependencies, works with Claude Code/Cursor/Windsurf.
+specific scans:
+npx vdma scan src/        # scan for slop and a11y issues
+npx vdma repair           # auto-fix DESIGN.md
+npx vdma gates            # run all 23 gates manually
+
+MIT, works offline, no API keys
 
 → https://github.com/imMamdouhaboammar/vibe-design-md-architect
 ```
 
 ---
 
-## 📝 Dev.to / Hashnode Article Title Options
+## 📝 Dev.to / Hashnode — Personal article titles
+
+Write from your own experience using the tool:
 
 ```
-1. "How I stopped my AI agent from shipping generic UI: 23 design gates that block slop before implementation"
+1. "How I stopped my AI agent from shipping inaccessible frontend — the tool I use before every project"
 
-2. "The 24 most common AI frontend failures (and how to block all of them automatically)"
+2. "npx vdma autopilot: the one command I run before my AI writes any CSS"
 
-3. "Vibe Design MD Architect: a CLI tool that enforces design quality on AI-generated frontends"
+3. "I scanned my AI-generated codebase and found 6 WCAG failures. Here's the tool I now use to prevent them"
 
-4. "Stop your AI from generating purple gradients: building a design gate system for Claude Code"
+4. "The 23 design checks I never remembered to do — now automated in one CLI command"
 
-5. "23 hard rules for AI-generated UI — and a CLI that enforces them automatically"
-```
-
----
-
-## 🏪 Product Hunt Launch
-
-**Tagline:**
-```
-23-gate design quality enforcer for AI coding agents
-```
-
-**Description:**
-```
-Vibe Design MD Architect is a CLI tool and Claude skill that runs 23 hard-blocking design gates before your AI agent writes frontend code.
-
-It blocks the patterns AI coding agents repeat on every project: purple gradients, missing focus rings, modals without focus trapping, dropdowns that clip at the viewport edge, and API keys in plain text.
-
-The tool forces a structured design process — design system baseline selection, product intake session, WCAG 2.2 verification — and produces PRODUCT.md and DESIGN.md as authoritative design truth the agent reads.
-
-One command: npx vibe-design-md-architect preflight
-```
-
-**Topics:** Developer Tools, Design, Productivity, Open Source, Artificial Intelligence
-
----
-
-## 📦 npm Registry Description
-
-Already set in `package.json`:
-```
-Autopilot design quality gates for AI-assisted UI — 23 hard-blocking gates that create, audit, and amplify PRODUCT.md and DESIGN.md before implementation. Stops generic AI-looking frontend before it starts.
+5. "Vibe Design MD Architect caught 4 issues my code review didn't — here's what they were"
 ```
 
 ---
 
-## 🔖 GitHub Topics to Add
+## 🌟 GitHub — Star and share
 
-Go to: https://github.com/imMamdouhaboammar/vibe-design-md-architect → Settings → Topics
+The simplest support:
 
-Add these topics (one by one):
+1. **Star the repo:** https://github.com/imMamdouhaboammar/vibe-design-md-architect
+2. **Share the star** — when you star, it shows on your GitHub activity. Followers notice.
+3. **Use it in your next project** — then share what it caught (even one real finding is a great post)
+
+---
+
+## ⭐ Why it matters
+
+This tool catches:
+- Accessibility failures that hurt real users
+- Mobile bugs that affect the majority of your users
+- Security UX failures that expose sensitive data
+- Design drift that makes AI-built products look AI-built
+
+Every share gets it in front of one more developer who's about to ship one of these.
+
+**The loop:**
 ```
-claude
-claude-code
-ai-coding
-vibe-coding
-design-system
-accessibility
-wcag
-ux-engineering
-frontend-quality
-anti-slop
-impeccable
-design-tokens
-rtl
-skill
-skills-sh
+You found it → used it → it caught something → you shared it → someone else found it
 ```
