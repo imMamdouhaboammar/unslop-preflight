@@ -1,6 +1,63 @@
-# Changelog
+## v1.8.0  -  Agentic Autopilot Loop (2026-06-08)
 
-## v1.7  -  Generic Directionality and Popup Positioning Gate (2026-06-08)
+### Added
+
+- **`npx vdma autopilot`** — one-command agentic repair loop. The single command every user needs:
+  - Runs all gates in sequence: bootstrap → validate → score → 23 gates → source scan → a11y scan
+  - For every DESIGN.md failure: automatically applies targeted repairs and re-runs the gate
+  - For source code issues: writes `VDMA-FIXES.md` with exact fix instructions for the coding agent
+  - Multi-pass loop (`--max-passes=3` default) — keeps repairing until all gates pass or max passes reached
+  - Colored terminal UI with per-phase status and repair detail lines
+  - Options: `--max-passes`, `--no-source-scan`, `--no-impeccable`, `--dry-run`
+  - Exit codes: 0 = all passed, 1 = DESIGN.md issues remain, 2 = source fixes needed
+
+- **`scripts/autopilot.mjs`** — the orchestrator engine:
+  - Phase-based execution (Bootstrap → Validate → Score → Gates → UI Scan → A11y Scan → Intake/Standards)
+  - Auto-detects `DESIGN.md`, `PRODUCT.md`, `src/` from the working directory
+  - Parses gate failure output to inject targeted DESIGN.md repairs per failure type
+  - Writes `VDMA-FIXES.md` for source issues that require an agent or human to fix
+
+- **`scripts/repair-design-md.mjs`** — targeted DESIGN.md + PRODUCT.md auto-repair engine:
+  - Detects and patches all 6 required sections (Overview, Colors, Typography, Elevation, Components, Do's and Don'ts)
+  - Detects and injects all required fields: Impeccable setup gate, Creative North Star, color token table, viewport contract, modal contract, z-index token scale, popup strategy (Gate 23), typography scale, overlay system declaration
+  - Creates PRODUCT.md from template if missing
+  - Outputs machine-readable JSON repair log for the autopilot to parse
+  - Can be used standalone: `npx vdma repair`
+
+- **`npx vdma repair`** — new CLI command calling `repair-design-md.mjs` directly
+
+- **`VDMA-FIXES.md`** — auto-generated fix file for source code issues:
+  - Lists every blocker found in UI scanner + accessibility scanner
+  - Includes an agent prompt for applying all fixes: "Apply all fixes listed in VDMA-FIXES.md, then run: npx vdma autopilot"
+  - Re-running autopilot after fixes verifies and closes the loop
+
+### Updated
+
+- `bin/cli.mjs`: `autopilot` and `repair` commands added; `autopilot` is now the recommended first command shown in help
+- `package.json`: version → 1.8.0; `autopilot` and `repair` npm scripts added
+- `CONTRIBUTING.md`: Updated with autopilot architecture notes
+
+### Agent loop pattern (how it works end-to-end)
+
+```
+User: npx vdma autopilot
+  → Bootstrap: creates DESIGN.md + PRODUCT.md if missing
+  → Repair: patches missing sections and required fields
+  → Validate: re-validates after repair
+  → Score: improves if below threshold
+  → 23 gates: repairs DESIGN.md for each failure, re-runs
+  → Source scan: writes VDMA-FIXES.md for source blockers
+  → A11y scan: appends to VDMA-FIXES.md
+
+User: "Claude, apply all fixes in VDMA-FIXES.md"
+  → Claude applies source fixes
+
+User: npx vdma autopilot
+  → All passes → DESIGN.md ready → implementation unblocked ✓
+```
+
+## v1.7.0  -  Viral Launch — CLI, World-class README, Social Kit (2026-06-08)
+
 
 ### Changed
 

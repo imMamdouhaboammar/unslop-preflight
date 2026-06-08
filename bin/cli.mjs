@@ -55,28 +55,33 @@ function usage() {
   banner();
   console.log(`${c.bold}Usage:${c.reset}  npx vibe-design-md-architect <command> [args]\n`);
 
-  const cmds = [
+  const COMMANDS = [
+    ['autopilot',  '🤖 ONE command: repair loop → all gates → auto-fix → VDMA-FIXES.md  [--max-passes=3]'],
     ['init',       'Install skill into .claude/skills/ (project) or ~/.claude/skills/ (global)'],
-    ['preflight',  'Full autopilot: Impeccable setup → intake → standards → validate → gates → scan'],
+    ['preflight',  'Full step-by-step preflight: Impeccable → intake → standards → validate → gates → scan'],
     ['gates',      'Run all 23 hard-blocking gates  [DESIGN.md] [PRODUCT.md] [src/]'],
     ['validate',   'Validate DESIGN.md six-section contract  [DESIGN.md]'],
     ['score',      'Score DESIGN.md quality against the rubric  [DESIGN.md] [PRODUCT.md]'],
+    ['repair',     'Auto-repair DESIGN.md + PRODUCT.md in one shot  [DESIGN.md] [PRODUCT.md]'],
     ['scan',       'Scan frontend source for AI slop & accessibility issues  [src/]'],
     ['scan:a11y',  'Run deep ARIA/landmark/semantics audit  [src/]  [--strict]'],
     ['scan:viewport', 'Run viewport fit scan (requires Playwright)  [http://localhost:3000]'],
     ['amplify',    'Amplify (repair) an old or weak DESIGN.md  [DESIGN.md] [PRODUCT.md]'],
     ['intake',     'Produce INTAKE.session.md from prompts and inferred context'],
     ['standards',  'Generate 2026 standards search brief  [PRODUCT.md] [DESIGN.md]'],
-    ['help',       'Show this message'],
+    ['help',       'Show this help message'],
   ];
 
-  for (const [cmd, desc] of cmds) {
+  for (const [cmd, desc] of COMMANDS) {
     console.log(`  ${c.cyan}${cmd.padEnd(16)}${c.reset}  ${c.dim}${desc}${c.reset}`);
   }
 
-  console.log(`\n${c.bold}Examples:${c.reset}`);
+  console.log(`${c.bold}The one command you need:${c.reset}`);
+  console.log(`  ${c.bold}${c.magenta}npx vdma autopilot${c.reset}  ${c.dim}← runs everything, repairs everything${c.reset}`);
+  console.log(`\n${c.bold}More examples:${c.reset}`);
+  console.log(`  ${c.dim}npx vibe-design-md-architect autopilot --max-passes=5${c.reset}`);
   console.log(`  ${c.dim}npx vibe-design-md-architect init${c.reset}`);
-  console.log(`  ${c.dim}npx vibe-design-md-architect preflight${c.reset}`);
+  console.log(`  ${c.dim}npx vibe-design-md-architect repair${c.reset}`);
   console.log(`  ${c.dim}npx vibe-design-md-architect gates DESIGN.md PRODUCT.md src/${c.reset}`);
   console.log(`  ${c.dim}npx vibe-design-md-architect scan src/${c.reset}`);
   console.log(`  ${c.dim}npx vibe-design-md-architect amplify DESIGN.md PRODUCT.md${c.reset}`);
@@ -291,15 +296,31 @@ function cmdStandards(argv) {
   process.exit(run('standards-search-brief.mjs', args));
 }
 
+/** repair — targeted DESIGN.md + PRODUCT.md auto-repair */
+function cmdRepair(argv) {
+  const args = detectArgs(argv, ['DESIGN.md', 'PRODUCT.md'].filter(existsSync));
+  console.log(hd('Auto-repair DESIGN.md + PRODUCT.md'));
+  process.exit(run('repair-design-md.mjs', args));
+}
+
+/** autopilot — full agentic loop */
+function cmdAutopilot(argv) {
+  banner();
+  console.log(`${c.bold}${c.magenta}AUTOPILOT MODE${c.reset} — one command, full repair loop, all gates\n`);
+  process.exit(run('autopilot.mjs', argv));
+}
+
 // ─── Router ──────────────────────────────────────────────────────────
 const [,, cmd = 'help', ...rest] = process.argv;
 
 const routes = {
+  autopilot:       () => cmdAutopilot(rest),
   init:            () => cmdInit(rest),
   preflight:       () => cmdPreflight(rest),
   gates:           () => cmdGates(rest),
   validate:        () => cmdValidate(rest),
   score:           () => cmdScore(rest),
+  repair:          () => cmdRepair(rest),
   scan:            () => cmdScan(rest),
   'scan:a11y':     () => cmdScanA11y(rest),
   'scan:viewport': () => cmdScanViewport(rest),

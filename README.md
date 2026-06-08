@@ -10,10 +10,15 @@
 [![skills.sh](https://img.shields.io/badge/skills.sh-install-5B21B6?style=flat-square)](https://skills.sh/imMamdouhaboammar/vibe-design-md-architect/vibe-design-md-architect)
 [![Gates](https://img.shields.io/badge/gates-23-F59E0B?style=flat-square)](./SKILL.md)
 [![License: MIT](https://img.shields.io/badge/license-MIT-22C55E?style=flat-square)](./LICENSE)
-[![Version](https://img.shields.io/badge/version-1.7.0-3B82F6?style=flat-square)](./CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.8.0-3B82F6?style=flat-square)](./CHANGELOG.md)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-EC4899?style=flat-square)](./CONTRIBUTING.md)
 
-[**Quick Start**](#-quick-start) · [**CLI**](#%EF%B8%8F-cli-reference) · [**What it blocks**](#-what-it-blocks) · [**All 23 Gates**](#-23-hard-blocking-gates) · [**Changelog**](./CHANGELOG.md)
+```bash
+npx vibe-design-md-architect autopilot
+```
+> **That's it.** One command bootstraps your DESIGN.md, runs all 23 gates, auto-repairs every failure, and tells you exactly what needs a human fix. Then you run it again and everything passes.
+
+[**Autopilot**](#-autopilot-the-one-command-agentic-loop) · [**Quick Start**](#-quick-start) · [**CLI**](#%EF%B8%8F-cli-reference) · [**What it blocks**](#-what-it-blocks) · [**All 23 Gates**](#-23-hard-blocking-gates) · [**Changelog**](./CHANGELOG.md)
 
 </div>
 
@@ -61,6 +66,78 @@ IMPLEMENTATION ALLOWED ✓
 
 ---
 
+## 🤖 Autopilot — the one-command agentic loop
+
+```bash
+npx vdma autopilot
+```
+
+The autopilot runs every gate in sequence, auto-repairs every failure it can fix, and repeats until everything passes. You only need one command.
+
+### What it does per pass
+
+```
+Pass 1
+ [ 1/9]  Impeccable setup          → attempts npx impeccable skills install
+ [ 2/9]  Bootstrap artifacts       → creates DESIGN.md + PRODUCT.md if missing
+ [ 3/9]  Repair DESIGN.md          → patches missing sections + required fields
+ [ 4/9]  Validate DESIGN.md        → checks six-section contract → repairs + retries
+ [ 5/9]  Score DESIGN.md           → checks quality score → repairs if below threshold
+ [ 6/9]  Run 23 gates              → runs all gates → repairs DESIGN.md failures → retries
+ [ 7/9]  Scan UI implementation    → scans src/ for slop + accessibility blockers
+ [ 8/9]  Scan accessibility        → WCAG 2.2 audit on src/
+ [ 9/9]  Intake + standards brief  → scaffolds INTAKE.session.md (first pass only)
+
+Repairs applied → Pass 2 → …
+
+✓ All gates pass. Implementation unblocked.
+```
+
+### What gets auto-repaired (DESIGN.md)
+
+| What's missing | What autopilot adds |
+|----------------|-------------------|
+| Any of the 6 required sections | Injects full template section |
+| Impeccable setup gate | Injects gate + command under Overview |
+| Creative North Star | Injects placeholder under Overview |
+| Color token table | Injects 10-token semantic color scale |
+| Viewport Contract table | Injects 4-row route governance table |
+| Modal / Drawer contract | Injects full modal contract |
+| Z-index token scale | Injects `--z-sticky` to `--z-top` CSS |
+| Popup positioning strategy | Injects Strategy B (Floating UI) pattern |
+| Typography scale | Injects 9-row type scale table |
+| Overlay system declaration | Injects toast/overlay system rules |
+| Missing PRODUCT.md | Creates from template |
+
+### Source fixes → VDMA-FIXES.md
+
+Issues in your source code can't be auto-patched safely. Instead, autopilot writes `VDMA-FIXES.md`:
+
+```
+VDMA-FIXES.md
+→ [BLOCKER] src/components/Dropdown.jsx:42 — clickable <div> instead of <button>
+→ [BLOCKER] src/pages/Login.jsx:11 — height: 100vh without dvh fallback
+→ [a11y] src/components/Nav.jsx:8 — <nav> missing aria-label
+```
+
+Then just tell your coding agent:
+```
+Apply all fixes listed in VDMA-FIXES.md, then run: npx vdma autopilot
+```
+
+The agent applies the fixes, you run autopilot again, everything passes.
+
+### Options
+
+```bash
+npx vdma autopilot --max-passes=5      # More passes for complex projects
+npx vdma autopilot --no-source-scan    # Skip source scanning (DESIGN.md only)
+npx vdma autopilot --no-impeccable     # Skip Impeccable install attempt
+npx vdma autopilot --dry-run           # Show what would run without doing it
+```
+
+---
+
 ## ⚡ Quick Start
 
 **Option A — npx (no install required):**
@@ -100,8 +177,10 @@ npx vibe-design-md-architect <command> [args]
 
 | Command | What it does |
 |---------|-------------|
+| `autopilot` | **🤖 THE command** — repair loop → all 23 gates → VDMA-FIXES.md `[--max-passes=3]` |
 | `init` | Install skill into `.claude/skills/` (project) or `~/.claude/skills/` (global) |
-| `preflight` | **Autopilot**: Impeccable → intake → standards → validate → gates → scan |
+| `preflight` | **Step-by-step**: Impeccable → intake → standards → validate → gates → scan |
+| `repair` | Auto-repair DESIGN.md + PRODUCT.md in one shot |
 | `gates` | Run all 23 hard-blocking gates `[DESIGN.md] [PRODUCT.md] [src/]` |
 | `validate` | Validate DESIGN.md six-section contract |
 | `score` | Score DESIGN.md quality against the rubric |
