@@ -1,10 +1,22 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 
-const designFile = process.argv[2] || 'DESIGN.md';
-const productFile = process.argv[3] || 'PRODUCT.md';
-const srcDir = process.argv[4] || 'src';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const SKILL_ROOT = path.resolve(__dirname, '..');
+const PROJECT_ROOT = process.cwd();
+
+const resolveProjectPath = (value) => path.isAbsolute(value) ? value : path.join(PROJECT_ROOT, value);
+const resolveSkillScript = (name) => path.join(SKILL_ROOT, 'scripts', name);
+
+const designFile = resolveProjectPath(process.argv[2] || 'DESIGN.md');
+const productFile = resolveProjectPath(process.argv[3] || 'PRODUCT.md');
+const srcDir = resolveProjectPath(process.argv[4] || 'src');
+const intakeFile = path.join(PROJECT_ROOT, 'INTAKE.session.md');
+const standardsFile = path.join(PROJECT_ROOT, 'STANDARDS.search-notes.md');
+
 const failures = [];
 const warnings = [];
 
@@ -16,11 +28,11 @@ function check(label, condition, level = 'blocker') {
 
 const design = read(designFile);
 const product = read(productFile);
-const intake = read('INTAKE.session.md');
-const standards = read('STANDARDS.search-notes.md');
+const intake = read(intakeFile);
+const standards = read(standardsFile);
 const all = `${design}\n${product}\n${intake}\n${standards}`.toLowerCase();
 
-check('missing INTAKE.session.md', exists('INTAKE.session.md'));
+check('missing INTAKE.session.md', exists(intakeFile));
 check('intake missing design system baseline', /Design System Baseline|Selected baseline|atlassian|salesforce-lightning|shopify-polaris|material-design|apple-human-interface|custom-hybrid/i.test(intake));
 check('intake missing core user', /core user:/i.test(intake));
 check('intake missing main job', /main job|job to be done/i.test(intake));
@@ -34,7 +46,7 @@ check('DESIGN.md missing Intake Session Gate', /Intake Session Gate/i.test(desig
 check('DESIGN.md missing Rules Engine Gate', /Rules Engine Gate/i.test(design));
 check('DESIGN.md missing Design System Baseline', /Design System Baseline|Selected baseline|atlassian|salesforce-lightning|shopify-polaris|material-design|apple-human-interface|custom-hybrid/i.test(design));
 check('DESIGN.md missing baseline fit rationale', /Why this baseline fits|What to borrow|What not to copy|borrowed patterns/i.test(design));
-check('missing STANDARDS.search-notes.md', exists('STANDARDS.search-notes.md'), 'major');
+check('missing STANDARDS.search-notes.md', exists(standardsFile), 'major');
 check('standards notes missing selected design system docs', /Atlassian Design System|Lightning Design System|Salesforce|Polaris|Shopify|Material Design|Human Interface Guidelines|Apple|Selected Design System Baseline/i.test(standards), 'major');
 check('missing contrast rules', /4\.5:1|contrast/i.test(design));
 check('missing directionality rules', /rtl|ltr|directionality|text-align:\s*start|logical/i.test(design));
@@ -43,31 +55,33 @@ check('missing popup system rules', /alert\(\)|confirm\(\)|prompt\(\)|modal|draw
 check('missing UX-CRX rules', /ux-crx|primary action|secondary action|decision point|recovery path/i.test(design));
 check('missing icon system rules', /sparkle|magic wand|emoji|icon system|starburst/i.test(design));
 
-// Gates 14-17 (evidence-based, see references/ai-failure-patterns.md).
-// Reported as 'major' so pre-existing files are flagged without a hard mid-stream fail.
 check('Gate 14: DESIGN.md missing semantic HTML / button-vs-div rule', /semantic html|<button>|button>.*<a|div onclick|real button|element is a `?<button/i.test(design), 'major');
 check('Gate 14: DESIGN.md missing keyboard operability rule', /keyboard|focus-visible|tabindex|onkeydown|enter\/space|operable by keyboard/i.test(design), 'major');
 check('Gate 15: DESIGN.md missing realistic-content rule (no placeholder slop)', /realistic (content|data|example)|no placeholder|lorem ipsum|fake data|placeholder.*never/i.test(design), 'major');
 check('Gate 16: DESIGN.md missing design-token rule (no hardcoded values)', /token|do not invent tokens|no undocumented|hardcoded/i.test(design), 'major');
 check('Gate 17: implementation prompt should name DESIGN.md as single source of truth', /single source of truth|do not invent tokens|re-run.*gates|source of truth/i.test(all), 'major');
 
-if (exists('scripts/validate-design-md.mjs') && exists(designFile)) {
-  const res = spawnSync(process.execPath, ['scripts/validate-design-md.mjs', designFile], { encoding: 'utf8' });
+const validateScript = resolveSkillScript('validate-design-md.mjs');
+if (exists(validateScript) && exists(designFile)) {
+  const res = spawnSync(process.execPath, [validateScript, designFile], { encoding: 'utf8', cwd: PROJECT_ROOT });
   if (res.status !== 0) failures.push(`validate-design-md failed:\n${res.stderr || res.stdout}`);
 }
 
-if (exists('scripts/score-design-md.mjs') && exists(designFile)) {
-  const res = spawnSync(process.execPath, ['scripts/score-design-md.mjs', designFile, productFile], { encoding: 'utf8' });
+const scoreScript = resolveSkillScript('score-design-md.mjs');
+if (exists(scoreScript) && exists(designFile)) {
+  const res = spawnSync(process.execPath, [scoreScript, designFile, productFile], { encoding: 'utf8', cwd: PROJECT_ROOT });
   if (res.status !== 0) failures.push(`score-design-md failed:\n${res.stderr || res.stdout}`);
 }
 
-if (exists('scripts/scan-ui-implementation.mjs') && exists(srcDir)) {
-  const res = spawnSync(process.execPath, ['scripts/scan-ui-implementation.mjs', srcDir], { encoding: 'utf8' });
+const scanUiScript = resolveSkillScript('scan-ui-implementation.mjs');
+if (exists(scanUiScript) && exists(srcDir)) {
+  const res = spawnSync(process.execPath, [scanUiScript, srcDir], { encoding: 'utf8', cwd: PROJECT_ROOT });
   if (res.status !== 0) failures.push(`scan-ui-implementation failed:\n${res.stderr || res.stdout}`);
 }
 
-if (exists('scripts/scan-accessibility.mjs') && exists(srcDir)) {
-  const res = spawnSync(process.execPath, ['scripts/scan-accessibility.mjs', srcDir], { encoding: 'utf8' });
+const scanA11yScript = resolveSkillScript('scan-accessibility.mjs');
+if (exists(scanA11yScript) && exists(srcDir)) {
+  const res = spawnSync(process.execPath, [scanA11yScript, srcDir], { encoding: 'utf8', cwd: PROJECT_ROOT });
   if (res.status !== 0) failures.push(`scan-accessibility failed:\n${res.stderr || res.stdout}`);
 }
 
