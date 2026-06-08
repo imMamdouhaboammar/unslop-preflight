@@ -1,38 +1,41 @@
-# Security Policy
+# Security
 
-## Reporting a vulnerability
+Vibe Design MD Architect is a local-first skill and CLI for design planning before frontend implementation.
 
-If you find a security vulnerability in this tool, please **do not** open a public GitHub issue.
+## What this package does
 
-Instead, report it by emailing the maintainer directly or by using GitHub's private vulnerability reporting:
+- Reads and writes local Markdown files such as `PRODUCT.md`, `DESIGN.md`, `INTAKE.session.md`, and `STANDARDS.search-notes.md`.
+- Runs local validation, scoring, and scanning scripts.
+- Optionally attempts `npx impeccable skills install` when the user runs preflight or autopilot.
+- Does not collect secrets.
+- Does not require API keys.
+- Does not send project files to external services.
+- Does not include postinstall or preinstall lifecycle scripts.
 
-→ https://github.com/imMamdouhaboammar/vibe-design-md-architect/security/advisories/new
+## Files it may create
 
-Include:
-- A clear description of the vulnerability
-- Steps to reproduce
-- Potential impact
+- `PRODUCT.md`
+- `DESIGN.md`
+- `INTAKE.session.md`
+- `STANDARDS.search-notes.md`
+- `DESIGN.amplified.md`
+- `DESIGN.amplification-report.md`
+- `VDMA-FIXES.md`
 
-You will receive a response within 72 hours.
+## Network behavior
 
-## Scope
+The package itself is local-first. The only network-related behavior is user-triggered package installation through npm/npx commands such as:
 
-This tool is a Node.js CLI and Claude skill. It reads local filesystem files and runs static analysis on source code. It does not make network requests, store data remotely, or handle user credentials.
+```bash
+npx impeccable skills install
+```
 
-**In scope:**
-- Malicious input in `DESIGN.md` or `PRODUCT.md` that could cause unexpected behavior in scanner scripts
-- Path traversal vulnerabilities in CLI arguments
-- Vulnerabilities in how the tool handles `src/` directory scanning
+This command is optional and visible in terminal output.
 
-**Out of scope:**
-- Vulnerabilities in optional dependencies (Playwright) — report those to Playwright's team
-- Social engineering attacks against users of this tool
+## Dependency policy
 
-## Supported versions
+This package should avoid runtime dependencies unless strictly necessary. Optional tools such as Playwright must be installed by the user in their own project.
 
-Only the current `main` branch is actively maintained. Security fixes are applied to the latest version only.
+## Reporting issues
 
-| Version | Supported |
-|---------|-----------|
-| 1.7.x   | ✅ Yes |
-| < 1.7   | ❌ No |
+Open a GitHub issue if you find a security concern.

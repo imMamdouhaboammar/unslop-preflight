@@ -1,6 +1,6 @@
 ---
 name: vibe-design-md-architect
-description: Create, audit, and amplify PRODUCT.md and DESIGN.md before UI work; run 23 hard-blocking quality gates including intake, standards search, Impeccable install, accessibility, directionality, viewport governance, modal governance, overlay stack, sensitive data display, and popup/floating element positioning; enforce strict anti-AI-slop rules, RTL/LTR checks, design token integrity, and realistic-content gates; use Impeccable workflows, Amplify Mode, scanner scripts, and evals for SaaS, web apps, dashboards, landing pages, and RTL/LTR products.
+description: Create, audit, and repair PRODUCT.md and DESIGN.md before UI implementation, with 23 design gates for accessibility, RTL/LTR, design tokens, viewport, modal, overlay, and anti-AI-slop checks.
 ---
 
 # Vibe Design MD Architect

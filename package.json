@@ -44,7 +44,23 @@
     "design-gates",
     "web-design",
     "saas-design",
-    "dashboard"
+    "dashboard",
+    "claude-skill",
+    "cursor-skill",
+    "codex-skill",
+    "windsurf-skill",
+    "cline-skill",
+    "ai-ui-design",
+    "design-md-generator",
+    "design-md-repair",
+    "frontend-guardrails",
+    "rtl-ui",
+    "arabic-ui",
+    "wcag-22",
+    "modal-governance",
+    "overlay-governance",
+    "viewport-governance",
+    "floating-ui"
   ],
   "author": "imMamdouhaboammar",
   "license": "MIT",
@@ -59,6 +75,7 @@
   "engines": {
     "node": ">=18.0.0"
   },
+  "sideEffects": false,
   "publishConfig": {
     "access": "public"
   },
