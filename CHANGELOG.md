@@ -1,3 +1,16 @@
+## v1.9.0 - 10-Point Production Rewrite (2026-06-10)
+
+### Added
+- **`vibe-design-md-architect` Rewrite** — modularized into separate files under `src/rules/` for easier scaling.
+- **Strict Anti-AI-Slop Rules**: Auto-detection of `sparkle` icons, `brain` icons, and emojis.
+- **Idempotency**: Automatic markers (`<!-- vibe-design-md-architect:start [rule-id] -->`) to prevent duplicate sections.
+- **Deterministic Contrast Math**: Replaced visual guessing with mathematical WCAG checks for text and backgrounds.
+- **Doctor Command**: Runs environment checks (Node >= 18, `package.json`, `.git`).
+- **AI Output Mode**: Added `--agent-prompt` flag to export a fix list into `.vibe-design/fix-list.md`.
+- **CLI Refresh**: Displays checkmarks `✓` and crosses `✕` with perfectly suppressed logs for the `--json` output.
+- Fixed backtick syntax errors in templates.
+- Complete 100% test coverage with 19 tests passing.
+
 ## v1.8.0  -  Agentic Autopilot Loop (2026-06-08)
 
 ### Added

@@ -1,6 +1,6 @@
 {
   "name": "vibe-design-md-architect",
-  "version": "0.2.0",
+  "version": "1.9.0",
   "description": "A pre-agent design artifact quality gate for PRODUCT.md, DESIGN.md, and AGENT.md.",
   "type": "module",
   "main": "src/cli.js",

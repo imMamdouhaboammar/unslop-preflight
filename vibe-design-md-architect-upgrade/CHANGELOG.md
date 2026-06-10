@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.2.0
+## 1.9.0
 
 - Added production-grade CLI command structure.
 - Added artifact templates for PRODUCT.md, DESIGN.md, and AGENT.md.

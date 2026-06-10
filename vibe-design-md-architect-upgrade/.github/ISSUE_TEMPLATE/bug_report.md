@@ -25,4 +25,4 @@ If applicable, add screenshots or paste CLI output to help explain your problem.
 **Environment:**
  - OS: [e.g. macOS]
  - Node Version: [e.g. 18.18.0]
- - CLI Version: [e.g. 0.2.0]
+ - CLI Version: [e.g. 1.9.0]
