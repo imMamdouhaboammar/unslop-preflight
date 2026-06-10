@@ -18,3 +18,4 @@ DESIGN.legacy.md
 # Playwright
 playwright-report/
 test-results/
+.agents/
