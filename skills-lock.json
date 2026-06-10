@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "vibe-design-md-architect": {
+      "source": "imMamdouhaboammar/vibe-design-md-architect",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "f3fad96b701e56c6b13d31b5fd88faf84d4841835ecc8b3b480d2984284a34ce"
+    }
+  }
+}

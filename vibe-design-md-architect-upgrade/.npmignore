@@ -1,0 +1,7 @@
+tests/
+.github/
+.vibe-design/
+docs/
+examples/
+.gitignore
+coverage

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://skills.sh/schemas/skills.sh.schema.json",
+  "notGrouped": "bottom",
+  "groupings": [
+    {
+      "title": "Design Planning",
+      "description": "Skills for product-aware UI planning, design gates, and anti-AI-slop checks before implementation.",
+      "skills": [
+        "vibe-design-md-architect"
+      ]
+    }
+  ]
+}
