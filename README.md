@@ -10,7 +10,7 @@
 [![skills.sh](https://img.shields.io/badge/skills.sh-install-5B21B6?style=flat-square)](https://skills.sh/imMamdouhaboammar/vibe-design-md-architect)
 [![Gates](https://img.shields.io/badge/gates-23-F59E0B?style=flat-square)](./SKILL.md)
 [![License: MIT](https://img.shields.io/badge/license-MIT-22C55E?style=flat-square)](./LICENSE)
-[![Version](https://img.shields.io/badge/version-1.8.0-3B82F6?style=flat-square)](./CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.9.1-3B82F6?style=flat-square)](./CHANGELOG.md)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-EC4899?style=flat-square)](./CONTRIBUTING.md)
 
 ```bash
@@ -228,19 +228,13 @@ npx vibe-design-md-architect <command> [args]
 
 | Command | What it does |
 |---------|-------------|
-| `autopilot` | **🤖 THE command** — repair loop → all 23 gates → VDMA-FIXES.md `[--max-passes=3]` |
-| `init` | Install skill into `.claude/skills/` (project) or `~/.claude/skills/` (global) |
-| `preflight` | **Step-by-step**: Impeccable → intake → standards → validate → gates → scan |
-| `repair` | Auto-repair DESIGN.md + PRODUCT.md in one shot |
-| `gates` | Run all 23 hard-blocking gates `[DESIGN.md] [PRODUCT.md] [src/]` |
-| `validate` | Validate DESIGN.md six-section contract |
-| `score` | Score DESIGN.md quality against the rubric |
-| `scan` | Scan frontend source for AI slop and a11y issues `[src/]` |
-| `scan:a11y` | Deep ARIA/landmark/semantics audit (WCAG 2.2 mapped) `[--strict]` |
-| `scan:viewport` | Playwright-based viewport fit scan at 8 breakpoints |
-| `amplify` | Repair an old or weak DESIGN.md into a gate-passing version |
-| `intake` | Interactive intake session → `INTAKE.session.md` |
-| `standards` | Generate 2026 standards search brief |
+| `autopilot` | **🤖 THE command** — Run init, audit, safe repair, and final report |
+| `init` | Create missing PRODUCT.md, DESIGN.md, and AGENT.md |
+| `audit` | Run quality gates against artifact docs |
+| `repair` | Append safe missing sections and checklists |
+| `report` | Write `.vibe-design/report.md` and `report.json` |
+| `doctor` | Check runtime and project assumptions |
+| `update` | Update the CLI to the latest version |
 
 **Short alias:** `vdma` works everywhere `vibe-design-md-architect` does.
 
@@ -421,7 +415,11 @@ Run them in this order: **VDD → this skill → Impeccable**.
 ```
 vibe-design-md-architect/
 ├── bin/
-│   └── cli.mjs                          ← autopilot CLI (npx vdma)
+│   └── cli.js                           ← Main CLI entry point (npx vdma)
+├── src/
+│   ├── commands/                        ← CLI Commands (autopilot, init, repair...)
+│   ├── rules/                           ← Strict design gates & rules engine
+│   └── core/                            ← Filesystem, templates, and reporting
 ├── scripts/
 │   ├── run-gates.mjs                    ← all 23 gates runner
 │   ├── scan-ui-implementation.mjs       ← AI slop + functional scanner
@@ -468,10 +466,12 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for the gate addition workflow, templat
 
 See [CHANGELOG.md](./CHANGELOG.md) for the full history.
 
-**Current: v1.7.0**
-- Gate 23: Popup and Floating Element Positioning (Strategy A/B/C, portal mounting, z-index tokens)
-- Directionality is now conditional: LTR default, RTL only when intake confirms RTL-primary language
-- Modal centering hardened: `align-self: safe center` pattern, transform ban without height clamp
+**Current: v1.9.1**
+- **10-Point Production Rewrite**: Complete modular architecture inside `src/`.
+- **Strict Anti-AI-Slop Rules**: Auto-detection of `sparkle` icons, `brain` icons, and emojis.
+- **Deterministic Contrast Math**: Replaced visual guessing with mathematical WCAG checks for text and backgrounds.
+- **New Commands**: `doctor` for environment checks, and `update` for easy CLI updates.
+- **AI Output Mode**: Added `--agent-prompt` flag to export a fix list into `.vibe-design/fix-list.md`.
 
 ---
 
