@@ -4,8 +4,9 @@ import { audit } from './commands/audit.js';
 import { repair } from './commands/repair.js';
 import { report } from './commands/report.js';
 import { doctor } from './commands/doctor.js';
+import { update } from './commands/update.js';
 import { parseArgs, printHelp } from './core/output.js';
-const commands = { autopilot, init, audit, repair, report, doctor };
+const commands = { autopilot, init, audit, repair, report, doctor, update };
 export async function run(argv, meta = {}) {
   const parsed = parseArgs(argv);
   if (parsed.flags.version) return console.log(meta.version || '0.0.0');

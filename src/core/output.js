@@ -49,6 +49,7 @@ ${c.bold('Commands:')}
   ${c.green('repair')}       Append safe missing sections and checklists
   ${c.green('report')}       Write .vibe-design/report.md and report.json
   ${c.green('doctor')}       Check runtime and project assumptions
+  ${c.green('update')}       Update the CLI to the latest version
 
 ${c.bold('Flags:')}
   --dry-run      Preview writes without changing files
