@@ -52,7 +52,7 @@ jobs:
             scripts/scan-ui-implementation.mjs \
             scripts/scan-accessibility.mjs \
             scripts/run-evals.mjs \
-            bin/cli.mjs; do
+            bin/cli.js; do
             [ -f "$s" ] || (echo "MISSING: $s" && exit 1)
           done
           echo "All scripts present ✓"
