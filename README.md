@@ -6,6 +6,7 @@
 
 **23 hard-blocking design gates** that run before your agent writes a single line of frontend code.
 
+[![Socket Badge](https://badge.socket.dev/npm/package/vibe-design-md-architect/1.9.3)](https://badge.socket.dev/npm/package/vibe-design-md-architect/1.9.3)
 [![npm](https://img.shields.io/npm/v/vibe-design-md-architect?style=flat-square&color=5B21B6&label=npm)](https://www.npmjs.com/package/vibe-design-md-architect)
 [![skills.sh](https://img.shields.io/badge/skills.sh-install-5B21B6?style=flat-square)](https://skills.sh/imMamdouhaboammar/vibe-design-md-architect)
 [![Gates](https://img.shields.io/badge/gates-23-F59E0B?style=flat-square)](./SKILL.md)
