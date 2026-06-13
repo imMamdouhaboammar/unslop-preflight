@@ -1,1 +1,1 @@
-hello
+import { modalViewportRules } from './modalViewport.js';
