@@ -12,3 +12,5 @@ export const placeholderRules = [
     'manual'
   )
 ];
+
+// Modal viewport gates are registered in responsive rules.
