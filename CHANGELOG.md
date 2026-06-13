@@ -1,5 +1,18 @@
 # Changelog
 
+## v1.9.5 - Root Cause Mode Gates (2026-06-13)
+
+### Added
+
+- **Root Cause Mode.** Bug, issue, broken UI, regression, overflow, clipping, z-index, viewport, modal, popup, drawer, dropdown, tooltip, toast, focus trap, and layout failure language now triggers diagnosis-first governance.
+- **Patch-language blocker.** Quick fixes, workarounds, magic numbers, `z-9999`, and `z-index: 9999` are blocked when used without root cause analysis.
+- **Verification proof rule.** Root fixes now require proof such as tests, audit output, viewport cases, state cases, or acceptance criteria.
+- **Root Cause Mode guide.** Added `docs/ROOT_CAUSE_MODE.md`.
+
+### Why it matters
+
+This release encodes the practical prompt pattern "fix the problem from the root" into the audit system. The agent must diagnose the cause before editing instead of patching visible symptoms.
+
 ## v1.9.4 - Modal Viewport and Stacking Reasoning Gates (2026-06-13)
 
 ### Added
