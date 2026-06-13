@@ -1,1 +1,4 @@
 import { modalViewportRules } from './modalViewport.js';
+export const responsiveRules = [
+  ...modalViewportRules
+];
