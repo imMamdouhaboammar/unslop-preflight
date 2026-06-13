@@ -1,136 +1,215 @@
 # Contributing to Vibe Design MD Architect
 
-Thank you for improving this skill. This guide explains how to add a gate, update a scanner rule, improve a template, or submit a bug fix.
+Thank you for improving this project. This repository is a quality gate for AI-assisted frontend work, so every change should keep the system safer, clearer, and easier for coding agents to follow.
 
----
+## Change-size policy
+
+Keep changes narrow and reviewable.
+
+Prefer one focused behavior change per pull request. A behavior change may include docs and tests in the same PR when they describe or verify the same behavior.
+
+Avoid broad rewrites unless the purpose is explicitly a documentation refresh or a structural cleanup that has been reviewed as such.
 
 ## Adding a new gate
 
-Gates are hard-blocking rules that prevent implementation until a design artifact passes. Follow these steps when adding a gate:
+Gates are rules that prevent implementation until the design artifacts are strong enough.
 
-### 1. Assign a gate number
+### 1. Decide whether it is a numbered gate or readiness-layer rule
 
-Gate numbers are sequential. Check the current highest number in `SKILL.md` under **Strict Rules Engine** → Hard-blocking rule groups. Use the next integer.
+Use a numbered gate when the rule belongs to the core UI governance set.
 
-### 2. Add the gate section to `SKILL.md`
+Use a readiness-layer rule when the rule cuts across artifacts, such as:
 
-Add a new `## [Gate Name] (Gate N)` section after the last existing gate section. Include:
+- readiness bands
+- placeholder detection
+- taste calibration
+- category breakdowns
+- agent guidance file resolution
 
-- What failure pattern the gate prevents
-- Required behavior (what must be true before implementation proceeds)
-- Forbidden patterns (with code examples where helpful)
-- A QA checklist (what to verify manually)
-- A pointer to any new reference file if one is needed
+Do not force every rule into the numbered gate list.
 
-Add the gate name to the hard-blocking rule groups list.
+### 2. Add or update rule code
 
-### 3. Create or update a reference file
+Rule code lives mainly in `src/rules/`.
 
-If the gate needs a detailed reference, create `references/<gate-topic>.md`. Keep it focused — one topic per file. Reference files are read by the agent and must not duplicate `SKILL.md` verbatim.
+Common locations:
 
-### 4. Add scanner rules (optional but recommended)
+- `src/rules/product.js`
+- `src/rules/design.js`
+- `src/rules/taste.js`
+- `src/rules/placeholders.js`
+- `src/rules/agent.js`
+- `src/rules/index.js`
 
-Open `scripts/scan-ui-implementation.mjs` or `scripts/scan-accessibility.mjs` and add detection rules:
+Keep checks focused, deterministic, and easy to explain in a report.
 
-- **Blockers** (`severity: 'blocker'`): patterns that hard-fail the gate run.
-- **Warnings** (`severity: 'warning'`): patterns worth flagging but not blocking.
+### 3. Update templates when the rule requires new artifact content
 
-Each rule needs: an ID (e.g. `G1`, `V6`, `M3`), a description, a pattern to match, and a corrective message.
+Generated artifact templates should make the correct behavior easy.
 
-### 5. Update `scripts/run-gates.mjs`
+Update the relevant template source when a rule expects new sections in:
 
-If the gate involves design-level checks (not just source scans), add the check logic to `run-gates.mjs`. Keep checks focused and fast.
+- `PRODUCT.md`
+- `DESIGN.md`
+- `AGENTS.md`
 
-### 6. Update `assets/qa-checklist.md`
+Generated files should not rely on unresolved placeholders for implementation-ready output.
 
-Add a QA section for the new gate with checkbox items. Keep it implementation-focused: what would a reviewer check, not what the rule says.
+### 4. Update reports when the output changes
 
-### 7. Update `assets/DESIGN.template.md`
+If a rule affects scoring, readiness, categories, or fix-list behavior, update the reporter output as well.
 
-If the gate requires new fields in `DESIGN.md`, add placeholder sections or tables to the template so the coding agent produces them by default.
+Reports should include:
 
-### 8. Update `assets/implementation-prompt.template.md`
+- score
+- readiness band
+- category breakdown
+- blockers
+- safe repair summary
+- exact next action
 
-Add a brief instruction in the implementation prompt so the coding agent is told what the gate requires before it starts writing code.
+### 5. Add or update tests
 
-### 9. Add an entry to `CHANGELOG.md`
+Add tests when behavior changes.
 
-Follow the existing format:
+At minimum, test:
 
-```markdown
-## vN.N  -  Gate Name (YYYY-MM-DD)
+- the failure case
+- the passing case
+- compatibility with existing files when relevant
 
-### Added
-- Gate N: [short description of what the gate prevents and what it requires]
-- `references/<file>.md`: ...
-- `SKILL.md`: ...
-- `scripts/...`: ...
-- `assets/...`: ...
+Use:
 
-### Technical references
-- [relevant standards and docs]
+```bash
+npm test
 ```
-
-### 10. Update `README.md`
-
-Add the new gate to the Gates table. Format: `| N | Gate Name | One-line purpose |`
-
----
 
 ## Updating an existing gate
 
-- Make changes to `SKILL.md` and the relevant reference file.
-- Update `assets/qa-checklist.md` if checklist items change.
-- Update `CHANGELOG.md` with a `### Changed` or `### Strengthened` entry.
-- Do not change gate numbers. Gates are stable references.
+When changing a gate:
 
----
+- keep the gate number stable
+- update the rule code
+- update `SKILL.md`
+- update relevant templates
+- update `README.md` if the public behavior changed
+- update `CHANGELOG.md`
+- update `docs/AI_AGENT_READINESS.md` if readiness, taste, placeholder, report, or AGENTS behavior changed
 
-## Fixing a scanner rule
+## Updating AGENTS.md behavior
 
-1. Open the relevant script (`scan-ui-implementation.mjs` or `scan-accessibility.mjs`).
-2. Find the rule by its ID or pattern.
-3. Fix the regex or logic, update the corrective message if the advice changed.
-4. Test against a small source file that triggers the rule.
+`AGENTS.md` is the preferred agent guidance file for new projects.
 
----
+Rules:
 
-## Improving a template
+- New projects should generate `AGENTS.md`.
+- Existing projects with only `AGENT.md` should remain compatible.
+- Audit and repair should read the active agent guidance file.
+- Reports and fix lists should tell coding agents to read `PRODUCT.md`, `DESIGN.md`, and `AGENTS.md` unless compatibility mode is active.
 
-Templates live in `assets/`. They are used by the agent to produce starter files. Keep templates:
+## Updating readiness behavior
 
-- Complete enough to be immediately useful.
-- Light enough that the agent fills in product-specific details, not generic placeholders.
-- Consistent with the `DESIGN.md` six-section contract: Overview, Colors, Typography, Elevation, Components, Do's and Don'ts.
+Readiness changes must stay practical.
 
----
+The four readiness bands are:
+
+- `blocked`
+- `needs-spec-work`
+- `agent-ready-with-fix-list`
+- `agent-ready`
+
+If you change the logic behind these bands, update:
+
+- `src/core/auditor.js`
+- `src/core/reporter.js`
+- `README.md`
+- `SKILL.md`
+- `CHANGELOG.md`
+- `docs/AI_AGENT_READINESS.md`
+
+## Updating taste rules
+
+Taste rules should stop generic AI UI without turning the system into personal preference.
+
+Good taste rules check for concrete design decisions:
+
+- Design Read
+- Taste Controls
+- valid dial values from 1 to 10
+- Design System Decision
+- product-specific anti-AI-slop instructions
+- Agent Handoff
+- Pre-flight Check
+
+Avoid vague checks that only enforce words like modern, clean, premium, or minimal.
+
+## Updating placeholder rules
+
+Placeholder rules should block implementation handoffs that still contain template markers.
+
+Common blocked patterns:
+
+- `[audience]`
+- `[Feature 1]`
+- `[product name]`
+- `TODO`
+- `TBD`
+- `...`
+
+Be careful not to block legitimate markdown syntax or real product copy.
+
+## Scanner rule changes
+
+Source scanners live in `scripts/`.
+
+When adding a scanner rule, include:
+
+- severity: `blocker` or `warning`
+- clear message
+- filename and line when possible
+- corrective guidance
+- test fixture when practical
+
+Source issues that cannot be safely auto-fixed should become fix-list items, not silent rewrites.
+
+## Documentation sync checklist
+
+Any behavior change should update the docs in the same PR.
+
+Check these files:
+
+- [ ] `README.md`
+- [ ] `CHANGELOG.md`
+- [ ] `SKILL.md`
+- [ ] `AGENTS.md`
+- [ ] `CONTRIBUTING.md`
+- [ ] `docs/AI_AGENT_READINESS.md`
+- [ ] package metadata if published files changed
+- [ ] reference files if the rule needs deeper explanation
+- [ ] templates if generated artifacts changed
 
 ## PR checklist
 
-Before opening a pull request, verify:
+Before opening or merging a PR, verify:
 
-- [ ] Gate number is sequential and unused.
-- [ ] `SKILL.md` section is complete: description, required behavior, forbidden patterns, QA checklist.
-- [ ] Reference file created or updated if needed.
-- [ ] Scanner rule added or updated if the gate is detectable statically.
-- [ ] `qa-checklist.md` updated.
-- [ ] `DESIGN.template.md` updated if new DESIGN.md fields are required.
-- [ ] `implementation-prompt.template.md` updated if the coding agent needs new instructions.
-- [ ] `CHANGELOG.md` entry written.
-- [ ] `README.md` gate table updated.
-- [ ] No gate is removed or renumbered.
-- [ ] No existing `DESIGN.md` that passes all previous gates starts failing because of this change (backward compatible unless documented as a breaking change).
-
----
+- [ ] Change is focused and reviewable.
+- [ ] Existing CLI contract is preserved unless a breaking change is documented.
+- [ ] `AGENTS.md` compatibility behavior is respected.
+- [ ] Readiness output still gives a clear next action.
+- [ ] Placeholder checks do not block valid content.
+- [ ] Taste rules enforce concrete decisions, not personal preference.
+- [ ] Tests were added or updated when behavior changed.
+- [ ] `npm test` was run when local environment allowed it.
+- [ ] Docs were updated with the behavior change.
 
 ## Code style
 
-- Scripts use ES modules (`type: "module"` in `package.json`). Use `.mjs` extension.
-- No external runtime dependencies. Scripts must run with plain Node.js and no install step (except `playwright` which is optional).
-- Keep scripts readable and commented. They are read by agents as well as humans.
-- Use `process.exit(1)` for blocker failures and `process.exit(0)` for warnings-only or clean runs.
-
----
+- Use ES modules.
+- Keep runtime dependencies minimal.
+- Keep rules deterministic.
+- Prefer clear helper functions over dense regex-only logic.
+- Do not hide failures behind vague warnings.
+- Make output useful to a human and to an AI coding agent.
 
 ## Questions
 
