@@ -1,5 +1,18 @@
 # Changelog
 
+## v1.9.4 - Modal Viewport and Stacking Reasoning Gates (2026-06-13)
+
+### Added
+
+- **Strict modal viewport gates.** `DESIGN.md` now fails with errors when modals, dialogs, popups, drawers, sheets, popovers, overlays, lightboxes, command palettes, or toasts are mentioned without a viewport contract.
+- **Overlay sizing requirements.** Overlays now require explicit width guards, height guards, internal scroll behavior, mobile behavior, and viewport QA proof.
+- **Stacking reasoning gate.** Layered UI such as modals, drawers, dropdowns, tooltips, toasts, sticky headers, and fixed headers now requires a stacking or placement plan before implementation.
+- **High layer value guard.** Raising layer values without a diagnosis is treated as a design risk instead of an acceptable fix.
+
+### Why it matters
+
+This release targets a repeated AI implementation failure: popups and modals that overflow the viewport, get clipped by parents, appear under headers, or are patched with arbitrary high layer values. The system now blocks those issues at the design artifact stage before a coding agent touches frontend code.
+
 ## v1.9.3 - AI Agent Readiness, Taste Calibration, and AGENTS.md (2026-06-13)
 
 ### Added
@@ -77,50 +90,3 @@ This release moves the system from a checklist-only design gate to an AI-agent r
 - Directionality is now conditional. LTR remains the default unless intake confirms Arabic, Hebrew, or another RTL language.
 
 ## v1.6.0 - Dashboard Shell, Overlay Stack, and Sensitive Data Gates (2026-06-03)
-
-### Added
-
-- Gate 20: Dashboard Shell and Layout Governance.
-- Gate 21: Overlay Stack and Collision Governance.
-- Gate 22: Sensitive Data Display Governance.
-- Reference files for dashboard shell, overlay rules, and sensitive data display.
-- Scanner rules for manual toast construction, hardcoded toast placement, exposed secret tokens, and unsafe overlay behavior.
-
-## v1.5.0 - Modal, Dialog, and Overlay Governance (2026-06-03)
-
-### Added
-
-- Gate 19: Modal, Dialog, and Overlay Governance.
-- Modal contract covering scroll owner, focus behavior, backdrop behavior, viewport-safe sizing, close targets, RTL/BiDi handling, and form labeling.
-- Scanner warnings for accessible name, visible labels, target size, fixed modal width, and missing focus-trap indicators.
-
-## v1.4.0 - Viewport Governance Gate (2026-06-03)
-
-### Added
-
-- Gate 18: Viewport Governance.
-- Page Viewport Contract with route-level scroll ownership.
-- Playwright viewport scanner for common small and desktop viewport sizes.
-- Rules for `dvh`/`svh`, auth page sizing, horizontal overflow, and root overflow hacks.
-
-## v1.3.0 - Recommended Companion: Vibe Driven Dev (2026-05-31)
-
-### Added
-
-- Vibe Driven Dev as a recommended pre-execution companion for PRD, scope, stack, and architecture decisions.
-- Reference guidance for pairing VDD, VDMA, and Impeccable.
-
-## v1.2.0 - Deep Accessibility Scanner (2026-05-31)
-
-### Added
-
-- Static accessibility scanner for ARIA, landmarks, heading structure, image alt text, form labels, icon-only controls, duplicate ids, `lang`/`dir`, and empty links/buttons.
-- `--strict` mode for failing on warnings.
-
-## v1.1.0 - Evidence-Based AI Failure Hardening (2026-05-31)
-
-### Added
-
-- Reference notes for common AI UI failure patterns.
-- Gates 14 to 17 for semantic HTML, realistic content, design tokens, and drift control.
-- Scanner rules for clickable non-interactive elements, lorem ipsum, fake users, native browser popups, generic gradients, default font choices, emoji icons, and focus-outline removal.
