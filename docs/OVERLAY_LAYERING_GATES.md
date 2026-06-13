@@ -15,7 +15,7 @@ AI coding agents often create modals, dialogs, drawers, popovers, dropdowns, and
 
 ## Modal viewport contract
 
-When `DESIGN.md` mentions a modal, dialog, popup, drawer, sheet, overlay, lightbox, popover, or command palette, the audit now expects a written viewport contract.
+When `DESIGN.md` mentions a modal, dialog, popup, drawer, sheet, overlay, lightbox, popover, or command palette, the audit expects a written viewport contract.
 
 The contract must include:
 
@@ -25,20 +25,21 @@ The contract must include:
 - Mobile behavior: full-screen, bottom sheet, or bounded centered modal with safe margins under 768px.
 - QA proof: 320x568, 375x667, 390x844, landscape, keyboard-open state, no clipping, and no horizontal overflow.
 
-## Stacking plan
+## Stacking reasoning v2
 
-Layered UI such as sticky headers, fixed headers, modals, drawers, dropdowns, tooltips, and toasts must include a stacking or placement plan.
+Layered UI such as sticky headers, fixed headers, modals, drawers, dropdowns, tooltips, popovers, and toasts must include a reasoning plan before implementation.
 
-The plan should explain:
+The plan must cover:
 
-- The intended visual order.
-- The likely root cause when a layer appears in the wrong place.
-- Whether the component lives in local DOM, overlay root, native top layer, or portal.
-- Whether an ancestor might create a stacking or clipping problem.
+- Placement plan: what must appear above what, and why.
+- Stacking context audit: ancestors that use `transform`, `opacity`, `filter`, `contain`, `isolation`, `will-change`, overflow clipping, fixed positioning, or sticky positioning.
+- Layer scale: named layer tokens for base content, sticky headers, dropdowns, drawers, modals, toasts, and alerts.
+- Portal policy: whether the overlay renders in local DOM, a portal root, document body, native dialog top layer, or another overlay root.
+- Conflict matrix: header vs dropdown, drawer vs modal, tooltip vs modal, toast vs modal, and global alert vs every overlay.
 
 ## What the agent must not do
 
-Do not treat an overlay bug as a simple number problem. Raising layer values without a plan is usually a symptom fix, not a root fix.
+Do not treat an overlay bug as a simple number problem. Raising layer values without a root-cause plan is usually a symptom fix, not a root fix.
 
 The correct sequence is:
 
@@ -59,3 +60,8 @@ The correct sequence is:
 - `modal-viewport-qa-missing`
 - `modal-fixed-size-risk`
 - `stacking-plan-missing`
+- `stacking-context-audit-missing`
+- `layer-scale-missing`
+- `overlay-portal-policy-missing`
+- `blind-z-index-escalation`
+- `layer-conflict-matrix-missing`
