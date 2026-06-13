@@ -44,7 +44,7 @@ ${c.bold('Usage:')}
 
 ${c.bold('Commands:')}
   ${c.green('autopilot')}    Run init, audit, safe repair, and final report
-  ${c.green('init')}         Create missing PRODUCT.md, DESIGN.md, and AGENT.md
+  ${c.green('init')}         Create missing PRODUCT.md, DESIGN.md, and AGENTS.md
   ${c.green('audit')}        Run quality gates against artifact docs
   ${c.green('repair')}       Append safe missing sections and checklists
   ${c.green('report')}       Write .vibe-design/report.md and report.json
@@ -66,6 +66,18 @@ ${c.bold('Flags:')}
 `);
 }
 
+function readinessColor(readiness) {
+  if (readiness === 'agent-ready') return c.green;
+  if (readiness === 'agent-ready-with-fix-list') return c.yellow;
+  return c.red;
+}
+
+function topCategories(categories = {}) {
+  return Object.entries(categories)
+    .sort(([, a], [, b]) => b.total - a.total)
+    .slice(0, 3);
+}
+
 export function printResult(result, flags = {}) {
   const useColor = !flags.noColor;
   if (flags.json) return console.log(JSON.stringify(result, null, 2));
@@ -83,6 +95,17 @@ export function printResult(result, flags = {}) {
   
   const scoreColor = s.score >= 90 ? c.green : s.score >= 70 ? c.yellow : c.red;
   console.log(`Score: ${scoreColor(s.score.toString(), useColor)}/100 | Checks: ${s.checks} | Errors: ${c.red(s.errors.toString(), useColor)} | Warnings: ${c.yellow(s.warnings.toString(), useColor)} | Info: ${s.info}`);
+
+  if (s.readiness) {
+    const color = readinessColor(s.readiness);
+    console.log(`Readiness: ${color(s.readiness, useColor)}`);
+    if (s.readinessMessage) console.log(`Decision: ${s.readinessMessage}`);
+  }
+
+  const categories = topCategories(s.categories);
+  if (categories.length && (flags.verbose || s.errors || s.warnings)) {
+    console.log(`Top categories: ${categories.map(([name, data]) => `${name} (${data.total})`).join(', ')}`);
+  }
   
   if (result.generated?.length) console.log(`${c.green('Generated:', useColor)} ${result.generated.join(', ')}`);
   if (result.changed?.length) console.log(`${c.blue('Changed:', useColor)} ${result.changed.join(', ')}`);
@@ -113,4 +136,3 @@ export function printResult(result, flags = {}) {
     console.log(`> ${result.suggestedPrompt}`);
   }
 }
-
