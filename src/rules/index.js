@@ -2,6 +2,7 @@ import { rule } from './utils.js';
 import { productRules } from './product.js';
 import { designRules } from './design.js';
 import { placeholderRules } from './placeholders.js';
+import { rootCauseRules } from './rootCause.js';
 import { responsiveRules } from './responsive.js';
 import { modalViewportRules } from './modalViewport.js';
 import { stackingRules } from './stacking.js';
@@ -42,6 +43,7 @@ export const rules = [
   ...designRules,
   ...placeholderRules,
   ...tasteRules,
+  ...rootCauseRules,
   ...responsiveRules,
   ...modalViewportRules,
   ...stackingRules,
