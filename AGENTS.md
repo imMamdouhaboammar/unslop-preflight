@@ -10,9 +10,23 @@ This repository is a quality gate for AI-assisted frontend work. Keep every chan
 - Treat `AGENTS.md` as the preferred agent guidance file for new projects.
 - Preserve compatibility with existing `AGENT.md` files.
 - Keep generated `PRODUCT.md` and `DESIGN.md` guidance specific, practical, and implementation-ready.
-- Treat accessibility, responsive behavior, privacy, RTL support, viewport governance, overlay rules, sensitive-data handling, and design-token discipline as hard requirements.
+- Treat accessibility, responsive behavior, privacy, RTL support, viewport governance, overlay rules, sensitive-data handling, root-cause diagnosis, and design-token discipline as hard requirements.
 - Add or update tests when behavior changes.
 - Run `npm test` before proposing or merging a code change when the local environment allows it.
+
+## Root Cause Mode
+
+When a request mentions a bug, issue, broken UI, regression, overflow, clipping, z-index, viewport, modal, popup, drawer, dropdown, tooltip, toast, focus trap, or layout failure, do not patch the symptom first.
+
+Use this sequence before editing code:
+
+1. Reproduce the failure or restate the failing state.
+2. Separate visible symptoms from the underlying cause.
+3. Identify the smallest root fix that removes the cause.
+4. Check nearby regressions that the fix could create.
+5. Add verification proof: test, audit output, viewport case, state case, or acceptance criteria.
+
+Do not use quick fixes, magic numbers, `z-9999`, forced dimensions, or broad rewrites unless the root cause analysis proves they are necessary.
 
 ## Files to inspect before changing behavior
 
@@ -20,7 +34,7 @@ This repository is a quality gate for AI-assisted frontend work. Keep every chan
 - `src/core/reporter.js` for report and fix-list output.
 - `src/core/templates.js` for generated `PRODUCT.md`, `DESIGN.md`, and `AGENTS.md` content.
 - `src/commands/init.js` and `src/commands/repair.js` for artifact creation and safe repair.
-- `src/rules/` for product, design, taste, placeholder, agent, and UX rules.
+- `src/rules/` for product, design, taste, placeholder, root-cause, agent, and UX rules.
 - `README.md`, `CHANGELOG.md`, `SKILL.md`, `CONTRIBUTING.md`, and `docs/AI_AGENT_READINESS.md` when behavior changes.
 
 ## Readiness rules
