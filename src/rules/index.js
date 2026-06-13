@@ -6,6 +6,7 @@ import { uxRules } from './ux.js';
 import { accessibilityRules } from './accessibility.js';
 import { securityRules } from './security.js';
 import { agentRules } from './agent.js';
+import { tasteRules } from './taste.js';
 
 const docs = ['PRODUCT.md', 'DESIGN.md'];
 
@@ -37,6 +38,7 @@ export const rules = [
   ...readinessRules,
   ...productRules,
   ...designRules,
+  ...tasteRules,
   ...responsiveRules,
   ...uxRules,
   ...accessibilityRules,
