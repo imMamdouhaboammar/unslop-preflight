@@ -43,14 +43,33 @@ Use this sequence:
 
 Tip: This engine can work with many skills and tools. Install only the ones you actually need. Bulk-installing every skill adds unnecessary context overhead for the AI agent on every run and increases the review surface.
 
+## Overlay and stacking reasoning
+
+When working on modals, dialogs, popups, drawers, sheets, overlays, lightboxes, popovers, command palettes, dropdowns, tooltips, toasts, sticky headers, or fixed headers, check the design contract before editing code.
+
+Required concepts:
+
+- viewport contract
+- width guard
+- height guard
+- internal scroll
+- mobile behavior
+- viewport QA proof
+- stacking context audit
+- layer scale
+- portal policy
+- conflict matrix
+
+Do not solve layered UI problems by raising z-index alone.
+
 ## Files to inspect before changing behavior
 
 - `src/core/auditor.js` for scoring, readiness, categories, and artifact loading.
 - `src/core/reporter.js` for report and fix-list output.
 - `src/core/templates.js` for generated `PRODUCT.md`, `DESIGN.md`, and `AGENTS.md` content.
 - `src/commands/init.js` and `src/commands/repair.js` for artifact creation and safe repair.
-- `src/rules/` for product, design, taste, placeholder, root-cause, agent-harness, agent, and UX rules.
-- `README.md`, `CHANGELOG.md`, `SKILL.md`, `CONTRIBUTING.md`, and `docs/AI_AGENT_READINESS.md` when behavior changes.
+- `src/rules/` for product, design, taste, placeholder, root-cause, agent-harness, modal-viewport, stacking, agent, and UX rules.
+- `README.md`, `CHANGELOG.md`, `SKILL.md`, `CONTRIBUTING.md`, and `docs/` when behavior changes.
 
 ## Readiness rules
 
@@ -61,7 +80,7 @@ The audit should produce one of these readiness bands:
 - `agent-ready-with-fix-list`
 - `agent-ready`
 
-Do not treat a raw score as enough. A single unresolved placeholder, security issue, accessibility blocker, or missing core artifact can still block implementation.
+Do not treat a raw score as enough. A single unresolved placeholder, security issue, accessibility blocker, missing root-cause diagnosis, or missing overlay contract can still block implementation.
 
 ## Taste rules
 
@@ -114,4 +133,7 @@ When behavior changes, update docs in the same change:
 - `AGENTS.md`
 - `CONTRIBUTING.md`
 - `docs/AI_AGENT_READINESS.md`
+- `docs/ROOT_CAUSE_MODE.md`
+- `docs/OVERLAY_LAYERING_GATES.md`
+- `docs/INSTALL_AGENT_HARNESS.md`
 - package metadata when published files change
