@@ -67,7 +67,7 @@ export const stackingRules = [
     'layer-conflict-matrix-missing',
     'Layered UI needs a conflict matrix',
     'visual-layering-reasoning',
-    'warning',
+    'error',
     'DESIGN.md',
     (ctx) => mentionsLayeredUi(ctx) && !hasConflictMatrix.test(design(ctx)),
     'Add a conflict matrix for header, dropdown, drawer, modal, tooltip, toast, and global alert ordering.'

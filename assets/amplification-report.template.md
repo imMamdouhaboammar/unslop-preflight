@@ -11,7 +11,7 @@
 - Design System Baseline:
 - Baseline answer source:
 - Baseline official docs checked:
-- Impeccable setup attempted:
+- Unslop setup attempted:
 - Validation status:
 - Score:
 
@@ -71,12 +71,12 @@ Run before implementation:
 node scripts/run-gates.mjs DESIGN.amplified.md PRODUCT.md src
 ```
 
-## Impeccable setup status
+## Unslop setup status
 
 The coding agent must run this command from the project root before implementation:
 
 ```bash
-npx impeccable skills install
+npx unslop skills install
 ```
 
 ## Remaining assumptions
@@ -91,7 +91,7 @@ npx impeccable skills install
 - [ ] Rules Engine Gate exists
 - [ ] Six top-level sections only
 - [ ] Creative North Star exists
-- [ ] Impeccable setup gate exists
+- [ ] Unslop setup gate exists
 - [ ] Contrast rules exist
 - [ ] Icon system rules exist
 - [ ] RTL/LTR directionality rules exist

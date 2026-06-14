@@ -6,7 +6,7 @@ This repository is a quality gate for AI-assisted frontend work. Keep every chan
 
 - Prefer one focused file change per commit unless tests or docs must move with the same behavior change.
 - Do not rewrite broad areas of the codebase while fixing a narrow issue.
-- Preserve the existing CLI contract, especially `vibe-design-md-architect` and `vdma` commands.
+- Preserve the existing CLI contract, especially `unslop` and `unslop` commands.
 - Treat `AGENTS.md` as the preferred agent guidance file for new projects.
 - Preserve compatibility with existing `AGENT.md` files.
 - Keep generated `PRODUCT.md` and `DESIGN.md` guidance specific, practical, and implementation-ready.

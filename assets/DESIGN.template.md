@@ -127,7 +127,7 @@ Before implementation, the agent must search or verify current official standard
 Required topics:
 
 - Claude Skills packaging
-- Impeccable setup
+- Unslop setup
 - WCAG 2.2 AA
 - W3C RTL and internationalization
 - MDN Baseline and dialog guidance
@@ -152,12 +152,12 @@ Implementation is blocked until failed gates are repaired.
 
 [Contrast, focus, keyboard, target size, reduced motion, text size, labels, error recovery]
 
-### Impeccable setup gate
+### Unslop setup gate
 
 Before implementation, the coding agent must run this command from the project root when shell access exists:
 
 ```bash
-npx impeccable skills install
+npx unslop skills install
 ```
 
 If the command has already been run, the agent must confirm it. If it cannot run, the agent must document the failure reason and continue using this `DESIGN.md` as the source of truth. UI implementation must not start before this setup gate is attempted.
@@ -532,7 +532,7 @@ If the command has already been run, the agent must confirm it. If it cannot run
 
 ### Do
 
-- Run `npx impeccable skills install` from the project root before UI implementation when shell access exists.
+- Run `npx unslop skills install` from the project root before UI implementation when shell access exists.
 - Read `PRODUCT.md` and `DESIGN.md` before coding.
 - Keep every visual decision traceable to this file.
 
@@ -546,7 +546,7 @@ If the command has already been run, the agent must confirm it. If it cannot run
 - Treat mobile as desktop content stacked vertically.
 - Use native browser `alert()`, `confirm()`, or `prompt()` for product interactions.
 - Ignore semantic HTML, keyboard navigation, visible focus, reduced motion, or accessible labels.
-- Skip the Impeccable setup gate or remove the `npx impeccable skills install` command from project instructions.
+- Skip the Unslop setup gate or remove the `npx unslop skills install` command from project instructions.
 - Apply blanket `overflow: hidden` on `html`, `body`, `#root`, `main`, or page shells to hide layout overflow.
 - Use `width: 100vw` on padded wrappers (creates horizontal overflow).
 - Use fixed `height: 100vh` on content-heavy containers without a documented internal scroll owner.
@@ -563,7 +563,7 @@ If the command has already been run, the agent must confirm it. If it cannot run
 
 ### Implementation guardrails
 
-- Run `npx impeccable skills install` from the project root before coding when shell access exists.
+- Run `npx unslop skills install` from the project root before coding when shell access exists.
 - Read `PRODUCT.md` and `DESIGN.md` before coding.
 - Do not invent a new visual system.
 - If a token or component rule is missing, update `DESIGN.md` before coding.

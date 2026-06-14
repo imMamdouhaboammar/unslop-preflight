@@ -6,12 +6,12 @@ This skill is intentionally designed around official or high-trust documentation
 
 Claude Agent Skills are filesystem-based packages with `SKILL.md` plus optional scripts, templates, and references. The `name` and `description` metadata help Claude decide when to load the skill. Keep `SKILL.md` concise and push detailed protocols into `references/`, `assets/`, `scripts/`, and `evals/`.
 
-## Impeccable
+## Unslop
 
 The mandatory setup command is:
 
 ```bash
-npx impeccable skills install
+npx unslop skills install
 ```
 
 It should be attempted from the project root before creating, amplifying, or implementing UI from `DESIGN.md`.

@@ -1,5 +1,7 @@
 import { readText } from './filesystem.js';
 import { rules } from '../rules/index.js';
+import { calculateScore, readinessBand, readinessMessage } from './scoring.js';
+import { convertLegacyIssueToEvidence } from './findings.js';
 
 export function loadContext(cwd) {
   const files = {
@@ -27,38 +29,33 @@ function categorySummary(issues) {
     const key = issue.category || 'uncategorized';
     acc[key] ||= { errors: 0, warnings: 0, info: 0, total: 0 };
     acc[key].total += 1;
-    if (issue.severity === 'error') acc[key].errors += 1;
+    if (issue.severity === 'error' || issue.severity === 'blocker') acc[key].errors += 1;
     else if (issue.severity === 'warning') acc[key].warnings += 1;
     else acc[key].info += 1;
     return acc;
   }, {});
 }
 
-function readinessBand({ score, errors, warnings }) {
-  if (errors > 0) return 'blocked';
-  if (score < 70 || warnings >= 8) return 'needs-spec-work';
-  if (warnings > 0) return 'agent-ready-with-fix-list';
-  return 'agent-ready';
-}
-
-function readinessMessage(band) {
-  if (band === 'blocked') return 'Do not hand this to an AI coding agent yet. Resolve errors first.';
-  if (band === 'needs-spec-work') return 'Spec quality is too thin for reliable AI implementation. Tighten the fix list before coding.';
-  if (band === 'agent-ready-with-fix-list') return 'Usable for an AI coding agent, but include the fix list in the handoff prompt.';
-  return 'Ready for AI-assisted implementation with standard verification.';
-}
-
 export function summarize(result) {
-  const errors = result.issues.filter((i) => i.severity === 'error').length;
-  const warnings = result.issues.filter((i) => i.severity === 'warning').length;
-  const info = result.issues.filter((i) => i.severity === 'info').length;
-  const score = Math.max(0, 100 - errors * 18 - warnings * 7 - info * 2);
-  const band = readinessBand({ score, errors, warnings });
+  // Convert all incoming issues to Evidence objects for the new scoring engine
+  const evidences = result.issues.map(i => {
+    if (i.constructor.name === 'Evidence') return i;
+    return convertLegacyIssueToEvidence(i, i.type || 'spec');
+  });
+
+  const errors = evidences.filter((i) => i.severity === 'error' || i.severity === 'blocker').length;
+  const warnings = evidences.filter((i) => i.severity === 'warning').length;
+  const info = evidences.filter((i) => i.severity === 'info').length;
+
+  const score = calculateScore(evidences);
+  const band = readinessBand(score, errors, warnings);
+  
   return {
     ...result,
+    evidences, // Attach the full Evidence objects
     summary: {
       score,
-      checks: rules.length,
+      checks: rules.length, // Does not include source scanners count dynamically yet
       errors,
       warnings,
       info,

@@ -10,11 +10,11 @@ export async function update(parsed) {
   if (existsSync(pkgPath)) {
     try {
       const pkg = JSON.parse(readFileSync(pkgPath, 'utf8'));
-      // Don't run local update if we are inside the vibe-design-md-architect repo itself
-      if (pkg.name !== 'vibe-design-md-architect') {
+      // Don't run local update if we are inside the unslop repo itself
+      if (pkg.name !== 'unslop') {
         if (
-          (pkg.dependencies && pkg.dependencies['vibe-design-md-architect']) ||
-          (pkg.devDependencies && pkg.devDependencies['vibe-design-md-architect'])
+          (pkg.dependencies && pkg.dependencies['unslop']) ||
+          (pkg.devDependencies && pkg.devDependencies['unslop'])
         ) {
           isLocal = true;
         }
@@ -27,10 +27,10 @@ export async function update(parsed) {
   try {
     if (isLocal) {
       console.log('\x1b[33m📦 Updating local project dependency...\x1b[0m');
-      execSync('npm install vibe-design-md-architect@latest', { stdio: 'inherit', cwd });
+      execSync('npm install unslop@latest', { stdio: 'inherit', cwd });
     } else {
       console.log('\x1b[34m🌍 Updating global installation...\x1b[0m');
-      execSync('npm install -g vibe-design-md-architect@latest', { stdio: 'inherit' });
+      execSync('npm install -g unslop@latest', { stdio: 'inherit' });
     }
     
     return {

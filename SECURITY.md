@@ -1,12 +1,12 @@
 # Security
 
-Vibe Design MD Architect is a local-first skill and CLI for design planning before frontend implementation.
+Unslop is a local-first skill and CLI for design planning before frontend implementation.
 
 ## What this package does
 
 - Reads and writes local Markdown files such as `PRODUCT.md`, `DESIGN.md`, `INTAKE.session.md`, and `STANDARDS.search-notes.md`.
 - Runs local validation, scoring, and scanning scripts.
-- Optionally attempts `npx impeccable skills install` when the user runs preflight or autopilot.
+- Optionally attempts `npx unslop skills install` when the user runs preflight or autopilot.
 - Does not collect secrets.
 - Does not require API keys.
 - Does not send project files to external services.
@@ -27,7 +27,7 @@ Vibe Design MD Architect is a local-first skill and CLI for design planning befo
 The package itself is local-first. The only network-related behavior is user-triggered package installation through npm/npx commands such as:
 
 ```bash
-npx impeccable skills install
+npx unslop skills install
 ```
 
 This command is optional and visible in terminal output.

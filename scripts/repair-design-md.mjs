@@ -156,17 +156,17 @@ function appendIfMissing(content, rule) {
 
 const REQUIRED_DESIGN_RULES = [
   {
-    id: 'impeccable-setup-gate',
-    label: 'Impeccable setup gate',
+    id: 'unslop-setup-gate',
+    label: 'Unslop setup gate',
     after: '## Overview',
-    pattern: /npx\s+impeccable\s+skills\s+install/i,
+    pattern: /npx\s+unslop\s+skills\s+install/i,
     content: [
-      '### Impeccable setup gate',
+      '### Unslop setup gate',
       '',
       'Before any UI implementation, run:',
       '',
       '```bash',
-      'npx impeccable skills install',
+      'npx unslop skills install',
       '```',
       '',
       'If the command cannot run, document the failure reason and continue using DESIGN.md as the source of truth. UI implementation must not start before this setup gate is attempted.',
@@ -228,7 +228,7 @@ const REQUIRED_DESIGN_RULES = [
       'Required topics:',
       '',
       '- Claude Skills packaging',
-      '- Impeccable setup',
+      '- Unslop setup',
       '- WCAG 2.2 AA',
       '- W3C internationalization and RTL guidance',
       '- MDN Baseline and dialog guidance',

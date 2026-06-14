@@ -5,7 +5,7 @@ export const designRules = [
     return ctx.files['DESIGN.md'] && /overflow\s*:\s*hidden/i.test(ctx.files['DESIGN.md']) && !/intentional|mask|clip|layout bug/i.test(ctx.files['DESIGN.md']);
   }, 'Document why overflow hidden is needed or remove it.', 'suggested'),
 
-  rule('vague-modern', 'Vague design language needs concrete criteria', 'content-quality', 'info', 'DESIGN.md', (ctx) => {
+  rule('vague-modern', 'Vague design language needs concrete criteria', 'content-quality', 'error', 'DESIGN.md', (ctx) => {
     return ctx.files['DESIGN.md'] && /make it modern|clean and modern|beautiful UI/i.test(ctx.files['DESIGN.md']);
   }, 'Replace vague adjectives with layout, component, state, and interaction requirements.', 'manual'),
 

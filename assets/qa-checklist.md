@@ -9,7 +9,7 @@
 - [ ] `PRODUCT.md` exists and contains strategy, not visual tokens.
 - [ ] 2026 Standards Search Gate completed or marked as bundled-references-only.
 - [ ] `STANDARDS.search-notes.md` exists.
-- [ ] `npx impeccable skills install` was attempted or documented as unavailable.
+- [ ] `npx unslop skills install` was attempted or documented as unavailable.
 
 ## DESIGN.md gates
 
@@ -18,7 +18,7 @@
 - [ ] Overview includes Intake Session Gate.
 - [ ] Overview includes 2026 Standards Gate.
 - [ ] Overview includes Rules Engine Gate.
-- [ ] Overview includes Impeccable setup gate with `npx impeccable skills install`.
+- [ ] Overview includes Unslop setup gate with `npx unslop skills install`.
 - [ ] Colors use semantic tokens with hex values.
 - [ ] Typography covers Arabic, English, and numbers when relevant.
 - [ ] Elevation covers focus, overlays, disabled, loading, and interaction states.
@@ -54,7 +54,7 @@ Run before final handoff:
 ```bash
 node scripts/scan-ui-implementation.mjs src
 node scripts/scan-viewport-fit.mjs http://localhost:3000
-npx impeccable detect src/
+npx unslop detect src/
 ```
 
 ## Viewport QA

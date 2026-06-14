@@ -1,6 +1,6 @@
 # AI Agent Readiness System
 
-This document explains the readiness layer in Vibe Design MD Architect.
+This document explains the readiness layer in Unslop.
 
 The goal is simple: do not hand a vague product brief, weak design file, or unsafe implementation handoff to an AI coding agent.
 
@@ -288,7 +288,7 @@ When source code has risky issues, the system should not blindly patch everythin
 Instead, it should write a fix list for the coding agent:
 
 ```text
-Read PRODUCT.md, DESIGN.md, and AGENTS.md. Apply every item below. Do not invent design decisions outside the artifacts. Diagnose the root cause before changing code. Rerun npx vdma audit after applying fixes.
+Read PRODUCT.md, DESIGN.md, and AGENTS.md. Apply every item below. Do not invent design decisions outside the artifacts. Diagnose the root cause before changing code. Rerun npx unslop audit after applying fixes.
 ```
 
 This keeps the repair loop safe.
@@ -303,10 +303,10 @@ This keeps the repair loop safe.
 ## Recommended user flow
 
 ```bash
-npx vdma autopilot
+npx unslop autopilot
 # read score, readiness, categories, and fix list
 # repair PRODUCT.md, DESIGN.md, AGENTS.md, or source as needed
-npx vdma autopilot
+npx unslop autopilot
 # proceed only when readiness is agent-ready or intentionally accepted by the team
 ```
 

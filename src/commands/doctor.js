@@ -33,12 +33,12 @@ export async function doctor({ cwd, flags }) {
   // 5. Artifacts Existence Check
   for (const f of ['PRODUCT.md', 'DESIGN.md', 'AGENT.md']) {
     if (!existsSync(resolve(cwd, f))) {
-      issues.push({ id: `${f.toLowerCase()}-missing`, title: `${f} is not yet created.`, category: 'runtime', severity: 'info', suggestedFix: `Run \`npx vibe-design-md-architect init\` to create it.` });
+      issues.push({ id: `${f.toLowerCase()}-missing`, title: `${f} is not yet created.`, category: 'runtime', severity: 'info', suggestedFix: `Run \`npx unslop init\` to create it.` });
     }
   }
 
   const result = summarize({ issues, generated: [], changed: [], repairs: [] }); 
-  result.nextCommand = 'vibe-design-md-architect autopilot'; 
+  result.nextCommand = 'unslop autopilot'; 
   printResult(result, flags); 
   return result; 
 }

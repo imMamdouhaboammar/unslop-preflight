@@ -73,7 +73,7 @@ jobs:
             scripts/scan-accessibility.mjs \
             scripts/scan-viewport-fit.mjs \
             scripts/amplify-design-md.mjs \
-            scripts/impeccable-preflight.sh \
+            scripts/unslop-preflight.sh \
             scripts/run-evals.mjs; do
             if [ ! -f "$s" ]; then
               echo "MISSING script: $s"

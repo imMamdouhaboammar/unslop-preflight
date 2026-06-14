@@ -13,7 +13,7 @@ Use these source classes in this order:
 1. Official standards and specification bodies, such as W3C and WHATWG.
 2. Official platform documentation, such as MDN and web.dev.
 3. Official framework documentation for the project stack.
-4. Official tool documentation for Claude Skills and Impeccable.
+4. Official tool documentation for Claude Skills and Unslop.
 5. Reputable engineering articles only for examples and interpretation.
 6. Community discussions only as qualitative signals, never as standards.
 
@@ -22,7 +22,7 @@ Use these source classes in this order:
 Every standards search must verify:
 
 - Claude Skills packaging and custom skill folder anatomy.
-- Impeccable install command and workflow.
+- Unslop install command and workflow.
 - WCAG 2.2 AA rules relevant to contrast, focus, keyboard, reflow, target size, labels, errors, reduced motion, and non-text contrast.
 - W3C directionality guidance for RTL languages, especially Arabic.
 - MDN Baseline status for newer web platform features.

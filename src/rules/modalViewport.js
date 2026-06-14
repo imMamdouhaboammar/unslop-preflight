@@ -69,7 +69,7 @@ export const modalViewportRules = [
     'modal-shell-scrollbar-risk',
     'Overlay appears to scroll the shell or expose a native scrollbar',
     'modal-viewport-governance',
-    'warning',
+    'error',
     'DESIGN.md',
     (ctx) => hasOverlay(ctx) && exposedScrollbarRisk.test(designDoc(ctx)) && !scrollAestheticGuard.test(designDoc(ctx)),
     'Do not let the modal shell expose a large native scrollbar. Keep the shell fixed inside the viewport and scroll only the content pane with a restrained scrollbar treatment.'

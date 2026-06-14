@@ -37,17 +37,17 @@ export function parseArgs(argv) {
 
 export function printHelp() {
   console.log(`
-${c.bold(c.cyan('vibe-design-md-architect'))}
+${c.bold(c.cyan('unslop'))}
 
 ${c.bold('Usage:')}
-  vibe-design-md-architect <command> [flags]
+  unslop <command> [flags]
 
 ${c.bold('Commands:')}
   ${c.green('autopilot')}    Run init, audit, safe repair, and final report
   ${c.green('init')}         Create missing PRODUCT.md, DESIGN.md, and AGENTS.md
   ${c.green('audit')}        Run quality gates against artifact docs
   ${c.green('repair')}       Append safe missing sections and checklists
-  ${c.green('report')}       Write .vibe-design/report.md and report.json
+  ${c.green('report')}       Write .unslop/report.md and report.json
   ${c.green('doctor')}       Check runtime and project assumptions
   ${c.green('update')}       Update the CLI to the latest version
 
@@ -55,7 +55,7 @@ ${c.bold('Flags:')}
   --dry-run      Preview writes without changing files
   --json         Print machine-readable JSON
   --agent-prompt Print a copyable prompt for AI agents
-  --report       Write reports to .vibe-design
+  --report       Write reports to .unslop
   --ci           Exit non-zero on errors
   --strict       Treat errors as failing
   --verbose      Show extra details
@@ -91,7 +91,7 @@ export function printResult(result, flags = {}) {
   
   const s = result.summary || { score: 0, checks: 0, errors: 0, warnings: 0, info: 0 };
   
-  console.log(`\n${c.bold(c.cyan('Vibe Design MD Architect Output', useColor), useColor)}`);
+  console.log(`\n${c.bold(c.cyan('Unslop Output', useColor), useColor)}`);
   
   const scoreColor = s.score >= 90 ? c.green : s.score >= 70 ? c.yellow : c.red;
   console.log(`Score: ${scoreColor(s.score.toString(), useColor)}/100 | Checks: ${s.checks} | Errors: ${c.red(s.errors.toString(), useColor)} | Warnings: ${c.yellow(s.warnings.toString(), useColor)} | Info: ${s.info}`);

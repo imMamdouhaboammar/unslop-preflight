@@ -1,5 +1,17 @@
 # Changelog
 
+## v1.9.8 - Strict Gates Enforcement (2026-06-14)
+
+### Changed
+
+- **Strict Gates Enforcement.** All gates and rules now run in strict mode. All `warning` and `info` severity levels across all rules have been elevated to `error`.
+- **Validation Script Hardening.** `validate-design-md.mjs` and `run-gates.mjs` now enforce stricter regex checks and treat any warning as an immediate failure. Added more strict AI-slop words like "seamless", "delve", and "robust" to the blacklist.
+- **Test Fixes.** Updated tests to account for the new strict behavior and the preference for `AGENTS.md`.
+
+### Why it matters
+
+To guarantee the highest quality of AI-generated implementations, there can be no "soft" failures. Enforcing all gates as strict errors ensures that no weak design specifications or unresolved assumptions slip through to the coding agent.
+
 ## v1.9.7 - Visual Slop Gates (2026-06-14)
 
 ### Added
@@ -74,7 +86,7 @@ This release targets a repeated AI implementation failure: popups and modals tha
   - Pre-flight Check
 - **Placeholder gates.** New placeholder detection blocks unresolved template markers in `PRODUCT.md` and `DESIGN.md`, including `[audience]`, `[Feature 1]`, `TODO`, `TBD`, and ellipsis-only placeholders.
 - **Updated generated templates.** New projects now start with `Design Read`, `Taste Controls`, `Design System Decision`, `Anti-AI-Slop Guidelines`, `Agent Handoff`, and `Pre-flight Check` sections.
-- **Agent-ready reports.** `.vibe-design/report.md` and fix-list output now include readiness, category breakdown, and instructions to read `PRODUCT.md`, `DESIGN.md`, and `AGENTS.md` before implementation.
+- **Agent-ready reports.** `.unslop/report.md` and fix-list output now include readiness, category breakdown, and instructions to read `PRODUCT.md`, `DESIGN.md`, and `AGENTS.md` before implementation.
 - **Documentation for the readiness system.** Added `docs/AI_AGENT_READINESS.md` as the technical guide for readiness bands, taste rules, placeholder blocking, and report behavior.
 
 ### Changed

@@ -26,7 +26,7 @@ const scoreItems = [
   ['Accessibility and localization', 10, /contrast|keyboard|focus|reduced motion|rtl|ltr|arabic|localization|directionality|4\.5:1|3:1/i.test(design)],
   ['Responsive and mobile quality', 8, /responsive|mobile|viewport|320|360|390|414|tablet|touch target|container quer/i.test(design)],
   ['Component usefulness', 7, /Purpose:|Anatomy:|Variants:|States:|Accessibility:/i.test(design)],
-  ['Agent readiness', 5, /implementation guardrails|before coding|DESIGN\.md|PRODUCT\.md|alert\(\)|confirm\(\)|prompt\(\)|in-app/i.test(design) && /npx\s+impeccable\s+skills\s+install/i.test(design)],
+  ['Agent readiness', 5, /implementation guardrails|before coding|DESIGN\.md|PRODUCT\.md|alert\(\)|confirm\(\)|prompt\(\)|in-app/i.test(design) && /npx\s+unslop\s+skills\s+install/i.test(design)],
 ];
 
 let total = 0;

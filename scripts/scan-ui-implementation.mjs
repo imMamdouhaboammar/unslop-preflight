@@ -4,8 +4,8 @@
 // blocker rules fail the scan (exit 1). warning rules are reported but do not fail.
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const target = process.argv[2] || 'src';
 const exts = new Set(['.js', '.jsx', '.ts', '.tsx', '.html', '.vue', '.svelte', '.css', '.scss', '.mdx']);
 const skipDirs = new Set(['node_modules', '.next', 'dist', 'build', '.git', 'coverage', '.turbo', '.vercel']);
 
@@ -130,50 +130,61 @@ function walk(dir, files = []) {
   return files;
 }
 
-const files = walk(target);
-const findings = [];
+export function scanUi(targetDir) {
+  const files = walk(targetDir);
+  const findings = [];
 
-for (const file of files) {
-  const content = fs.readFileSync(file, 'utf8');
-  const lines = content.split(/\r?\n/);
-  for (let index = 0; index < lines.length; index++) {
-    const line = lines[index];
-    for (const rule of rules) {
-      rule.pattern.lastIndex = 0;
-      if (rule.pattern.test(line)) {
-        findings.push({ file, line: index + 1, level: rule.level, rule: rule.name, excerpt: line.trim().slice(0, 160) });
+  for (const file of files) {
+    const content = fs.readFileSync(file, 'utf8');
+    const lines = content.split(/\r?\n/);
+    for (let index = 0; index < lines.length; index++) {
+      const line = lines[index];
+      for (const rule of rules) {
+        rule.pattern.lastIndex = 0;
+        if (rule.pattern.test(line)) {
+          findings.push({ file, line: index + 1, level: rule.level, rule: rule.name, excerpt: line.trim().slice(0, 160) });
+        }
       }
     }
+    scanOnClickWithoutKey(content, file, findings);
+    scanRootOverflowHidden(content, file, findings);
+    scanTailwindRootOverflowFreeze(content, file, findings);
+    scanModalWithoutFocusTrap(content, file, findings);
   }
-  scanOnClickWithoutKey(content, file, findings);
-  scanRootOverflowHidden(content, file, findings);
-  scanTailwindRootOverflowFreeze(content, file, findings);
-  scanModalWithoutFocusTrap(content, file, findings);
+
+  return findings;
 }
 
-if (!files.length) {
-  console.log(`no files found under ${target}`);
-  process.exit(0);
-}
-
-const blockers = findings.filter(f => f.level === 'blocker');
-const warnings = findings.filter(f => f.level === 'blocker');
-
-if (warnings.length) {
-  console.warn(`UI scan warnings (${warnings.length})`);
-  for (const f of warnings) {
-    console.warn(`- [warn] ${f.rule} at ${f.file}:${f.line}`);
-    console.warn(`  ${f.excerpt}`);
+const isMain = process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1];
+if (isMain) {
+  const target = process.argv[2] || 'src';
+  const files = walk(target);
+  
+  if (!files.length) {
+    console.log(`no files found under ${target}`);
+    process.exit(0);
   }
-}
 
-if (blockers.length) {
-  console.error(`UI implementation scan failed (${blockers.length} blockers)`);
-  for (const f of blockers) {
-    console.error(`- ${f.rule} at ${f.file}:${f.line}`);
-    console.error(`  ${f.excerpt}`);
+  const findings = scanUi(target);
+  const blockers = findings.filter(f => f.level === 'blocker');
+  const warnings = findings.filter(f => f.level === 'warning');
+
+  if (warnings.length) {
+    console.warn(`UI scan warnings (${warnings.length})`);
+    for (const f of warnings) {
+      console.warn(`- [warn] ${f.rule} at ${f.file}:${f.line}`);
+      console.warn(`  ${f.excerpt}`);
+    }
   }
-  process.exit(1);
-}
 
-console.log(`UI implementation scan passed${warnings.length ? ` (${warnings.length} warnings)` : ''}`);
+  if (blockers.length) {
+    console.error(`UI implementation scan failed (${blockers.length} blockers)`);
+    for (const f of blockers) {
+      console.error(`- ${f.rule} at ${f.file}:${f.line}`);
+      console.error(`  ${f.excerpt}`);
+    }
+    process.exit(1);
+  }
+
+  console.log(`UI implementation scan passed${warnings.length ? ` (${warnings.length} warnings)` : ''}`);
+}

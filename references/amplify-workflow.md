@@ -33,7 +33,7 @@ Before rewriting the old file:
 
 1. Complete `INTAKE.session.md`.
 2. Create or refresh `STANDARDS.search-notes.md`.
-3. Attempt `npx impeccable skills install` when shell access exists.
+3. Attempt `npx unslop skills install` when shell access exists.
 4. Read the old design file completely.
 5. Preserve the old file as `DESIGN.legacy.md` if it exists in the repository.
 
@@ -45,7 +45,7 @@ Before rewriting the old file:
 4. Convert raw colors into semantic tokens.
 5. Convert vague components into implementation contracts.
 6. Add responsive, directionality, accessibility, feedback, and motion rules.
-7. Add the Impeccable setup gate with `npx impeccable skills install`.
+7. Add the Unslop setup gate with `npx unslop skills install`.
 8. Keep exactly the six top-level `DESIGN.md` sections.
 
 ## Diagnostic checklist
@@ -55,7 +55,7 @@ Audit the old file for:
 - Missing intake session gate
 - Missing 2026 standards search gate
 - Missing rules engine gate
-- Missing Impeccable setup gate
+- Missing Unslop setup gate
 - Missing Creative North Star
 - Weak visual thesis
 - Vague adjectives
@@ -104,7 +104,7 @@ Create `DESIGN.amplification-report.md` with:
 
 ## Rules engine status
 
-## Impeccable setup status
+## Unslop setup status
 
 ## Remaining assumptions
 

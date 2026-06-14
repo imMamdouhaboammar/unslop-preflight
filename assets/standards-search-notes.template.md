@@ -11,7 +11,7 @@
 ## Topics Checked
 
 - Claude Skills:
-- Impeccable:
+- Unslop:
 - WCAG 2.2:
 - W3C RTL:
 - MDN Baseline:

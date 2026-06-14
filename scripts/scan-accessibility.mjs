@@ -10,9 +10,8 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const target = process.argv[2] && !process.argv[2].startsWith('--') ? process.argv[2] : 'src';
-const strict = process.argv.includes('--strict');
 const exts = new Set(['.html', '.htm', '.jsx', '.tsx', '.vue', '.svelte']);
 const skipDirs = new Set(['node_modules', '.next', 'dist', 'build', '.git', 'coverage', '.turbo', '.vercel']);
 
@@ -208,35 +207,48 @@ function walk(dir, files = []) {
   return files;
 }
 
-const files = walk(target);
-if (!files.length) {
-  console.log(`no scannable files found under ${target}`);
-  process.exit(0);
+export function scanA11y(targetDir) {
+  findings.length = 0; // Clear module level array
+  const files = walk(targetDir);
+  for (const file of files) scanFile(file);
+  return [...findings];
 }
-for (const file of files) scanFile(file);
 
-const blockers = findings.filter(f => f.level === 'blocker');
-const warnings = findings.filter(f => f.level === 'blocker');
-const infos = findings.filter(f => f.level === 'info');
+const isMain = process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1];
+if (isMain) {
+  const target = process.argv[2] && !process.argv[2].startsWith('--') ? process.argv[2] : 'src';
+  const strict = process.argv.includes('--strict');
 
-function print(group, label) {
-  if (!group.length) return;
-  console[label === 'blocker' ? 'error' : 'warn'](`\nAccessibility ${label}s (${group.length}):`);
-  for (const f of group) {
-    const loc = f.line ? `${f.file}:${f.line}` : f.file;
-    console[label === 'blocker' ? 'error' : 'warn'](`- [WCAG ${f.wcag}] ${f.rule} at ${loc}`);
-    if (f.excerpt) console[label === 'blocker' ? 'error' : 'warn'](`  ${f.excerpt}`);
+  const files = walk(target);
+  if (!files.length) {
+    console.log(`no scannable files found under ${target}`);
+    process.exit(0);
   }
-}
 
-print(infos, 'info');
-print(warnings, 'blocker');
-print(blockers, 'blocker');
+  const findings = scanA11y(target);
+  const blockers = findings.filter(f => f.level === 'blocker');
+  const warnings = findings.filter(f => f.level === 'warning');
+  const infos = findings.filter(f => f.level === 'info');
 
-const failOn = strict ? blockers.length + warnings.length : blockers.length;
-console.log(`\nScanned ${files.length} file(s): ${blockers.length} blocker(s), ${warnings.length} warning(s), ${infos.length} info.`);
-if (failOn) {
-  console.error(`Accessibility scan failed${strict ? ' (strict)' : ''}.`);
-  process.exit(1);
+  function print(group, label) {
+    if (!group.length) return;
+    console[label === 'blocker' ? 'error' : 'warn'](`\nAccessibility ${label}s (${group.length}):`);
+    for (const f of group) {
+      const loc = f.line ? `${f.file}:${f.line}` : f.file;
+      console[label === 'blocker' ? 'error' : 'warn'](`- [WCAG ${f.wcag}] ${f.rule} at ${loc}`);
+      if (f.excerpt) console[label === 'blocker' ? 'error' : 'warn'](`  ${f.excerpt}`);
+    }
+  }
+
+  print(infos, 'info');
+  print(warnings, 'blocker');
+  print(blockers, 'blocker');
+
+  const failOn = strict ? blockers.length + warnings.length : blockers.length;
+  console.log(`\nScanned ${files.length} file(s): ${blockers.length} blocker(s), ${warnings.length} warning(s), ${infos.length} info.`);
+  if (failOn) {
+    console.error(`Accessibility scan failed${strict ? ' (strict)' : ''}.`);
+    process.exit(1);
+  }
+  console.log('Accessibility scan passed.');
 }
-console.log('Accessibility scan passed.');

@@ -5,7 +5,7 @@
 Recommended repository name:
 
 ```text
-vibe-design-md-architect
+unslop
 ```
 
 Make the repository public if you want it to appear on skills.sh.
@@ -25,7 +25,7 @@ scripts/
 evals/
 ```
 
-`SKILL.md` must stay at the repository root, unless you intentionally move the skill into `skills/vibe-design-md-architect/SKILL.md`.
+`SKILL.md` must stay at the repository root, unless you intentionally move the skill into `skills/unslop/SKILL.md`.
 
 ## 3. Verify metadata
 
@@ -33,7 +33,7 @@ The top of `SKILL.md` must include valid YAML frontmatter:
 
 ```yaml
 ---
-name: vibe-design-md-architect
+name: unslop
 description: Create, audit, and repair PRODUCT.md and DESIGN.md before UI implementation for SaaS, dashboards, landing pages, and RTL/LTR web apps.
 ---
 ```
@@ -58,16 +58,16 @@ node scripts/scan-viewport-fit.mjs http://localhost:3000
 
 ## 5. Test installation through skills CLI
 
-Replace `imMamdouhaboammar/vibe-design-md-architect` with your GitHub repository path:
+Replace `imMamdouhaboammar/unslop` with your GitHub repository path:
 
 ```bash
-npx skills add imMamdouhaboammar/vibe-design-md-architect
+npx skills add imMamdouhaboammar/unslop
 ```
 
 Or test the specific skill:
 
 ```bash
-npx skills add https://github.com/imMamdouhaboammar/vibe-design-md-architect --skill vibe-design-md-architect
+npx skills add https://github.com/imMamdouhaboammar/unslop --skill unslop
 ```
 
 ## 6. Wait for skills.sh discovery
@@ -77,11 +77,11 @@ skills.sh lists repositories automatically after the repository is seen through 
 Expected public URL shape:
 
 ```text
-https://skills.sh/imMamdouhaboammar/vibe-design-md-architect/vibe-design-md-architect
+https://skills.sh/imMamdouhaboammar/unslop/unslop
 ```
 
 ## 7. Suggested launch copy
 
 ```text
-I published Vibe Design MD Architect, a skill for agents that keeps UI work from starting too early. It creates and repairs PRODUCT.md and DESIGN.md, asks the right design-system baseline question first, adds standards checks, installs Impeccable when possible, and blocks generic AI-looking frontend before implementation.
+I published Unslop, a skill for agents that keeps UI work from starting too early. It creates and repairs PRODUCT.md and DESIGN.md, asks the right design-system baseline question first, adds standards checks, installs Unslop when possible, and blocks generic AI-looking frontend before implementation.
 ```

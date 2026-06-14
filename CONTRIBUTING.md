@@ -1,4 +1,4 @@
-# Contributing to Vibe Design MD Architect
+# Contributing to Unslop
 
 Thank you for improving this project. This repository is a quality gate for AI-assisted frontend work, so every change should keep the system safer, clearer, and easier for coding agents to follow.
 

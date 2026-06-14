@@ -34,8 +34,8 @@ const checks = [
   ['UX-CRX rules', /ux-crx|primary action|secondary action|decision point|recovery path|progressive disclosure/i],
   ['responsive mobile rules', /responsive|mobile|viewport|320|360|390|414|tablet|touch target/i],
   ['in-app popup rules', /in-app|modal|drawer|toast|banner|inline validation|alert\(\)|confirm\(\)|prompt\(\)|native browser/i],
-  ['Impeccable setup command', /npx\s+impeccable\s+skills\s+install/i],
-  ['Impeccable setup gate', /impeccable setup|setup gate|installation gate|before implementation|before coding/i],
+  ['Unslop setup command', /npx\s+unslop\s+skills\s+install/i],
+  ['Unslop setup gate', /unslop setup|setup gate|installation gate|before implementation|before coding/i],
   ['Intake Session Gate', /Intake Session Gate|INTAKE\.session\.md|intake/i],
   ['2026 Standards Gate', /2026 Standards Gate|STANDARDS\.search-notes\.md|standards search|live standards/i],
   ['Rules Engine Gate', /Rules Engine Gate|run-gates\.mjs|rules engine/i],
@@ -61,6 +61,16 @@ const weakPhrases = [
   'state-of-the-art',
   'unleash',
   'unlock the power',
+  'seamless',
+  'delve',
+  'empower',
+  'robust',
+  'testament',
+  'elevate',
+  'transform',
+  'innovative',
+  'synergy',
+  'leverage'
 ];
 
 for (const phrase of weakPhrases) {

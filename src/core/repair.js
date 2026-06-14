@@ -44,11 +44,12 @@ function resolveSectionFile(cwd, file) {
   return file === AGENT_INSTRUCTION_TARGET ? activeAgentInstructionFile(cwd) : file;
 }
 
-export function applyRepairs(cwd, issues, flags = {}) {
+export function applyRepairs(cwd, repairPlan, flags = {}) {
   const generated = []; 
   const changed = []; 
   const repairs = [];
   
+  // Always ensure essential templates exist (Tier 0)
   for (const file of ['PRODUCT.md', 'DESIGN.md']) {
     if (!exists(cwd, file)) { 
       writeText(cwd, file, templateFor(file), flags); 
@@ -64,15 +65,16 @@ export function applyRepairs(cwd, issues, flags = {}) {
     repairs.push({ file: agentInstructionFile, action: 'created template' });
   }
   
-  for (const issue of issues) {
-    if (issue.repairability !== 'auto' || issue.id.endsWith('-missing')) continue;
-    const section = autoSections[issue.id]; 
+  // Tier 1: Safe Docs
+  for (const evidence of repairPlan.safeDocs || []) {
+    const ruleId = evidence.ruleName;
+    const section = autoSections[ruleId]; 
     if (!section) continue;
 
     const targetFile = resolveSectionFile(cwd, section[0]);
     const fileContent = readText(cwd, targetFile) || '';
-    const startMarker = `<!-- vibe-design-md-architect:start ${issue.id} -->`;
-    const endMarker = `<!-- vibe-design-md-architect:end ${issue.id} -->`;
+    const startMarker = `<!-- unslop:start ${ruleId} -->`;
+    const endMarker = `<!-- unslop:end ${ruleId} -->`;
     
     if (fileContent.includes(startMarker)) {
       continue; // Skip if already injected
@@ -82,7 +84,16 @@ export function applyRepairs(cwd, issues, flags = {}) {
     appendText(cwd, targetFile, contentToInject, flags);
     
     if (!changed.includes(targetFile)) changed.push(targetFile);
-    repairs.push({ file: targetFile, rule: issue.id, action: 'appended safe section' });
+    repairs.push({ file: targetFile, rule: ruleId, action: 'appended safe section' });
+  }
+
+  // Tier 3: Suggested Patches (Code)
+  if (flags['apply-code-fixes']) {
+    for (const evidence of repairPlan.suggestedPatches || []) {
+      // In Sprint 4, we only acknowledge the flag. Actual ast-based patching 
+      // will be integrated here later. For now, log the attempt.
+      repairs.push({ file: evidence.file, rule: evidence.ruleName, action: 'attempted code patch' });
+    }
   }
   
   return { generated, changed, repairs };

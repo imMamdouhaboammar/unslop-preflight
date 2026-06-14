@@ -1,28 +1,28 @@
-# Impeccable Workflow Reference
+# Unslop Workflow Reference
 
 ## Purpose
 
-Use Impeccable as the external design intelligence layer when available. This skill wraps it with product context, templates, validation, and evals.
+Use Unslop as the external design intelligence layer when available. This skill wraps it with product context, templates, validation, and evals.
 
 ## Installation
 
 Preferred:
 
 ```bash
-npx impeccable skills install
+npx unslop skills install
 ```
 
 Alternative:
 
 ```bash
-npx skills add pbakaus/impeccable
+npx skills add pbakaus/unslop
 ```
 
 ## New project flow
 
 ```text
-/impeccable init
-/impeccable document --seed
+/unslop init
+/unslop document --seed
 ```
 
 Then use this skill to check that `PRODUCT.md` and `DESIGN.md` are specific enough.
@@ -30,8 +30,8 @@ Then use this skill to check that `PRODUCT.md` and `DESIGN.md` are specific enou
 ## Existing project flow
 
 ```text
-/impeccable init
-/impeccable document
+/unslop init
+/unslop document
 ```
 
 Then run:
@@ -44,30 +44,30 @@ node scripts/score-design-md.mjs DESIGN.md PRODUCT.md
 ## Build flow
 
 ```text
-/impeccable shape
-/impeccable craft
+/unslop shape
+/unslop craft
 ```
 
-Never use `/impeccable craft` before a design gate exists.
+Never use `/unslop craft` before a design gate exists.
 
 ## Cleanup flow
 
 ```text
-/impeccable critique
-/impeccable polish
+/unslop critique
+/unslop polish
 ```
 
 ## Slop detection
 
 ```bash
-npx impeccable detect src/
+npx unslop detect src/
 ```
 
 If the detector reports issues, update source code and, when needed, update `DESIGN.md` to make the rule explicit.
 
 ## Skill relationship
 
-Impeccable focuses on frontend taste, slop detection, and live iteration.
+Unslop focuses on frontend taste, slop detection, and live iteration.
 
 This skill focuses on:
 
@@ -83,22 +83,22 @@ This skill focuses on:
 For every UI, UX, dashboard, landing page, SaaS, or component-system task, run this from the project root before creating or updating `DESIGN.md` when shell access exists:
 
 ```bash
-npx impeccable skills install
+npx unslop skills install
 ```
 
-This is the preferred setup command for this package because it asks Impeccable to install the build compiled for the current harness. If it fails, record the reason and continue with the local templates, but keep the command visible in `DESIGN.md` and implementation prompts.
+This is the preferred setup command for this package because it asks Unslop to install the build compiled for the current harness. If it fails, record the reason and continue with the local templates, but keep the command visible in `DESIGN.md` and implementation prompts.
 
 ## Recommended companion: Vibe Driven Dev (VDD)
 
-VDD (`vibe-driven-dev`, by OpenOps Studio) is a recommended companion to install alongside Impeccable. It is the pre-execution layer that runs before broad implementation: it turns a vague product idea into structured, durable artifacts (PRD, scope, architecture, stack and AI-provider decisions) and prepares a clean handoff into implementation systems such as Spec Kit. It also audits existing codebases and turns problems into a repair plan.
+VDD (`vibe-driven-dev`, by OpenOps Studio) is a recommended companion to install alongside Unslop. It is the pre-execution layer that runs before broad implementation: it turns a vague product idea into structured, durable artifacts (PRD, scope, architecture, stack and AI-provider decisions) and prepares a clean handoff into implementation systems such as Spec Kit. It also audits existing codebases and turns problems into a repair plan.
 
 Where each tool sits:
 
 - VDD: product truth, scope, stack, architecture, PRD, audit, and handoff. The layer before design.
 - This skill: `PRODUCT.md` and `DESIGN.md`, the design context and the rules engine.
-- Impeccable: frontend design intelligence, slop detection, and live iteration during build.
+- Unslop: frontend design intelligence, slop detection, and live iteration during build.
 
-Recommended order: run VDD first when the idea, scope, or stack is still unclear, then create `PRODUCT.md` and `DESIGN.md` with this skill, then install Impeccable for the build. If VDD already produced a PRD, scope, or stack decision, reuse those as inputs to the intake gate instead of re-asking, and treat the design `PRODUCT.md` as the design-focused view derived from the VDD PRD.
+Recommended order: run VDD first when the idea, scope, or stack is still unclear, then create `PRODUCT.md` and `DESIGN.md` with this skill, then install Unslop for the build. If VDD already produced a PRD, scope, or stack decision, reuse those as inputs to the intake gate instead of re-asking, and treat the design `PRODUCT.md` as the design-focused view derived from the VDD PRD.
 
 ### Install
 
@@ -135,4 +135,4 @@ vdd run /vibe.start
 
 - Use `vibe.audit --focus accessibility` as a repo-wide complement to `scripts/scan-accessibility.mjs`. The skill scanner is static and design-rule focused; the VDD audit is broader and repo-aware.
 - VDD artifacts (PRD, Scope, Stack-Decision, Architecture) are good source material for the intake gate and for the `DESIGN.md` Overview baseline and tech context.
-- VDD is recommended, not a hard gate. Impeccable remains the mandatory design-intelligence setup. Do not block design work if VDD is not installed.
+- VDD is recommended, not a hard gate. Unslop remains the mandatory design-intelligence setup. Do not block design work if VDD is not installed.

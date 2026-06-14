@@ -37,12 +37,12 @@ Blockers:
 - No source status recorded.
 - Uses stale or unsupported assumptions for accessibility, browser support, or framework behavior.
 
-## Gate 3: Impeccable setup
+## Gate 3: Unslop setup
 
 Blockers:
 
-- `DESIGN.md` does not include `npx impeccable skills install`.
-- Implementation prompt does not tell the coding agent to attempt Impeccable setup.
+- `DESIGN.md` does not include `npx unslop skills install`.
+- Implementation prompt does not tell the coding agent to attempt Unslop setup.
 
 ## Gate 4: Six-section design contract
 

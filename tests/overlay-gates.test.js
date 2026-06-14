@@ -6,7 +6,7 @@ import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
 
 const cli = new URL('../bin/cli.js', import.meta.url).pathname;
-const cwd = () => mkdtempSync(join(tmpdir(), 'vdma-overlay-'));
+const cwd = () => mkdtempSync(join(tmpdir(), 'unslop-overlay-'));
 const run = (args, dir) => spawnSync(process.execPath, [cli, ...args], { cwd: dir, encoding: 'utf8' });
 
 function issuesFor(design) {

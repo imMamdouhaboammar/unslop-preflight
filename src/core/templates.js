@@ -197,7 +197,7 @@ You MUST complete these steps and provide proof before considering the task done
 - [ ] Mobile layout checked with no horizontal overflow and proper dynamic viewport units.
 - [ ] Keyboard navigation checked with Tab, Enter, Space, and Escape.
 - [ ] Loading, empty, and error states implemented.
-- [ ] Run npx vibe-design-md-architect audit in the terminal.
+- [ ] Run npx unslop audit in the terminal.
 - [ ] Paste the final score and ensure there are 0 Errors before you complete the task. Do NOT skip this step.
 
 ## When To Stop

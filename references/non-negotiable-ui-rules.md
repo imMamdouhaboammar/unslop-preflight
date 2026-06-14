@@ -251,7 +251,7 @@ Forbidden:
 - Do not implement UI before `INTAKE.session.md` exists.
 - Do not implement UI before `PRODUCT.md` exists.
 - Do not implement UI before `DESIGN.md` exists.
-- Do not implement UI before attempting `npx impeccable skills install` when shell access exists.
+- Do not implement UI before attempting `npx unslop skills install` when shell access exists.
 - Do not implement UI before the 2026 Standards Search Gate is completed or documented as unavailable.
 - Do not implement UI when `node scripts/run-gates.mjs DESIGN.md PRODUCT.md src` reports blockers.
 - Do not silently invent visual tokens during implementation. Extend `DESIGN.md` first.

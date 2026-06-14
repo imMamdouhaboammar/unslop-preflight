@@ -19,7 +19,7 @@ export async function init({ cwd, flags }) {
     generated,
     changed: [],
     repairs: generated.map((file) => ({ file, action: 'created template' })),
-    nextCommand: 'vibe-design-md-architect audit'
+    nextCommand: 'unslop audit'
   };
 
   printResult(result, flags);

@@ -34,13 +34,13 @@ const all = `${design}\n${product}\n${intake}\n${standards}`.toLowerCase();
 
 check('missing INTAKE.session.md', exists(intakeFile));
 check('intake missing design system baseline', /Design System Baseline|Selected baseline|atlassian|salesforce-lightning|shopify-polaris|material-design|apple-human-interface|custom-hybrid/i.test(intake));
-check('intake missing core user', /core user:/i.test(intake));
-check('intake missing main job', /main job|job to be done/i.test(intake));
+check('intake missing core user', /core user:\s*.{3,}/i.test(intake));
+check('intake missing main job', /(main job|job to be done).{3,}/i.test(intake));
 check('missing PRODUCT.md', exists(productFile));
 check('PRODUCT.md missing design system baseline', /Design System Baseline|Selected baseline|atlassian|salesforce-lightning|shopify-polaris|material-design|apple-human-interface|custom-hybrid/i.test(product));
 check('PRODUCT.md missing success criteria', /success criteria/i.test(product));
 check('missing DESIGN.md target', exists(designFile));
-check('DESIGN.md missing Impeccable install command', /npx\s+impeccable\s+skills\s+install/i.test(design));
+check('DESIGN.md missing Unslop install command', /npx\s+unslop\s+skills\s+install/i.test(design));
 check('DESIGN.md missing 2026 Standards Gate', /2026 Standards Gate/i.test(design));
 check('DESIGN.md missing Intake Session Gate', /Intake Session Gate/i.test(design));
 check('DESIGN.md missing Rules Engine Gate', /Rules Engine Gate/i.test(design));
@@ -86,8 +86,8 @@ if (exists(scanA11yScript) && exists(srcDir)) {
 }
 
 if (warnings.length) {
-  console.warn('Gate warnings');
-  for (const warning of warnings) console.warn(`- ${warning}`);
+  console.error('Gate warnings treated as errors');
+  for (const warning of warnings) failures.push(`[STRICT] ${warning}`);
 }
 if (failures.length) {
   console.error('Rules engine gates failed');

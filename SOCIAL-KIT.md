@@ -18,7 +18,7 @@ You know how to fix that. One share might save someone a full day of cleanup.
 
 **The reciprocity loop:**
 1. You found this through someone else's share
-2. You ran `npx vdma autopilot` and it caught something real
+2. You ran `npx unslop autopilot` and it caught something real
 3. Now someone else needs to find it
 
 ---
@@ -38,9 +38,9 @@ My AI just generated this modal:
 
 On a 568px screen.
 
-npx vdma autopilot caught it before I shipped it.
+npx unslop autopilot caught it before I shipped it.
 
-→ github.com/imMamdouhaboammar/vibe-design-md-architect
+→ github.com/imMamdouhaboammar/unslop
 
 #ClaudeCode #VibeCoding #WebDev
 ```
@@ -50,13 +50,13 @@ npx vdma autopilot caught it before I shipped it.
 ```
 Ran this on my project before starting UI:
 
-npx vibe-design-md-architect autopilot
+npx unslop autopilot
 
 It created DESIGN.md, ran 23 gates, found 4 issues I would have shipped.
 
 Worth the 2 minutes.
 
-→ github.com/imMamdouhaboammar/vibe-design-md-architect
+→ github.com/imMamdouhaboammar/unslop
 ```
 
 ---
@@ -71,7 +71,7 @@ Things my AI agent stopped doing after I installed this skill:
 • Hardcoded hex values instead of design tokens
 
 One command:
-npx vdma autopilot
+npx unslop autopilot
 
 #AIcoding #ClaudeCode #frontend
 ```
@@ -83,7 +83,7 @@ npx vdma autopilot
 ```
 Just scanned my existing frontend with:
 
-npx vdma scan src/
+npx unslop scan src/
 
 Found 6 blockers I had no idea about:
 • clickable <div> instead of <button> in 3 places
@@ -92,7 +92,7 @@ Found 6 blockers I had no idea about:
 
 This is a free tool. No install needed.
 
-→ github.com/imMamdouhaboammar/vibe-design-md-architect
+→ github.com/imMamdouhaboammar/unslop
 ```
 
 ---
@@ -102,7 +102,7 @@ This is a free tool. No install needed.
 ```
 free tool that stops your AI from shipping ugly frontend
 
-npx vdma autopilot
+npx unslop autopilot
 
 [no install, one command, works with Claude Code/Cursor/Windsurf]
 
@@ -114,11 +114,11 @@ npx vdma autopilot
 ```
 accidentally discovered this scans for AI UI slop before you implement
 
-npx vibe-design-md-architect scan src/
+npx unslop scan src/
 
 flagged 4 things my AI put in that I would have shipped
 
-→ github.com/imMamdouhaboammar/vibe-design-md-architect
+→ github.com/imMamdouhaboammar/unslop
 ```
 
 ---
@@ -128,14 +128,14 @@ flagged 4 things my AI put in that I would have shipped
 ```
 If you use Claude Code, this is worth knowing:
 
-1. npx vibe-design-md-architect init
-2. npx vdma autopilot
+1. npx unslop init
+2. npx unslop autopilot
 
 It installs a skill that forces Claude to do proper design intake before UI.
 23 gates. Auto-repairs failures. Writes VDMA-FIXES.md for the rest.
 
 No more "generic AI look"
-→ github.com/imMamdouhaboammar/vibe-design-md-architect
+→ github.com/imMamdouhaboammar/unslop
 ```
 
 ---
@@ -145,11 +145,11 @@ No more "generic AI look"
 ### After using it on a real project
 
 ```
-I've been using an open-source tool called Vibe Design MD Architect on my last two projects, and wanted to share it.
+I've been using an open-source tool called Unslop on my last two projects, and wanted to share it.
 
 It runs before the AI touches any frontend code. One command:
 
-npx vibe-design-md-architect autopilot
+npx unslop autopilot
 
 In about 90 seconds it:
 → Creates PRODUCT.md and DESIGN.md if you don't have them
@@ -169,7 +169,7 @@ It's MIT licensed, no dependencies beyond Node.js, works with Claude Code, Curso
 
 Worth trying on your current project.
 
-→ https://github.com/imMamdouhaboammar/vibe-design-md-architect
+→ https://github.com/imMamdouhaboammar/unslop
 
 #AI #WebDevelopment #Accessibility #FrontendEngineering #ClaudeCode
 ```
@@ -182,13 +182,13 @@ Worth trying on your current project.
 Quick tip for anyone using AI coding agents:
 
 Before your agent writes any frontend code, run:
-npx vibe-design-md-architect autopilot
+npx unslop autopilot
 
 It's a free CLI that creates your design system artifacts and blocks 23 common AI UI failures — including accessibility issues, overflow bugs, insecure data display, and broken mobile behavior.
 
 Saved me from shipping at least 4 real problems last week.
 
-Open source: github.com/imMamdouhaboammar/vibe-design-md-architect
+Open source: github.com/imMamdouhaboammar/unslop
 
 #AI #Frontend #UX
 ```
@@ -208,11 +208,11 @@ This free CLI stopped my Claude agent from generating another generic dark SaaS 
 ```
 Been using Claude Code for about 3 months and kept running into the same problem — Claude picks the same visual defaults every time. Purple/indigo gradients, identical rounded cards, Inter font, no RTL, missing focus rings.
 
-Found this tool last week: Vibe Design MD Architect
+Found this tool last week: Unslop
 
 One command before any UI work:
 
-npx vibe-design-md-architect autopilot
+npx unslop autopilot
 
 What it does:
 1. Creates PRODUCT.md and DESIGN.md if you don't have them
@@ -231,7 +231,7 @@ None of that would have failed CI. All of it would have shipped.
 
 Free, MIT, works completely offline, no API calls.
 
-→ https://github.com/imMamdouhaboammar/vibe-design-md-architect
+→ https://github.com/imMamdouhaboammar/unslop
 ```
 
 ---
@@ -247,10 +247,10 @@ Free CLI that scans AI-generated frontend for the patterns everyone hates — cl
 ```
 I know "here's a tool" posts can be annoying, but this one is legitimately useful and I want more people to know it exists.
 
-It's called Vibe Design MD Architect. It runs static analysis on your frontend code for patterns that AI coding agents keep introducing.
+It's called Unslop. It runs static analysis on your frontend code for patterns that AI coding agents keep introducing.
 
 ```
-npx vdma scan src/
+npx unslop scan src/
 ```
 
 What it flags:
@@ -273,12 +273,12 @@ What it flags:
 It also has an "autopilot" mode that runs the full loop — creates design artifacts, gates, scans, auto-repairs what it can, writes a fix list for the rest:
 
 ```
-npx vibe-design-md-architect autopilot
+npx unslop autopilot
 ```
 
 MIT licensed. No install required. Works with Claude Code, Cursor, Windsurf.
 
-→ https://github.com/imMamdouhaboammar/vibe-design-md-architect
+→ https://github.com/imMamdouhaboammar/unslop
 ```
 
 ---
@@ -298,11 +298,11 @@ The models pick the same defaults: purple gradient hero, identical feature cards
 
 This tool creates a design context file (DESIGN.md) that the agent reads before touching frontend code. The autopilot mode scaffolds it, validates it, and blocks implementation until 23 quality gates pass.
 
-npx vibe-design-md-architect autopilot
+npx unslop autopilot
 
 It works with any coding agent that reads skill files — Claude Code, but also any model you've set up with a skill/context folder.
 
-Source: https://github.com/imMamdouhaboammar/vibe-design-md-architect
+Source: https://github.com/imMamdouhaboammar/unslop
 ```
 
 ---
@@ -316,11 +316,11 @@ Show HN: I used this tool to catch 6 accessibility failures in my AI-generated U
 
 **Comment-style post (to put in the thread):**
 ```
-I've been running AI coding agents for my side project and wanted to share a tool I found that's been genuinely useful: Vibe Design MD Architect.
+I've been running AI coding agents for my side project and wanted to share a tool I found that's been genuinely useful: Unslop.
 
 It runs before any frontend code is written. One command:
 
-  npx vibe-design-md-architect autopilot
+  npx unslop autopilot
 
 What actually happened when I ran it on my current project:
 
@@ -334,7 +334,7 @@ The source issues it found: no focus trap in my modals (WCAG 2.4.3), icon button
 These are exactly the things that pass code review and fail real users.
 
 The tool is MIT, no dependencies beyond Node.js, works offline. Source at:
-https://github.com/imMamdouhaboammar/vibe-design-md-architect
+https://github.com/imMamdouhaboammar/unslop
 ```
 
 ---
@@ -346,12 +346,12 @@ https://github.com/imMamdouhaboammar/vibe-design-md-architect
 ```
 if you use AI coding agents and haven't run this yet, worth doing:
 
-npx vibe-design-md-architect autopilot
+npx unslop autopilot
 
 caught 4 things in my project I was about to ship
 works with Claude Code, Cursor, Windsurf — no install needed
 
-→ github.com/imMamdouhaboammar/vibe-design-md-architect
+→ github.com/imMamdouhaboammar/unslop
 ```
 
 ---
@@ -361,7 +361,7 @@ works with Claude Code, Cursor, Windsurf — no install needed
 ```
 hey, sharing this because it helped my project and I think others would find it useful
 
-it's called Vibe Design MD Architect — a CLI that runs before your AI writes any frontend
+it's called Unslop — a CLI that runs before your AI writes any frontend
 
 what it does:
 • creates DESIGN.md + PRODUCT.md if you don't have them
@@ -370,16 +370,16 @@ what it does:
 • writes VDMA-FIXES.md for source issues that need the agent to fix
 
 autopilot mode (full run):
-npx vibe-design-md-architect autopilot
+npx unslop autopilot
 
 specific scans:
-npx vdma scan src/        # scan for slop and a11y issues
-npx vdma repair           # auto-fix DESIGN.md
-npx vdma gates            # run all 23 gates manually
+npx unslop scan src/        # scan for slop and a11y issues
+npx unslop repair           # auto-fix DESIGN.md
+npx unslop gates            # run all 23 gates manually
 
 MIT, works offline, no API keys
 
-→ https://github.com/imMamdouhaboammar/vibe-design-md-architect
+→ https://github.com/imMamdouhaboammar/unslop
 ```
 
 ---
@@ -391,13 +391,13 @@ Write from your own experience using the tool:
 ```
 1. "How I stopped my AI agent from shipping inaccessible frontend — the tool I use before every project"
 
-2. "npx vdma autopilot: the one command I run before my AI writes any CSS"
+2. "npx unslop autopilot: the one command I run before my AI writes any CSS"
 
 3. "I scanned my AI-generated codebase and found 6 WCAG failures. Here's the tool I now use to prevent them"
 
 4. "The 23 design checks I never remembered to do — now automated in one CLI command"
 
-5. "Vibe Design MD Architect caught 4 issues my code review didn't — here's what they were"
+5. "Unslop caught 4 issues my code review didn't — here's what they were"
 ```
 
 ---
@@ -406,7 +406,7 @@ Write from your own experience using the tool:
 
 The simplest support:
 
-1. **Star the repo:** https://github.com/imMamdouhaboammar/vibe-design-md-architect
+1. **Star the repo:** https://github.com/imMamdouhaboammar/unslop
 2. **Share the star** — when you star, it shows on your GitHub activity. Followers notice.
 3. **Use it in your next project** — then share what it caught (even one real finding is a great post)
 

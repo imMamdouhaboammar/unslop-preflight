@@ -13,7 +13,7 @@ export const agentRules = [
     return Boolean(doc) && !has(doc, section(['Verification Checklist', 'QA Checklist']));
   }, 'Add a verification checklist to the active agent instruction file.', 'auto'),
 
-  rule('missing-agent-handoff', 'DESIGN.md missing agent handoff instructions', 'agent-handoff-readiness', 'info', 'DESIGN.md', (ctx) => {
+  rule('missing-agent-handoff', 'DESIGN.md missing agent handoff instructions', 'agent-handoff-readiness', 'error', 'DESIGN.md', (ctx) => {
     return ctx.files['DESIGN.md'] && !has(ctx.files['DESIGN.md'], /agent|handoff/i);
   }, 'Add agent handoff instructions.', 'auto')
 ];

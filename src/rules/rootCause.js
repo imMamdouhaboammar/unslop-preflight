@@ -35,7 +35,7 @@ export const rootCauseRules = [
     'root-cause-verification-missing',
     'Root fixes need verification proof',
     'root-cause-governance',
-    'warning',
+    'error',
     'DESIGN.md',
     (ctx) => needsRootCause(ctx) && rootCauseTerms.test(`${ctx.files['DESIGN.md'] || ''}\n${ctx.files['AGENTS.md'] || ctx.files['AGENT.md'] || ''}`) && !proofTerms.test(ctx.files['DESIGN.md'] || ''),
     'Add verification proof: reproduction case, regression check, viewport/state coverage, or acceptance criteria that prove the root fix worked.',

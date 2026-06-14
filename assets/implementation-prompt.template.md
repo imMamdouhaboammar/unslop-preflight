@@ -8,7 +8,7 @@ You are implementing UI for this project.
 Before writing code:
 1. Run the intake gate and make sure `INTAKE.session.md` exists. If Vibe Driven Dev (VDD) artifacts exist (PRD, Scope, Stack-Decision, Architecture), reuse them as intake inputs instead of re-asking.
 2. Run the 2026 standards gate and make sure `STANDARDS.search-notes.md` exists or is marked as bundled-references-only.
-3. Run `npx impeccable skills install` from the project root if it has not already been run. If it fails, document why. When the idea, scope, or stack is still unclear, it is recommended to run VDD first (`npx vibe-driven-dev install claude-code --project`, then `vdd run /vibe.start`); VDD is recommended, not required.
+3. Run `npx unslop skills install` from the project root if it has not already been run. If it fails, document why. When the idea, scope, or stack is still unclear, it is recommended to run VDD first (`npx vibe-driven-dev install claude-code --project`, then `vdd run /vibe.start`); VDD is recommended, not required.
 4. Read PRODUCT.md.
 5. Read DESIGN.md.
 6. Run `node scripts/run-gates.mjs DESIGN.md PRODUCT.md src` and repair blockers before implementation.
@@ -23,18 +23,18 @@ Before writing code:
 15. All overlays (toast, tour, popover, dropdown) must come from the centralized Overlay System. Do not build ad-hoc `position: fixed` overlays in page components. Do not create manual toast markup. Use the Toast System API only.
 16. Dashboard pages must use the declared shell grid layout from DESIGN.md. Main content must not slide under the sidebar. Scroll ownership per region must match the dashboard shell contract.
 17. Sensitive tokens and API keys must be masked by default. Secret creation must use a secure result modal, not a toast. Delete and revoke require confirmation.
-18. If Impeccable is available, run or follow:
-   - /impeccable shape
-   - /impeccable craft
-   - /impeccable critique
-   - /impeccable polish
+18. If Unslop is available, run or follow:
+   - /unslop shape
+   - /unslop craft
+   - /unslop critique
+   - /unslop polish
 19. Before final output, run:
    - node scripts/validate-design-md.mjs DESIGN.md
    - node scripts/score-design-md.mjs DESIGN.md PRODUCT.md
    - node scripts/run-gates.mjs DESIGN.md PRODUCT.md src
    - node scripts/scan-ui-implementation.mjs src
    - node scripts/scan-viewport-fit.mjs http://localhost:3000 (when Playwright is available)
-   - npx impeccable detect src/ if Impeccable is installed
+   - npx unslop detect src/ if Unslop is installed
 
 Task:
 [Write the implementation task here]
@@ -43,7 +43,7 @@ Task:
 
 ## Mandatory non-negotiable UI rules
 
-Before writing UI code, confirm that `DESIGN.md` includes the exact command `npx impeccable skills install`, plus rules for contrast, AI color control, icon system, directionality, UX-CRX logic, responsive mobile behavior, modern web baseline, and in-app popup patterns.
+Before writing UI code, confirm that `DESIGN.md` includes the exact command `npx unslop skills install`, plus rules for contrast, AI color control, icon system, directionality, UX-CRX logic, responsive mobile behavior, modern web baseline, and in-app popup patterns.
 
 Do not use:
 

@@ -25,7 +25,7 @@
 - 2026 Standards Gate
 - Rules Engine Gate
 - Accessibility baseline
-- Impeccable setup gate with `npx impeccable skills install`
+- Unslop setup gate with `npx unslop skills install`
 - Localization and RTL notes when relevant
 
 ## Colors must include
@@ -84,7 +84,7 @@ Every generated or amplified `DESIGN.md` must mention:
 - Selected Design System Baseline
 - `INTAKE.session.md`
 - `STANDARDS.search-notes.md`
-- `npx impeccable skills install`
+- `npx unslop skills install`
 - `node scripts/validate-design-md.mjs DESIGN.md`
 - `node scripts/score-design-md.mjs DESIGN.md PRODUCT.md`
 - `node scripts/run-gates.mjs DESIGN.md PRODUCT.md src`

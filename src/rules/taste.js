@@ -26,7 +26,7 @@ export const tasteRules = [
     'missing-design-read',
     'DESIGN.md needs a brief-inferred Design Read',
     'taste-calibration',
-    'warning',
+    'error',
     'DESIGN.md',
     (ctx) => {
       const doc = designDoc(ctx);
@@ -40,7 +40,7 @@ export const tasteRules = [
     'missing-taste-dials',
     'DESIGN.md needs explicit taste controls',
     'taste-calibration',
-    'warning',
+    'error',
     'DESIGN.md',
     (ctx) => {
       const doc = designDoc(ctx);
@@ -69,7 +69,7 @@ export const tasteRules = [
     'missing-design-system-decision',
     'DESIGN.md needs a design-system decision',
     'design-system-governance',
-    'warning',
+    'error',
     'DESIGN.md',
     (ctx) => {
       const doc = designDoc(ctx);
@@ -83,7 +83,7 @@ export const tasteRules = [
     'default-ai-aesthetic-risk',
     'DESIGN.md contains default AI-looking aesthetic language',
     'anti-ai-slop',
-    'warning',
+    'error',
     'DESIGN.md',
     (ctx) => {
       const doc = designDoc(ctx);
@@ -97,7 +97,7 @@ export const tasteRules = [
     'missing-preflight-proof',
     'DESIGN.md needs pre-flight proof before implementation',
     'agent-handoff-readiness',
-    'info',
+    'error',
     'DESIGN.md',
     (ctx) => {
       const doc = designDoc(ctx);

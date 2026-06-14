@@ -7,7 +7,7 @@ export const responsiveRules = [
     return /mobile/i.test(d) && !/(flex-col|w-full|block)/i.test(d);
   }, 'Replace generic mobile advice with explicit tokens (e.g., Use flex-col and w-full).', 'auto'),
   
-  rule('deterministic-tablet-behavior', 'DESIGN.md must use deterministic tablet styling', 'responsive-design', 'info', 'DESIGN.md', (ctx) => {
+  rule('deterministic-tablet-behavior', 'DESIGN.md must use deterministic tablet styling', 'responsive-design', 'error', 'DESIGN.md', (ctx) => {
     const d = ctx.files['DESIGN.md'];
     if (!d) return false;
     return /tablet/i.test(d) && !/(md:grid|md:flex|md:)/i.test(d);

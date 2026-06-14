@@ -1,9 +1,9 @@
 ---
-name: vibe-design-md-architect
+name: unslop
 description: Create, audit, repair, and score PRODUCT.md, DESIGN.md, and AGENTS.md before AI-assisted frontend implementation. Includes base UI gates, readiness bands, taste calibration, placeholder blocking, Root Cause Mode, modal viewport governance, stacking reasoning, install-agent-harness guidance, accessibility, RTL/LTR, token, privacy, and source-scan checks.
 ---
 
-# Vibe Design MD Architect
+# Unslop
 
 ## Purpose
 
@@ -337,7 +337,7 @@ The original 23 numbered gates still define the core UI governance system:
 1. Design System Baseline
 2. Intake Session
 3. Standards Search
-4. Impeccable Install
+4. Unslop Install
 5. PRODUCT.md
 6. DESIGN.md Contract
 7. Rules Engine
@@ -358,7 +358,17 @@ The original 23 numbered gates still define the core UI governance system:
 22. Sensitive Data Display
 23. Popup and Floating Positioning
 
-The readiness layer adds AGENTS.md support, readiness bands, taste calibration, placeholder blocking, Root Cause Mode, modal viewport hard gates, stacking reasoning, and Install Agent Harness readiness.
+The readiness layer adds v1.9.8 docs
+
+- Strict Gates Enforcement: All warnings and info rules are now elevated to errors.
+- AGENTS.md support across init, audit, repair, reports, and package publishing
+- readiness bands and category scoring
+- taste calibration rules
+- placeholder gates for product and design artifacts
+- Root Cause Mode for bug and layout work
+- strict modal viewport and overlay sizing gates
+- stacking context, portal policy, and z-index reasoning gates
+- Install Agent Harness recommendations with bulk-install guard expectations
 
 ## Source scanner expectations
 
@@ -421,18 +431,18 @@ Amplify Mode should:
 Use these commands when available:
 
 ```bash
-npx vdma init
-npx vdma audit --verbose
-npx vdma repair --dry-run --report
-npx vdma autopilot
+npx unslop init
+npx unslop audit --verbose
+npx unslop repair --dry-run --report
+npx unslop autopilot
 ```
 
 For source scans:
 
 ```bash
-npx vdma scan src/
-npx vdma scan:a11y src/
-npx vdma scan:viewport http://localhost:3000
+npx unslop scan src/
+npx unslop scan:a11y src/
+npx unslop scan:viewport http://localhost:3000
 ```
 
 For tests in this repository:

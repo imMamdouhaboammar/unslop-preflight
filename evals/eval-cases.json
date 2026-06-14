@@ -9,7 +9,7 @@
       "ask the design system baseline question first",
       "create PRODUCT.md",
       "create DESIGN.md",
-      "attempt npx impeccable skills install when shell access exists",
+      "attempt npx unslop skills install when shell access exists",
       "block implementation until design gates are attempted"
     ],
     "must_avoid": [

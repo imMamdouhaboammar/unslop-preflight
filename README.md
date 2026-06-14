@@ -1,20 +1,20 @@
 <div align="center">
 
-# Vibe Design MD Architect
+# Unslop
 
 ### Stop AI coding agents from shipping generic, fragile frontend work.
 
 **A pre-implementation quality gate for `PRODUCT.md`, `DESIGN.md`, and `AGENTS.md` with readiness bands, taste calibration, root-cause governance, overlay reasoning, and install-agent-harness guidance.**
 
-[![Socket Badge](https://badge.socket.dev/npm/package/vibe-design-md-architect/1.9.3)](https://badge.socket.dev/npm/package/vibe-design-md-architect/1.9.3)
-[![npm](https://img.shields.io/npm/v/vibe-design-md-architect?style=flat-square&color=5B21B6&label=npm)](https://www.npmjs.com/package/vibe-design-md-architect)
-[![skills.sh](https://img.shields.io/badge/skills.sh-install-5B21B6?style=flat-square)](https://skills.sh/imMamdouhaboammar/vibe-design-md-architect)
+[![Socket Badge](https://badge.socket.dev/npm/package/unslop/1.9.8)](https://badge.socket.dev/npm/package/unslop/1.9.8)
+[![npm](https://img.shields.io/npm/v/unslop?style=flat-square&color=5B21B6&label=npm)](https://www.npmjs.com/package/unslop)
+[![skills.sh](https://img.shields.io/badge/skills.sh-install-5B21B6?style=flat-square)](https://skills.sh/imMamdouhaboammar/unslop)
 [![Gates](https://img.shields.io/badge/gates-23%2B%20readiness-F59E0B?style=flat-square)](./SKILL.md)
-[![Version](https://img.shields.io/badge/docs-1.9.6-3B82F6?style=flat-square)](./CHANGELOG.md)
+[![Version](https://img.shields.io/badge/docs-1.9.8-3B82F6?style=flat-square)](./CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/license-MIT-22C55E?style=flat-square)](./LICENSE)
 
 ```bash
-npx vibe-design-md-architect autopilot
+npx unslop autopilot
 ```
 
 One command creates or repairs `PRODUCT.md`, `DESIGN.md`, and `AGENTS.md`, runs the gates, scores readiness, writes a fix list, and blocks implementation until the handoff is strong enough for an AI coding agent.
@@ -23,35 +23,55 @@ One command creates or repairs `PRODUCT.md`, `DESIGN.md`, and `AGENTS.md`, runs 
 
 </div>
 
----
+## Unslop Brand Narrative
 
-## What this is
+AI made it easier to build interfaces.
 
-Vibe Design MD Architect is a pre-implementation quality gate for AI-assisted frontend work.
+It also made it easier to ship the same broken interface again and again.
 
-It does not replace your coding agent. It prepares the project before the coding agent writes UI code. The system forces the agent to work from product truth, design intent, accessibility constraints, responsive behavior, root-cause diagnosis, and implementation handoff instructions instead of inventing a generic SaaS interface from a short prompt.
+The oversized headline.
+The glassy card stack.
+The purple gradient that came from nowhere.
+The modal that looks fine until the screen gets smaller.
+The popup with a scrollbar that feels like a browser bug.
+The z-index fix that only works because someone typed `9999` and hoped for the best.
 
-The current system supports:
+This is AI slop.
 
-- `PRODUCT.md` strategy context
-- `DESIGN.md` design and implementation contract
-- `AGENTS.md` repository instructions for AI coding agents
-- readiness bands and category breakdowns
-- taste calibration and anti-AI-slop checks
-- placeholder blocking before implementation
-- Root Cause Mode for bug, layout, viewport, overlay, and regression work
-- strict modal viewport gates
-- stacking and z-index reasoning gates
-- Install Agent Harness recommendations for project-specific skills and tools
-- accessibility, RTL/LTR, privacy, sensitive-data, token, and source-scan checks
+Not because AI is bad.
+Because agents are fast, obedient, and often too confident.
 
-## The problem
+They will implement a vague brief.
+They will decorate weak specs.
+They will patch symptoms instead of finding the cause.
+They will ship visual noise if no one teaches them what good looks like.
 
-AI coding agents often skip the reasoning layer.
+Unslop exists for the moment before that happens.
 
-They choose default gradients, fake metrics, weak modals, fragile dropdowns, arbitrary z-index values, root overflow hacks, and broad symptom patches. The output can look acceptable in one screenshot while breaking on small screens, keyboard navigation, RTL layouts, real data, or overlay-heavy interactions.
+It is a preflight gate for AI-built frontends.
+It reads your product brief, design direction, agent instructions, and code readiness before the agent starts building.
 
-VDMA blocks those failures before code starts.
+It asks the questions a good senior frontend reviewer would ask:
+
+- Does the design have a real hierarchy?
+- Will the modal survive mobile screens?
+- Will the popup stay usable without an ugly scrollbar?
+- Is the z-index solving the cause or hiding it?
+- Does the typography follow a scale, or did the agent guess?
+- Is the project ready for an AI coding agent, or does it need sharper instructions first?
+- Do you actually need more tools installed, or are you about to bloat the agent’s context for no reason?
+
+Unslop does not try to make the AI slower.
+
+It makes the AI less naive.
+
+It turns taste, layout logic, root-cause thinking, and agent setup into gates that can be checked before code ships.
+
+Because the future of frontend is not "AI writes everything."
+
+The future is knowing what to stop before AI writes the wrong thing beautifully.
+
+Unslop helps teams ship AI-assisted interfaces that feel intentional, not generated.
 
 ## When to use it
 
@@ -68,10 +88,11 @@ Use it when you are building or reviewing:
 
 Do not use it for backend-only work, database-only tasks, non-UI scripts, or projects with a mature design system that already fully governs frontend implementation.
 
-## What's current in v1.9.6
+## What's current in v1.9.8
 
-The current docs cover the readiness system through v1.9.6:
+The current docs cover the readiness system through v1.9.8:
 
+- Strict Gates Enforcement: All rules now run in strict mode, blocking implementations if any warning or info-level guidance is missed.
 - `AGENTS.md` is the primary agent guidance file for new projects.
 - Readiness bands explain whether the project is blocked, needs spec work, is agent-ready with fixes, or is agent-ready.
 - Taste rules require Design Read, Taste Controls, Design System Decision, Anti-AI-Slop rules, Agent Handoff, and Pre-flight Check.
@@ -112,41 +133,41 @@ Implementation allowed only when the artifacts are specific enough
 ### Option A: run with npx
 
 ```bash
-npx vibe-design-md-architect autopilot
+npx unslop autopilot
 ```
 
 ### Option B: initialize artifacts first
 
 ```bash
-npx vibe-design-md-architect init
-npx vibe-design-md-architect audit
-npx vibe-design-md-architect repair --dry-run --report
+npx unslop init
+npx unslop audit
+npx unslop repair --dry-run --report
 ```
 
 ### Option C: install in a project
 
 ```bash
-npm install --save-dev vibe-design-md-architect
-npx vdma autopilot
+npm install --save-dev unslop
+npx unslop autopilot
 ```
 
 ### Option D: install globally
 
 ```bash
-npm install -g vibe-design-md-architect
-vdma autopilot
+npm install -g unslop
+unslop autopilot
 ```
 
 ### Option E: install as a skill
 
 ```bash
-npx skills add imMamdouhaboammar/vibe-design-md-architect
+npx skills add imMamdouhaboammar/unslop
 ```
 
 ## Autopilot
 
 ```bash
-npx vdma autopilot
+npx unslop autopilot
 ```
 
 Autopilot runs the full loop:
@@ -156,16 +177,16 @@ Autopilot runs the full loop:
 3. Repairs safe missing sections.
 4. Runs the rules engine.
 5. Scans frontend source when present.
-6. Writes `.vibe-design/report.md`, `.vibe-design/report.json`, and agent-readable fix instructions.
+6. Writes `.unslop/report.md`, `.unslop/report.json`, and agent-readable fix instructions.
 7. Repeats until it reaches the pass limit or the project is ready.
 
 Useful options:
 
 ```bash
-npx vdma autopilot --max-passes=5
-npx vdma autopilot --no-source-scan
-npx vdma autopilot --no-impeccable
-npx vdma autopilot --dry-run
+npx unslop autopilot --max-passes=5
+npx unslop autopilot --no-source-scan
+npx unslop autopilot --no-unslop
+npx unslop autopilot --dry-run
 ```
 
 ## Readiness bands
@@ -264,13 +285,13 @@ A placeholder can be useful in a starter template. It is dangerous in an impleme
 ## CLI Reference
 
 ```bash
-npx vibe-design-md-architect <command> [args]
+npx unslop <command> [args]
 ```
 
 Short alias:
 
 ```bash
-npx vdma <command> [args]
+npx unslop <command> [args]
 ```
 
 | Command | What it does |
@@ -279,17 +300,17 @@ npx vdma <command> [args]
 | `init` | Creates missing `PRODUCT.md`, `DESIGN.md`, and `AGENTS.md` |
 | `audit` | Runs artifact gates and prints score, readiness, and category breakdown |
 | `repair` | Adds safe missing sections and prepares agent-readable fixes |
-| `report` | Writes `.vibe-design/report.md` and `.vibe-design/report.json` |
+| `report` | Writes `.unslop/report.md` and `.unslop/report.json` |
 | `doctor` | Checks runtime and project assumptions |
 | `update` | Updates the CLI package |
 
 Common usage:
 
 ```bash
-npx vdma init
-npx vdma audit --verbose
-npx vdma repair --dry-run --report
-npx vdma autopilot
+npx unslop init
+npx unslop audit --verbose
+npx unslop repair --dry-run --report
+npx unslop autopilot
 ```
 
 ## Base gates and readiness-layer checks
@@ -301,7 +322,7 @@ The original numbered gates still define the core UI governance system.
 | 1 | Design System Baseline | Select a baseline before design work |
 | 2 | Intake Session | Capture product, user, job, localization, and risk context |
 | 3 | Standards Search | Check current WCAG, MDN, web.dev, and framework guidance when possible |
-| 4 | Impeccable Install | Record or run relevant setup before UI work |
+| 4 | Unslop Install | Record or run relevant setup before UI work |
 | 5 | PRODUCT.md | Strategy artifact exists and passes contract |
 | 6 | DESIGN.md Contract | Required design sections and decisions exist |
 | 7 | Rules Engine | All artifact gates run consistently |
@@ -340,10 +361,10 @@ Readiness-layer checks now add AGENTS.md resolution, taste calibration, placehol
 ## Scanners
 
 ```bash
-npx vdma scan src/
-npx vdma scan:a11y src/
-npx vdma scan:a11y src/ --strict
-npx vdma scan:viewport http://localhost:3000
+npx unslop scan src/
+npx unslop scan:a11y src/
+npx unslop scan:a11y src/ --strict
+npx unslop scan:viewport http://localhost:3000
 ```
 
 The scanners detect source-level issues that artifact rules cannot safely auto-patch. Those issues are written into fix-list output for the coding agent.
@@ -356,9 +377,9 @@ After a healthy run, a project can contain:
 PRODUCT.md                  product strategy and constraints
 DESIGN.md                   design contract and implementation rules
 AGENTS.md                   instructions for AI coding agents
-.vibe-design/report.md      human-readable audit report
-.vibe-design/report.json    machine-readable audit result
-.vibe-design/fix-list.md    agent-readable fix list when source issues exist
+.unslop/report.md      human-readable audit report
+.unslop/report.json    machine-readable audit result
+.unslop/fix-list.md    agent-readable fix list when source issues exist
 VDMA-FIXES.md               source fix handoff from autopilot scans
 ```
 
@@ -380,7 +401,7 @@ VDMA-FIXES.md               source fix handoff from autopilot scans
 ## Repository structure
 
 ```text
-vibe-design-md-architect/
+unslop/
 ├── bin/                         CLI entrypoint
 ├── src/
 │   ├── commands/                init, audit, repair, report, autopilot
@@ -400,10 +421,10 @@ vibe-design-md-architect/
 ## Recommended workflow
 
 ```bash
-npx vdma autopilot
+npx unslop autopilot
 # read the readiness band and fix list
 # apply required fixes
-npx vdma autopilot
+npx unslop autopilot
 # proceed only when readiness is agent-ready or intentionally accepted by the team
 ```
 
@@ -413,8 +434,9 @@ Read [`CONTRIBUTING.md`](./CONTRIBUTING.md) before adding a gate, scanner, templ
 
 ## Current documented behavior
 
-**v1.9.6 docs**
+**v1.9.8 docs**
 
+- Strict Gates Enforcement: All warnings and info rules are now elevated to errors.
 - AGENTS.md support across init, audit, repair, reports, and package publishing
 - readiness bands and category scoring
 - taste calibration rules
@@ -428,6 +450,6 @@ Read [`CONTRIBUTING.md`](./CONTRIBUTING.md) before adding a gate, scanner, templ
 
 **Built for AI-first frontend workflows that need judgment before code.**
 
-[GitHub](https://github.com/imMamdouhaboammar/vibe-design-md-architect) · [npm](https://www.npmjs.com/package/vibe-design-md-architect) · [skills.sh](https://skills.sh/imMamdouhaboammar/vibe-design-md-architect/vibe-design-md-architect) · [Issues](https://github.com/imMamdouhaboammar/vibe-design-md-architect/issues)
+[GitHub](https://github.com/imMamdouhaboammar/unslop) · [npm](https://www.npmjs.com/package/unslop) · [skills.sh](https://skills.sh/imMamdouhaboammar/unslop/unslop) · [Issues](https://github.com/imMamdouhaboammar/unslop/issues)
 
 </div>

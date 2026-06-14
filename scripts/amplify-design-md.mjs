@@ -25,7 +25,7 @@ const checks = [
   ['Missing Intake Session Gate', !/Intake Session Gate|INTAKE\.session\.md|intake/i.test(oldDesign)],
   ['Missing 2026 Standards Gate', !/2026 Standards Gate|STANDARDS\.search-notes\.md|standards search/i.test(oldDesign)],
   ['Missing Rules Engine Gate', !/Rules Engine Gate|run-gates\.mjs|rules engine/i.test(oldDesign)],
-  ['Missing Impeccable setup gate', !/npx\s+impeccable\s+skills\s+install/i.test(oldDesign)],
+  ['Missing Unslop setup gate', !/npx\s+unslop\s+skills\s+install/i.test(oldDesign)],
   ['Missing Creative North Star', !/Creative North Star/i.test(oldDesign)],
   ['Missing contrast rules', !/contrast|4\.5:1|3:1/i.test(oldDesign)],
   ['Missing RTL/LTR directionality rules', !/rtl|ltr|directionality|dir=|text-align:\s*start|logical/i.test(oldDesign)],
@@ -79,7 +79,7 @@ const report = `# DESIGN.md Amplification Report
 - Intake gate required: yes
 - Standards search gate required: yes
 - Rules engine required: yes
-- Impeccable setup required: yes
+- Unslop setup required: yes
 - Validation status: pending after Claude rewrite
 
 ## Design system baseline
@@ -131,12 +131,12 @@ Run before implementation:
 node scripts/run-gates.mjs ${targetFile} PRODUCT.md src
 \`\`\`
 
-## Impeccable setup status
+## Unslop setup status
 
 The coding agent must run this command from the project root before implementation:
 
 \`\`\`bash
-npx impeccable skills install
+npx unslop skills install
 \`\`\`
 
 ## Remaining assumptions
@@ -151,7 +151,7 @@ npx impeccable skills install
 - [ ] Rules Engine Gate exists
 - [ ] Six top-level sections only
 - [ ] Creative North Star exists
-- [ ] Impeccable setup gate exists
+- [ ] Unslop setup gate exists
 - [ ] Contrast rules exist
 - [ ] Icon system rules exist
 - [ ] RTL/LTR directionality rules exist
@@ -165,7 +165,7 @@ npx impeccable skills install
 const scaffold = `# DESIGN.md
 
 > Amplified from: ${path.basename(designFile)}
-> This scaffold must be completed by Claude using vibe-design-md-architect, references/amplify-workflow.md, and the old design file.
+> This scaffold must be completed by Claude using unslop, references/amplify-workflow.md, and the old design file.
 
 ## Overview
 
@@ -187,12 +187,12 @@ node scripts/score-design-md.mjs ${targetFile} PRODUCT.md
 node scripts/run-gates.mjs ${targetFile} PRODUCT.md src
 \`\`\`
 
-### Impeccable setup gate
+### Unslop setup gate
 
 Before implementation, the coding agent must run this command from the project root when shell access exists:
 
 \`\`\`bash
-npx impeccable skills install
+npx unslop skills install
 \`\`\`
 
 If the command has already been run, confirm it. If it cannot run, document the failure reason and continue using this file as the source of truth. UI implementation must not start before this setup gate is attempted.

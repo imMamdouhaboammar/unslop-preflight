@@ -5,7 +5,7 @@
 1. Mode Classification Gate
 2. Intake Session Gate
 3. Standards Search Gate
-4. Impeccable Setup Gate
+4. Unslop Setup Gate
 5. PRODUCT.md Gate
 6. DESIGN.md Contract Gate
 7. Rules Engine Gate
@@ -24,12 +24,12 @@ Create or update `INTAKE.session.md`. Extract inferable context first. Ask at mo
 
 Create or update `STANDARDS.search-notes.md`. Use live official sources when web access exists. Mark bundled-references-only when unavailable.
 
-## Impeccable Setup Gate
+## Unslop Setup Gate
 
 Attempt:
 
 ```bash
-npx impeccable skills install
+npx unslop skills install
 ```
 
 Document failure if unavailable.
@@ -65,5 +65,5 @@ Run source scanners before final handoff.
 
 ```bash
 node scripts/scan-ui-implementation.mjs src
-npx impeccable detect src/
+npx unslop detect src/
 ```

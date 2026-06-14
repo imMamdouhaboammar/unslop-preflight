@@ -19,7 +19,7 @@ export const typographyRules = [
     'typography-scale-missing',
     'DESIGN.md needs an explicit typography scale',
     'typography-governance',
-    'warning',
+    'error',
     'DESIGN.md',
     (ctx) => Boolean(designDoc(ctx)) && !typeScale.test(designDoc(ctx)),
     'Add a typography scale that defines display, headline, title, body, label, helper, and error text sizes instead of ad hoc text sizes.'
@@ -28,7 +28,7 @@ export const typographyRules = [
     'typography-hierarchy-missing',
     'DESIGN.md needs text hierarchy roles',
     'typography-governance',
-    'warning',
+    'error',
     'DESIGN.md',
     (ctx) => Boolean(designDoc(ctx)) && (!hierarchyTerms.test(designDoc(ctx)) || !sizeTokens.test(designDoc(ctx))),
     'Define named text roles with sizes and usage rules, such as display, h1, h2, body, label, helper text, and validation error text.'
@@ -46,7 +46,7 @@ export const typographyRules = [
     'random-type-sizing-language',
     'DESIGN.md contains random typography sizing language',
     'anti-ai-slop',
-    'warning',
+    'error',
     'DESIGN.md',
     (ctx) => randomTypeLanguage.test(designDoc(ctx)) && !typeScale.test(designDoc(ctx)),
     'Replace vague size language with a real type scale and hierarchy. Headline size must follow content importance, viewport, and reading density.'
@@ -55,7 +55,7 @@ export const typographyRules = [
     'typography-line-height-missing',
     'Typography scale needs line-height or readability rules',
     'typography-governance',
-    'warning',
+    'error',
     'DESIGN.md',
     (ctx) => Boolean(designDoc(ctx)) && typeScale.test(designDoc(ctx)) && !lineHeightGuard.test(designDoc(ctx)),
     'Add line-height, text measure, and readability rules so large Arabic/English headings and dense form labels do not feel randomly sized.'
@@ -64,7 +64,7 @@ export const typographyRules = [
     'rtl-typography-contract-missing',
     'Arabic or RTL interfaces need a typography contract',
     'typography-governance',
-    'warning',
+    'error',
     'DESIGN.md',
     (ctx) => rtlTerms.test(ctx.all || designDoc(ctx)) && !rtlTypeGuard.test(designDoc(ctx)),
     'For Arabic, RTL, or bilingual interfaces, define Arabic font handling, Latin fallback, line-height, label density, and mixed-language heading behavior.'
