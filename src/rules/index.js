@@ -1,2 +1,1 @@
-// temporary placeholder
-export const rules = [];
+export { rules } from './index.backup.js';
