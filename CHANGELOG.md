@@ -1,5 +1,19 @@
 # Changelog
 
+## v1.9.6 - Install Agent Harness Gate (2026-06-14)
+
+### Added
+
+- **Install Agent Harness readiness.** The audit system now checks whether the agent handoff asks the coding agent to inspect the project and recommend only the missing skills, tools, and harnesses needed for the current work.
+- **Bulk-install guard.** Harness guidance must warn against installing every available skill or tool because unnecessary global context can slow or confuse AI coding agents.
+- **Priority matrix requirement.** Harness recommendations should explain priority, project-specific reason, when to use the item, and when to skip it.
+- **Trust and verification notes.** Harness guidance should include source review, version checks, dry runs, restart notes, and rollback guidance where relevant.
+- **Harness catalog guide.** Added `docs/INSTALL_AGENT_HARNESS.md` to explain how to classify design, review, planning, research, runtime, and external-app harnesses.
+
+### Why it matters
+
+Many VDMA users are vibe coders who do not know which agent skills, scanners, plugins, and runtime helpers are worth installing. This gate turns setup into a project-specific recommendation step instead of a bulk-install habit.
+
 ## v1.9.5 - Root Cause Mode Gates (2026-06-13)
 
 ### Added
@@ -78,28 +92,3 @@ This release moves the system from a checklist-only design gate to an AI-agent r
 - `doctor` command for runtime and project assumptions.
 - `--agent-prompt` output mode for writing fix lists into `.vibe-design/fix-list.md`.
 - Cleaner CLI output with JSON-safe logging behavior.
-
-## v1.8.0 - Agentic Autopilot Loop (2026-06-08)
-
-### Added
-
-- `npx vdma autopilot` as the main one-command loop.
-- Multi-pass repair flow for `PRODUCT.md` and `DESIGN.md`.
-- `VDMA-FIXES.md` for source code issues that require an agent or human to fix.
-- `npx vdma repair` command.
-- Autopilot options: `--max-passes`, `--no-source-scan`, `--no-impeccable`, and `--dry-run`.
-
-## v1.7.0 - Popup Positioning and Directionality Hardening (2026-06-08)
-
-### Added
-
-- Gate 23: Popup and Floating Element Positioning.
-- Strategy A/B/C positioning declaration for floating UI.
-- Portal mounting rule for elements that need to escape clipping parents.
-- Z-index token scale for dropdowns, tooltips, modals, and toasts.
-
-### Changed
-
-- Directionality is now conditional. LTR remains the default unless intake confirms Arabic, Hebrew, or another RTL language.
-
-## v1.6.0 - Dashboard Shell, Overlay Stack, and Sensitive Data Gates (2026-06-03)
