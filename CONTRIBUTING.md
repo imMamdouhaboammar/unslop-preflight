@@ -25,6 +25,10 @@ Use a readiness-layer rule when the rule cuts across artifacts, such as:
 - taste calibration
 - category breakdowns
 - agent guidance file resolution
+- root-cause governance
+- install-agent-harness readiness
+
+Use an overlay or implementation-behavior rule when the gate protects UI behavior such as modal sizing, stacking context, portal policy, viewport behavior, source scans, or collision handling.
 
 Do not force every rule into the numbered gate list.
 
@@ -38,10 +42,23 @@ Common locations:
 - `src/rules/design.js`
 - `src/rules/taste.js`
 - `src/rules/placeholders.js`
+- `src/rules/rootCause.js`
+- `src/rules/agentHarness.js`
+- `src/rules/modalViewport.js`
+- `src/rules/stacking.js`
 - `src/rules/agent.js`
 - `src/rules/index.js`
 
 Keep checks focused, deterministic, and easy to explain in a report.
+
+A good rule should include:
+
+- stable `id`
+- clear `category`
+- useful `severity`
+- direct `message`
+- practical `suggestedFix`
+- minimal false positives
 
 ### 3. Update templates when the rule requires new artifact content
 
@@ -77,6 +94,7 @@ At minimum, test:
 - the failure case
 - the passing case
 - compatibility with existing files when relevant
+- pipeline registration when the rule is exported through `src/rules/index.js`
 
 Use:
 
@@ -88,13 +106,13 @@ npm test
 
 When changing a gate:
 
-- keep the gate number stable
+- keep the gate ID stable unless the behavior is intentionally new
 - update the rule code
 - update `SKILL.md`
 - update relevant templates
 - update `README.md` if the public behavior changed
 - update `CHANGELOG.md`
-- update `docs/AI_AGENT_READINESS.md` if readiness, taste, placeholder, report, or AGENTS behavior changed
+- update the relevant guide in `docs/`
 
 ## Updating AGENTS.md behavior
 
@@ -106,6 +124,7 @@ Rules:
 - Existing projects with only `AGENT.md` should remain compatible.
 - Audit and repair should read the active agent guidance file.
 - Reports and fix lists should tell coding agents to read `PRODUCT.md`, `DESIGN.md`, and `AGENTS.md` unless compatibility mode is active.
+- Agent guidance should include Root Cause Mode and Install Agent Harness behavior when relevant.
 
 ## Updating readiness behavior
 
@@ -142,6 +161,62 @@ Good taste rules check for concrete design decisions:
 - Pre-flight Check
 
 Avoid vague checks that only enforce words like modern, clean, premium, or minimal.
+
+## Updating Root Cause Mode
+
+Root Cause Mode rules should force diagnosis before patching.
+
+When changing root-cause behavior, update:
+
+- `src/rules/rootCause.js`
+- `docs/ROOT_CAUSE_MODE.md`
+- `AGENTS.md`
+- `SKILL.md`
+- `README.md`
+- tests for blocked patch language and verification proof
+
+Do not weaken the rule into a generic suggestion. The system should block symptom-only fixes when the task clearly involves a bug, broken UI, overflow, clipping, viewport, z-index, or overlay failure.
+
+## Updating overlay, modal, and stacking gates
+
+Overlay behavior is high-risk because a screenshot can look fine while real viewports break.
+
+When changing overlay or stacking behavior, update:
+
+- `src/rules/modalViewport.js`
+- `src/rules/stacking.js`
+- `docs/OVERLAY_LAYERING_GATES.md`
+- `SKILL.md`
+- `README.md`
+- tests for missing viewport contract, blind z-index, portal policy, and stacking context audit
+
+Required concepts should stay explicit:
+
+- viewport contract
+- width guard
+- height guard
+- internal scroll
+- mobile behavior
+- QA proof
+- stacking context audit
+- layer scale
+- portal policy
+- conflict matrix
+
+## Updating Install Agent Harness
+
+Harness guidance should recommend a small, project-specific set of skills and tools. It should not encourage bulk install.
+
+When changing harness behavior, update:
+
+- `src/rules/agentHarness.js`
+- `docs/INSTALL_AGENT_HARNESS.md`
+- `AGENTS.md`
+- `SKILL.md`
+- `README.md`
+- tests for inventory, bulk-install guard, priority matrix, and trust notes
+
+Each recommendation should explain priority, why it matters now, setup method after source review, verification, and skip condition.
 
 ## Updating placeholder rules
 
@@ -184,6 +259,9 @@ Check these files:
 - [ ] `AGENTS.md`
 - [ ] `CONTRIBUTING.md`
 - [ ] `docs/AI_AGENT_READINESS.md`
+- [ ] `docs/ROOT_CAUSE_MODE.md`
+- [ ] `docs/OVERLAY_LAYERING_GATES.md`
+- [ ] `docs/INSTALL_AGENT_HARNESS.md`
 - [ ] package metadata if published files changed
 - [ ] reference files if the rule needs deeper explanation
 - [ ] templates if generated artifacts changed
@@ -198,6 +276,9 @@ Before opening or merging a PR, verify:
 - [ ] Readiness output still gives a clear next action.
 - [ ] Placeholder checks do not block valid content.
 - [ ] Taste rules enforce concrete decisions, not personal preference.
+- [ ] Root-cause rules block symptom-only fixes but allow diagnosed fixes.
+- [ ] Overlay rules require viewport, stacking, and portal reasoning when relevant.
+- [ ] Harness rules warn against bulk install and require project-specific priority.
 - [ ] Tests were added or updated when behavior changed.
 - [ ] `npm test` was run when local environment allowed it.
 - [ ] Docs were updated with the behavior change.
