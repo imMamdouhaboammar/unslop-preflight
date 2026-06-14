@@ -10,7 +10,7 @@ This repository is a quality gate for AI-assisted frontend work. Keep every chan
 - Treat `AGENTS.md` as the preferred agent guidance file for new projects.
 - Preserve compatibility with existing `AGENT.md` files.
 - Keep generated `PRODUCT.md` and `DESIGN.md` guidance specific, practical, and implementation-ready.
-- Treat accessibility, responsive behavior, privacy, RTL support, viewport governance, overlay rules, sensitive-data handling, root-cause diagnosis, and design-token discipline as hard requirements.
+- Treat accessibility, responsive behavior, privacy, RTL support, viewport governance, overlay rules, sensitive-data handling, root-cause diagnosis, install-agent-harness guidance, and design-token discipline as hard requirements.
 - Add or update tests when behavior changes.
 - Run `npm test` before proposing or merging a code change when the local environment allows it.
 
@@ -28,13 +28,28 @@ Use this sequence before editing code:
 
 Do not use quick fixes, magic numbers, `z-9999`, forced dimensions, or broad rewrites unless the root cause analysis proves they are necessary.
 
+## Install Agent Harness
+
+Before handing a project to a coding agent, inspect the project and recommend only the skills or tools it actually needs now.
+
+Use this sequence:
+
+1. Detect the active agent host: Claude Code, Codex, Cursor, Gemini CLI, Copilot, Antigravity, OpenCode, Windsurf, or other compatible host.
+2. Inspect project shape: framework, test setup, UI risk, review risk, design-system maturity, runtime error risk, and whether the project is a small page, large app, migration, or refactor.
+3. Recommend a small harness inventory with priority: required now, recommended now, optional later, or skip.
+4. Explain the job of each recommended item and why it matters for this specific project.
+5. Include install command only when the source is trusted and relevant.
+6. Include verification: version check, dry run, source review, restart note, and rollback note where applicable.
+
+Tip: This engine can work with many skills and tools. Install only the ones you actually need. Bulk-installing every skill adds unnecessary context overhead for the AI agent on every run and increases the review surface.
+
 ## Files to inspect before changing behavior
 
 - `src/core/auditor.js` for scoring, readiness, categories, and artifact loading.
 - `src/core/reporter.js` for report and fix-list output.
 - `src/core/templates.js` for generated `PRODUCT.md`, `DESIGN.md`, and `AGENTS.md` content.
 - `src/commands/init.js` and `src/commands/repair.js` for artifact creation and safe repair.
-- `src/rules/` for product, design, taste, placeholder, root-cause, agent, and UX rules.
+- `src/rules/` for product, design, taste, placeholder, root-cause, agent-harness, agent, and UX rules.
 - `README.md`, `CHANGELOG.md`, `SKILL.md`, `CONTRIBUTING.md`, and `docs/AI_AGENT_READINESS.md` when behavior changes.
 
 ## Readiness rules
