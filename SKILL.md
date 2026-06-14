@@ -1,6 +1,6 @@
 ---
 name: vibe-design-md-architect
-description: Create, audit, repair, and score PRODUCT.md, DESIGN.md, and AGENTS.md before AI-assisted frontend implementation. Includes 23 design gates, readiness bands, taste calibration, placeholder detection, accessibility, RTL/LTR, viewport, modal, overlay, token, and sensitive-data checks.
+description: Create, audit, repair, and score PRODUCT.md, DESIGN.md, and AGENTS.md before AI-assisted frontend implementation. Includes base UI gates, readiness bands, taste calibration, placeholder blocking, Root Cause Mode, modal viewport governance, stacking reasoning, install-agent-harness guidance, accessibility, RTL/LTR, token, privacy, and source-scan checks.
 ---
 
 # Vibe Design MD Architect
@@ -15,9 +15,9 @@ The skill creates and audits the product and design artifacts that should exist 
 - `DESIGN.md`
 - `AGENTS.md`
 
-The goal is to stop the agent from inventing vague product decisions, generic visual style, fragile accessibility behavior, weak responsive behavior, unsafe modals, broken overlays, fake data, hardcoded tokens, and unresolved placeholders.
+The goal is to stop the agent from inventing vague product decisions, generic visual style, fragile accessibility behavior, weak responsive behavior, unsafe modals, broken overlays, fake data, hardcoded tokens, unresolved placeholders, symptom patches, and unnecessary tool installs.
 
-This skill is useful for SaaS dashboards, admin panels, landing pages, product pages, bilingual RTL/LTR products, Arabic-first products, design-system preparation, UI redesigns, and AI-generated frontend cleanup.
+This skill is useful for SaaS dashboards, admin panels, landing pages, product pages, bilingual RTL/LTR products, Arabic-first products, design-system preparation, UI redesigns, AI-generated frontend cleanup, and vibe-coded projects that need a safer agent setup.
 
 Do not use it for backend-only tasks, database-only work, non-UI scripts, or projects where a mature design system already fully governs frontend implementation.
 
@@ -25,7 +25,7 @@ Do not use it for backend-only tasks, database-only work, non-UI scripts, or pro
 
 Do not let the coding agent start from a short prompt.
 
-The agent should start from a clear product read, a specific design contract, a known design system direction, concrete taste controls, accessibility constraints, responsive rules, and implementation handoff instructions.
+The agent should start from a clear product read, a specific design contract, a known design system direction, concrete taste controls, accessibility constraints, responsive rules, root-cause governance, overlay rules, install-agent-harness guidance, and implementation handoff instructions.
 
 If those artifacts are missing, weak, or filled with placeholders, implementation is blocked.
 
@@ -47,6 +47,8 @@ Before writing frontend code, do all of the following:
 12. Write source-code fixes into a fix list instead of patching risky implementation details blindly.
 13. Report score, readiness, category breakdown, and next action.
 14. Block UI implementation when readiness is `blocked` or `needs-spec-work`.
+15. For bug, layout, viewport, overlay, z-index, clipping, or regression work, require Root Cause Mode before any fix.
+16. For vibe-coded projects, recommend only the missing agent skills or tools needed now. Do not bulk-install everything.
 
 ## Project modes
 
@@ -61,6 +63,8 @@ Classify each request as one of these modes:
 | `audit` | The user asks for quality review or diagnosis |
 | `amplify` | The user has an old, weak, incomplete, or generic `DESIGN.md` |
 | `repair` | The user wants safe artifact fixes without broad rewrites |
+| `root-cause-fix` | The user describes a broken UI, regression, clipping, viewport, z-index, or overlay issue |
+| `harness-readiness` | The user needs help choosing project-specific agent skills, plugins, scanners, or runtime helpers |
 
 If the mode is unclear, infer it and state the assumption briefly.
 
@@ -114,7 +118,6 @@ It should include:
 - Design Read
 - Taste Controls
 - Design System Decision
-- Impeccable setup rule when relevant
 - visual direction
 - color tokens
 - typography scale
@@ -124,15 +127,18 @@ It should include:
 - responsive behavior
 - accessibility rules
 - directionality rules
-- modal and dialog rules
+- modal viewport contract
 - overlay and feedback rules
+- stacking context and z-index reasoning
 - popup positioning strategy
 - sensitive data display rules
+- Root Cause Mode rules for broken UI work
+- Install Agent Harness recommendations when relevant
 - anti-AI-slop guidelines
 - agent handoff
 - pre-flight check
 
-A weak `DESIGN.md` that only says "modern", "premium", "clean", "minimal", "SaaS-like", or "AI-powered" is not implementation-ready.
+A weak `DESIGN.md` that only says modern, premium, clean, minimal, SaaS-like, or AI-powered is not implementation-ready.
 
 ## AGENTS.md contract
 
@@ -147,6 +153,8 @@ It should include:
 - product/design constraints to preserve
 - accessibility and privacy requirements
 - readiness rules
+- Root Cause Mode sequence
+- Install Agent Harness sequence
 - instruction to apply fix lists before implementation
 
 New projects should use `AGENTS.md`. Existing projects with `AGENT.md` remain supported.
@@ -189,12 +197,6 @@ The agent should write a short interpretation of:
 - what tension the design must solve
 - what the design must avoid
 
-Example format:
-
-```text
-Reading this as: [specific product] for [specific user] who needs [specific job] under [specific constraint]. The interface should feel [specific direction], not [anti-reference].
-```
-
 ### Taste Controls
 
 Use three dials, each from 1 to 10:
@@ -223,13 +225,58 @@ Ban generic defaults that do not serve the product, such as:
 - default font choices with no rationale
 - vague adjectives instead of design decisions
 
-### Agent Handoff
+## Root Cause Mode
 
-State what the coding agent must preserve and what it must not invent.
+When a request mentions a bug, issue, broken UI, regression, overflow, clipping, z-index, viewport, modal, popup, drawer, dropdown, tooltip, toast, focus trap, or layout failure, the agent must diagnose before editing.
 
-### Pre-flight Check
+Required sequence:
 
-Before implementation, confirm that `PRODUCT.md`, `DESIGN.md`, and `AGENTS.md` are specific, complete, and free of unresolved placeholders.
+1. Reproduce or restate the failing state.
+2. Separate visible symptoms from the underlying cause.
+3. Identify the smallest root fix.
+4. Check nearby regressions.
+5. Provide verification proof.
+
+Do not accept quick fixes, workarounds, magic numbers, forced dimensions, `z-9999`, `z-index: 9999`, or broad rewrites without diagnosis.
+
+## Modal viewport and overlay governance
+
+When `DESIGN.md` mentions a modal, dialog, popup, drawer, sheet, overlay, lightbox, popover, toast, or command palette, the design must include:
+
+- viewport contract
+- width guard
+- height guard
+- internal scroll behavior
+- mobile behavior
+- QA proof for small viewports, landscape, keyboard-open state, no clipping, and no horizontal overflow
+
+## Stacking and z-index reasoning
+
+Layered UI must include:
+
+- placement plan
+- stacking context audit
+- layer scale
+- portal policy
+- conflict matrix
+
+Do not treat overlay problems as number-only problems. Raising z-index without root-cause diagnosis is a symptom patch.
+
+## Install Agent Harness
+
+Before implementation, the agent should inspect the project and recommend only the missing skills and tools needed now.
+
+Required output:
+
+- active host: Claude Code, Codex, Cursor, Gemini CLI, Copilot, Antigravity, OpenCode, Windsurf, or another host
+- project shape: static page, React app, Next app, dashboard, design-system work, migration, refactor, or bug fix
+- risk profile: runtime errors, duplicate code, missing tests, weak design spec, large-codebase navigation, UI quality, external app integration
+- recommendation priority: required now, recommended now, optional later, or skip
+- reason for this project now
+- setup method or command after source review
+- verification and rollback notes
+
+Do not bulk-install every skill or tool. Extra skills add context overhead and can introduce conflicting guidance.
 
 ## Placeholder policy
 
@@ -269,10 +316,13 @@ Reports should group issues by practical category, including:
 - taste calibration
 - placeholders
 - agent guidance
+- root cause governance
+- install agent harness
 - accessibility
 - responsive behavior
 - viewport governance
 - modal and overlay governance
+- stacking and z-index reasoning
 - popup positioning
 - sensitive data display
 - security and privacy
@@ -280,35 +330,35 @@ Reports should group issues by practical category, including:
 
 Use category breakdowns to tell the user where to focus first.
 
-## The 23 hard gates
+## Base gates and readiness layer
 
-| # | Gate | What it enforces |
-|---|------|------------------|
-| 1 | Design System Baseline | Select a baseline before design work |
-| 2 | Intake Session | Capture product, user, job, localization, and risk context |
-| 3 | Standards Search | Check current standards when web access exists |
-| 4 | Impeccable Install | Run or record `npx impeccable skills install` |
-| 5 | PRODUCT.md | Product strategy artifact exists and passes contract |
-| 6 | DESIGN.md Contract | Design artifact contains required sections and decisions |
-| 7 | Rules Engine | Gate checks run consistently |
-| 8 | Accessibility and Directionality | Focus, contrast, ARIA, LTR by default, RTL when required |
-| 9 | UX-CRX Logic | Primary action, secondary action, recovery, decision point |
-| 10 | Mobile and Responsive | Mobile behavior is designed deliberately |
-| 11 | Popup and Feedback System | No native popups for product flows |
-| 12 | Implementation Scan | Source blockers are detected before handoff |
-| 13 | Amplify Preservation | Strong existing decisions are preserved during repair |
-| 14 | Semantic HTML and Interaction | No clickable divs or keyboard-dead controls |
-| 15 | Realistic Content | No lorem ipsum, fake users, or sample-only data |
-| 16 | Design Tokens | No hardcoded hex, magic spacing, or token drift |
-| 17 | Drift Control | Single source of truth and gates rerun per merge |
-| 18 | Viewport Governance | Scroll ownership, `dvh` fallback, no root overflow hacks |
-| 19 | Modal and Dialog | Focus trap, scroll lock, safe sizing, inert background |
-| 20 | Dashboard Shell | Grid, scroll ownership, auth hierarchy, form quality |
-| 21 | Overlay Stack | Centralized overlay system and collision handling |
-| 22 | Sensitive Data Display | Mask tokens and protect sensitive flows |
-| 23 | Popup and Floating Positioning | Strategy A/B/C, flip/shift/size, portals, z-index tokens |
+The original 23 numbered gates still define the core UI governance system:
 
-Taste, placeholder, readiness, and AGENTS.md checks are readiness-layer checks that sit on top of the numbered gates.
+1. Design System Baseline
+2. Intake Session
+3. Standards Search
+4. Impeccable Install
+5. PRODUCT.md
+6. DESIGN.md Contract
+7. Rules Engine
+8. Accessibility and Directionality
+9. UX-CRX Logic
+10. Mobile and Responsive
+11. Popup and Feedback System
+12. Implementation Scan
+13. Amplify Preservation
+14. Semantic HTML and Interaction
+15. Realistic Content
+16. Design Tokens
+17. Drift Control
+18. Viewport Governance
+19. Modal and Dialog
+20. Dashboard Shell
+21. Overlay Stack
+22. Sensitive Data Display
+23. Popup and Floating Positioning
+
+The readiness layer adds AGENTS.md support, readiness bands, taste calibration, placeholder blocking, Root Cause Mode, modal viewport hard gates, stacking reasoning, and Install Agent Harness readiness.
 
 ## Source scanner expectations
 
@@ -327,6 +377,8 @@ When source exists, scan for:
 - modals without accessible names or focus behavior
 - dropdowns without collision handling
 - tooltips or overlays without z-index tokens
+- blind z-index escalation
+- overlay viewport overflow risk
 
 Source issues that cannot be safely auto-fixed should be written into a fix list for the coding agent.
 
@@ -359,7 +411,7 @@ Amplify Mode should:
 1. Read the old design file completely.
 2. Preserve product-specific decisions that are useful.
 3. Remove weak generic language.
-4. Add missing taste, accessibility, responsive, modal, overlay, popup, token, and handoff rules.
+4. Add missing taste, accessibility, responsive, modal, overlay, popup, token, root-cause, harness, and handoff rules.
 5. Convert loose notes into a stronger `DESIGN.md` contract.
 6. Produce an explanation of what changed and why.
 7. Re-audit the result.
@@ -409,7 +461,7 @@ The report should tell the user whether implementation is allowed, not just list
 When the project becomes ready, give the coding agent this instruction:
 
 ```text
-Read PRODUCT.md, DESIGN.md, and AGENTS.md before writing UI code. Preserve the Design Read, Taste Controls, Design System Decision, accessibility rules, responsive rules, modal and overlay rules, popup positioning strategy, token rules, and sensitive data rules. Apply every item in the generated fix list before final output. Do not invent product, brand, or visual decisions that are not present in the artifacts.
+Read PRODUCT.md, DESIGN.md, and AGENTS.md before writing UI code. Preserve the Design Read, Taste Controls, Design System Decision, accessibility rules, responsive rules, Root Cause Mode, modal viewport rules, overlay and stacking rules, popup positioning strategy, token rules, sensitive data rules, and Install Agent Harness recommendations. Apply every item in the generated fix list before final output. Do not invent product, brand, or visual decisions that are not present in the artifacts.
 ```
 
 ## Documentation sync rule
@@ -422,6 +474,9 @@ When behavior changes, update all relevant docs in the same change:
 - `AGENTS.md`
 - `CONTRIBUTING.md`
 - `docs/AI_AGENT_READINESS.md`
+- `docs/ROOT_CAUSE_MODE.md`
+- `docs/OVERLAY_LAYERING_GATES.md`
+- `docs/INSTALL_AGENT_HARNESS.md`
 - package metadata when published files change
 
 Documentation is part of the system contract. Stale docs cause agents to follow the wrong behavior.
