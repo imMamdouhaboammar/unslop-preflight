@@ -1,23 +1,28 @@
 # AI Agent Readiness System
 
-This document explains the readiness layer added to Vibe Design MD Architect.
+This document explains the readiness layer in Vibe Design MD Architect.
 
-The goal is simple: do not hand a vague product brief or weak design file to an AI coding agent.
+The goal is simple: do not hand a vague product brief, weak design file, or unsafe implementation handoff to an AI coding agent.
 
-VDMA now checks whether the project has enough product truth, design judgment, implementation guidance, and safety constraints before code starts.
+VDMA checks whether the project has enough product truth, design judgment, implementation guidance, root-cause discipline, overlay reasoning, setup awareness, and safety constraints before code starts.
 
 ## What changed
 
-The system now goes beyond the original 23 hard gates.
+The system goes beyond the original 23 numbered UI gates.
 
-It adds four cross-cutting checks:
+It adds cross-cutting readiness checks:
 
 1. `AGENTS.md` support
 2. readiness bands
-3. taste calibration
-4. placeholder blocking
+3. category breakdowns
+4. taste calibration
+5. placeholder blocking
+6. Root Cause Mode
+7. modal viewport and overlay reasoning
+8. stacking and z-index reasoning
+9. Install Agent Harness readiness
 
-These checks sit above the numbered gates. They are not a replacement for accessibility, responsive, modal, overlay, token, or sensitive-data checks. They make the audit result easier to act on.
+These checks sit above the numbered gates. They are not a replacement for accessibility, responsive, modal, overlay, token, or sensitive-data checks. They make the audit result easier to act on and harder for a coding agent to bypass.
 
 ## Active agent guidance file
 
@@ -52,7 +57,7 @@ The audit result should produce a decision band.
 | `agent-ready-with-fix-list` | The handoff is mostly usable, but fixes remain | Apply the fix list, rerun audit |
 | `agent-ready` | The artifacts are specific enough for implementation | Proceed with the coding agent |
 
-The readiness band matters more than the raw score. A score can look acceptable while a single unresolved placeholder or security issue still blocks implementation.
+The readiness band matters more than the raw score. A score can look acceptable while a single unresolved placeholder, security issue, accessibility blocker, missing root-cause diagnosis, or missing overlay contract still blocks implementation.
 
 ## Category breakdown
 
@@ -65,10 +70,13 @@ Useful categories include:
 - taste calibration
 - placeholders
 - agent guidance
+- root cause governance
+- install agent harness
 - accessibility
 - responsive behavior
 - viewport governance
 - modal and overlay governance
+- stacking and z-index reasoning
 - popup positioning
 - sensitive data display
 - security and privacy
@@ -159,6 +167,8 @@ It should include:
 - responsive rules
 - accessibility rules
 - modal and overlay rules
+- root-cause rules
+- install-agent-harness recommendations
 - sensitive-data rules
 - forbidden inventions
 
@@ -171,7 +181,68 @@ Before implementation, confirm:
 - `AGENTS.md` or compatible `AGENT.md` exists
 - no unresolved placeholders remain
 - readiness is not `blocked`
+- root-cause requirements are satisfied for bug or broken UI work
+- overlay and stacking requirements are satisfied for layered UI work
+- selected harness items are explicit and minimal
 - fix-list items are known
+
+## Root Cause Mode
+
+Root Cause Mode turns the prompt pattern "fix the problem from the root" into a required handoff rule.
+
+When the work mentions a bug, issue, broken UI, regression, overflow, clipping, z-index, viewport, modal, popup, drawer, dropdown, tooltip, toast, focus trap, or layout failure, the agent must:
+
+1. Reproduce or restate the failing state.
+2. Separate symptoms from the underlying cause.
+3. Identify the smallest root fix.
+4. Check nearby regressions.
+5. Provide verification proof.
+
+The audit blocks symptom-only language such as quick fix, workaround, hack, just increase, just raise, magic number, `z-9999`, and `z-index: 9999` when it appears without diagnosis.
+
+Read [`ROOT_CAUSE_MODE.md`](./ROOT_CAUSE_MODE.md).
+
+## Overlay and stacking readiness
+
+Overlay-heavy UI needs more than a z-index value.
+
+When `DESIGN.md` mentions modals, dialogs, popups, drawers, sheets, popovers, lightboxes, command palettes, dropdowns, tooltips, sticky headers, fixed headers, or toasts, the design should include:
+
+- viewport contract
+- width guard
+- height guard
+- internal scroll behavior
+- mobile behavior
+- viewport QA proof
+- placement plan
+- stacking context audit
+- layer scale
+- portal policy
+- conflict matrix
+
+This blocks common AI failures such as modals that overflow mobile screens, dropdowns clipped by overflow parents, tooltips trapped by transformed ancestors, and arbitrary `z-9999` fixes.
+
+Read [`OVERLAY_LAYERING_GATES.md`](./OVERLAY_LAYERING_GATES.md).
+
+## Install Agent Harness readiness
+
+Many users are vibe coders. They may not know what agent skills, plugins, scanners, or runtime helpers should be installed before coding.
+
+The Install Agent Harness gate requires the coding agent to inspect the project and recommend only the missing harness items needed now.
+
+The recommendation should include:
+
+- active host
+- project shape
+- current risk profile
+- priority: required now, recommended now, optional later, or skip
+- reason for this project now
+- setup method after source review
+- verification and rollback notes
+
+Do not bulk-install every skill. Extra skills add context overhead, increase review surface, and can introduce conflicting instructions.
+
+Read [`INSTALL_AGENT_HARNESS.md`](./INSTALL_AGENT_HARNESS.md).
 
 ## Placeholder blocking
 
@@ -203,9 +274,9 @@ Score: 82
 Readiness: agent-ready-with-fix-list
 Decision: The project can move toward implementation after the listed source fixes are applied.
 Top categories:
-- placeholders: 1 blocker
+- overlay governance: 1 blocker
+- root cause governance: 1 warning
 - accessibility: 2 warnings
-- taste calibration: 1 warning
 ```
 
 The report should not merely say pass or fail. It should tell the user what to do next.
@@ -217,7 +288,7 @@ When source code has risky issues, the system should not blindly patch everythin
 Instead, it should write a fix list for the coding agent:
 
 ```text
-Read PRODUCT.md, DESIGN.md, and AGENTS.md. Apply every item below. Do not invent design decisions outside the artifacts. Rerun npx vdma audit after applying fixes.
+Read PRODUCT.md, DESIGN.md, and AGENTS.md. Apply every item below. Do not invent design decisions outside the artifacts. Diagnose the root cause before changing code. Rerun npx vdma audit after applying fixes.
 ```
 
 This keeps the repair loop safe.
@@ -227,7 +298,7 @@ This keeps the repair loop safe.
 - `AGENTS.md` is preferred.
 - `AGENT.md` remains compatible.
 - Existing projects should not break only because they use the older filename.
-- New generated files should use the new readiness sections.
+- New generated files should use the readiness sections.
 
 ## Recommended user flow
 
@@ -249,4 +320,7 @@ When the readiness system changes, update:
 - `AGENTS.md`
 - `CONTRIBUTING.md`
 - this file
+- `docs/ROOT_CAUSE_MODE.md`
+- `docs/OVERLAY_LAYERING_GATES.md`
+- `docs/INSTALL_AGENT_HARNESS.md`
 - package metadata if published files change
