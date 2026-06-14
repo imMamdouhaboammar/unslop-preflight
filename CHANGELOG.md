@@ -1,5 +1,19 @@
 # Changelog
 
+## v1.9.7 - Visual Slop Gates (2026-06-14)
+
+### Added
+
+- **Modal scrollbar treatment gate.** Long overlays must remain scrollable without exposing a heavy native scrollbar on the modal shell.
+- **Modal shell scrollbar risk warning.** `DESIGN.md` now flags shell-level scrollbar language unless the design defines a restrained body-pane scroll treatment.
+- **Typography governance.** New rules require a type scale, hierarchy roles, responsive caps for oversized headings, line-height guidance, and RTL/Arabic typography handling.
+- **Typography guide.** Added `docs/TYPOGRAPHY_GATES.md`.
+- **Visual slop smoke tests.** Added focused tests for modal scrollbar and typography gates.
+
+### Why it matters
+
+AI coding agents often produce modal forms with ugly exposed scrollbars and random headline sizes. This release blocks those patterns at the design artifact stage before implementation.
+
 ## v1.9.6 - Install Agent Harness Gate (2026-06-14)
 
 ### Added
@@ -78,17 +92,3 @@ This release moves the system from a checklist-only design gate to an AI-agent r
 ### Migration notes
 
 - No breaking change for users with `AGENT.md`; the system still detects it.
-- New projects should use `AGENTS.md`.
-- If audit output reports `blocked` or `needs-spec-work`, update `PRODUCT.md`, `DESIGN.md`, or `AGENTS.md` before handing the project to a coding agent.
-
-## v1.9.0 - 10-Point Production Rewrite (2026-06-10)
-
-### Added
-
-- Modular `src/` architecture with separated rules, commands, templates, and reporting.
-- Strict anti-AI-slop rules for generic icon language, fake content, hardcoded design choices, and weak visual defaults.
-- Idempotent repair markers to avoid duplicate injected sections.
-- Deterministic contrast math for WCAG checks.
-- `doctor` command for runtime and project assumptions.
-- `--agent-prompt` output mode for writing fix lists into `.vibe-design/fix-list.md`.
-- Cleaner CLI output with JSON-safe logging behavior.
