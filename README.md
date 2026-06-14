@@ -6,9 +6,9 @@
 
 **A pre-implementation quality gate for `PRODUCT.md`, `DESIGN.md`, and `AGENTS.md` with readiness bands, taste calibration, root-cause governance, overlay reasoning, and install-agent-harness guidance.**
 
-[![Socket Badge](https://badge.socket.dev/npm/package/unslop/1.9.8)](https://badge.socket.dev/npm/package/unslop/1.9.8)
-[![npm](https://img.shields.io/npm/v/unslop?style=flat-square&color=5B21B6&label=npm)](https://www.npmjs.com/package/unslop)
-[![skills.sh](https://img.shields.io/badge/skills.sh-install-5B21B6?style=flat-square)](https://skills.sh/imMamdouhaboammar/unslop)
+[![Socket Badge](https://badge.socket.dev/npm/package/unslop-preflight/1.9.8)](https://badge.socket.dev/npm/package/unslop-preflight/1.9.8)
+[![npm](https://img.shields.io/npm/v/unslop-preflight?style=flat-square&color=5B21B6&label=npm)](https://www.npmjs.com/package/unslop-preflight)
+[![skills.sh](https://img.shields.io/badge/skills.sh-install-5B21B6?style=flat-square)](https://skills.sh/imMamdouhaboammar/unslop-preflight)
 [![Gates](https://img.shields.io/badge/gates-23%2B%20readiness-F59E0B?style=flat-square)](./SKILL.md)
 [![Version](https://img.shields.io/badge/docs-1.9.8-3B82F6?style=flat-square)](./CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/license-MIT-22C55E?style=flat-square)](./LICENSE)
@@ -147,21 +147,21 @@ npx unslop repair --dry-run --report
 ### Option C: install in a project
 
 ```bash
-npm install --save-dev unslop
+npm install --save-dev unslop-preflight
 npx unslop autopilot
 ```
 
 ### Option D: install globally
 
 ```bash
-npm install -g unslop
+npm install -g unslop-preflight
 unslop autopilot
 ```
 
 ### Option E: install as a skill
 
 ```bash
-npx skills add imMamdouhaboammar/unslop
+npx skills add imMamdouhaboammar/unslop-preflight
 ```
 
 ## Autopilot

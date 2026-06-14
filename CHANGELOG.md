@@ -1,16 +1,21 @@
 # Changelog
 
-## v1.9.8 - Strict Gates Enforcement (2026-06-14)
+## v1.9.8 - Strict Gates & Torture Bench Alignment (2026-06-14)
 
 ### Changed
 
-- **Strict Gates Enforcement.** All gates and rules now run in strict mode. All `warning` and `info` severity levels across all rules have been elevated to `error`.
-- **Validation Script Hardening.** `validate-design-md.mjs` and `run-gates.mjs` now enforce stricter regex checks and treat any warning as an immediate failure. Added more strict AI-slop words like "seamless", "delve", and "robust" to the blacklist.
-- **Test Fixes.** Updated tests to account for the new strict behavior and the preference for `AGENTS.md`.
+- **Package Renaming:** Renamed NPM package to `unslop-preflight` to avoid registry naming conflicts.
+- **Strict Gates Enforcement:** All gates and rules now run in strict mode. All `warning` and `info` severity levels across all rules have been elevated to `error`.
+- **Validation Script Hardening:** `validate-design-md.mjs` and `run-gates.mjs` now enforce stricter regex checks and treat any warning as an immediate failure. Added more strict AI-slop words like "seamless", "delve", and "robust" to the blacklist.
+- **Heuristic & Regex Fixes:**
+  - Narrowed down `mobileGuard` in `src/rules/modalViewport.js` to avoid matching generic keyboard navigation headers.
+  - Corrected `modal-internal-scroll-risk` scanner pattern in `src/scanners/overlayScanner.js` to properly identify `overflow-y-scroll`.
+  - Upgraded rule checks to strip auto-injected unslop blocks first, preventing cascading dependencies and ensuring idempotency.
+- **Test Fixes:** Updated tests to account for the new strict behavior and the preference for `AGENTS.md`.
 
 ### Why it matters
 
-To guarantee the highest quality of AI-generated implementations, there can be no "soft" failures. Enforcing all gates as strict errors ensures that no weak design specifications or unresolved assumptions slip through to the coding agent.
+To guarantee the highest quality of AI-generated implementations, there can be no "soft" failures. Aligning torture bench cases and enforcing all gates as strict errors ensures that no weak design specifications or unresolved assumptions slip through to the coding agent, while maintaining perfect idempotency across multiple audit passes.
 
 ## v1.9.7 - Visual Slop Gates (2026-06-14)
 
