@@ -10,6 +10,7 @@ Common failures include:
 
 - The popup is wider than the mobile viewport.
 - The modal height exceeds the screen and cannot scroll.
+- The modal uses a large visible native scrollbar that makes the UI feel unfinished.
 - Content is clipped by a parent with `overflow: hidden` or a scroll container.
 - The overlay appears below a sticky header.
 - A tooltip or dropdown is trapped by a transformed parent.
@@ -26,6 +27,7 @@ The contract must include:
 - Width guard: `max-width`, `max-w`, `width: min(...)`, `clamp(...)`, inset spacing, or an equivalent dynamic width rule.
 - Height guard: `max-height`, `max-h`, `100dvh`, `100svh`, or an equivalent bounded dynamic height rule.
 - Internal scroll: `overflow-y-auto`, `overflow-auto`, `overscroll-contain`, or a documented scrollable body area.
+- Scrollbar treatment: long overlays must not expose a heavy native scrollbar on the modal shell. Prefer a scrollable body pane with hidden, thin, or custom scrollbar treatment plus a visible affordance such as a fade or scroll shadow.
 - Mobile behavior: full-screen, bottom sheet, or bounded centered modal with safe margins under 768px.
 - QA proof: 320x568, 375x667, 390x844, landscape, keyboard-open state, no clipping, and no horizontal overflow.
 
@@ -89,6 +91,8 @@ A useful `DESIGN.md` should answer these conflicts before implementation:
 
 Do not treat an overlay bug as a simple number problem. Raising layer values without a root-cause plan is usually a symptom fix, not a root fix.
 
+Do not solve long modals by exposing a thick native scrollbar on the shell. The scroll behavior belongs inside a bounded content pane with a restrained visual treatment and a clear scroll affordance.
+
 The correct sequence is:
 
 1. Diagnose the placement problem.
@@ -101,7 +105,7 @@ The correct sequence is:
 ## Passing handoff example
 
 ```text
-Modal viewport contract: modal width uses min(92vw, 640px), body max-height uses calc(100dvh - 32px), content scrolls inside modal body, mobile under 768px becomes full-screen with safe padding. QA: checked 320x568, 375x667, 390x844, landscape, keyboard-open state, no clipping, no horizontal overflow.
+Modal viewport contract: modal width uses min(92vw, 640px), body max-height uses calc(100dvh - 32px), content scrolls inside modal body with a hidden/thin scrollbar treatment and a bottom fade affordance. Mobile under 768px becomes full-screen with safe padding. QA: checked 320x568, 375x667, 390x844, landscape, keyboard-open state, no clipping, no horizontal overflow.
 
 Stacking plan: modal renders in overlay root, header remains below modal layer, toast remains above modal only for critical messages. Ancestors with transform/overflow are not allowed to contain the modal. Layer scale: header < dropdown < drawer < modal < critical toast.
 ```
@@ -112,6 +116,8 @@ Stacking plan: modal renders in overlay root, header remains below modal layer, 
 - `modal-width-guard-missing`
 - `modal-height-guard-missing`
 - `modal-internal-scroll-missing`
+- `modal-scrollbar-aesthetic-missing`
+- `modal-shell-scrollbar-risk`
 - `modal-mobile-behavior-missing`
 - `modal-viewport-qa-missing`
 - `modal-fixed-size-risk`
