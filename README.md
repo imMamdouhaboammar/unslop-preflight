@@ -4,22 +4,22 @@
 
 ### Stop AI coding agents from shipping generic, fragile frontend work.
 
-**23 hard design gates plus AI-agent readiness, taste calibration, placeholder detection, and AGENTS.md guidance before implementation starts.**
+**A pre-implementation quality gate for `PRODUCT.md`, `DESIGN.md`, and `AGENTS.md` with readiness bands, taste calibration, root-cause governance, overlay reasoning, and install-agent-harness guidance.**
 
 [![Socket Badge](https://badge.socket.dev/npm/package/vibe-design-md-architect/1.9.3)](https://badge.socket.dev/npm/package/vibe-design-md-architect/1.9.3)
 [![npm](https://img.shields.io/npm/v/vibe-design-md-architect?style=flat-square&color=5B21B6&label=npm)](https://www.npmjs.com/package/vibe-design-md-architect)
 [![skills.sh](https://img.shields.io/badge/skills.sh-install-5B21B6?style=flat-square)](https://skills.sh/imMamdouhaboammar/vibe-design-md-architect)
-[![Gates](https://img.shields.io/badge/gates-23-F59E0B?style=flat-square)](./SKILL.md)
-[![Version](https://img.shields.io/badge/version-1.9.3-3B82F6?style=flat-square)](./CHANGELOG.md)
+[![Gates](https://img.shields.io/badge/gates-23%2B%20readiness-F59E0B?style=flat-square)](./SKILL.md)
+[![Version](https://img.shields.io/badge/docs-1.9.6-3B82F6?style=flat-square)](./CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/license-MIT-22C55E?style=flat-square)](./LICENSE)
 
 ```bash
 npx vibe-design-md-architect autopilot
 ```
 
-One command creates or repairs `PRODUCT.md`, `DESIGN.md`, and `AGENTS.md`, runs the gates, scores readiness, writes a fix list, and blocks implementation until the design artifacts are strong enough for an AI coding agent.
+One command creates or repairs `PRODUCT.md`, `DESIGN.md`, and `AGENTS.md`, runs the gates, scores readiness, writes a fix list, and blocks implementation until the handoff is strong enough for an AI coding agent.
 
-[Autopilot](#autopilot) · [Quick Start](#quick-start) · [Readiness](#readiness-bands) · [Taste Calibration](#taste-calibration) · [CLI](#cli-reference) · [Gates](#23-hard-gates) · [Changelog](./CHANGELOG.md)
+[Autopilot](#autopilot) · [Quick Start](#quick-start) · [Readiness](#readiness-bands) · [Reasoning Gates](#reasoning-gates) · [Harness](#install-agent-harness) · [CLI](#cli-reference) · [Docs](#documentation-map)
 
 </div>
 
@@ -29,26 +29,29 @@ One command creates or repairs `PRODUCT.md`, `DESIGN.md`, and `AGENTS.md`, runs 
 
 Vibe Design MD Architect is a pre-implementation quality gate for AI-assisted frontend work.
 
-It does not replace your coding agent. It prepares the project before the coding agent writes UI code. The system forces the agent to work from product truth, design intent, accessibility rules, responsive rules, privacy rules, and implementation handoff instructions instead of inventing a generic SaaS interface from a short prompt.
+It does not replace your coding agent. It prepares the project before the coding agent writes UI code. The system forces the agent to work from product truth, design intent, accessibility constraints, responsive behavior, root-cause diagnosis, and implementation handoff instructions instead of inventing a generic SaaS interface from a short prompt.
 
 The current system supports:
 
 - `PRODUCT.md` strategy context
-- `DESIGN.md` design contract
-- `AGENTS.md` instructions for AI coding agents
-- hard blockers for accessibility, RTL/LTR, viewport, modals, overlays, tokens, sensitive data, and popup positioning
-- taste calibration rules inspired by strong design-brief workflows
-- placeholder detection so `[audience]`, `TODO`, `TBD`, and template leftovers do not reach implementation
-- readiness bands and category breakdowns, not just a raw score
-- safe repair and agent-readable fix lists
+- `DESIGN.md` design and implementation contract
+- `AGENTS.md` repository instructions for AI coding agents
+- readiness bands and category breakdowns
+- taste calibration and anti-AI-slop checks
+- placeholder blocking before implementation
+- Root Cause Mode for bug, layout, viewport, overlay, and regression work
+- strict modal viewport gates
+- stacking and z-index reasoning gates
+- Install Agent Harness recommendations for project-specific skills and tools
+- accessibility, RTL/LTR, privacy, sensitive-data, token, and source-scan checks
 
 ## The problem
 
-AI coding agents usually skip design decisions.
+AI coding agents often skip the reasoning layer.
 
-They choose purple gradients, default fonts, equal feature cards, fake data, hardcoded colors, weak modals, fragile dropdowns, and scroll hacks. They often produce something that looks acceptable in a screenshot but breaks with real users, small screens, keyboard navigation, RTL, or sensitive data.
+They choose default gradients, fake metrics, weak modals, fragile dropdowns, arbitrary z-index values, root overflow hacks, and broad symptom patches. The output can look acceptable in one screenshot while breaking on small screens, keyboard navigation, RTL layouts, real data, or overlay-heavy interactions.
 
-Vibe Design MD Architect blocks that before code starts.
+VDMA blocks those failures before code starts.
 
 ## When to use it
 
@@ -59,23 +62,24 @@ Use it when you are building or reviewing:
 - Arabic RTL or bilingual RTL/LTR products
 - AI-assisted UI builds in Claude Code, Cursor, Codex, Windsurf, Cline, Amp, or similar tools
 - design systems before frontend implementation
-- product specs that need to become implementation-ready UI instructions
-- weak or old `DESIGN.md` files that need a controlled repair
+- weak `DESIGN.md` files that need amplification
+- modal, popup, drawer, dropdown, tooltip, or toast behavior that keeps breaking
+- large or unfamiliar repos where the agent needs a small tool harness before coding
 
-Do not use it for backend-only work, database-only tasks, non-UI scripts, or projects with a mature design system that does not need `PRODUCT.md`, `DESIGN.md`, or `AGENTS.md`.
+Do not use it for backend-only work, database-only tasks, non-UI scripts, or projects with a mature design system that already fully governs frontend implementation.
 
-## What's new in v1.9.3
+## What's current in v1.9.6
 
-This release adds the AI-agent readiness layer:
+The current docs cover the readiness system through v1.9.6:
 
-- `AGENTS.md` is now the primary agent guidance file.
-- `init`, `audit`, `repair`, reports, templates, and package publishing all understand `AGENTS.md`.
+- `AGENTS.md` is the primary agent guidance file for new projects.
 - Readiness bands explain whether the project is blocked, needs spec work, is agent-ready with fixes, or is agent-ready.
-- Category breakdowns show where the risk lives: product clarity, taste calibration, placeholders, accessibility, security, responsive behavior, and more.
-- Taste rules require a Design Read, Taste Controls, Design System Decision, Anti-AI-Slop rules, Agent Handoff, and Pre-flight Check.
-- Placeholder gates block raw templates and vague placeholders before a coding agent starts.
-
-Read the full technical note in [`docs/AI_AGENT_READINESS.md`](./docs/AI_AGENT_READINESS.md).
+- Taste rules require Design Read, Taste Controls, Design System Decision, Anti-AI-Slop rules, Agent Handoff, and Pre-flight Check.
+- Placeholder gates block raw templates and vague placeholders before coding.
+- Root Cause Mode turns "fix the problem from the root" into an enforceable diagnosis-first rule.
+- Modal viewport gates block overlays that lack width guards, height guards, internal scroll, mobile behavior, and QA proof.
+- Stacking reasoning gates block blind z-index fixes and require layer scale, stacking context audit, portal policy, and conflict matrix.
+- Install Agent Harness asks the coding agent to recommend only the skills and tools this project needs now, with a warning against bulk install.
 
 ## How it works
 
@@ -86,13 +90,13 @@ PRODUCT.md
    Product strategy, users, job, risks, brand traits, accessibility, localization
    ↓
 DESIGN.md
-   Design Read, Taste Controls, design system decision, tokens, components, rules
+   Design Read, Taste Controls, system decision, tokens, components, overlay rules
    ↓
 AGENTS.md
    Project-specific instructions for AI coding agents
    ↓
 Audit
-   23 hard gates plus readiness, taste, placeholder, accessibility, security, and UX checks
+   Base gates plus readiness, taste, placeholders, root cause, overlays, harness, accessibility, security
    ↓
 Repair
    Safe missing sections are added, risky source fixes are written to a fix list
@@ -136,12 +140,6 @@ vdma autopilot
 ### Option E: install as a skill
 
 ```bash
-npx skills add https://github.com/imMamdouhaboammar/vibe-design-md-architect --skill vibe-design-md-architect
-```
-
-Shorthand:
-
-```bash
 npx skills add imMamdouhaboammar/vibe-design-md-architect
 ```
 
@@ -172,22 +170,76 @@ npx vdma autopilot --dry-run
 
 ## Readiness bands
 
-The audit result now gives a practical decision instead of only a score.
+The audit result gives a practical decision instead of only a score.
 
 | Band | Meaning | Action |
 |------|---------|--------|
-| `blocked` | Critical artifact, safety, placeholder, accessibility, or security issue | Do not implement yet |
+| `blocked` | Critical artifact, safety, placeholder, accessibility, security, or root-cause issue | Do not implement yet |
 | `needs-spec-work` | The docs exist but are still too vague for an AI agent | Repair or rewrite the weak sections |
 | `agent-ready-with-fix-list` | The docs are mostly usable, but source or design fixes remain | Apply the generated fix list, then rerun audit |
 | `agent-ready` | The artifacts are specific enough for implementation | Proceed with the coding agent |
 
-Category breakdowns make the score easier to act on. A low score now points to the exact class of risk instead of leaving the user with a single unexplained number.
+Category breakdowns show where the risk lives: product clarity, design contract, taste, placeholders, agent guidance, root cause, harness readiness, responsive behavior, modal overlays, stacking, accessibility, security, and implementation scans.
+
+## Reasoning gates
+
+### Root Cause Mode
+
+When the handoff mentions a bug, issue, broken UI, regression, overflow, clipping, z-index, viewport, modal, popup, drawer, dropdown, tooltip, toast, focus trap, or layout failure, the agent must diagnose before editing.
+
+It must reproduce or restate the failing state, separate symptom from cause, choose the smallest root fix, check regressions, and provide verification proof.
+
+Read [`docs/ROOT_CAUSE_MODE.md`](./docs/ROOT_CAUSE_MODE.md).
+
+### Modal viewport and overlay gates
+
+When `DESIGN.md` mentions modals, dialogs, popups, drawers, sheets, overlays, lightboxes, popovers, or command palettes, it must include:
+
+- width guard
+- height guard
+- internal scroll behavior
+- mobile behavior
+- viewport QA proof
+
+Read [`docs/OVERLAY_LAYERING_GATES.md`](./docs/OVERLAY_LAYERING_GATES.md).
+
+### Stacking and z-index reasoning
+
+Layered UI such as sticky headers, fixed headers, modals, drawers, dropdowns, tooltips, popovers, and toasts must include:
+
+- stacking or placement plan
+- stacking context audit
+- layer scale
+- portal policy
+- conflict matrix
+
+Blind `z-9999` or `z-index: 9999` fixes are blocked unless the root-cause analysis proves they are necessary.
+
+## Install Agent Harness
+
+Many users of this tool are vibe coders. They may not know which agent skills, plugins, scanners, or runtime helpers should be installed before coding.
+
+The Install Agent Harness gate asks the coding agent to inspect the project and recommend a small, relevant harness instead of installing everything.
+
+The agent should explain:
+
+- active host: Claude Code, Codex, Cursor, Gemini CLI, Copilot, Antigravity, OpenCode, Windsurf, or another host
+- project shape and current risk
+- recommended harness items
+- priority: required now, recommended now, optional later, or skip
+- why each item matters for this project now
+- setup method after source review
+- verification and rollback notes
+
+Tip: install only the skills and tools you actually need. Bulk-installing every available skill adds unnecessary context overhead and expands the review surface.
+
+Read [`docs/INSTALL_AGENT_HARNESS.md`](./docs/INSTALL_AGENT_HARNESS.md).
 
 ## Taste calibration
 
 The taste system adds design judgment before implementation.
 
-`DESIGN.md` should now include:
+`DESIGN.md` should include:
 
 - **Design Read**: the agent's interpretation of the product, user, tension, and visual direction.
 - **Taste Controls**: `DESIGN_VARIANCE`, `MOTION_INTENSITY`, and `VISUAL_DENSITY`, each from 1 to 10.
@@ -195,8 +247,6 @@ The taste system adds design judgment before implementation.
 - **Anti-AI-Slop Guidelines**: specific patterns to avoid for this product.
 - **Agent Handoff**: what the coding agent must preserve.
 - **Pre-flight Check**: final proof that the design is ready before code starts.
-
-This is the difference between "make it modern" and a useful UI direction a coding agent can follow.
 
 ## Placeholder gates
 
@@ -209,7 +259,7 @@ The audit blocks unresolved placeholders in `PRODUCT.md` and `DESIGN.md`, includ
 - `...`
 - template-only filler
 
-A placeholder can be useful in a starter template. It is dangerous in an implementation handoff. VDMA treats unresolved placeholders as a blocker before UI work starts.
+A placeholder can be useful in a starter template. It is dangerous in an implementation handoff.
 
 ## CLI Reference
 
@@ -242,16 +292,16 @@ npx vdma repair --dry-run --report
 npx vdma autopilot
 ```
 
-## 23 hard gates
+## Base gates and readiness-layer checks
 
-Implementation stays blocked until the relevant gates pass.
+The original numbered gates still define the core UI governance system.
 
 | # | Gate | What it enforces |
 |---|------|------------------|
 | 1 | Design System Baseline | Select a baseline before design work |
 | 2 | Intake Session | Capture product, user, job, localization, and risk context |
 | 3 | Standards Search | Check current WCAG, MDN, web.dev, and framework guidance when possible |
-| 4 | Impeccable Install | Record or run `npx impeccable skills install` before UI work |
+| 4 | Impeccable Install | Record or run relevant setup before UI work |
 | 5 | PRODUCT.md | Strategy artifact exists and passes contract |
 | 6 | DESIGN.md Contract | Required design sections and decisions exist |
 | 7 | Rules Engine | All artifact gates run consistently |
@@ -272,31 +322,20 @@ Implementation stays blocked until the relevant gates pass.
 | 22 | Sensitive Data Display | Mask tokens, secure creation flow, destructive confirmations |
 | 23 | Popup and Floating Positioning | Strategy A/B/C, flip/shift/size, portal mounting, z-index tokens |
 
+Readiness-layer checks now add AGENTS.md resolution, taste calibration, placeholder blocking, root-cause governance, modal viewport hard gates, stacking reasoning, and install-agent-harness readiness.
+
 ## What it blocks
-
-### Visual defaults
-
-| Pattern | Why it is blocked |
-|---------|-------------------|
-| Purple to blue gradient | Default AI identity choice |
-| Gradient text headings | Common AI visual tell |
-| Generic glass cards | Decoration without hierarchy |
-| Equal feature-card grids | No product-specific emphasis |
-| Sparkle and magic wand icons | Lazy AI metaphor |
-| Default `Inter` everywhere | Uncurated type decision |
-| Dark cyber SaaS look | Generic product skin |
-
-### Functional failures
 
 | Failure | Impact |
 |---------|--------|
 | Clickable `<div>` | Keyboard and screen reader failure |
 | Missing visible label | Forms become unclear after typing |
-| `height: 100vh` on auth screens | Mobile keyboard and small viewport breakage |
-| Root `overflow: hidden` | Scroll, zoom, and keyboard traps |
-| Modal without focus trap | Tab escapes to background |
-| Dropdown inside overflow parent | Options get clipped |
+| `height: 100vh` on mobile auth screens | Mobile keyboard and small viewport breakage |
+| Modal without bounded viewport contract | Popup overflows or clips on small screens |
+| Dropdown inside overflow parent without portal policy | Options get clipped |
+| Blind `z-9999` fix | Symptom patch without root-cause diagnosis |
 | API token visible in a table | Security UX failure |
+| Bulk-installing every skill | Context overhead and conflicting agent guidance |
 
 ## Scanners
 
@@ -307,7 +346,7 @@ npx vdma scan:a11y src/ --strict
 npx vdma scan:viewport http://localhost:3000
 ```
 
-The scanners detect source-level issues that the artifact rules cannot safely auto-patch. Those issues are written into fix-list output for the coding agent.
+The scanners detect source-level issues that artifact rules cannot safely auto-patch. Those issues are written into fix-list output for the coding agent.
 
 ## Generated artifacts
 
@@ -332,6 +371,9 @@ VDMA-FIXES.md               source fix handoff from autopilot scans
 | [`CHANGELOG.md`](./CHANGELOG.md) | Release history |
 | [`CONTRIBUTING.md`](./CONTRIBUTING.md) | Gate, scanner, template, and docs update workflow |
 | [`docs/AI_AGENT_READINESS.md`](./docs/AI_AGENT_READINESS.md) | Readiness, taste, placeholder, and report behavior |
+| [`docs/ROOT_CAUSE_MODE.md`](./docs/ROOT_CAUSE_MODE.md) | Diagnosis-first governance for bugs and layout failures |
+| [`docs/OVERLAY_LAYERING_GATES.md`](./docs/OVERLAY_LAYERING_GATES.md) | Modal viewport, stacking, z-index, and overlay reasoning |
+| [`docs/INSTALL_AGENT_HARNESS.md`](./docs/INSTALL_AGENT_HARNESS.md) | Project-specific skill and tool harness recommendations |
 | [`references/`](./references/) | Detailed rule references |
 | [`assets/`](./assets/) | Templates used to generate project artifacts |
 
@@ -343,7 +385,7 @@ vibe-design-md-architect/
 ├── src/
 │   ├── commands/                init, audit, repair, report, autopilot
 │   ├── core/                    auditor, templates, reporter, filesystem helpers
-│   └── rules/                   product, design, taste, placeholder, agent, UX rules
+│   └── rules/                   product, design, taste, placeholder, root-cause, harness, overlay, UX rules
 ├── scripts/                     standalone scanners and validators
 ├── assets/                      generated artifact templates
 ├── references/                  detailed rule references
@@ -369,15 +411,18 @@ npx vdma autopilot
 
 Read [`CONTRIBUTING.md`](./CONTRIBUTING.md) before adding a gate, scanner, template, or documentation update. Any behavior change should update the docs in the same pull request.
 
-## Current version
+## Current documented behavior
 
-**v1.9.3**
+**v1.9.6 docs**
 
 - AGENTS.md support across init, audit, repair, reports, and package publishing
 - readiness bands and category scoring
 - taste calibration rules
 - placeholder gates for product and design artifacts
-- updated generated templates with Design Read, Taste Controls, Design System Decision, Agent Handoff, and Pre-flight Check
+- Root Cause Mode for bug and layout work
+- strict modal viewport and overlay sizing gates
+- stacking context, portal policy, and z-index reasoning gates
+- Install Agent Harness recommendations with bulk-install guard
 
 <div align="center">
 
