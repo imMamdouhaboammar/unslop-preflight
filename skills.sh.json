@@ -4,7 +4,7 @@
   "groupings": [
     {
       "title": "Design Planning",
-      "description": "Skills for product-aware UI planning, design gates, AGENTS.md handoff, AI-agent readiness, taste calibration, and anti-AI-slop checks before implementation.",
+      "description": "Skills for product-aware UI planning, design gates, AGENTS.md handoff, AI-agent readiness, taste calibration, Root Cause Mode, overlay and stacking reasoning, Install Agent Harness guidance, and anti-AI-slop checks before implementation.",
       "skills": [
         "vibe-design-md-architect"
       ]
