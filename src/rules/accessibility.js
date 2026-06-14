@@ -8,7 +8,8 @@ export const accessibilityRules = [
   rule('deterministic-focus-management', 'DESIGN.md must use deterministic focus rings', 'accessibility', 'error', 'DESIGN.md', (ctx) => {
     const d = ctx.files['DESIGN.md'];
     if (!d) return false;
-    return /focus/i.test(d) && !/(focus-visible|ring-|outline-none)/i.test(d);
+    const cleaned = d.replace(/<!-- unslop:start[\s\S]*?unslop:end.*?-->/g, '');
+    return /focus/i.test(cleaned) && !/(focus-visible|ring-|outline-none)/i.test(cleaned);
   }, 'Replace generic focus rules with deterministic tokens (e.g., focus-visible:ring-2).', 'auto'),
 
   rule('modal-without-focus-trap', 'Modal is mentioned without focus-trap behavior', 'accessibility', 'error', 'DESIGN.md', (ctx) => {

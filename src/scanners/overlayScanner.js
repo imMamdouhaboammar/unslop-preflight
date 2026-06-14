@@ -40,9 +40,13 @@ export const overlayRules = [
   {
     name: 'modal-internal-scroll-risk',
     level: 'warning',
-    pattern: /overflow-(y-auto|auto|scroll)/i,
+    pattern: /overflow-(y-auto|y-scroll|auto|scroll)/i,
     heuristic: (content, file, findings) => {
-      if (/role=["']?(dialog|alertdialog)["']?/i.test(content) && /overflow-(y-auto|auto|scroll)/i.test(content)) {
+      const isModalFile = /modal|dialog|popover|drawer|overlay/i.test(file);
+      const hasModalRole = /role=["']?(dialog|alertdialog)["']?/i.test(content);
+      const hasFixedOverlay = /fixed|absolute/i.test(content) && /z-\[?[4-9]0|z-\[?9/i.test(content);
+      
+      if ((hasModalRole || isModalFile || hasFixedOverlay) && /overflow-(y-auto|y-scroll|auto|scroll)/i.test(content)) {
         if (!/max-h-|max-height/i.test(content)) {
           findings.push({
             file,

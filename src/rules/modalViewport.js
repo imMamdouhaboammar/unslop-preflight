@@ -6,7 +6,7 @@ const widthGuard = /max-w-|max-width|width:\s*min\(|w-\[min\(|clamp\(|inset-x-|m
 const heightGuard = /max-h-|max-height|100dvh|100svh|dvh|svh|h-\[min\(|height:\s*min\(|clamp\(/i;
 const scrollGuard = /overflow-y-auto|overflow-y-scroll|overflow-auto|overflow-scroll|overscroll-contain|internal scroll|scrollable body|modal body scroll/i;
 const scrollAestheticGuard = /scrollbar-hide|no visible scrollbar|hidden scrollbar|hide scrollbar|scrollbar-none|thin scrollbar|custom scrollbar|scroll shadow|fade affordance|scroll affordance|gradient fade|body pane scroll|content pane scroll/i;
-const mobileGuard = /mobile|under 768|sm:|max-sm|bottom sheet|full-screen|full screen|w-full|safe-area|keyboard/i;
+const mobileGuard = /mobile|under 768|sm:|max-sm|bottom sheet|full-screen|full screen|w-full|safe-area|virtual keyboard|on-screen keyboard|soft keyboard/i;
 const qaGuard = /320x568|375x667|390x844|landscape|keyboard-open|keyboard open|no horizontal overflow|viewport qa|no clipping/i;
 const riskyFixed = /height:\s*100vh|h-screen|w-\[\d{3,}px\]|width:\s*\d{3,}px|height:\s*\d{3,}px/i;
 const exposedScrollbarRisk = /visible scrollbar|native scrollbar|scrollbar always visible|browser scrollbar|shell scrollbar|modal shell scroll/i;
@@ -53,7 +53,17 @@ export const modalViewportRules = [
     'modal-viewport-governance',
     'error',
     'DESIGN.md',
-    (ctx) => hasOverlay(ctx) && !scrollGuard.test(designDoc(ctx)),
+    (ctx) => {
+      if (!hasOverlay(ctx)) return false;
+      const doc = designDoc(ctx);
+      const lines = doc.split(/\r?\n/);
+      const hasInternalScroll = lines.some(line => 
+        /(modal|dialog|popup|popover|drawer|overlay|shell|content).*?(scroll|overflow|auto|contain)/i.test(line) ||
+        /(scroll|overflow|auto|contain).*?(modal|dialog|popup|popover|drawer|overlay|shell|content)/i.test(line) ||
+        /internal scroll|scrollable body|modal body scroll/i.test(line)
+      );
+      return !hasInternalScroll;
+    },
     'Add overflow-y-auto, overflow-auto, overscroll-contain, or a documented scrollable modal body area.'
   ),
   rule(

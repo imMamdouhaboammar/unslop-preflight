@@ -1,23 +1,22 @@
 # Unslop Torture Bench Report
 
-**Average Score:** 3.67 / 5.0  
+**Average Score:** 4.00 / 5.0  
 **Critical Misses:** 0  
-**Threshold:** ❌ FAIL (< 4.0)
+**Threshold:** ✅ PASS
 
 ---
 
-## ⚠️ 02-modal-scrollbar-slop — Score: 3/5
+## ✅ 02-modal-scrollbar-slop — Score: 4/5
 
 | Field | Value |
 |---|---|
 | Status correct | YES |
 | Readiness | `blocked` |
 | Errors found | 23 |
-| Warnings found | 2 |
-| Expected IDs caught | 5 / 7 |
-| Missed IDs | modal-mobile-behavior-missing, modal-internal-scroll-missing |
+| Warnings found | 3 |
+| Expected IDs caught | 7 / 7 |
 
-> **Decision:** needs better ID coverage
+> **Decision:** pass
 
 ---
 
@@ -55,7 +54,7 @@
 |---|---|
 | Status correct | YES |
 | Readiness | `blocked` |
-| Errors found | 24 |
+| Errors found | 23 |
 | Warnings found | 0 |
 | Expected IDs caught | 3 / 3 |
 
@@ -69,33 +68,29 @@
 |---|---|
 | Status correct | YES |
 | Readiness | `blocked` |
-| Errors found | 25 |
-| Warnings found | 5 |
+| Errors found | 24 |
+| Warnings found | 6 |
 | Expected IDs caught | 5 / 5 |
 
 > **Decision:** pass
 
 ---
 
-## ⚠️ 12-repair-regression — Score: 3/5
+## ✅ 12-repair-regression — Score: 4/5
 
 | Field | Value |
 |---|---|
 | Status correct | YES |
 | Readiness | `blocked` |
-| Errors found | 20 |
+| Errors found | 21 |
 | Warnings found | 0 |
-| Expected IDs caught | 3 / 4 |
-| Missed IDs | modal-internal-scroll-missing |
-| Repair idempotent | NO ❌ |
+| Expected IDs caught | 4 / 4 |
+| Repair idempotent | YES ✅ |
 
-> **Decision:** needs better ID coverage
+> **Decision:** pass
 
 ---
 
 ## Gaps & Roadmap
 
-| Missed ID | Priority |
-|---|---|
-| `modal-mobile-behavior-missing` | 🟡 Normal |
-| `modal-internal-scroll-missing` | 🟡 Normal |
+No systematic gaps detected.
