@@ -1,7 +1,7 @@
 {
   "name": "vibe-design-md-architect",
-  "version": "1.9.6",
-  "description": "Autopilot design quality gates for AI-assisted UI with readiness bands, Root Cause Mode, overlay reasoning, Install Agent Harness guidance, and AGENTS.md handoff before implementation.",
+  "version": "1.9.7",
+  "description": "Autopilot design quality gates for AI-assisted UI with readiness bands, typography governance, Root Cause Mode, overlay reasoning, Install Agent Harness guidance, and AGENTS.md handoff before implementation.",
   "type": "module",
   "exports": {
     ".": "./src/cli.js",
@@ -69,6 +69,7 @@
     "agents-md",
     "ai-agent-readiness",
     "taste-calibration",
+    "typography-governance",
     "placeholder-gates",
     "root-cause-mode",
     "z-index-governance",
