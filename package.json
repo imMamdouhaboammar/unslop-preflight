@@ -81,11 +81,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/imMamdouhaboammar/unslop.git"
+    "url": "git+https://github.com/imMamdouhaboammar/unslop-preflight.git"
   },
-  "homepage": "https://github.com/imMamdouhaboammar/unslop#readme",
+  "homepage": "https://github.com/imMamdouhaboammar/unslop-preflight#readme",
   "bugs": {
-    "url": "https://github.com/imMamdouhaboammar/unslop/issues"
+    "url": "https://github.com/imMamdouhaboammar/unslop-preflight/issues"
   },
   "engines": {
     "node": ">=18.0.0"
