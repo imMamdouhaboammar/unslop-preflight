@@ -12,6 +12,7 @@ import { accessibilityRules } from './accessibility.js';
 import { securityRules } from './security.js';
 import { agentRules } from './agent.js';
 import { tasteRules } from './taste.js';
+import { typographyRules } from './typography.js';
 
 const docs = ['PRODUCT.md', 'DESIGN.md'];
 
@@ -44,6 +45,7 @@ export const rules = [
   ...designRules,
   ...placeholderRules,
   ...tasteRules,
+  ...typographyRules,
   ...rootCauseRules,
   ...agentHarnessRules,
   ...responsiveRules,
