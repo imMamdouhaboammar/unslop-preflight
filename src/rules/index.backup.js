@@ -3,6 +3,7 @@ import { productRules } from './product.js';
 import { designRules } from './design.js';
 import { placeholderRules } from './placeholders.js';
 import { rootCauseRules } from './rootCause.js';
+import { agentHarnessRules } from './agentHarness.js';
 import { responsiveRules } from './responsive.js';
 import { modalViewportRules } from './modalViewport.js';
 import { stackingRules } from './stacking.js';
@@ -44,6 +45,7 @@ export const rules = [
   ...placeholderRules,
   ...tasteRules,
   ...rootCauseRules,
+  ...agentHarnessRules,
   ...responsiveRules,
   ...modalViewportRules,
   ...stackingRules,
