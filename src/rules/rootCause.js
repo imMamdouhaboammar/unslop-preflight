@@ -2,12 +2,15 @@ import { rule } from './utils.js';
 
 const problemTerms = /\b(bug|issue|problem|broken|failure|regression|fix|repair|overflow|clipping|layout shift|z-index|viewport|modal|popup|drawer|dropdown|tooltip|toast|focus trap)\b/i;
 const rootCauseTerms = /root cause|diagnos|reproduc|symptom|underlying cause|cause analysis|fix from the root|حل المشكلة من جذورها|جذور المشكلة/i;
-const patchTerms = /quick fix|workaround|temporary fix|hack|just increase|just raise|z-?\[?9999\]?|z-index\s*:\s*9999|magic number/i;
+// Expanded: catches both technical z-index hacks AND governance anti-patterns in AGENTS.md
+const patchTerms = /quick fix|workaround|temporary fix|hack|just increase|just raise|z-?\[?9999\]?|z-index\s*:\s*9999|magic number|fix (it |the |visible )?(issue|bug|problem) (quickly|fast|first)|patch (the |visible )?|no need.*(diagnos|time|root|analysis)|skip diagnos/i;
 const proofTerms = /verify|verification|proof|test|regression|re-check|reproduce|acceptance|qa/i;
+// Anti-patterns that belong in AGENTS.md but explicitly reject good practice
+const agentAntiPatterns = /no need.*(diagnos|root|analysis)|skip.*(diagnos|root|qa|accessibility)|patch.*(visible|first)|fix (it )?quickly|use a workaround/i;
 
 function needsRootCause(ctx) {
   const text = `${ctx.files['PRODUCT.md'] || ''}\n${ctx.files['DESIGN.md'] || ''}\n${ctx.files['AGENTS.md'] || ctx.files['AGENT.md'] || ''}`;
-  return problemTerms.test(text);
+  return problemTerms.test(text) || agentAntiPatterns.test(ctx.files['AGENTS.md'] || ctx.files['AGENT.md'] || '');
 }
 
 export const rootCauseRules = [
@@ -16,18 +19,31 @@ export const rootCauseRules = [
     'Problems must use Root Cause Mode before implementation',
     'root-cause-governance',
     'error',
-    'DESIGN.md',
+    'AGENTS.md',
     (ctx) => needsRootCause(ctx) && !rootCauseTerms.test(`${ctx.files['DESIGN.md'] || ''}\n${ctx.files['AGENTS.md'] || ctx.files['AGENT.md'] || ''}`),
     'Add a Root Cause Mode section: reproduce the issue, separate symptoms from cause, identify the smallest root fix, and define verification proof.',
     'suggested'
+  ),
+  rule(
+    'agent-no-diagnosis-policy',
+    'AGENTS.md explicitly rejects diagnosis — this is an anti-pattern',
+    'root-cause-governance',
+    'error',
+    'AGENTS.md',
+    (ctx) => agentAntiPatterns.test(ctx.files['AGENTS.md'] || ctx.files['AGENT.md'] || ''),
+    'Remove or invert anti-diagnosis instructions. The agent must diagnose before patching. "Fix quickly" and "use a workaround" are forbidden as standing policies.',
+    'safeDocs'
   ),
   rule(
     'symptom-patch-language',
     'Patch language is not allowed without diagnosis',
     'root-cause-governance',
     'error',
-    'DESIGN.md',
-    (ctx) => patchTerms.test(ctx.files['DESIGN.md'] || '') && !rootCauseTerms.test(ctx.files['DESIGN.md'] || ''),
+    'AGENTS.md',
+    (ctx) => {
+      const all = `${ctx.files['DESIGN.md'] || ''}\n${ctx.files['AGENTS.md'] || ctx.files['AGENT.md'] || ''}`;
+      return patchTerms.test(all) && !rootCauseTerms.test(all);
+    },
     'Replace quick-fix language with a diagnosis-first plan. Do not raise z-index, force layout, or add magic numbers before identifying the cause.',
     'suggested'
   ),

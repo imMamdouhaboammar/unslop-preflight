@@ -2,13 +2,13 @@ export const responsiveRules = [
   {
     name: 'fixed-width-mobile-risk',
     level: 'blocker',
-    pattern: /w-\[(3[0-9]{2}px|4[0-9]{2}px|5[0-9]{2}px)\]|w-(72|80|96)/i,
+    pattern: /w-\[([3-9]\d{2}|[1-9]\d{3})px\]|w-(72|80|96)/i,
     heuristic: (content, file, findings) => {
-      if (/w-\[(3[0-9]{2}px|4[0-9]{2}px|5[0-9]{2}px)\]|w-(72|80|96)/i.test(content)) {
+      if (/w-\[([3-9]\d{2}|[1-9]\d{3})px\]|w-(72|80|96)/i.test(content)) {
         if (!/max-w-/i.test(content) && !/md:w-|sm:w-/i.test(content)) {
           findings.push({
             file,
-            line: content.split(/\r?\n/).findIndex(l => /w-(72|80|96|\[3)/i.test(l)) + 1,
+            line: content.split(/\r?\n/).findIndex(l => /w-(\[([3-9]\d{2}|[1-9]\d{3})px\]|72|80|96)/i.test(l)) + 1,
             level: 'blocker',
             rule: 'fixed-width-mobile-risk',
             excerpt: 'Fixed wide width without a max-width constraint or responsive breakpoint. Will cause horizontal scroll on mobile.'

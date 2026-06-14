@@ -61,13 +61,13 @@ Please review PRODUCT.md, DESIGN.md, AGENTS.md, and the files listed below befor
   - **Root Cause**: Code implementation error or omission
   - **Required Action**: See scanner specific fix guidelines.
 
-- [ ] **File**: `/Users/mamdouhaboammar/Documents/antigravity/focused-hypatia/unslop/tests/fixtures/visual-slop/src/components/BadModal.jsx` (Line: 20)
-  - **Issue**: 2. leading-none on huge text (leading-none-cutoff-risk)
+- [ ] **File**: `/Users/mamdouhaboammar/Documents/antigravity/focused-hypatia/unslop/tests/fixtures/visual-slop/src/components/BadModal.jsx` (Line: 19)
+  - **Issue**: 1. text-[120px] (oversized-typography-mobile-risk)
   - **Root Cause**: Code implementation error or omission
   - **Required Action**: See scanner specific fix guidelines.
 
-- [ ] **File**: `/Users/mamdouhaboammar/Documents/antigravity/focused-hypatia/unslop/tests/fixtures/visual-slop/src/components/BadModal.jsx`
-  - **Issue**: Fixed wide width without a max-width constraint or responsive breakpoint. Will cause horizontal scroll on mobile.
+- [ ] **File**: `/Users/mamdouhaboammar/Documents/antigravity/focused-hypatia/unslop/tests/fixtures/visual-slop/src/components/BadModal.jsx` (Line: 20)
+  - **Issue**: 2. leading-none on huge text (leading-none-cutoff-risk)
   - **Root Cause**: Code implementation error or omission
   - **Required Action**: See scanner specific fix guidelines.
 

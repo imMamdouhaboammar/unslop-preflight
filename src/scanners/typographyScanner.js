@@ -2,14 +2,15 @@ export const typographyRules = [
   {
     name: 'oversized-typography-mobile-risk',
     level: 'warning',
-    pattern: /text-(7xl|8xl|9xl|\[80px\]|\[90px\]|\[100px\])/i,
+    pattern: /text-(7xl|8xl|9xl|\[\d{2,3}px\])/i,
     heuristic: (content, file, findings) => {
-      if (/text-(7xl|8xl|9xl)/i.test(content)) {
+      const oversizedMatch = /text-(7xl|8xl|9xl|\[\d{2,3}px\])/i.test(content);
+      if (oversizedMatch) {
         // If it uses huge text without a responsive prefix like md:text-7xl or clamp
         if (!/md:text-|sm:text-|clamp/i.test(content)) {
           findings.push({
             file,
-            line: content.split(/\r?\n/).findIndex(l => /text-(7xl|8xl|9xl)/i.test(l)) + 1,
+            line: content.split(/\r?\n/).findIndex(l => /text-(7xl|8xl|9xl|\[\d{2,3}px\])/i.test(l)) + 1,
             level: 'warning',
             rule: 'oversized-typography-mobile-risk',
             excerpt: 'Oversized text utility found without a responsive constraint. This will break mobile layouts.'

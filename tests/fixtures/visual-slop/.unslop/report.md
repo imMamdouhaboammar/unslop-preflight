@@ -5,7 +5,7 @@
 **Readiness:** blocked
 > **Decision:** Do not hand this to an AI coding agent yet. Resolve errors and blocked source issues first.
 
-**Totals:** 21 Blockers | 10 Warnings | 4 Info
+**Totals:** 20 Blockers | 11 Warnings | 4 Info
 
 ## 2. Top Blockers
 
@@ -40,7 +40,7 @@
 | ERROR | `no-emojis` | `DESIGN.md` |  | high |
 | ERROR | `unresolved-design-placeholders` | `DESIGN.md` |  | high |
 | ERROR | `typography-line-height-missing` | `DESIGN.md` |  | high |
-| ERROR | `root-cause-mode-missing` | `DESIGN.md` |  | high |
+| ERROR | `root-cause-mode-missing` | `AGENTS.md` |  | high |
 | ERROR | `install-agent-harness-missing` | `AGENTS.md` |  | high |
 | ERROR | `react-harness-recommendation-missing` | `AGENTS.md` |  | high |
 | ERROR | `code-review-harness-recommendation-missing` | `AGENTS.md` |  | high |
@@ -63,8 +63,8 @@
 | WARNING | `height-100vh-mobile-risk` | `/Users/mamdouhaboammar/Documents/antigravity/focused-hypatia/unslop/tests/fixtures/visual-slop/src/components/BadModal.jsx:14` | 2. h-100vh (height-100vh-mobile-risk) | high |
 | WARNING | `oversized-typography-mobile-risk` | `/Users/mamdouhaboammar/Documents/antigravity/focused-hypatia/unslop/tests/fixtures/visual-slop/src/components/BadModal.jsx:16` | <h1 className="text-9xl leading-none">Huge Title</h1> | high |
 | WARNING | `leading-none-cutoff-risk` | `/Users/mamdouhaboammar/Documents/antigravity/focused-hypatia/unslop/tests/fixtures/visual-slop/src/components/BadModal.jsx:16` | <h1 className="text-9xl leading-none">Huge Title</h1> | high |
+| WARNING | `oversized-typography-mobile-risk` | `/Users/mamdouhaboammar/Documents/antigravity/focused-hypatia/unslop/tests/fixtures/visual-slop/src/components/BadModal.jsx:19` | 1. text-[120px] (oversized-typography-mobile-risk) | high |
 | WARNING | `leading-none-cutoff-risk` | `/Users/mamdouhaboammar/Documents/antigravity/focused-hypatia/unslop/tests/fixtures/visual-slop/src/components/BadModal.jsx:20` | 2. leading-none on huge text (leading-none-cutoff-risk) | high |
-| ERROR | `fixed-width-mobile-risk` | `/Users/mamdouhaboammar/Documents/antigravity/focused-hypatia/unslop/tests/fixtures/visual-slop/src/components/BadModal.jsx` | Fixed wide width without a max-width constraint or responsive breakpoint. Will cause horizontal scroll on mobile. | high |
 | INFO | `missing-skill-frontend-ui-engineering` | `N/A` | Complex UI framework detected without explicit UI engineering guards. | high |
 | INFO | `missing-skill-chrome-devtools` | `N/A` | Web project detected. Agent lacks live browser validation. | high |
 | INFO | `missing-skill-a11y-debugging` | `N/A` | High risk of inaccessible modals, missing ARIA tags, and bad contrast. | high |

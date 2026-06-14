@@ -1,0 +1,624 @@
+{
+  "issues": [
+    {
+      "id": "unresolved-product-placeholders",
+      "title": "PRODUCT.md still contains unresolved placeholders",
+      "category": "product-clarity",
+      "severity": "error",
+      "file": "PRODUCT.md",
+      "explanation": "PRODUCT.md still contains unresolved placeholders",
+      "suggestedFix": "Replace placeholder brackets, TODO/TBD, ellipses, and generic coming-soon copy with concrete product decisions before implementation.",
+      "repairability": "manual"
+    },
+    {
+      "id": "missing-design-read",
+      "title": "DESIGN.md needs a brief-inferred Design Read",
+      "category": "taste-calibration",
+      "severity": "error",
+      "file": "DESIGN.md",
+      "explanation": "DESIGN.md needs a brief-inferred Design Read",
+      "suggestedFix": "Add a Design Read that states page kind, audience, visual language, and aesthetic or design-system direction before implementation.",
+      "repairability": "auto"
+    },
+    {
+      "id": "missing-taste-dials",
+      "title": "DESIGN.md needs explicit taste controls",
+      "category": "taste-calibration",
+      "severity": "error",
+      "file": "DESIGN.md",
+      "explanation": "DESIGN.md needs explicit taste controls",
+      "suggestedFix": "Add DESIGN_VARIANCE, MOTION_INTENSITY, and VISUAL_DENSITY values from 1 to 10.",
+      "repairability": "auto"
+    },
+    {
+      "id": "missing-design-system-decision",
+      "title": "DESIGN.md needs a design-system decision",
+      "category": "design-system-governance",
+      "severity": "error",
+      "file": "DESIGN.md",
+      "explanation": "DESIGN.md needs a design-system decision",
+      "suggestedFix": "Declare the design foundation: official design system, existing system, or bespoke CSS/Tailwind direction. Avoid mixing systems.",
+      "repairability": "auto"
+    },
+    {
+      "id": "missing-preflight-proof",
+      "title": "DESIGN.md needs pre-flight proof before implementation",
+      "category": "agent-handoff-readiness",
+      "severity": "error",
+      "file": "DESIGN.md",
+      "explanation": "DESIGN.md needs pre-flight proof before implementation",
+      "suggestedFix": "Add a pre-flight checklist that confirms design read, dials, responsive rules, accessibility, states, and security display rules.",
+      "repairability": "auto"
+    },
+    {
+      "id": "typography-scale-missing",
+      "title": "DESIGN.md needs an explicit typography scale",
+      "category": "typography-governance",
+      "severity": "error",
+      "file": "DESIGN.md",
+      "explanation": "DESIGN.md needs an explicit typography scale",
+      "suggestedFix": "Add a typography scale that defines display, headline, title, body, label, helper, and error text sizes instead of ad hoc text sizes.",
+      "repairability": "suggested"
+    },
+    {
+      "id": "typography-hierarchy-missing",
+      "title": "DESIGN.md needs text hierarchy roles",
+      "category": "typography-governance",
+      "severity": "error",
+      "file": "DESIGN.md",
+      "explanation": "DESIGN.md needs text hierarchy roles",
+      "suggestedFix": "Define named text roles with sizes and usage rules, such as display, h1, h2, body, label, helper text, and validation error text.",
+      "repairability": "suggested"
+    },
+    {
+      "id": "root-cause-mode-missing",
+      "title": "Problems must use Root Cause Mode before implementation",
+      "category": "root-cause-governance",
+      "severity": "error",
+      "file": "AGENTS.md",
+      "explanation": "Problems must use Root Cause Mode before implementation",
+      "suggestedFix": "Add a Root Cause Mode section: reproduce the issue, separate symptoms from cause, identify the smallest root fix, and define verification proof.",
+      "repairability": "suggested"
+    },
+    {
+      "id": "install-agent-harness-missing",
+      "title": "Agent handoff should include an Install Agent Harness inventory",
+      "category": "agent-harness-readiness",
+      "severity": "error",
+      "file": "AGENTS.md",
+      "explanation": "Agent handoff should include an Install Agent Harness inventory",
+      "suggestedFix": "Add an Install Agent Harness section. Ask the agent to inspect the project and recommend only the missing tools or skills needed now, with priority and reason.",
+      "repairability": "suggested"
+    },
+    {
+      "id": "react-harness-recommendation-missing",
+      "title": "React projects should consider runtime safety harness tools",
+      "category": "agent-harness-readiness",
+      "severity": "error",
+      "file": "AGENTS.md",
+      "explanation": "React projects should consider runtime safety harness tools",
+      "suggestedFix": "For React or Next UI work, consider runtime error boundary and React health-check harnesses when runtime failures are likely.",
+      "repairability": "suggested"
+    },
+    {
+      "id": "modal-viewport-contract-missing",
+      "title": "Modal, popup, drawer, or overlay needs an explicit viewport contract",
+      "category": "modal-viewport-governance",
+      "severity": "error",
+      "file": "DESIGN.md",
+      "explanation": "Modal, popup, drawer, or overlay needs an explicit viewport contract",
+      "suggestedFix": "Add a viewport contract that proves the overlay fits inside the visual viewport on mobile, desktop, landscape, and keyboard-open states.",
+      "repairability": "suggested"
+    },
+    {
+      "id": "modal-width-guard-missing",
+      "title": "Overlay needs max-width or dynamic width guard",
+      "category": "modal-viewport-governance",
+      "severity": "error",
+      "file": "DESIGN.md",
+      "explanation": "Overlay needs max-width or dynamic width guard",
+      "suggestedFix": "Define max-width, width:min(...), clamp(...), inset spacing, or equivalent responsive width rules for every overlay shell.",
+      "repairability": "suggested"
+    },
+    {
+      "id": "modal-height-guard-missing",
+      "title": "Overlay needs max-height or dynamic viewport height guard",
+      "category": "modal-viewport-governance",
+      "severity": "error",
+      "file": "DESIGN.md",
+      "explanation": "Overlay needs max-height or dynamic viewport height guard",
+      "suggestedFix": "Define max-height using dynamic viewport units such as 100dvh or 100svh, or an equivalent bounded height rule.",
+      "repairability": "suggested"
+    },
+    {
+      "id": "modal-internal-scroll-missing",
+      "title": "Long overlay content needs internal scroll behavior",
+      "category": "modal-viewport-governance",
+      "severity": "error",
+      "file": "DESIGN.md",
+      "explanation": "Long overlay content needs internal scroll behavior",
+      "suggestedFix": "Add overflow-y-auto, overflow-auto, overscroll-contain, or a documented scrollable modal body area.",
+      "repairability": "suggested"
+    },
+    {
+      "id": "modal-viewport-qa-missing",
+      "title": "Overlay needs viewport QA proof",
+      "category": "modal-viewport-governance",
+      "severity": "error",
+      "file": "DESIGN.md",
+      "explanation": "Overlay needs viewport QA proof",
+      "suggestedFix": "Add QA proof for 320x568, 375x667, 390x844, landscape, keyboard-open state, no clipping, and no horizontal overflow.",
+      "repairability": "suggested"
+    },
+    {
+      "ruleName": "oversized-typography-mobile-risk",
+      "symptom": "<h1 className=\"text-[92px] leading-none font-black\">Launch faster with AI</h1>",
+      "likelyRootCause": "Code implementation error or omission",
+      "evidenceSnippet": "<h1 className=\"text-[92px] leading-none font-black\">Launch faster with AI</h1>",
+      "file": "/Users/mamdouhaboammar/Documents/antigravity/focused-hypatia/unslop/unslop-torture-bench/cases/03-random-typography/src/components/Hero.jsx",
+      "line": 4,
+      "fixStrategy": "See scanner specific fix guidelines.",
+      "confidence": "high",
+      "impact": "visual break",
+      "severity": "warning",
+      "effort": "small",
+      "type": "modular"
+    },
+    {
+      "ruleName": "leading-none-cutoff-risk",
+      "symptom": "<h1 className=\"text-[92px] leading-none font-black\">Launch faster with AI</h1>",
+      "likelyRootCause": "Code implementation error or omission",
+      "evidenceSnippet": "<h1 className=\"text-[92px] leading-none font-black\">Launch faster with AI</h1>",
+      "file": "/Users/mamdouhaboammar/Documents/antigravity/focused-hypatia/unslop/unslop-torture-bench/cases/03-random-typography/src/components/Hero.jsx",
+      "line": 4,
+      "fixStrategy": "See scanner specific fix guidelines.",
+      "confidence": "high",
+      "impact": "visual break",
+      "severity": "warning",
+      "effort": "small",
+      "type": "modular"
+    },
+    {
+      "ruleName": "oversized-typography-mobile-risk",
+      "symptom": "<p className=\"text-[19px] leading-[21px]\">A premium dashboard for your team.</p>",
+      "likelyRootCause": "Code implementation error or omission",
+      "evidenceSnippet": "<p className=\"text-[19px] leading-[21px]\">A premium dashboard for your team.</p>",
+      "file": "/Users/mamdouhaboammar/Documents/antigravity/focused-hypatia/unslop/unslop-torture-bench/cases/03-random-typography/src/components/Hero.jsx",
+      "line": 5,
+      "fixStrategy": "See scanner specific fix guidelines.",
+      "confidence": "high",
+      "impact": "visual break",
+      "severity": "warning",
+      "effort": "small",
+      "type": "modular"
+    },
+    {
+      "ruleName": "oversized-typography-mobile-risk",
+      "symptom": "<button className=\"text-[17px]\">Start now</button>",
+      "likelyRootCause": "Code implementation error or omission",
+      "evidenceSnippet": "<button className=\"text-[17px]\">Start now</button>",
+      "file": "/Users/mamdouhaboammar/Documents/antigravity/focused-hypatia/unslop/unslop-torture-bench/cases/03-random-typography/src/components/Hero.jsx",
+      "line": 6,
+      "fixStrategy": "See scanner specific fix guidelines.",
+      "confidence": "high",
+      "impact": "visual break",
+      "severity": "warning",
+      "effort": "small",
+      "type": "modular"
+    },
+    {
+      "ruleName": "oversized-typography-mobile-risk",
+      "symptom": "<span className=\"text-[13px]\">Trusted by teams</span>",
+      "likelyRootCause": "Code implementation error or omission",
+      "evidenceSnippet": "<span className=\"text-[13px]\">Trusted by teams</span>",
+      "file": "/Users/mamdouhaboammar/Documents/antigravity/focused-hypatia/unslop/unslop-torture-bench/cases/03-random-typography/src/components/Hero.jsx",
+      "line": 7,
+      "fixStrategy": "See scanner specific fix guidelines.",
+      "confidence": "high",
+      "impact": "visual break",
+      "severity": "warning",
+      "effort": "small",
+      "type": "modular"
+    },
+    {
+      "ruleName": "missing-skill-frontend-ui-engineering",
+      "symptom": "Complex UI framework detected without explicit UI engineering guards.",
+      "likelyRootCause": "AI Agent context limitation",
+      "evidenceSnippet": "Project framework: react",
+      "fixStrategy": "Activate the `frontend-ui-engineering` skill to ensure production-quality components and state management.",
+      "verificationProof": "Agent acknowledges and utilizes the frontend-ui-engineering skill",
+      "confidence": "high",
+      "impact": "agent-risk",
+      "severity": "info",
+      "effort": "small",
+      "type": "harness"
+    },
+    {
+      "ruleName": "missing-skill-chrome-devtools",
+      "symptom": "Web project detected. Agent lacks live browser validation.",
+      "likelyRootCause": "AI Agent context limitation",
+      "evidenceSnippet": "Project framework: react",
+      "fixStrategy": "Activate the `chrome-devtools` skill or `browser-testing-with-devtools` to allow the agent to run and inspect the app locally.",
+      "verificationProof": "Agent acknowledges and utilizes the chrome-devtools skill",
+      "confidence": "high",
+      "impact": "agent-risk",
+      "severity": "info",
+      "effort": "small",
+      "type": "harness"
+    },
+    {
+      "ruleName": "missing-skill-a11y-debugging",
+      "symptom": "High risk of inaccessible modals, missing ARIA tags, and bad contrast.",
+      "likelyRootCause": "AI Agent context limitation",
+      "evidenceSnippet": "Project framework: react",
+      "fixStrategy": "Activate the `a11y-debugging` skill so the agent can use Chrome DevTools to audit accessibility properly.",
+      "verificationProof": "Agent acknowledges and utilizes the a11y-debugging skill",
+      "confidence": "high",
+      "impact": "agent-risk",
+      "severity": "info",
+      "effort": "small",
+      "type": "harness"
+    }
+  ],
+  "generated": [],
+  "changed": [
+    "DESIGN.md"
+  ],
+  "repairs": [
+    {
+      "file": "DESIGN.md",
+      "rule": "deterministic-focus-management",
+      "action": "appended safe section"
+    }
+  ],
+  "evidences": [
+    {
+      "rule": "unresolved-product-placeholders",
+      "rootCause": "Design or spec omission",
+      "location": "PRODUCT.md",
+      "fix": "Update the relevant Markdown spec file.",
+      "verify": "Re-run audit --strict",
+      "confidence": "high",
+      "impact": "implementation ambiguity",
+      "severity": "error",
+      "type": "spec"
+    },
+    {
+      "rule": "missing-design-read",
+      "rootCause": "Design or spec omission",
+      "location": "DESIGN.md",
+      "fix": "Update the relevant Markdown spec file.",
+      "verify": "Re-run audit --strict",
+      "confidence": "high",
+      "impact": "implementation ambiguity",
+      "severity": "error",
+      "type": "spec"
+    },
+    {
+      "rule": "missing-taste-dials",
+      "rootCause": "Design or spec omission",
+      "location": "DESIGN.md",
+      "fix": "Update the relevant Markdown spec file.",
+      "verify": "Re-run audit --strict",
+      "confidence": "high",
+      "impact": "implementation ambiguity",
+      "severity": "error",
+      "type": "spec"
+    },
+    {
+      "rule": "missing-design-system-decision",
+      "rootCause": "Design or spec omission",
+      "location": "DESIGN.md",
+      "fix": "Update the relevant Markdown spec file.",
+      "verify": "Re-run audit --strict",
+      "confidence": "high",
+      "impact": "implementation ambiguity",
+      "severity": "error",
+      "type": "spec"
+    },
+    {
+      "rule": "missing-preflight-proof",
+      "rootCause": "Design or spec omission",
+      "location": "DESIGN.md",
+      "fix": "Update the relevant Markdown spec file.",
+      "verify": "Re-run audit --strict",
+      "confidence": "high",
+      "impact": "implementation ambiguity",
+      "severity": "error",
+      "type": "spec"
+    },
+    {
+      "rule": "typography-scale-missing",
+      "rootCause": "Design or spec omission",
+      "location": "DESIGN.md",
+      "fix": "Update the relevant Markdown spec file.",
+      "verify": "Re-run audit --strict",
+      "confidence": "high",
+      "impact": "implementation ambiguity",
+      "severity": "error",
+      "type": "spec"
+    },
+    {
+      "rule": "typography-hierarchy-missing",
+      "rootCause": "Design or spec omission",
+      "location": "DESIGN.md",
+      "fix": "Update the relevant Markdown spec file.",
+      "verify": "Re-run audit --strict",
+      "confidence": "high",
+      "impact": "implementation ambiguity",
+      "severity": "error",
+      "type": "spec"
+    },
+    {
+      "rule": "root-cause-mode-missing",
+      "rootCause": "Design or spec omission",
+      "location": "AGENTS.md",
+      "fix": "Update the relevant Markdown spec file.",
+      "verify": "Re-run audit --strict",
+      "confidence": "high",
+      "impact": "implementation ambiguity",
+      "severity": "error",
+      "type": "spec"
+    },
+    {
+      "rule": "install-agent-harness-missing",
+      "rootCause": "Design or spec omission",
+      "location": "AGENTS.md",
+      "fix": "Update the relevant Markdown spec file.",
+      "verify": "Re-run audit --strict",
+      "confidence": "high",
+      "impact": "implementation ambiguity",
+      "severity": "error",
+      "type": "spec"
+    },
+    {
+      "rule": "react-harness-recommendation-missing",
+      "rootCause": "Design or spec omission",
+      "location": "AGENTS.md",
+      "fix": "Update the relevant Markdown spec file.",
+      "verify": "Re-run audit --strict",
+      "confidence": "high",
+      "impact": "implementation ambiguity",
+      "severity": "error",
+      "type": "spec"
+    },
+    {
+      "rule": "modal-viewport-contract-missing",
+      "rootCause": "Design or spec omission",
+      "location": "DESIGN.md",
+      "fix": "Update the relevant Markdown spec file.",
+      "verify": "Re-run audit --strict",
+      "confidence": "high",
+      "impact": "implementation ambiguity",
+      "severity": "error",
+      "type": "spec"
+    },
+    {
+      "rule": "modal-width-guard-missing",
+      "rootCause": "Design or spec omission",
+      "location": "DESIGN.md",
+      "fix": "Update the relevant Markdown spec file.",
+      "verify": "Re-run audit --strict",
+      "confidence": "high",
+      "impact": "implementation ambiguity",
+      "severity": "error",
+      "type": "spec"
+    },
+    {
+      "rule": "modal-height-guard-missing",
+      "rootCause": "Design or spec omission",
+      "location": "DESIGN.md",
+      "fix": "Update the relevant Markdown spec file.",
+      "verify": "Re-run audit --strict",
+      "confidence": "high",
+      "impact": "implementation ambiguity",
+      "severity": "error",
+      "type": "spec"
+    },
+    {
+      "rule": "modal-internal-scroll-missing",
+      "rootCause": "Design or spec omission",
+      "location": "DESIGN.md",
+      "fix": "Update the relevant Markdown spec file.",
+      "verify": "Re-run audit --strict",
+      "confidence": "high",
+      "impact": "implementation ambiguity",
+      "severity": "error",
+      "type": "spec"
+    },
+    {
+      "rule": "modal-viewport-qa-missing",
+      "rootCause": "Design or spec omission",
+      "location": "DESIGN.md",
+      "fix": "Update the relevant Markdown spec file.",
+      "verify": "Re-run audit --strict",
+      "confidence": "high",
+      "impact": "implementation ambiguity",
+      "severity": "error",
+      "type": "spec"
+    },
+    {
+      "rule": "oversized-typography-mobile-risk",
+      "symptom": "<h1 className=\"text-[92px] leading-none font-black\">Launch faster with AI</h1>",
+      "rootCause": "Code implementation error or omission",
+      "location": "/Users/mamdouhaboammar/Documents/antigravity/focused-hypatia/unslop/unslop-torture-bench/cases/03-random-typography/src/components/Hero.jsx:4",
+      "evidence": "<h1 className=\"text-[92px] leading-none font-black\">Launch faster with AI</h1>",
+      "fix": "See scanner specific fix guidelines.",
+      "confidence": "high",
+      "impact": "visual break",
+      "severity": "warning",
+      "type": "modular"
+    },
+    {
+      "rule": "leading-none-cutoff-risk",
+      "symptom": "<h1 className=\"text-[92px] leading-none font-black\">Launch faster with AI</h1>",
+      "rootCause": "Code implementation error or omission",
+      "location": "/Users/mamdouhaboammar/Documents/antigravity/focused-hypatia/unslop/unslop-torture-bench/cases/03-random-typography/src/components/Hero.jsx:4",
+      "evidence": "<h1 className=\"text-[92px] leading-none font-black\">Launch faster with AI</h1>",
+      "fix": "See scanner specific fix guidelines.",
+      "confidence": "high",
+      "impact": "visual break",
+      "severity": "warning",
+      "type": "modular"
+    },
+    {
+      "rule": "oversized-typography-mobile-risk",
+      "symptom": "<p className=\"text-[19px] leading-[21px]\">A premium dashboard for your team.</p>",
+      "rootCause": "Code implementation error or omission",
+      "location": "/Users/mamdouhaboammar/Documents/antigravity/focused-hypatia/unslop/unslop-torture-bench/cases/03-random-typography/src/components/Hero.jsx:5",
+      "evidence": "<p className=\"text-[19px] leading-[21px]\">A premium dashboard for your team.</p>",
+      "fix": "See scanner specific fix guidelines.",
+      "confidence": "high",
+      "impact": "visual break",
+      "severity": "warning",
+      "type": "modular"
+    },
+    {
+      "rule": "oversized-typography-mobile-risk",
+      "symptom": "<button className=\"text-[17px]\">Start now</button>",
+      "rootCause": "Code implementation error or omission",
+      "location": "/Users/mamdouhaboammar/Documents/antigravity/focused-hypatia/unslop/unslop-torture-bench/cases/03-random-typography/src/components/Hero.jsx:6",
+      "evidence": "<button className=\"text-[17px]\">Start now</button>",
+      "fix": "See scanner specific fix guidelines.",
+      "confidence": "high",
+      "impact": "visual break",
+      "severity": "warning",
+      "type": "modular"
+    },
+    {
+      "rule": "oversized-typography-mobile-risk",
+      "symptom": "<span className=\"text-[13px]\">Trusted by teams</span>",
+      "rootCause": "Code implementation error or omission",
+      "location": "/Users/mamdouhaboammar/Documents/antigravity/focused-hypatia/unslop/unslop-torture-bench/cases/03-random-typography/src/components/Hero.jsx:7",
+      "evidence": "<span className=\"text-[13px]\">Trusted by teams</span>",
+      "fix": "See scanner specific fix guidelines.",
+      "confidence": "high",
+      "impact": "visual break",
+      "severity": "warning",
+      "type": "modular"
+    },
+    {
+      "rule": "missing-skill-frontend-ui-engineering",
+      "symptom": "Complex UI framework detected without explicit UI engineering guards.",
+      "rootCause": "AI Agent context limitation",
+      "location": "N/A",
+      "evidence": "Project framework: react",
+      "fix": "Activate the `frontend-ui-engineering` skill to ensure production-quality components and state management.",
+      "verify": "Agent acknowledges and utilizes the frontend-ui-engineering skill",
+      "confidence": "high",
+      "impact": "agent-risk",
+      "severity": "info",
+      "type": "harness"
+    },
+    {
+      "rule": "missing-skill-chrome-devtools",
+      "symptom": "Web project detected. Agent lacks live browser validation.",
+      "rootCause": "AI Agent context limitation",
+      "location": "N/A",
+      "evidence": "Project framework: react",
+      "fix": "Activate the `chrome-devtools` skill or `browser-testing-with-devtools` to allow the agent to run and inspect the app locally.",
+      "verify": "Agent acknowledges and utilizes the chrome-devtools skill",
+      "confidence": "high",
+      "impact": "agent-risk",
+      "severity": "info",
+      "type": "harness"
+    },
+    {
+      "rule": "missing-skill-a11y-debugging",
+      "symptom": "High risk of inaccessible modals, missing ARIA tags, and bad contrast.",
+      "rootCause": "AI Agent context limitation",
+      "location": "N/A",
+      "evidence": "Project framework: react",
+      "fix": "Activate the `a11y-debugging` skill so the agent can use Chrome DevTools to audit accessibility properly.",
+      "verify": "Agent acknowledges and utilizes the a11y-debugging skill",
+      "confidence": "high",
+      "impact": "agent-risk",
+      "severity": "info",
+      "type": "harness"
+    }
+  ],
+  "summary": {
+    "score": 0,
+    "checks": 64,
+    "errors": 15,
+    "warnings": 5,
+    "info": 3,
+    "readiness": "blocked",
+    "readinessMessage": "Do not hand this to an AI coding agent yet. Resolve errors and blocked source issues first.",
+    "categories": {
+      "product-clarity": {
+        "errors": 1,
+        "warnings": 0,
+        "info": 0,
+        "total": 1
+      },
+      "taste-calibration": {
+        "errors": 2,
+        "warnings": 0,
+        "info": 0,
+        "total": 2
+      },
+      "design-system-governance": {
+        "errors": 1,
+        "warnings": 0,
+        "info": 0,
+        "total": 1
+      },
+      "agent-handoff-readiness": {
+        "errors": 1,
+        "warnings": 0,
+        "info": 0,
+        "total": 1
+      },
+      "typography-governance": {
+        "errors": 2,
+        "warnings": 0,
+        "info": 0,
+        "total": 2
+      },
+      "root-cause-governance": {
+        "errors": 1,
+        "warnings": 0,
+        "info": 0,
+        "total": 1
+      },
+      "agent-harness-readiness": {
+        "errors": 2,
+        "warnings": 0,
+        "info": 0,
+        "total": 2
+      },
+      "modal-viewport-governance": {
+        "errors": 5,
+        "warnings": 0,
+        "info": 0,
+        "total": 5
+      },
+      "uncategorized": {
+        "errors": 0,
+        "warnings": 5,
+        "info": 3,
+        "total": 8
+      }
+    }
+  },
+  "fingerprint": {
+    "framework": "react",
+    "uiLibraries": [],
+    "configs": [],
+    "routing": "unknown",
+    "hasTypescript": false,
+    "hasTailwind": true,
+    "packageJson": {
+      "name": "case-03",
+      "dependencies": {
+        "react": "^18.0.0",
+        "tailwindcss": "^3.0.0"
+      }
+    },
+    "srcDirs": [
+      "src",
+      "src/components"
+    ]
+  }
+}
