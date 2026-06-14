@@ -1,0 +1,73 @@
+# Unslop Autopilot Report
+
+## 1. Executive Summary
+**Score:** 0/100
+**Readiness:** blocked
+> **Decision:** Do not hand this to an AI coding agent yet. Resolve errors and blocked source issues first.
+
+**Totals:** 19 Blockers | 0 Warnings | 3 Info
+
+## 2. Top Blockers
+
+- **[`unresolved-product-placeholders`]** at `PRODUCT.md`
+  - *Root Cause:* Design or spec omission
+  - *Fix Strategy:* Update the relevant Markdown spec file.
+  - *Verify:* Re-run audit --strict
+- **[`missing-design-read`]** at `DESIGN.md`
+  - *Root Cause:* Design or spec omission
+  - *Fix Strategy:* Update the relevant Markdown spec file.
+  - *Verify:* Re-run audit --strict
+- **[`missing-taste-dials`]** at `DESIGN.md`
+  - *Root Cause:* Design or spec omission
+  - *Fix Strategy:* Update the relevant Markdown spec file.
+  - *Verify:* Re-run audit --strict
+- **[`missing-design-system-decision`]** at `DESIGN.md`
+  - *Root Cause:* Design or spec omission
+  - *Fix Strategy:* Update the relevant Markdown spec file.
+  - *Verify:* Re-run audit --strict
+- **[`missing-preflight-proof`]** at `DESIGN.md`
+  - *Root Cause:* Design or spec omission
+  - *Fix Strategy:* Update the relevant Markdown spec file.
+  - *Verify:* Re-run audit --strict
+
+## 3. Evidence Table
+
+| Severity | Rule | Location | Symptom / Excerpt | Confidence |
+|----------|------|----------|-------------------|------------|
+| ERROR | `unresolved-product-placeholders` | `PRODUCT.md` |  | high |
+| ERROR | `missing-design-read` | `DESIGN.md` |  | high |
+| ERROR | `missing-taste-dials` | `DESIGN.md` |  | high |
+| ERROR | `missing-design-system-decision` | `DESIGN.md` |  | high |
+| ERROR | `missing-preflight-proof` | `DESIGN.md` |  | high |
+| ERROR | `typography-scale-missing` | `DESIGN.md` |  | high |
+| ERROR | `typography-hierarchy-missing` | `DESIGN.md` |  | high |
+| ERROR | `root-cause-mode-missing` | `AGENTS.md` |  | high |
+| ERROR | `install-agent-harness-missing` | `AGENTS.md` |  | high |
+| ERROR | `react-harness-recommendation-missing` | `AGENTS.md` |  | high |
+| ERROR | `modal-viewport-contract-missing` | `DESIGN.md` |  | high |
+| ERROR | `modal-width-guard-missing` | `DESIGN.md` |  | high |
+| ERROR | `modal-height-guard-missing` | `DESIGN.md` |  | high |
+| ERROR | `modal-scrollbar-aesthetic-missing` | `DESIGN.md` |  | high |
+| ERROR | `modal-viewport-qa-missing` | `DESIGN.md` |  | high |
+| ERROR | `stacking-plan-missing` | `DESIGN.md` |  | high |
+| ERROR | `layer-scale-missing` | `DESIGN.md` |  | high |
+| ERROR | `overlay-portal-policy-missing` | `DESIGN.md` |  | high |
+| ERROR | `layer-conflict-matrix-missing` | `DESIGN.md` |  | high |
+| INFO | `missing-skill-frontend-ui-engineering` | `N/A` | Complex UI framework detected without explicit UI engineering guards. | high |
+| INFO | `missing-skill-chrome-devtools` | `N/A` | Web project detected. Agent lacks live browser validation. | high |
+| INFO | `missing-skill-a11y-debugging` | `N/A` | High risk of inaccessible modals, missing ARIA tags, and bad contrast. | high |
+
+## 4. Auto Repairs Applied
+
+- **DESIGN.md**: appended safe section (`deterministic-focus-management`)
+
+## 5. Agent Handoff Prompt
+
+> Inspect PRODUCT.md, DESIGN.md, AGENTS.md, package.json, routing files, component structure, and existing tests. Read `.unslop/fix-list.md` and resolve any listed issues. Implement only the requested scope while preserving existing behavior. Before completion, run `npx unslop audit`, ensure there are 0 errors, and show the final output score and readiness.
+
+## 6. Verification Checklist
+- [ ] Build succeeds without errors
+- [ ] Mobile viewports (320px, 375px, 390px) checked
+- [ ] Keyboard navigation and focus traps work
+- [ ] RTL layout checked (if applicable)
+- [ ] Overlays and modals render correctly without scroll cutoff

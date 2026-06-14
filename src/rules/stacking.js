@@ -7,7 +7,7 @@ const hasScale = /layer scale|z-index scale|z index scale|layer tokens|z-index t
 const hasAudit = /stacking context audit|stacking audit|ancestor audit|transform|opacity|filter|contain|isolation|will-change|overflow hidden|overflow-hidden|fixed parent|sticky parent/i;
 const hasPortalPolicy = /portal policy|portal root|overlay root|document body|top layer|native dialog|local dom/i;
 const hasConflictMatrix = /conflict matrix|layer order|header vs|drawer vs|modal vs|toast vs|tooltip vs|dropdown vs/i;
-const blindEscalation = /z-\[?9999\]?|z-\[?999\]?|z-index\s*:\s*9999|z-index\s*:\s*999/i;
+const blindEscalation = /z-\[?9999\]?|z-\[?999\]?|z-index\s*:\s*9999|z-index\s*:\s*999|increase z-index|raise z-index|z-index until|use z-9999|use z-999|just (increase|raise|bump) (the )?z/i;
 
 function design(ctx) {
   return ctx.files['DESIGN.md'] || '';
