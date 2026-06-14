@@ -1,5 +1,5 @@
 {
-  "name": "unslop",
+  "name": "unslop-preflight",
   "version": "1.9.7",
   "description": "Autopilot design quality gates for AI-assisted UI with readiness bands, typography governance, Root Cause Mode, overlay reasoning, Install Agent Harness guidance, and AGENTS.md handoff before implementation.",
   "type": "module",
