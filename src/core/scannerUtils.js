@@ -17,6 +17,19 @@ export function walk(dir, files = []) {
   return files;
 }
 
+function findLine(content, pattern) {
+  const lines = content.split(/\r?\n/);
+  const index = lines.findIndex((line) => {
+    pattern.lastIndex = 0;
+    return pattern.test(line);
+  });
+  return index >= 0 ? index + 1 : 1;
+}
+
+function excerptFor(rule, fallback) {
+  return (rule.message || fallback || rule.name || 'Review required').trim().slice(0, 220);
+}
+
 export function scanWithRules(targetDir, rules) {
   const files = walk(targetDir);
   const findings = [];
@@ -24,12 +37,25 @@ export function scanWithRules(targetDir, rules) {
   for (const file of files) {
     const content = readFileSync(file, 'utf8');
     const lines = content.split(/\r?\n/);
+
+    for (const rule of rules) {
+      if (!rule.pattern || rule.scope !== 'file') continue;
+      rule.pattern.lastIndex = 0;
+      if (rule.pattern.test(content)) {
+        findings.push({
+          file,
+          line: findLine(content, rule.pattern),
+          level: rule.level || 'blocker',
+          rule: rule.name,
+          excerpt: excerptFor(rule, rule.pattern.source)
+        });
+      }
+    }
     
-    // Line-by-line rules
     for (let index = 0; index < lines.length; index++) {
       const line = lines[index];
       for (const rule of rules) {
-        if (!rule.pattern) continue;
+        if (!rule.pattern || rule.scope === 'file') continue;
         rule.pattern.lastIndex = 0;
         if (rule.pattern.test(line)) {
           findings.push({ 
@@ -37,13 +63,12 @@ export function scanWithRules(targetDir, rules) {
             line: index + 1, 
             level: rule.level || 'blocker', 
             rule: rule.name, 
-            excerpt: line.trim().slice(0, 160) 
+            excerpt: excerptFor(rule, line.trim()) 
           });
         }
       }
     }
 
-    // Heuristic functions
     for (const rule of rules) {
       if (rule.heuristic) {
         rule.heuristic(content, file, findings);
