@@ -6,11 +6,11 @@
 
 **A preflight system for AI-built frontends. It checks `PRODUCT.md`, `DESIGN.md`, `AGENTS.md`, and source code before implementation moves forward.**
 
-[![Socket Badge](https://badge.socket.dev/npm/package/unslop-preflight/1.10.0)](https://badge.socket.dev/npm/package/unslop-preflight/1.10.0)
+[![Socket Badge](https://badge.socket.dev/npm/package/unslop-preflight/1.10.1)](https://badge.socket.dev/npm/package/unslop-preflight/1.10.1)
 [![npm](https://img.shields.io/npm/v/unslop-preflight?style=flat-square&color=5B21B6&label=npm)](https://www.npmjs.com/package/unslop-preflight)
 [![skills.sh](https://skills.sh/b/imMamdouhaboammar/unslop-preflight)](https://skills.sh/imMamdouhaboammar/unslop-preflight)
 [![Gates](https://img.shields.io/badge/gates-23%2B%20readiness-F59E0B?style=flat-square)](./SKILL.md)
-[![Version](https://img.shields.io/badge/docs-1.10.0-3B82F6?style=flat-square)](./CHANGELOG.md)
+[![Version](https://img.shields.io/badge/docs-1.10.1-3B82F6?style=flat-square)](./CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/license-MIT-22C55E?style=flat-square)](./LICENSE)
 
 ```bash
@@ -91,18 +91,19 @@ Install as a skill:
 npx skills add imMamdouhaboammar/unslop-preflight
 ```
 
-## What is current in v1.10.0
+## What is current in v1.10.1
 
-v1.10.0 adds a source-level detector layer on top of the existing artifact gates.
+v1.10.1 syncs the GitHub repository and npm package metadata, adds automated npm publishing, and keeps the v1.10 source-level detector layer.
 
-New in this release:
+New in v1.10.x:
 
 - `unslop scan` command for direct frontend source scanning
 - source slop detectors for React keys, focus states, images, links, inputs, motion, async views, empty states, color drift, sample data, and generic visual stacks
 - file-scoped scanner rules for checks that need full-file context
 - file exclusions for token, theme, test, story, fixture, and mock files where a signal would create noise
-- `--no-source-scan` now works inside autopilot
-- source findings now appear as code evidence in reports and fix lists
+- `--no-source-scan` works inside autopilot
+- source findings appear as code evidence in reports and fix lists
+- npm publish workflow with GitHub Actions, Trusted Publishing support, package pack verification, tests, and duplicate-version skip
 
 ## How it works
 
@@ -185,6 +186,23 @@ Current detector coverage:
 | `sample-data-shipping-risk` | sample names, placeholder copy, and dummy domains in source |
 
 More detail lives in [`docs/SOURCE_SLOP_DETECTORS.md`](./docs/SOURCE_SLOP_DETECTORS.md).
+
+## npm publishing
+
+This repository is prepared for automatic npm publishing through GitHub Actions.
+
+Recommended npm trusted publisher settings:
+
+```text
+Owner: imMamdouhaboammar
+Repository: unslop-preflight
+Workflow filename: npm-publish.yml
+Allowed action: npm publish
+```
+
+The workflow tests the package, runs `npm pack --dry-run`, checks whether the package version already exists on npm, and publishes only if the version is new.
+
+Read [`docs/NPM_PUBLISHING.md`](./docs/NPM_PUBLISHING.md).
 
 ## Readiness bands
 
@@ -269,6 +287,7 @@ npx unslop <command> [args]
 | Command | What it does |
 |---------|--------------|
 | `autopilot` | Runs init, audit, safe repair, source scans, reports, and fix-list generation |
+| `preflight` | Alias for `autopilot` |
 | `init` | Creates missing `PRODUCT.md`, `DESIGN.md`, and `AGENTS.md` |
 | `audit` | Runs artifact gates and prints score, readiness, and category breakdown |
 | `scan` | Runs source scanners against frontend code |
@@ -338,6 +357,7 @@ AGENTS.md                instructions for AI coding agents
 | [`AGENTS.md`](./AGENTS.md) | Repository-level guidance for AI coding agents |
 | [`CHANGELOG.md`](./CHANGELOG.md) | Release history |
 | [`CONTRIBUTING.md`](./CONTRIBUTING.md) | Gate, scanner, template, and docs update workflow |
+| [`docs/NPM_PUBLISHING.md`](./docs/NPM_PUBLISHING.md) | GitHub Actions and npm Trusted Publishing setup |
 | [`docs/AI_AGENT_READINESS.md`](./docs/AI_AGENT_READINESS.md) | Readiness, taste, placeholder, and report behavior |
 | [`docs/SOURCE_SLOP_DETECTORS.md`](./docs/SOURCE_SLOP_DETECTORS.md) | Source-level detector behavior |
 | [`docs/ROOT_CAUSE_MODE.md`](./docs/ROOT_CAUSE_MODE.md) | Diagnosis-first governance for bugs and layout failures |
@@ -350,20 +370,21 @@ AGENTS.md                instructions for AI coding agents
 
 ```text
 unslop-preflight/
-├── bin/                         CLI entrypoint
+├── .github/workflows/            npm publish automation
+├── bin/                          CLI entrypoint
 ├── src/
-│   ├── commands/                init, audit, repair, report, autopilot, scan
-│   ├── core/                    auditor, scanners, reporter, filesystem helpers
-│   ├── rules/                   product, design, taste, placeholder, root-cause, harness, overlay, UX rules
-│   └── scanners/                source-level UI, layout, typography, overlay, responsive detectors
-├── scripts/                     standalone scanners and validators
-├── assets/                      generated artifact templates
-├── references/                  detailed rule references
-├── docs/                        documentation for system behavior
-├── tests/                       Node test runner coverage
-├── AGENTS.md                    agent guidance for this repository
-├── SKILL.md                     skill runtime instructions
-├── CHANGELOG.md                 release history
+│   ├── commands/                 init, audit, repair, report, autopilot, scan
+│   ├── core/                     auditor, scanners, reporter, filesystem helpers
+│   ├── rules/                    product, design, taste, placeholder, root-cause, harness, overlay, UX rules
+│   └── scanners/                 source-level UI, layout, typography, overlay, responsive detectors
+├── scripts/                      standalone scanners and validators
+├── assets/                       generated artifact templates
+├── references/                   detailed rule references
+├── docs/                         documentation for system behavior
+├── tests/                        Node test runner coverage
+├── AGENTS.md                     agent guidance for this repository
+├── SKILL.md                      skill runtime instructions
+├── CHANGELOG.md                  release history
 └── package.json
 ```
 
