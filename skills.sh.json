@@ -3,8 +3,8 @@
   "notGrouped": "bottom",
   "groupings": [
     {
-      "title": "Design Planning",
-      "description": "Skills for product-aware UI planning, design gates, AGENTS.md handoff, AI-agent readiness, taste calibration, typography governance, Root Cause Mode, modal scrollbar treatment, overlay and stacking reasoning, Install Agent Harness guidance, and anti-AI-slop checks before implementation.",
+      "title": "Frontend Preflight",
+      "description": "AI-agent readiness checks for product handoff, design contracts, source slop detection, overlays, accessibility, responsive behavior, and fix-list generation before frontend implementation.",
       "skills": [
         "unslop-preflight"
       ]
