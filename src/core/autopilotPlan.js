@@ -37,7 +37,7 @@ function toSourceEvidence(finding) {
     evidenceSnippet: finding.excerpt,
     file: finding.file,
     line: finding.line,
-    fixStrategy: 'Fix the flagged source-level pattern, then rerun `unslop scan` or `unslop autopilot`.',
+    fixStrategy: 'Fix the flagged source-level pattern, then rerun `npx unslop-preflight scan` or `npx unslop-preflight autopilot`.',
     confidence: 'high',
     impact: finding.level === 'blocker' ? 'accessibility break' : 'visual break',
     severity: finding.level === 'blocker' ? 'error' : finding.level || 'warning',
@@ -53,8 +53,8 @@ function toScannerFailureEvidence(failure, strict = false) {
     likelyRootCause: 'A source scanner crashed or could not read the target path.',
     evidenceSnippet: failure.error || 'Scanner failed without details.',
     file: failure.targetDir,
-    fixStrategy: 'Fix the scanner input path or scanner failure, then rerun `unslop autopilot`.',
-    verificationProof: 'Rerun `unslop autopilot --strict` and confirm scannerFailures is 0.',
+    fixStrategy: 'Fix the scanner input path or scanner failure, then rerun `npx unslop-preflight autopilot`.',
+    verificationProof: 'Rerun `npx unslop-preflight autopilot --strict` and confirm scannerFailures is 0.',
     confidence: 'high',
     impact: 'agent-risk',
     severity: strict ? 'error' : 'warning',
@@ -170,10 +170,10 @@ function runSinglePass(cwd, flags, pass) {
   };
 }
 
-function stopReasonFor(cycle, pass, maxPasses) {
+function stopReasonFor(cycle, pass, maxPasses, flags = {}) {
   const { before, result, patch, repairPlan, metadata } = cycle;
 
-  if (metadata.scanStats?.scannerFailures > 0 && result.summary?.errors > 0) {
+  if (flags.strict && metadata.scanStats?.scannerFailures > 0) {
     return 'error';
   }
 
@@ -215,7 +215,7 @@ export function runAutopilotPipeline(cwd, flags = {}) {
 
   for (let pass = 1; pass <= maxPasses; pass++) {
     const cycle = runSinglePass(cwd, flags, pass);
-    const reason = stopReasonFor(cycle, pass, maxPasses);
+    const reason = stopReasonFor(cycle, pass, maxPasses, flags);
 
     allGenerated.push(...(cycle.patch.generated || []));
     allChanged.push(...(cycle.patch.changed || []));
@@ -254,8 +254,8 @@ export function runAutopilotPipeline(cwd, flags = {}) {
   finalResult.reportFiles = writeReports(cwd, finalResult, flags);
   finalResult.exitCode = exitCodeFor(finalResult);
   finalResult.nextCommand = finalResult.summary.errors > 0
-    ? 'unslop scan --strict'
-    : 'unslop audit --strict';
+    ? 'npx unslop-preflight scan --strict'
+    : 'npx unslop-preflight audit --strict';
   finalResult.suggestedPrompt = 'Review `.unslop/report.md` and `.unslop/fix-list.md`. Apply manual source fixes separately; autopilot only applies safe documentation repairs.';
 
   return finalResult;
