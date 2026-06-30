@@ -14,16 +14,18 @@ function formatText(text, colorFn, useColor) {
 }
 
 const c = {
-  red: (t, u = true) => formatText(t, x => `${colors.red}${x}${colors.reset}`, u),
-  green: (t, u = true) => formatText(t, x => `${colors.green}${x}${colors.reset}`, u),
-  yellow: (t, u = true) => formatText(t, x => `${colors.yellow}${x}${colors.reset}`, u),
-  blue: (t, u = true) => formatText(t, x => `${colors.blue}${x}${colors.reset}`, u),
-  cyan: (t, u = true) => formatText(t, x => `${colors.cyan}${x}${colors.reset}`, u),
-  bold: (t, u = true) => formatText(t, x => `${colors.bold}${x}${colors.reset}`, u),
+  red: (text, useColor = true) => formatText(text, (value) => `${colors.red}${value}${colors.reset}`, useColor),
+  green: (text, useColor = true) => formatText(text, (value) => `${colors.green}${value}${colors.reset}`, useColor),
+  yellow: (text, useColor = true) => formatText(text, (value) => `${colors.yellow}${value}${colors.reset}`, useColor),
+  blue: (text, useColor = true) => formatText(text, (value) => `${colors.blue}${value}${colors.reset}`, useColor),
+  cyan: (text, useColor = true) => formatText(text, (value) => `${colors.cyan}${value}${colors.reset}`, useColor),
+  bold: (text, useColor = true) => formatText(text, (value) => `${colors.bold}${value}${colors.reset}`, useColor)
 };
 
 export function parseArgs(argv) {
-  const flags = {}; const args = [];
+  const flags = {};
+  const args = [];
+
   for (const item of argv) {
     if (item.startsWith('--')) {
       const [key, raw] = item.slice(2).split('=');
@@ -32,6 +34,7 @@ export function parseArgs(argv) {
       args.push(item);
     }
   }
+
   return { command: args[0], args: args.slice(1), flags, cwd: process.cwd() };
 }
 
@@ -80,19 +83,20 @@ function topCategories(categories = {}) {
 
 export function printResult(result, flags = {}) {
   const useColor = !flags.noColor;
+
   if (flags.json) return console.log(JSON.stringify(result, null, 2));
-  
+
   if (flags.agentPrompt) {
-    import('./report.js').then(m => {
-      console.log(m.buildFixList(result));
+    import('./report.js').then((module) => {
+      console.log(module.buildFixList(result));
     });
     return;
   }
-  
+
   const s = result.summary || { score: 0, checks: 0, errors: 0, warnings: 0, info: 0 };
-  
+
   console.log(`\n${c.bold(c.cyan('Unslop Output', useColor), useColor)}`);
-  
+
   const scoreColor = s.score >= 90 ? c.green : s.score >= 70 ? c.yellow : c.red;
   console.log(`Score: ${scoreColor(s.score.toString(), useColor)}/100 | Checks: ${s.checks} | Errors: ${c.red(s.errors.toString(), useColor)} | Warnings: ${c.yellow(s.warnings.toString(), useColor)} | Info: ${s.info}`);
 
@@ -102,22 +106,35 @@ export function printResult(result, flags = {}) {
     if (s.readinessMessage) console.log(`Decision: ${s.readinessMessage}`);
   }
 
+  if (result.stopReason) {
+    console.log(`Stop reason: ${c.cyan(result.stopReason, useColor)}`);
+  }
+
+  if (result.scanStats) {
+    const stats = result.scanStats;
+    console.log(`Scan: ${stats.filesScanned} files | ${stats.findings} findings | ${stats.scannerFailures} scanner failures | ${stats.durationMs}ms`);
+  }
+
+  if (result.codeFixes?.requested && !result.codeFixes.applied) {
+    console.log(c.yellow('Code fix application is not implemented yet. Autopilot only wrote fix-list guidance.', useColor));
+  }
+
   const categories = topCategories(s.categories);
   if (categories.length && (flags.verbose || s.errors || s.warnings)) {
     console.log(`Top categories: ${categories.map(([name, data]) => `${name} (${data.total})`).join(', ')}`);
   }
-  
+
   if (result.generated?.length) console.log(`${c.green('Generated:', useColor)} ${result.generated.join(', ')}`);
   if (result.changed?.length) console.log(`${c.blue('Changed:', useColor)} ${result.changed.join(', ')}`);
   if (result.repairs?.length) console.log(`${c.yellow('Auto-repaired:', useColor)} ${result.repairs.length} items`);
-  
+
   if (result.issues?.length) {
     console.log(`\n${c.bold('Issues:', useColor)}`);
     for (const issue of result.issues) {
       const isError = issue.severity === 'error';
       const sevColor = isError ? c.red : issue.severity === 'warning' ? c.yellow : c.cyan;
-      const marker = isError ? '✕' : (issue.severity === 'warning' ? '⚠' : 'ℹ');
-      console.log(`  ${sevColor(`${marker} [${issue.severity.toUpperCase()}]`, useColor)} ${issue.id}: ${issue.title}`);
+      const marker = isError ? '✕' : issue.severity === 'warning' ? '⚠' : 'ℹ';
+      console.log(`  ${sevColor(`${marker} [${String(issue.severity).toUpperCase()}]`, useColor)} ${issue.id}: ${issue.title}`);
       if (flags.verbose && issue.suggestedFix) {
         console.log(`      ↳ ${c.blue('Fix:', useColor)} ${issue.suggestedFix}`);
       }
@@ -125,12 +142,19 @@ export function printResult(result, flags = {}) {
   } else if (!flags.json) {
     console.log(`\n${c.green('✓ No issues found! Your design spec is robust.', useColor)}`);
   }
-  
+
+  if (result.reportFiles?.length) {
+    console.log(`\n${c.bold('Reports:', useColor)}`);
+    for (const file of result.reportFiles) {
+      console.log(`  ${file}`);
+    }
+  }
+
   if (result.nextCommand) {
     console.log(`\n${c.bold('Next steps:', useColor)}`);
     console.log(`  Run: ${c.cyan(result.nextCommand, useColor)}`);
   }
-  
+
   if (result.suggestedPrompt) {
     console.log(`\n${c.bold('Suggested Prompt for AI Coding Agent:', useColor)}`);
     console.log(`> ${result.suggestedPrompt}`);

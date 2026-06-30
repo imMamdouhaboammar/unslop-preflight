@@ -13,6 +13,7 @@
   },
   "scripts": {
     "test": "node --test tests/*.test.js",
+    "build": "node --check bin/cli.js && node --check src/cli.js && node --check src/core/autopilotPlan.js && node --check src/core/sourceScanner.js && node --check src/core/report.js",
     "autopilot": "node bin/cli.js autopilot",
     "repair": "node bin/cli.js repair",
     "scan": "node bin/cli.js scan",

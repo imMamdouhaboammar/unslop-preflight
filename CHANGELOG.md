@@ -1,5 +1,19 @@
 # Changelog
 
+## Unreleased - Autopilot Hardening
+
+### Added
+- **Real Max-Passes Loop**: Robust `--max-passes=N` pass refinement loop in autopilot to resolve issues sequentially.
+- **Pass History**: Track pass-by-pass score history and action summary in report results.
+- **Clean Stop Reasons**: Autopilot reports stopping reason (`agent-ready`, `no-safe-repairs`, `no-score-improvement`, `max-passes`, or `error`).
+- **Scanner Failure Collection**: Scanner walk and crash errors are recorded as metadata in `scanStats` and treated as blocking evidence in `--strict` mode.
+- **Testing Coverage**: Added full validation tests for autopilot refinement loop, scanner failures, stats reporting, and code fixes.
+- **CI Hardening**: Build validation script checks CLI, commands, and core autopilot and reporter engines.
+
+### Changed
+- **Markdown Repair Spacing**: Restored readable, spacing-preserving formatting when safe document repairs are appended to markdown files.
+- **Code Fix Truthfulness**: Compatibility flag `--apply-code-fixes` accurately reports requested state and does not falsely claim source modifications.
+
 ## v1.11.0 - Modular Standards Packs System & Vibe Coding Profile (2026-06-30)
 
 ### Added

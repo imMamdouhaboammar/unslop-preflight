@@ -2,6 +2,8 @@
 
 # Unslop
 
+The package name is `unslop-preflight`.
+
 ### Stop AI coding agents before they ship fragile frontend work.
 
 **A preflight system for AI-built frontends. It checks `PRODUCT.md`, `DESIGN.md`, `AGENTS.md`, and source code before implementation moves forward.**
@@ -142,6 +144,12 @@ Readiness decision
 ## Autopilot
 
 ```bash
+npx unslop-preflight autopilot
+```
+
+The package's primary command is `npx unslop-preflight autopilot`. After installing the package locally or globally, the shorter `unslop` bin alias is also fully available:
+
+```bash
 npx unslop autopilot
 ```
 
@@ -155,14 +163,24 @@ Autopilot does the full preflight pass:
 6. Writes report files under `.unslop/`.
 7. Returns a readiness band and next command.
 
-Useful options:
+### Options & Hardening
+
+* **Bounded Refinement Loop (`--max-passes=N`)**: Specifies the maximum number of correction passes (1 to 10) autopilot runs in a single session.
+* **Detailed Reports (`.unslop/`)**: Autopilot writes reports to `.unslop/report.md`, `.unslop/report.json`, and `.unslop/fix-list.md`. The JSON and markdown reports include:
+  * `passes[]`: Pass-by-pass history of scores, applied repairs, and results.
+  * `stopReason`: Clean stopping motivation (`agent-ready`, `no-safe-repairs`, `no-score-improvement`, `max-passes`, or `error`).
+  * `scanStats`: Detailed statistics (files scanned/skipped, findings, scanner failures, run duration, and directories scanned).
+* **Robust Scanner Failure Handling**: Scanner execution or file-walk errors do not crash the process; they are recorded as warning metadata in reports. In `--strict` mode, scanner failures are treated as blocking evidence, causing the check to fail.
+* **Compatibility Code Fix Flag (`--apply-code-fixes`)**: The `--apply-code-fixes` flag is kept for compatibility. It correctly reports `requested: true` and `applied: false` with the reason `not-implemented` inside output metadata. Autopilot does not automatically modify or rewrite source files.
+
+Useful option syntax:
 
 ```bash
-npx unslop autopilot --max-passes=5
-npx unslop autopilot --no-source-scan
-npx unslop autopilot --dry-run
-npx unslop autopilot --json
-npx unslop autopilot --strict
+npx unslop-preflight autopilot --max-passes=5
+npx unslop-preflight autopilot --no-source-scan
+npx unslop-preflight autopilot --dry-run
+npx unslop-preflight autopilot --json
+npx unslop-preflight autopilot --strict
 ```
 
 ## Source slop detectors

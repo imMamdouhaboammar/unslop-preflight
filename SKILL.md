@@ -208,6 +208,16 @@ Required output:
 
 Do not bulk-install every skill or tool.
 
+## Autopilot Hardening and Execution
+
+The primary direct command is `npx unslop-preflight autopilot`. Once installed, `unslop` is available as a shorter binary alias (e.g., `npx unslop autopilot`).
+
+### Key hardiness features:
+- **Max Passes (`--max-passes=N`)**: Specifies the maximum refinement passes (1-10, default 1) to run, allowing progressive safe repairs.
+- **Run Metadata**: Output reports inside `.unslop/` include `stopReason` (`agent-ready`, `no-safe-repairs`, `no-score-improvement`, `max-passes`, or `error`), `passes[]` history, and detailed `scanStats` (files scanned/skipped, findings, scanner failures, run duration, and directories scanned).
+- **Scanner Failure Collection**: File walk and scanner-specific crashes do not crash the autopilot run; they are logged as warning metadata. In `--strict` mode, scanner failures are treated as blocking evidence.
+- **Code Fix Request**: The compatibility flag `--apply-code-fixes` records that fixes were requested but does not automatically modify or rewrite source files (which remain manual actions).
+
 ## Recommended commands
 
 When the Unslop CLI is available, use these commands:
