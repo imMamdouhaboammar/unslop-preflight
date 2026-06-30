@@ -6,7 +6,7 @@ import { report } from './commands/report.js';
 import { doctor } from './commands/doctor.js';
 import { update } from './commands/update.js';
 import { parseArgs, printHelp } from './core/output.js';
-const commands = { autopilot, init, audit, repair, report, doctor, update };
+const commands = { autopilot, preflight: autopilot, init, audit, repair, report, doctor, update };
 function applyExitCode(parsed, result) {
   if ((parsed.flags.ci || parsed.flags.strict) && result?.summary?.errors > 0) process.exitCode = 1;
 }
