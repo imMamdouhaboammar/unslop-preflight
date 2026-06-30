@@ -6,6 +6,7 @@ import { overlayRules } from '../scanners/overlayScanner.js';
 import { typographyRules } from '../scanners/typographyScanner.js';
 import { layeringRules } from '../scanners/layeringScanner.js';
 import { responsiveRules } from '../scanners/responsiveScanner.js';
+import { sourceSlopRules } from '../scanners/sourceSlopScanner.js';
 
 export function runSourceScanners(cwd, fingerprint) {
   const allFindings = [];
@@ -15,27 +16,23 @@ export function runSourceScanners(cwd, fingerprint) {
   for (const dir of dirsToScan) {
     const targetDir = join(cwd, dir);
     
-    // UI Scan (Legacy Script)
     try {
       const uiFindings = scanUi(targetDir);
       allFindings.push(...uiFindings.map(f => ({ ...f, type: 'ui' })));
     } catch (e) {}
 
-    // A11y Scan (Legacy Script)
     try {
       const a11yFindings = scanA11y(targetDir);
       allFindings.push(...a11yFindings.map(f => ({ ...f, type: 'a11y' })));
     } catch (e) {}
 
-    // V2 Modular Scanners
     try {
-      const modularRules = [...overlayRules, ...typographyRules, ...layeringRules, ...responsiveRules];
+      const modularRules = [...overlayRules, ...typographyRules, ...layeringRules, ...responsiveRules, ...sourceSlopRules];
       const modularFindings = scanWithRules(targetDir, modularRules);
       allFindings.push(...modularFindings.map(f => ({ ...f, type: 'modular' })));
     } catch (e) {}
   }
 
-  // Deduplicate
   const uniqueFindings = [];
   const seen = new Set();
   
