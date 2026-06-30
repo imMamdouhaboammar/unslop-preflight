@@ -73,3 +73,16 @@ test('file-scoped scanner does not flag motion with reduced-motion guard', () =>
     assert.ok(!ruleNames(findings).includes('motion-without-reduced-motion-review'));
   });
 });
+
+test('source slop scanner catches unsafe target blank links and missing autocomplete', () => {
+  withFixture(`
+    export function Signup() {
+      return <form><a href="https://example.com" target="_blank">Docs</a><input type="email" /></form>;
+    }
+  `, (src) => {
+    const findings = scanWithRules(src, sourceSlopRules);
+    const rules = ruleNames(findings);
+    assert.ok(rules.includes('target-blank-without-rel'));
+    assert.ok(rules.includes('input-without-autocomplete-review'));
+  });
+});
