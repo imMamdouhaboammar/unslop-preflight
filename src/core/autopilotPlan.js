@@ -24,7 +24,7 @@ function toSourceEvidence(finding) {
     impact: finding.level === 'blocker' ? 'accessibility break' : 'visual break',
     severity: finding.level === 'blocker' ? 'error' : finding.level || 'warning',
     effort: 'small',
-    type: 'code'
+    type: finding.type || 'code'
   });
 }
 
