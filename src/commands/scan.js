@@ -11,8 +11,8 @@ function scannerFailureEvidence(failure, strict = false) {
     likelyRootCause: 'A source scanner crashed or could not read the target path.',
     evidenceSnippet: failure.error || 'Scanner failed without details.',
     file: failure.targetDir,
-    fixStrategy: 'Fix the scanner input path or scanner failure, then rerun `unslop scan`.',
-    verificationProof: 'Rerun `unslop scan --strict` and confirm scannerFailures is 0.',
+    fixStrategy: 'Fix the scanner input path or scanner failure, then rerun `npx unslop-preflight scan`.',
+    verificationProof: 'Rerun `npx unslop-preflight scan --strict` and confirm scannerFailures is 0.',
     confidence: 'high',
     impact: 'agent-risk',
     severity: strict ? 'error' : 'warning',
@@ -31,7 +31,7 @@ function toIssue(finding) {
     file: finding.file,
     line: finding.line,
     excerpt: finding.excerpt,
-    suggestedFix: 'Fix the source-level issue, then rerun `unslop scan` or `unslop autopilot`.',
+    suggestedFix: 'Fix the source-level issue, then rerun `npx unslop-preflight scan` or `npx unslop-preflight autopilot`.',
     repairability: 'manual',
     type: 'code'
   };
@@ -68,7 +68,7 @@ export async function scan({ cwd, args, flags }) {
     scannerFindings: sourceFindings,
     scannerResults: metadata.scannerResults,
     scanStats: metadata.scanStats,
-    nextCommand: 'unslop autopilot --report'
+    nextCommand: 'npx unslop-preflight autopilot --report'
   });
 
   if (flags.strict && metadata.scanStats.scannerFailures > 0) {
