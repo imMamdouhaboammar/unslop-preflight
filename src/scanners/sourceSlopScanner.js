@@ -53,6 +53,7 @@ export const sourceSlopRules = [
   {
     name: 'hardcoded-color-token-drift',
     level: 'warning',
+    excludeFile: /(tokens?|theme|tailwind\.config|globals\.css|variables|\.test\.|\.spec\.|stories\.)/i,
     pattern: /#[0-9a-f]{3,8}\b/i,
     message: 'Hardcoded color found. Move durable color decisions into tokens or theme files.'
   },
@@ -72,6 +73,7 @@ export const sourceSlopRules = [
   {
     name: 'sample-data-shipping-risk',
     level: 'warning',
+    excludeFile: /(\.test\.|\.spec\.|stories\.|fixtures?|mocks?)/i,
     pattern: /(John Doe|Jane Doe|Acme Corp|lorem ipsum|example\.com|TODO:|TBD|coming soon)/i,
     message: 'Sample or placeholder content detected in source.'
   }
