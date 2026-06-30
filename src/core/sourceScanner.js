@@ -8,6 +8,7 @@ import { typographyRules } from '../scanners/typographyScanner.js';
 import { layeringRules } from '../scanners/layeringScanner.js';
 import { responsiveRules } from '../scanners/responsiveScanner.js';
 import { sourceSlopRules } from '../scanners/sourceSlopScanner.js';
+import { vibeCodingRules } from '../scanners/standardsPackScanner.js';
 
 function resolveTargetDir(cwd, dir) {
   return isAbsolute(dir) ? dir : join(cwd, dir);
@@ -122,13 +123,16 @@ export function emptySourceScanMetadata(reason = 'source-scan-disabled') {
   };
 }
 
-export function runSourceScanners(cwd, fingerprint) {
+export function runSourceScanners(cwd, fingerprint, flags = {}) {
   const startedAt = Date.now();
   const allFindings = [];
   const scannerResults = [];
   const filesSeen = new Set();
   const dirsToScan = fingerprint.srcDirs.length > 0 ? fingerprint.srcDirs : ['src', 'app', 'components'];
   const modularRules = [...overlayRules, ...typographyRules, ...layeringRules, ...responsiveRules, ...sourceSlopRules];
+  if (flags.standards === 'vibe-coding') {
+    modularRules.push(...vibeCodingRules);
+  }
   const scanners = [
     { name: 'ui', type: 'ui', run: scanUi },
     { name: 'accessibility', type: 'a11y', run: scanA11y },

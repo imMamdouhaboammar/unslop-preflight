@@ -137,3 +137,12 @@ When behavior changes, update docs in the same change:
 - `docs/OVERLAY_LAYERING_GATES.md`
 - `docs/INSTALL_AGENT_HARNESS.md`
 - package metadata when published files change
+
+<!-- unslop:start missing-verification-checklist -->
+## Verification Checklist
+- [ ] Build passes.
+- [ ] Tests pass.
+- [ ] Main flows checked.
+- [ ] Mobile behavior checked.
+- [ ] Accessibility basics checked.
+<!-- unslop:end missing-verification-checklist -->

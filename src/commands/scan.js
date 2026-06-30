@@ -47,7 +47,7 @@ export async function scan({ cwd, args, flags }) {
 
   const sourceFindings = flags.noSourceScan
     ? []
-    : runSourceScanners(cwd, fingerprint);
+    : runSourceScanners(cwd, fingerprint, flags);
 
   const metadata = sourceFindings.metadata || emptySourceScanMetadata();
   const scannerFailures = (metadata.scannerResults || [])
@@ -58,7 +58,6 @@ export async function scan({ cwd, args, flags }) {
     ...sourceFindings.map(toIssue),
     ...scannerFailures
   ];
-
   const result = summarize({
     issues,
     generated: [],
