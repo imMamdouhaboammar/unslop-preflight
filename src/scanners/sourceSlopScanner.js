@@ -45,21 +45,21 @@ export const sourceSlopRules = [
     name: 'motion-without-reduced-motion-review',
     level: 'warning',
     scope: 'file',
-    pattern: /(framer-motion|<motion\.|whileHover=|whileTap=)(?![\s\S]*(useReducedMotion|prefers-reduced-motion|motion-safe|motion-reduce))/i,
+    pattern: /^(?=[\s\S]*(framer-motion|<motion\.|whileHover=|whileTap=))(?![\s\S]*(useReducedMotion|prefers-reduced-motion|motion-safe|motion-reduce))[\s\S]*$/i,
     message: 'Motion behavior detected without a reduced-motion guard.'
   },
   {
     name: 'collection-map-empty-state-review',
     level: 'warning',
     scope: 'file',
-    pattern: /\.map\s*\((?![\s\S]*(empty|no results|no data|not found|length\s*===\s*0|\.length\s*\?))/i,
+    pattern: /^(?=[\s\S]*\.map\s*\()(?![\s\S]*(empty|no results|no data|not found|length\s*===\s*0|\.length\s*\?))[\s\S]*$/i,
     message: 'Collection rendering appears to lack an empty state.'
   },
   {
     name: 'async-view-state-review',
     level: 'warning',
     scope: 'file',
-    pattern: /\b(fetch|axios\.|useSWR|useQuery|useInfiniteQuery|supabase\.)\b(?![\s\S]*(loading|isLoading|pending|skeleton|spinner|aria-busy)[\s\S]*(error|isError|catch\s*\(|onError|ErrorBoundary)[\s\S]*(empty|no results|no data|not found|length\s*===\s*0|isEmpty))/i,
+    pattern: /^(?=[\s\S]*\b(fetch|axios\.|useSWR|useQuery|useInfiniteQuery|supabase\.)\b)(?!(?=[\s\S]*(loading|isLoading|pending|skeleton|spinner|aria-busy))(?=[\s\S]*(error|isError|catch\s*\(|onError|ErrorBoundary))(?=[\s\S]*(empty|no results|no data|not found|length\s*===\s*0|isEmpty)))[\s\S]*$/i,
     message: 'Async view should prove loading, error, and empty states before handoff.'
   },
   {
@@ -73,7 +73,7 @@ export const sourceSlopRules = [
     name: 'generic-ai-aesthetic-stack',
     level: 'info',
     scope: 'file',
-    pattern: /(bg-gradient|linear-gradient)[\s\S]*(from-purple|via-purple|to-pink|to-fuchsia|backdrop-blur|glass|shadow-2xl)/i,
+    pattern: /^(?=[\s\S]*(bg-gradient|linear-gradient))(?=[\s\S]*(from-purple|via-purple|to-pink|to-fuchsia))(?=[\s\S]*(backdrop-blur|glass|shadow-2xl))[\s\S]*$/i,
     message: 'Generic gradient/glass/heavy-shadow stack detected. Confirm it belongs to the product visual system.'
   },
   {
