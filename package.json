@@ -1,6 +1,6 @@
 {
   "name": "unslop-preflight",
-  "version": "1.10.1",
+  "version": "1.11.0",
   "description": "Autopilot design quality gates and source-level UI slop detectors for AI-assisted frontend work before implementation handoff.",
   "type": "module",
   "exports": {
