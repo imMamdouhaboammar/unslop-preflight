@@ -141,13 +141,17 @@ Follow these steps carefully:
 
 3. Run Unslop Preflight with the correct direct command:
 
-   npx unslop-preflight autopilot --report --strict
+   npx unslop-preflight autopilot --safe-fix --verify --report --strict
+
+   (Fallback: If the project is important or unstable, run first in plan-only mode:
+    npx unslop-preflight autopilot --plan-only --report)
 
 4. After it runs, open and read:
 
    .unslop/report.md
    .unslop/report.json
    .unslop/fix-list.md
+   .unslop/source-fixes.md (if present)
 
 5. Fix the project based on the fix list.
 
@@ -174,7 +178,7 @@ Follow these steps carefully:
 
 7. After fixing, run Unslop again:
 
-   npx unslop-preflight autopilot --report --strict
+   npx unslop-preflight autopilot --safe-fix --verify --report --strict
 
 8. Repeat until:
    - the report has no critical blockers
@@ -267,20 +271,34 @@ The package's primary command is `npx unslop-preflight autopilot`. After install
 unslop autopilot
 ```
 
-Autopilot does the full preflight pass:
+`autopilot` has two levels:
 
-1. Fingerprints the project shape.
-2. Creates missing `PRODUCT.md`, `DESIGN.md`, and `AGENTS.md`.
-3. Runs artifact gates.
-4. Runs source scanners when frontend code exists.
-5. Applies safe documentation repairs.
-6. Writes report files under `.unslop/`.
-7. Returns a readiness band and next command.
+1. **Preflight loop**:
+   Scans, scores, repairs safe handoff docs, and creates fix-lists.
+
+2. **Safe repair loop**:
+   With `--safe-fix`, applies deterministic low-risk source patches and verifies them.
+
+### Repair Modes
+
+- `--plan-only`: Run scan, audit, and report only. Do not write or modify any files.
+- `--doc-fix` (Default): Apply safe `PRODUCT.md`, `DESIGN.md`, and `AGENTS.md` repairs only. Does not modify source code.
+- `--safe-fix`: Apply safe doc repairs AND safe source-code fixes (deterministic, low-risk, idempotent).
+- `--agent-fix`: Do not modify source code directly. Instead, generate a stronger, tailored agent patch prompt in `.unslop/agent-fix-prompt.md`.
+
+> [!NOTE]
+> **Honest Note**: Unslop does not rewrite your app. Unslop only applies low-risk deterministic fixes. Complex architectural fixes stay in the fix list for a coding agent or human.
+
+### Verification Loop
+
+With `--verify`, Unslop automatically detects your project's lockfile/package manager (`npm`, `pnpm`, `yarn`, `bun`), extracts available build-time checks from `package.json` (like `typecheck`, `lint`, `test`, `build`), runs them synchronously under a configurable timeout (`--verify-timeout=120`), and summarizes before/after improvements in `.unslop/report.md` and `.unslop/report.json`.
 
 ### Options & Hardening
 
 * **Bounded Refinement Loop (`--max-passes=N`)**: Specifies the maximum number of correction passes (1 to 10) autopilot runs in a single session.
-* **Detailed Reports (`.unslop/`)**: Autopilot writes reports to `.unslop/report.md`, `.unslop/report.json`, and `.unslop/fix-list.md`. The JSON and markdown reports include:
+* **Detailed Reports (`.unslop/`)**: Autopilot writes reports to `.unslop/report.md`, `.unslop/report.json`, `.unslop/fix-list.md`, and (in `--safe-fix` mode) `.unslop/source-fixes.json`, `.unslop/source-fixes.md`, and `.unslop/patch-summary.md`. The reports include:
+  * `beforeAfter`: Before/after delta tracking of scores, blockers, and findings.
+  * `verificationResults[]`: Exit codes, timeouts, status, and summary of each run check.
   * `passes[]`: Pass-by-pass history of scores, applied repairs, and results.
   * `stopReason`: Clean stopping motivation (`agent-ready`, `no-safe-repairs`, `no-score-improvement`, `max-passes`, or `error`).
   * `scanStats`: Detailed statistics (files scanned/skipped, findings, scanner failures, run duration, and directories scanned).
@@ -290,10 +308,11 @@ Autopilot does the full preflight pass:
 Useful option syntax:
 
 ```bash
+npx unslop-preflight autopilot --plan-only
+npx unslop-preflight autopilot --doc-fix
+npx unslop-preflight autopilot --safe-fix --verify
+npx unslop-preflight autopilot --agent-fix --report
 npx unslop-preflight autopilot --max-passes=5
-npx unslop-preflight autopilot --no-source-scan
-npx unslop-preflight autopilot --dry-run
-npx unslop-preflight autopilot --json
 npx unslop-preflight autopilot --strict
 ```
 

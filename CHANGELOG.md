@@ -2,6 +2,29 @@
 
 ## [Unreleased]
 
+## [Next] - Real Autopilot Source Repair
+
+### Added
+- **Safe Source Fix Engine**: Created a secure, idempotent source fixer (`src/core/sourceFixEngine.js`) to apply precise, deterministic, local, and reversible source-code repairs.
+- **7 Low-Risk Deterministic Fixers**:
+  - Unsafe target="_blank" (adds `rel="noopener noreferrer"`).
+  - Missing button type in JSX (adds `type="button"` with submit/save text exclusions).
+  - Image missing loading lazy (adds `loading="lazy"` with hero exclusions and self-closing tag preservation).
+  - Missing alt on decorative-looking images (adds `alt=""` with strict keyword checks).
+  - Tailwind transition-all mapping (transforms to `transition-colors` or `transition-transform`).
+  - Focus outline none (adds focus ring helpers only if Tailwind is detected).
+  - Standalone production console.log remover.
+- **Repair Mode Options**:
+  - `--plan-only`: Run scans and reports without file modification.
+  - `--doc-fix` (Default): Apply safe documentation/spec repairs only.
+  - `--safe-fix`: Apply safe doc repairs and approved deterministic source fixes.
+  - `--agent-fix`: Write optimized developer instructions to `.unslop/agent-fix-prompt.md`.
+- **Patch Safety Check Validator**: Enforces strict boundaries to reject modified paths outside the project root, generated builds, lockfiles, node_modules, `.env`, or files violating size limits (default max 20 files, 50 lines/file, 300 total lines).
+- **Synchronous Verification Loop**: Automatically detects the active package manager (`npm`, `pnpm`, `yarn`, `bun`), runs available checks (`typecheck`, `lint`, `test`, `build`) sequentially with an async-simulated sync execution loop and a configurable timeout (`--verify-timeout=120`), and blocks readiness on failures.
+- **Before/After Proof Report**: Delta tracking for score improvements, blocker reduction, and findings reduction, displayed in a short markdown report table and `.unslop/report.json`.
+- **Structured Fix Reports**: Saves detailed results to `.unslop/source-fixes.json`, `.unslop/source-fixes.md`, and human-friendly `.unslop/patch-summary.md`.
+- **Exhaustive Unit Tests**: Added a complete suite of unit and integration tests under `tests/sourceRepair.test.js`.
+
 ## v1.11.3 - Maintainability & CLI Truth Pass (2026-06-30)
 
 ### Added

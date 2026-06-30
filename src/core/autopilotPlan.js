@@ -6,6 +6,8 @@ import { writeReports } from './report.js';
 import { convertLegacyIssueToEvidence, Evidence } from './findings.js';
 import { planRepairs } from './repairPlanner.js';
 import { adviseHarnesses } from './harnessAdvisor.js';
+import { runSourceFixEngine } from './sourceFixEngine.js';
+import { runVerification } from './verify.js';
 
 function flagValue(flags = {}, camelName, kebabName) {
   return flags[camelName] ?? flags[kebabName];
@@ -19,6 +21,14 @@ function sourceScanEnabled(flags = {}) {
 
 function codeFixesRequested(flags = {}) {
   return Boolean(flags.applyCodeFixes || flags['apply-code-fixes']);
+}
+
+export function getRepairMode(flags = {}) {
+  if (flags.planOnly || flags['plan-only']) return 'plan-only';
+  if (flags.safeFix || flags['safe-fix']) return 'safe-fix';
+  if (flags.agentFix || flags['agent-fix']) return 'agent-fix';
+  if (flags.docFix || flags['doc-fix']) return 'doc-fix';
+  return 'doc-fix';
 }
 
 function maxPassesFor(flags = {}) {
@@ -135,13 +145,52 @@ function runSinglePass(cwd, flags, pass) {
   });
 
   const repairPlan = planRepairs(initialEvidences);
-  const patch = applyRepairs(cwd, repairPlan, flags);
-  const finalAudit = runAudit(cwd);
+  const repairMode = getRepairMode(flags);
+
+  // Apply repairs (safe documentation repairs only)
+  // If we are in plan-only mode, pass dryRun: true to applyRepairs
+  const appRepairFlags = (repairMode === 'plan-only') ? { ...flags, dryRun: true } : flags;
+  const patch = applyRepairs(cwd, repairPlan, appRepairFlags);
+
+  // Run source code fixes if safe-fix is enabled
+  let sourceFixes = { applied: [], skipped: [], failed: [] };
+  if (repairMode === 'safe-fix') {
+    const fixFlags = { ...flags, safeFix: true, 'safe-fix': true, repairMode };
+    sourceFixes = runSourceFixEngine(cwd, sourceFindings, fixFlags);
+  } else {
+    const previewFlags = { ...flags, dryRun: true, 'dry-run': true, repairMode };
+    sourceFixes = runSourceFixEngine(cwd, sourceFindings, previewFlags);
+  }
+
+  // Run verification if flags.verify is enabled
+  let verificationResults = [];
+  if (flags.verify && (repairMode === 'safe-fix' || repairMode === 'doc-fix')) {
+    verificationResults = runVerification(cwd, flags);
+  }
+
+  // If source fixes were applied, trigger a re-scan!
+  let finalSourceFindings = sourceFindings;
+  let finalMetadata = metadata;
+  let finalAudit = firstAudit;
+
+  if (sourceFixes.applied.length > 0 && repairMode === 'safe-fix') {
+    const finalScan = runSourceScan(cwd, fingerprint, flags);
+    finalSourceFindings = finalScan.sourceFindings;
+    finalMetadata = finalScan.metadata;
+    finalAudit = runAudit(cwd);
+  } else if (repairMode !== 'plan-only') {
+    finalAudit = runAudit(cwd);
+  }
+
+  const finalSourceIssuesFormatted = finalSourceFindings.map(toSourceEvidence);
+  const finalScannerFailures = (finalMetadata.scannerResults || [])
+    .filter((result) => result.status === 'failed')
+    .map((failure) => toScannerFailureEvidence(failure, Boolean(flags.strict)));
 
   const finalIssues = [
     ...finalAudit.issues,
-    ...formattedSourceIssues,
-    ...scannerFailures,
+    ...finalSourceIssuesFormatted,
+    ...finalScannerFailures,
     ...harnessRecommendations
   ];
 
@@ -151,13 +200,19 @@ function runSinglePass(cwd, flags, pass) {
     ...patch,
     fingerprint,
     sourceScanEnabled: sourceScanEnabled(flags),
-    scannerFindings: sourceFindings,
-    scannerResults: metadata.scannerResults,
-    scanStats: metadata.scanStats,
+    scannerFindings: finalSourceFindings,
+    scannerResults: finalMetadata.scannerResults,
+    scanStats: finalMetadata.scanStats,
     codeFixes: patch.codeFixes
   });
 
   result.issues = result.evidences.map(toPrintableIssue);
+
+  // Attach sourceFixes and verificationResults onto the result
+  result.appliedFixes = sourceFixes.applied;
+  result.skippedFixes = sourceFixes.skipped;
+  result.failedFixes = sourceFixes.failed;
+  result.verificationResults = verificationResults;
 
   return {
     pass,
@@ -165,8 +220,10 @@ function runSinglePass(cwd, flags, pass) {
     result,
     repairPlan,
     patch,
-    sourceFindings,
-    metadata
+    sourceFindings: finalSourceFindings,
+    metadata: finalMetadata,
+    sourceFixes,
+    verificationResults
   };
 }
 
@@ -210,16 +267,45 @@ export function runAutopilotPipeline(cwd, flags = {}) {
   const allGenerated = [];
   const allChanged = [];
   const allRepairs = [];
+
+  const allAppliedFixes = [];
+  const allSkippedFixes = [];
+  const allFailedFixes = [];
+  const allVerificationResults = [];
+
   let finalResult = null;
   let stopReason = 'max-passes';
+
+  let initialScore = undefined;
+  let initialBlockers = undefined;
+  let initialSourceFindings = undefined;
 
   for (let pass = 1; pass <= maxPasses; pass++) {
     const cycle = runSinglePass(cwd, flags, pass);
     const reason = stopReasonFor(cycle, pass, maxPasses, flags);
 
+    if (pass === 1) {
+      initialScore = cycle.before.summary.score;
+      initialBlockers = cycle.before.summary.errors;
+      initialSourceFindings = cycle.sourceFindings.length;
+    }
+
     allGenerated.push(...(cycle.patch.generated || []));
     allChanged.push(...(cycle.patch.changed || []));
     allRepairs.push(...(cycle.patch.repairs || []));
+
+    if (cycle.result.appliedFixes) {
+      allAppliedFixes.push(...cycle.result.appliedFixes);
+    }
+    if (cycle.result.skippedFixes) {
+      allSkippedFixes.push(...cycle.result.skippedFixes);
+    }
+    if (cycle.result.failedFixes) {
+      allFailedFixes.push(...cycle.result.failedFixes);
+    }
+    if (cycle.result.verificationResults) {
+      allVerificationResults.push(...cycle.result.verificationResults);
+    }
 
     passes.push({
       pass,
@@ -241,25 +327,45 @@ export function runAutopilotPipeline(cwd, flags = {}) {
     }
   }
 
-  finalResult.generated = unique(allGenerated);
-  finalResult.changed = unique(allChanged);
-  finalResult.repairs = allRepairs;
-  finalResult.passes = passes;
-  finalResult.stopReason = stopReason;
-  finalResult.codeFixes ||= {
-    requested: codeFixesRequested(flags),
-    applied: false,
-    reason: codeFixesRequested(flags) ? 'not-implemented' : 'not-requested'
-  };
-  if (flags.standards) {
-    finalResult.selectedStandards = flags.standards;
+  if (finalResult) {
+    finalResult.generated = unique(allGenerated);
+    finalResult.changed = unique(allChanged);
+    finalResult.repairs = allRepairs;
+    finalResult.passes = passes;
+    finalResult.stopReason = stopReason;
+
+    finalResult.appliedFixes = allAppliedFixes;
+    finalResult.skippedFixes = allSkippedFixes;
+    finalResult.failedFixes = allFailedFixes;
+    finalResult.verificationResults = allVerificationResults;
+
+    finalResult.initialScore = initialScore;
+    finalResult.initialBlockers = initialBlockers;
+    finalResult.initialSourceFindings = initialSourceFindings ?? 0;
+
+    finalResult.codeFixes ||= {
+      requested: codeFixesRequested(flags),
+      applied: false,
+      reason: codeFixesRequested(flags) ? 'not-implemented' : 'not-requested'
+    };
+    if (flags.standards) {
+      finalResult.selectedStandards = flags.standards;
+    }
+    finalResult.reportFiles = writeReports(cwd, finalResult, flags);
+    finalResult.exitCode = exitCodeFor(finalResult);
+    finalResult.nextCommand = finalResult.summary.errors > 0
+      ? 'npx unslop-preflight scan --strict'
+      : 'npx unslop-preflight audit --strict';
+
+    const repairMode = getRepairMode(flags);
+    if (repairMode === 'safe-fix') {
+      finalResult.suggestedPrompt = 'Review `.unslop/report.md` and `.unslop/patch-summary.md`. Automatic fixes have been applied and verified; run remaining manual checks.';
+    } else if (repairMode === 'agent-fix') {
+      finalResult.suggestedPrompt = 'A customized coding agent prompt has been written to `.unslop/agent-fix-prompt.md`. Pass it to your agent to resolve the remaining source issues.';
+    } else {
+      finalResult.suggestedPrompt = 'Review `.unslop/report.md` and `.unslop/fix-list.md`. Apply manual source fixes separately; autopilot only applies safe documentation repairs.';
+    }
   }
-  finalResult.reportFiles = writeReports(cwd, finalResult, flags);
-  finalResult.exitCode = exitCodeFor(finalResult);
-  finalResult.nextCommand = finalResult.summary.errors > 0
-    ? 'npx unslop-preflight scan --strict'
-    : 'npx unslop-preflight audit --strict';
-  finalResult.suggestedPrompt = 'Review `.unslop/report.md` and `.unslop/fix-list.md`. Apply manual source fixes separately; autopilot only applies safe documentation repairs.';
 
   return finalResult;
 }

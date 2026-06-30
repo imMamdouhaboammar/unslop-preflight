@@ -212,11 +212,23 @@ Do not bulk-install every skill or tool.
 
 The primary direct command is `npx unslop-preflight autopilot`. Once installed, `unslop` is available as a shorter binary alias (e.g., `unslop autopilot`).
 
+`autopilot` runs in two modes:
+1. **Preflight loop**: Scans, scores, repairs safe handoff docs, and creates fix-lists.
+2. **Safe repair loop**: With `--safe-fix`, applies deterministic low-risk source patches and verifies them.
+
+### Repair Modes:
+- `--plan-only`: Scan and report only. Writes no files.
+- `--doc-fix` (Default): Apply safe `PRODUCT.md`, `DESIGN.md`, and `AGENTS.md` repairs only.
+- `--safe-fix`: Apply safe doc repairs and safe deterministic source-code fixes.
+- `--agent-fix`: Do not modify source directly. Instead generate a stronger coding-agent patch prompt in `.unslop/agent-fix-prompt.md`.
+
+### Verification Loop:
+- With `--verify`, Unslop automatically detects your project's lockfile/package manager (`npm`, `pnpm`, `yarn`, `bun`), extracts available build-time checks from `package.json` (like `typecheck`, `lint`, `test`, `build`), and runs them synchronously under a configurable timeout (`--verify-timeout=120`).
+
 ### Key hardiness features:
 - **Max Passes (`--max-passes=N`)**: Specifies the maximum refinement passes (1-10, default 1) to run, allowing progressive safe repairs.
-- **Run Metadata**: Output reports inside `.unslop/` include `stopReason` (`agent-ready`, `no-safe-repairs`, `no-score-improvement`, `max-passes`, or `error`), `passes[]` history, and detailed `scanStats` (files scanned/skipped, findings, scanner failures, run duration, and directories scanned).
+- **Run Metadata**: Output reports inside `.unslop/` include `beforeAfter` tracking, `verificationResults[]` status, `stopReason` (`agent-ready`, `no-safe-repairs`, `no-score-improvement`, `max-passes`, or `error`), `passes[]` history, and detailed `scanStats`.
 - **Scanner Failure Collection**: File walk and scanner-specific crashes do not crash the autopilot run; they are logged as warning metadata. In `--strict` mode, scanner failures are treated as blocking evidence.
-- **Code Fix Request**: The compatibility flag `--apply-code-fixes` records that fixes were requested but does not automatically modify or rewrite source files (which remain manual actions).
 
 ## Recommended commands
 
@@ -224,18 +236,17 @@ When the Unslop CLI is available, use these commands:
 
 ```bash
 npx unslop-preflight init
-npx unslop-preflight standards list
-npx unslop-preflight standards inspect vibe-coding
-npx unslop-preflight audit --verbose --standards=vibe-coding
-npx unslop-preflight scan src --strict --standards=vibe-coding
-npx unslop-preflight autopilot --standards=vibe-coding
+npx unslop-preflight autopilot --plan-only --report
+npx unslop-preflight autopilot --doc-fix --report
+npx unslop-preflight autopilot --safe-fix --verify --report --strict
+npx unslop-preflight autopilot --agent-fix --report
 ```
 
 For repository tests:
 
 ```bash
 npm test
-node --test tests/sourceSlopScanner.test.js
+node --test tests/sourceRepair.test.js
 ```
 
 Do not run commands that make destructive changes unless the user asked for implementation or repair.

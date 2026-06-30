@@ -71,6 +71,12 @@ ${c.bold('Flags:')}
   --dry-run      Preview writes without changing files
   --json         Print machine-readable JSON
   --agent-prompt Print a copyable prompt for AI agents
+  --plan-only    Run scan, audit, and report only. Do not write files
+  --doc-fix      Apply safe PRODUCT.md, DESIGN.md, and AGENTS.md repairs only
+  --safe-fix     Apply safe doc repairs and safe source-code fixes
+  --agent-fix    Write a copyable correction prompt to .unslop/agent-fix-prompt.md
+  --verify       Run package checks (typecheck, lint, test, build) after fixes
+  --verify-timeout=<seconds> Timeout in seconds for verification checks (default: 120)
   --report       Write reports to .unslop
   --ci           Exit non-zero on errors
   --strict       Treat errors as failing
