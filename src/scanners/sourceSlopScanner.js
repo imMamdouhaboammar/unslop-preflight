@@ -30,6 +30,18 @@ export const sourceSlopRules = [
     message: 'Image needs an explicit sizing contract to prevent layout shift.'
   },
   {
+    name: 'target-blank-without-rel',
+    level: 'blocker',
+    pattern: /<a\b(?=[^>]*target=["']_blank["'])(?![^>]*rel=["'][^"']*(noopener|noreferrer)[^"']*["'])/i,
+    message: 'target="_blank" link lacks rel="noopener" or rel="noreferrer".'
+  },
+  {
+    name: 'input-without-autocomplete-review',
+    level: 'warning',
+    pattern: /<input\b(?=[^>]*type=["'](email|password|tel|search)["'])(?![^>]*(autoComplete=|autocomplete=))/i,
+    message: 'Input for email, password, tel, or search should declare autocomplete behavior.'
+  },
+  {
     name: 'motion-without-reduced-motion-review',
     level: 'warning',
     scope: 'file',
