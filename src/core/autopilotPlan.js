@@ -28,6 +28,21 @@ function toSourceEvidence(finding) {
   });
 }
 
+function toPrintableIssue(evidence) {
+  return {
+    id: evidence.ruleName,
+    title: evidence.symptom,
+    category: evidence.type || 'code',
+    severity: evidence.severity === 'blocker' ? 'error' : evidence.severity,
+    file: evidence.file,
+    line: evidence.line,
+    excerpt: evidence.evidenceSnippet,
+    suggestedFix: evidence.fixStrategy,
+    repairability: 'manual',
+    type: evidence.type
+  };
+}
+
 export function runAutopilotPipeline(cwd, flags = {}) {
   const fingerprint = fingerprintProject(cwd);
   const firstAudit = runAudit(cwd);
@@ -48,6 +63,7 @@ export function runAutopilotPipeline(cwd, flags = {}) {
   const finalIssues = [...finalAudit.issues, ...formattedSourceIssues, ...harnessRecommendations];
   const result = summarize({ ...finalAudit, issues: finalIssues, ...patch, fingerprint, sourceScanEnabled: sourceScanEnabled(flags) });
 
+  result.issues = result.evidences.map(toPrintableIssue);
   result.reportFiles = writeReports(cwd, result, flags);
 
   const errors = result.issues.filter(i => i.severity === 'error' || i.severity === 'blocker').length;
