@@ -1,10 +1,7 @@
 # SOCIAL-KIT — Spread the Word
 
-> **For the community, by the community.**
->
-> This skill helped your project. Here's how to pay it forward and help more developers find it.
->
-> Copy any template below, make it your own, and share. The more developers who know it exists, the less AI slop ships.
+> [!NOTE]
+> Draft marketing copy. These examples are not product guarantees or user testimonials.
 
 ---
 
@@ -18,14 +15,14 @@ You know how to fix that. One share might save someone a full day of cleanup.
 
 **The reciprocity loop:**
 1. You found this through someone else's share
-2. You ran `npx unslop autopilot` and it caught something real
+2. You ran `npx unslop-preflight autopilot` and it caught something real
 3. Now someone else needs to find it
 
 ---
 
 ## 🐦 Twitter / X
 
-### If autopilot caught a bug in your project
+### Example: If autopilot caught a bug in your project
 
 ```
 My AI just generated this modal:
@@ -38,9 +35,9 @@ My AI just generated this modal:
 
 On a 568px screen.
 
-npx unslop autopilot caught it before I shipped it.
+npx unslop-preflight autopilot caught it before I shipped it.
 
-→ github.com/imMamdouhaboammar/unslop
+→ github.com/imMamdouhaboammar/unslop-preflight
 
 #ClaudeCode #VibeCoding #WebDev
 ```
@@ -50,13 +47,13 @@ npx unslop autopilot caught it before I shipped it.
 ```
 Ran this on my project before starting UI:
 
-npx unslop autopilot
+npx unslop-preflight autopilot
 
 It created DESIGN.md, ran 23 gates, found 4 issues I would have shipped.
 
 Worth the 2 minutes.
 
-→ github.com/imMamdouhaboammar/unslop
+→ github.com/imMamdouhaboammar/unslop-preflight
 ```
 
 ---
@@ -71,19 +68,19 @@ Things my AI agent stopped doing after I installed this skill:
 • Hardcoded hex values instead of design tokens
 
 One command:
-npx unslop autopilot
+npx unslop-preflight autopilot
 
 #AIcoding #ClaudeCode #frontend
 ```
 
 ---
 
-### If the scan caught slop in existing code
+### Example: If the scan caught slop in existing code
 
 ```
 Just scanned my existing frontend with:
 
-npx unslop scan src/
+npx unslop-preflight scan src/
 
 Found 6 blockers I had no idea about:
 • clickable <div> instead of <button> in 3 places
@@ -92,17 +89,17 @@ Found 6 blockers I had no idea about:
 
 This is a free tool. No install needed.
 
-→ github.com/imMamdouhaboammar/unslop
+→ github.com/imMamdouhaboammar/unslop-preflight
 ```
 
 ---
 
-### Minimal / casual
+### Example: Minimal / casual
 
 ```
 free tool that stops your AI from shipping ugly frontend
 
-npx unslop autopilot
+npx unslop-preflight autopilot
 
 [no install, one command, works with Claude Code/Cursor/Windsurf]
 
@@ -114,42 +111,42 @@ npx unslop autopilot
 ```
 accidentally discovered this scans for AI UI slop before you implement
 
-npx unslop scan src/
+npx unslop-preflight scan src/
 
 flagged 4 things my AI put in that I would have shipped
 
-→ github.com/imMamdouhaboammar/unslop
+→ github.com/imMamdouhaboammar/unslop-preflight
 ```
 
 ---
 
-### For developers who use Claude Code specifically
+### Example: For developers who use Claude Code specifically
 
 ```
 If you use Claude Code, this is worth knowing:
 
-1. npx unslop init
-2. npx unslop autopilot
+1. npx unslop-preflight init
+2. npx unslop-preflight autopilot
 
 It installs a skill that forces Claude to do proper design intake before UI.
 23 gates. Auto-repairs failures. Writes VDMA-FIXES.md for the rest.
 
 No more "generic AI look"
-→ github.com/imMamdouhaboammar/unslop
+→ github.com/imMamdouhaboammar/unslop-preflight
 ```
 
 ---
 
 ## 💼 LinkedIn
 
-### After using it on a real project
+### Example: After using it on a real project
 
 ```
-I've been using an open-source tool called Unslop on my last two projects, and wanted to share it.
+I've been using an open-source tool called Unslop Preflight on my last two projects, and wanted to share it.
 
 It runs before the AI touches any frontend code. One command:
 
-npx unslop autopilot
+npx unslop-preflight autopilot
 
 In about 90 seconds it:
 → Creates PRODUCT.md and DESIGN.md if you don't have them
@@ -169,26 +166,26 @@ It's MIT licensed, no dependencies beyond Node.js, works with Claude Code, Curso
 
 Worth trying on your current project.
 
-→ https://github.com/imMamdouhaboammar/unslop
+→ https://github.com/imMamdouhaboammar/unslop-preflight
 
 #AI #WebDevelopment #Accessibility #FrontendEngineering #ClaudeCode
 ```
 
 ---
 
-### Shorter / casual LinkedIn
+### Example: Shorter / casual LinkedIn
 
 ```
 Quick tip for anyone using AI coding agents:
 
 Before your agent writes any frontend code, run:
-npx unslop autopilot
+npx unslop-preflight autopilot
 
 It's a free CLI that creates your design system artifacts and blocks 23 common AI UI failures — including accessibility issues, overflow bugs, insecure data display, and broken mobile behavior.
 
 Saved me from shipping at least 4 real problems last week.
 
-Open source: github.com/imMamdouhaboammar/unslop
+Open source: github.com/imMamdouhaboammar/unslop-preflight
 
 #AI #Frontend #UX
 ```
@@ -197,7 +194,7 @@ Open source: github.com/imMamdouhaboammar/unslop
 
 ## 🔴 Reddit
 
-### r/ClaudeAI
+### Example: r/ClaudeAI
 
 **Title:**
 ```
@@ -208,11 +205,11 @@ This free CLI stopped my Claude agent from generating another generic dark SaaS 
 ```
 Been using Claude Code for about 3 months and kept running into the same problem — Claude picks the same visual defaults every time. Purple/indigo gradients, identical rounded cards, Inter font, no RTL, missing focus rings.
 
-Found this tool last week: Unslop
+Found this tool last week: Unslop Preflight
 
 One command before any UI work:
 
-npx unslop autopilot
+npx unslop-preflight autopilot
 
 What it does:
 1. Creates PRODUCT.md and DESIGN.md if you don't have them
@@ -231,12 +228,12 @@ None of that would have failed CI. All of it would have shipped.
 
 Free, MIT, works completely offline, no API calls.
 
-→ https://github.com/imMamdouhaboammar/unslop
+→ https://github.com/imMamdouhaboammar/unslop-preflight
 ```
 
 ---
 
-### r/webdev
+### Example: r/webdev
 
 **Title:**
 ```
@@ -247,10 +244,10 @@ Free CLI that scans AI-generated frontend for the patterns everyone hates — cl
 ```
 I know "here's a tool" posts can be annoying, but this one is legitimately useful and I want more people to know it exists.
 
-It's called Unslop. It runs static analysis on your frontend code for patterns that AI coding agents keep introducing.
+It's called Unslop Preflight. It runs static analysis on your frontend code for patterns that AI coding agents keep introducing.
 
 ```
-npx unslop scan src/
+npx unslop-preflight scan src/
 ```
 
 What it flags:
@@ -273,17 +270,17 @@ What it flags:
 It also has an "autopilot" mode that runs the full loop — creates design artifacts, gates, scans, auto-repairs what it can, writes a fix list for the rest:
 
 ```
-npx unslop autopilot
+npx unslop-preflight autopilot
 ```
 
 MIT licensed. No install required. Works with Claude Code, Cursor, Windsurf.
 
-→ https://github.com/imMamdouhaboammar/unslop
+→ https://github.com/imMamdouhaboammar/unslop-preflight
 ```
 
 ---
 
-### r/LocalLLaMA
+### Example: r/LocalLLaMA
 
 **Title:**
 ```
@@ -298,11 +295,11 @@ The models pick the same defaults: purple gradient hero, identical feature cards
 
 This tool creates a design context file (DESIGN.md) that the agent reads before touching frontend code. The autopilot mode scaffolds it, validates it, and blocks implementation until 23 quality gates pass.
 
-npx unslop autopilot
+npx unslop-preflight autopilot
 
 It works with any coding agent that reads skill files — Claude Code, but also any model you've set up with a skill/context folder.
 
-Source: https://github.com/imMamdouhaboammar/unslop
+Source: https://github.com/imMamdouhaboammar/unslop-preflight
 ```
 
 ---
@@ -314,13 +311,14 @@ Source: https://github.com/imMamdouhaboammar/unslop
 Show HN: I used this tool to catch 6 accessibility failures in my AI-generated UI before shipping
 ```
 
-**Comment-style post (to put in the thread):**
+### Example: Comment-style post (to put in the thread):
+
 ```
-I've been running AI coding agents for my side project and wanted to share a tool I found that's been genuinely useful: Unslop.
+I've been running AI coding agents for my side project and wanted to share a tool I found that's been genuinely useful: Unslop Preflight.
 
 It runs before any frontend code is written. One command:
 
-  npx unslop autopilot
+  npx unslop-preflight autopilot
 
 What actually happened when I ran it on my current project:
 
@@ -334,34 +332,34 @@ The source issues it found: no focus trap in my modals (WCAG 2.4.3), icon button
 These are exactly the things that pass code review and fail real users.
 
 The tool is MIT, no dependencies beyond Node.js, works offline. Source at:
-https://github.com/imMamdouhaboammar/unslop
+https://github.com/imMamdouhaboammar/unslop-preflight
 ```
 
 ---
 
 ## 💬 Discord (Claude / AI dev communities)
 
-### Short drop
+### Example: Short drop
 
 ```
 if you use AI coding agents and haven't run this yet, worth doing:
 
-npx unslop autopilot
+npx unslop-preflight autopilot
 
 caught 4 things in my project I was about to ship
 works with Claude Code, Cursor, Windsurf — no install needed
 
-→ github.com/imMamdouhaboammar/unslop
+→ github.com/imMamdouhaboammar/unslop-preflight
 ```
 
 ---
 
-### Longer explanation
+### Example: Longer explanation
 
 ```
 hey, sharing this because it helped my project and I think others would find it useful
 
-it's called Unslop — a CLI that runs before your AI writes any frontend
+it's called Unslop Preflight — a CLI that runs before your AI writes any frontend
 
 what it does:
 • creates DESIGN.md + PRODUCT.md if you don't have them
@@ -370,34 +368,34 @@ what it does:
 • writes VDMA-FIXES.md for source issues that need the agent to fix
 
 autopilot mode (full run):
-npx unslop autopilot
+npx unslop-preflight autopilot
 
 specific scans:
-npx unslop scan src/        # scan for slop and a11y issues
-npx unslop repair           # auto-fix DESIGN.md
-npx unslop gates            # run all 23 gates manually
+npx unslop-preflight scan src/        # scan for slop and a11y issues
+npx unslop-preflight repair           # auto-fix DESIGN.md
+npx unslop-preflight gates            # run all 23 gates manually
 
 MIT, works offline, no API keys
 
-→ https://github.com/imMamdouhaboammar/unslop
+→ https://github.com/imMamdouhaboammar/unslop-preflight
 ```
 
 ---
 
-## 📝 Dev.to / Hashnode — Personal article titles
+## 📝 Dev.to / Hashnode — Example personal article titles
 
 Write from your own experience using the tool:
 
 ```
 1. "How I stopped my AI agent from shipping inaccessible frontend — the tool I use before every project"
 
-2. "npx unslop autopilot: the one command I run before my AI writes any CSS"
+2. "npx unslop-preflight autopilot: the one command I run before my AI writes any CSS"
 
 3. "I scanned my AI-generated codebase and found 6 WCAG failures. Here's the tool I now use to prevent them"
 
 4. "The 23 design checks I never remembered to do — now automated in one CLI command"
 
-5. "Unslop caught 4 issues my code review didn't — here's what they were"
+5. "Unslop Preflight caught 4 issues my code review didn't — here's what they were"
 ```
 
 ---
@@ -406,7 +404,7 @@ Write from your own experience using the tool:
 
 The simplest support:
 
-1. **Star the repo:** https://github.com/imMamdouhaboammar/unslop
+1. **Star the repo:** https://github.com/imMamdouhaboammar/unslop-preflight
 2. **Share the star** — when you star, it shows on your GitHub activity. Followers notice.
 3. **Use it in your next project** — then share what it caught (even one real finding is a great post)
 

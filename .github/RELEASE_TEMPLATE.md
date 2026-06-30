@@ -34,8 +34,8 @@ GitHub: https://github.com/imMamdouhaboammar/unslop-preflight
 - [ ] `npm ci`
 - [ ] `npm test`
 - [ ] `npm pack --dry-run`
-- [ ] `npx unslop --version`
-- [ ] `npx unslop scan src --strict`
+- [ ] `npx unslop-preflight --version`
+- [ ] `npx unslop-preflight scan src --strict`
 
 ## Publishing checklist
 
@@ -51,6 +51,6 @@ GitHub: https://github.com/imMamdouhaboammar/unslop-preflight
 Install or run directly:
 
 ```bash
-npx unslop autopilot
-npx unslop scan src --strict
+npx unslop-preflight autopilot
+npx unslop-preflight scan src --strict
 ```

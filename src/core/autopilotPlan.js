@@ -100,7 +100,7 @@ function runSourceScan(cwd, fingerprint, flags) {
     };
   }
 
-  const sourceFindings = runSourceScanners(cwd, fingerprint);
+  const sourceFindings = runSourceScanners(cwd, fingerprint, flags);
   return {
     sourceFindings,
     metadata: sourceFindings.metadata || emptySourceScanMetadata('metadata-missing')

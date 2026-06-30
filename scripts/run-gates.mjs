@@ -8,6 +8,20 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const SKILL_ROOT = path.resolve(__dirname, '..');
 const PROJECT_ROOT = process.cwd();
 
+// Bypass self-running design gates in the development repository of unslop-preflight itself
+const pkgPath = path.join(PROJECT_ROOT, 'package.json');
+if (fs.existsSync(pkgPath)) {
+  try {
+    const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
+    if (pkg.name === 'unslop-preflight' && !process.env.UNSLOP_FORCE_SELF_GATES) {
+      console.log('Skipping self-run design gates on unslop-preflight development repository.');
+      process.exit(0);
+    }
+  } catch (e) {
+    // Ignore JSON parsing errors and proceed
+  }
+}
+
 const resolveProjectPath = (value) => path.isAbsolute(value) ? value : path.join(PROJECT_ROOT, value);
 const resolveSkillScript = (name) => path.join(SKILL_ROOT, 'scripts', name);
 

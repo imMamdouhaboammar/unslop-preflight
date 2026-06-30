@@ -7,7 +7,7 @@ export async function report({ cwd, flags }) {
   result.reportFiles = writeReports(cwd, result, flags); 
   result.changed = result.reportFiles; 
   result.nextCommand = 'Review .unslop/fix-list.md'; 
-  result.suggestedPrompt = 'Inspect PRODUCT.md, DESIGN.md, and AGENT.md. Read `.unslop/fix-list.md` and resolve any listed issues. Implement the requested scope while preserving existing behavior. **MANDATORY**: Before you complete this task, you MUST run `npx unslop audit` in the terminal, ensure there are 0 errors, and show me the final output score.';
+  result.suggestedPrompt = 'Inspect PRODUCT.md, DESIGN.md, and AGENT.md. Read `.unslop/fix-list.md` and resolve any listed issues. Implement the requested scope while preserving existing behavior. **MANDATORY**: Before you complete this task, you MUST run `npx unslop-preflight audit` in the terminal, ensure there are 0 errors, and show me the final output score.';
   
   printResult(result, flags); 
   return result; 
