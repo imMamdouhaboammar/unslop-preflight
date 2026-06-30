@@ -7,6 +7,9 @@ import { doctor } from './commands/doctor.js';
 import { update } from './commands/update.js';
 import { parseArgs, printHelp } from './core/output.js';
 const commands = { autopilot, init, audit, repair, report, doctor, update };
+function applyExitCode(parsed, result) {
+  if ((parsed.flags.ci || parsed.flags.strict) && result?.summary?.errors > 0) process.exitCode = 1;
+}
 export async function run(argv, meta = {}) {
   const parsed = parseArgs(argv);
   if (parsed.flags.version) return console.log(meta.version || '0.0.0');
@@ -14,9 +17,12 @@ export async function run(argv, meta = {}) {
   const command = parsed.command;
   if (command === 'scan') {
     const mod = await import('./commands/scan.js');
-    return mod.scan(parsed);
+    const result = await mod.scan(parsed);
+    applyExitCode(parsed, result);
+    return result;
   }
   if (!commands[command]) return printHelp();
   const result = await commands[command](parsed);
+  applyExitCode(parsed, result);
   return result;
 }
