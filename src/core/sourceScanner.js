@@ -1,4 +1,4 @@
-import { join } from 'node:path';
+import { isAbsolute, join } from 'node:path';
 import { scanUi } from '../../scripts/scan-ui-implementation.mjs';
 import { scanA11y } from '../../scripts/scan-accessibility.mjs';
 import { scanWithRules } from './scannerUtils.js';
@@ -8,13 +8,17 @@ import { layeringRules } from '../scanners/layeringScanner.js';
 import { responsiveRules } from '../scanners/responsiveScanner.js';
 import { sourceSlopRules } from '../scanners/sourceSlopScanner.js';
 
+function resolveTargetDir(cwd, dir) {
+  return isAbsolute(dir) ? dir : join(cwd, dir);
+}
+
 export function runSourceScanners(cwd, fingerprint) {
   const allFindings = [];
 
   const dirsToScan = fingerprint.srcDirs.length > 0 ? fingerprint.srcDirs : ['src', 'app', 'components'];
 
   for (const dir of dirsToScan) {
-    const targetDir = join(cwd, dir);
+    const targetDir = resolveTargetDir(cwd, dir);
     
     try {
       const uiFindings = scanUi(targetDir);
