@@ -3,6 +3,7 @@ import { emptySourceScanMetadata, runSourceScanners } from '../core/sourceScanne
 import { summarize } from '../core/auditor.js';
 import { Evidence } from '../core/findings.js';
 import { printResult } from '../core/output.js';
+import { verifyScoringIntegrity } from '../core/integrity.js';
 
 function scannerFailureEvidence(failure, strict = false) {
   return new Evidence({
@@ -38,6 +39,7 @@ function toIssue(finding) {
 }
 
 export async function scan({ cwd, args, flags }) {
+  verifyScoringIntegrity();
   const fingerprint = fingerprintProject(cwd);
   const target = args?.[0];
 

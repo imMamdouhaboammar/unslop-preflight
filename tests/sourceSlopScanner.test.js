@@ -95,3 +95,69 @@ test('scanner rule file exclusions prevent token false positives', () => {
     assert.ok(!ruleNames(findings).includes('hardcoded-color-token-drift'));
   }, 'theme.ts');
 });
+
+test('source slop scanner catches brain icons, sparkle icons, and raw emojis in source', () => {
+  withFixture(`
+    export function AIWidgets() {
+      return (
+        <div>
+          <h3>AI Brain 🧠</h3>
+          <p>Get instant answers ✨</p>
+          <Brain className="lucide-brain" />
+          <SparklesIcon />
+          <p>Some happy faces 😊 for users</p>
+        </div>
+      );
+    }
+  `, (src) => {
+    const findings = scanWithRules(src, sourceSlopRules);
+    const rules = ruleNames(findings);
+    assert.ok(rules.includes('no-brain-icons-source'));
+    assert.ok(rules.includes('no-sparkle-icons-source'));
+    assert.ok(rules.includes('no-emojis-source'));
+  });
+});
+
+test('source slop scanner triggers sidebar heuristics on files/contents matching sidebar', () => {
+  // Test a sidebar component with viewport clipping, lack of scrolling, and missing active states
+  withFixture(`
+    export function MainSidebar() {
+      return (
+        <aside className="h-screen bg-slate-900 text-white">
+          <nav>
+            <a href="/home">Home</a>
+            <a href="/settings">Settings</a>
+          </nav>
+        </aside>
+      );
+    }
+  `, (src) => {
+    const findings = scanWithRules(src, sourceSlopRules);
+    const rules = ruleNames(findings);
+    assert.ok(rules.includes('sidebar-viewport-clipping'));
+    assert.ok(rules.includes('sidebar-missing-overflow'));
+    assert.ok(rules.includes('sidebar-missing-active-state'));
+  }, 'Sidebar.jsx');
+});
+
+test('source slop scanner passes sidebar heuristics on a properly designed sidebar', () => {
+  withFixture(`
+    export function ResponsiveSidebar() {
+      return (
+        <aside className="min-h-dvh overflow-y-auto bg-slate-900 text-white">
+          <nav>
+            <a href="/home" aria-current="page" className="active">Home</a>
+            <a href="/settings">Settings</a>
+          </nav>
+        </aside>
+      );
+    }
+  `, (src) => {
+    const findings = scanWithRules(src, sourceSlopRules);
+    const rules = ruleNames(findings);
+    assert.ok(!rules.includes('sidebar-viewport-clipping'));
+    assert.ok(!rules.includes('sidebar-missing-overflow'));
+    assert.ok(!rules.includes('sidebar-missing-active-state'));
+  }, 'Sidebar.jsx');
+});
+

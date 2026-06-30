@@ -88,5 +88,70 @@ export const sourceSlopRules = [
     excludeFile: /(\.test\.|\.spec\.|stories\.|fixtures?|mocks?)/i,
     pattern: /(John Doe|Jane Doe|Acme Corp|lorem ipsum|example\.com|TODO:|TBD|coming soon)/i,
     message: 'Sample or placeholder content detected in source.'
+  },
+  {
+    name: 'no-brain-icons-source',
+    level: 'blocker',
+    excludeFile: /(\.test\.|\.spec\.|stories\.|fixtures?|mocks?)/i,
+    pattern: /🧠|<Brain\b|BrainIcon|lucide-brain/i,
+    message: 'Brain icons or emojis detected in source. Brain icons are considered AI slop. Remove or replace with standard icons.'
+  },
+  {
+    name: 'no-sparkle-icons-source',
+    level: 'blocker',
+    excludeFile: /(\.test\.|\.spec\.|stories\.|fixtures?|mocks?)/i,
+    pattern: /✨|<Sparkles\b|SparklesIcon|lucide-sparkles/i,
+    message: 'Sparkle icons or emojis detected in source. Sparkle icons are considered AI slop. Remove or replace with standard icons.'
+  },
+  {
+    name: 'no-emojis-source',
+    level: 'blocker',
+    excludeFile: /(\.test\.|\.spec\.|stories\.|fixtures?|mocks?)/i,
+    pattern: /(?![\u00A9\u00AE\u2122])[\p{Emoji_Presentation}\p{Extended_Pictographic}]/u,
+    message: 'Emojis detected in source. Emojis are strictly forbidden in production UI code. Replace with vector icons.'
+  },
+  {
+    name: 'sidebar-layout-risk',
+    heuristic: (content, file, findings) => {
+      const isSidebarFile = /sidebar/i.test(file) || /sidebar|id="sidebar"|role="complementary"/i.test(content);
+      if (!isSidebarFile) return;
+
+      const lines = content.split(/\r?\n/);
+
+      // Check for hardcoded viewport height clipping risk (h-screen / 100vh)
+      if (/h-screen|100vh|h-\[100vh\]/i.test(content) && !/h-dvh|min-h-dvh|min-h-screen/i.test(content)) {
+        const lineNo = lines.findIndex(l => /h-screen|100vh|h-\[100vh\]/i.test(l)) + 1;
+        findings.push({
+          file,
+          line: lineNo > 0 ? lineNo : 1,
+          level: 'blocker',
+          rule: 'sidebar-viewport-clipping',
+          excerpt: 'Sidebar has hardcoded h-screen or 100vh, causing mobile bottom layout clipping. Use h-dvh, min-h-dvh, or min-h-screen.'
+        });
+      }
+
+      // Check for lack of scrolling/overflow containment
+      if (!/overflow-y-auto|overflow-y:\s*(auto|scroll)|overflow-y-scroll|overflow:\s*auto/i.test(content)) {
+        findings.push({
+          file,
+          line: 1,
+          level: 'blocker',
+          rule: 'sidebar-missing-overflow',
+          excerpt: 'Sidebar is missing explicit overflow-y scroll/containment (e.g. overflow-y-auto). Menu items may be clipped.'
+        });
+      }
+
+      // Check for missing semantic active state handlers / accessibility page types
+      if (!/aria-current|active-pill|\.active|activeClassName|isActive/i.test(content)) {
+        findings.push({
+          file,
+          line: 1,
+          level: 'warning',
+          rule: 'sidebar-missing-active-state',
+          excerpt: 'Sidebar is missing active link semantic handling (e.g., aria-current="page" or specific active class).'
+        });
+      }
+    }
   }
 ];
+

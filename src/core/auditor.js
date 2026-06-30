@@ -2,6 +2,7 @@ import { readText } from './filesystem.js';
 import { rules } from '../rules/index.js';
 import { calculateScore, readinessBand, readinessMessage } from './scoring.js';
 import { convertLegacyIssueToEvidence } from './findings.js';
+import { verifyScoringIntegrity } from './integrity.js';
 
 export function loadContext(cwd) {
   const files = {
@@ -37,6 +38,7 @@ function categorySummary(issues) {
 }
 
 export function summarize(result) {
+  verifyScoringIntegrity();
   // Convert all incoming issues to Evidence objects for the new scoring engine
   const evidences = result.issues.map(i => {
     if (i.constructor.name === 'Evidence') return i;

@@ -8,6 +8,7 @@ import { planRepairs } from './repairPlanner.js';
 import { adviseHarnesses } from './harnessAdvisor.js';
 import { runSourceFixEngine } from './sourceFixEngine.js';
 import { runVerification } from './verify.js';
+import { verifyScoringIntegrity } from './integrity.js';
 
 function flagValue(flags = {}, camelName, kebabName) {
   return flags[camelName] ?? flags[kebabName];
@@ -262,6 +263,7 @@ function exitCodeFor(result) {
 }
 
 export function runAutopilotPipeline(cwd, flags = {}) {
+  verifyScoringIntegrity();
   const maxPasses = maxPassesFor(flags);
   const passes = [];
   const allGenerated = [];
