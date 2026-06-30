@@ -1,127 +1,152 @@
 <div align="center">
 
-# Unslop
+# ✨ UNSLOP PREFLIGHT ✨
 
 The package name is `unslop-preflight`.
 
-### Stop AI coding agents before they ship fragile frontend work.
+<p align="center">
+  <strong>The Ultimate Preflight & Autonomous Repair Guardrails for AI-Built Frontends.</strong>
+  <br />
+  <em>Stop AI coding agents before they ship fragile, slop-ridden frontend layouts.</em>
+</p>
 
-**A preflight system for AI-built frontends. It checks `PRODUCT.md`, `DESIGN.md`, `AGENTS.md`, and source code before implementation moves forward.**
+---
 
-[![npm](https://img.shields.io/npm/v/unslop-preflight?style=flat-square&color=5B21B6&logo=npm&logoColor=white)](https://www.npmjs.com/package/unslop-preflight)
-[![npm downloads](https://img.shields.io/npm/dm/unslop-preflight?style=flat-square&color=5B21B6&logo=npm&logoColor=white&label=installs)](https://www.npmjs.com/package/unslop-preflight)
+### 🛡️ Core Package Metrics & Ecosystem
+
+[![npm version](https://img.shields.io/npm/v/unslop-preflight?style=for-the-badge&color=5B21B6&logo=npm&logoColor=white)](https://www.npmjs.com/package/unslop-preflight)
+[![npm downloads](https://img.shields.io/npm/dm/unslop-preflight?style=for-the-badge&color=5B21B6&logo=npm&logoColor=white&label=installs)](https://www.npmjs.com/package/unslop-preflight)
+[![CI status](https://img.shields.io/github/actions/workflow/status/imMamdouhaboammar/unslop-preflight/ci.yml?style=for-the-badge&logo=githubactions&logoColor=white&label=CI&color=10B981)](https://github.com/imMamdouhaboammar/unslop-preflight/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-10B981?style=for-the-badge&logo=mit&logoColor=white)](./LICENSE)
+
 [![Socket Supply Chain](https://img.shields.io/badge/supply%20chain-78%2F100-F59E0B?style=flat-square&logo=socket&logoColor=white)](https://socket.dev/npm/package/unslop-preflight)
-[![Socket Vulnerability](https://img.shields.io/badge/vulnerability-100%2F100-22C55E?style=flat-square&logo=socket&logoColor=white)](https://socket.dev/npm/package/unslop-preflight)
-[![Socket Quality](https://img.shields.io/badge/quality-100%2F100-22C55E?style=flat-square&logo=socket&logoColor=white)](https://socket.dev/npm/package/unslop-preflight)
-[![Socket Maintenance](https://img.shields.io/badge/maintenance-90%2F100-22C55E?style=flat-square&logo=socket&logoColor=white)](https://socket.dev/npm/package/unslop-preflight)
-[![Socket License](https://img.shields.io/badge/license-100%2F100-22C55E?style=flat-square&logo=socket&logoColor=white)](https://socket.dev/npm/package/unslop-preflight)
-[![CI](https://img.shields.io/github/actions/workflow/status/imMamdouhaboammar/unslop-preflight/ci.yml?style=flat-square&logo=githubactions&logoColor=white&label=CI)](https://github.com/imMamdouhaboammar/unslop-preflight/actions/workflows/ci.yml)
-[![Release](https://img.shields.io/github/v/release/imMamdouhaboammar/unslop-preflight?style=flat-square&color=5B21B6&logo=github&logoColor=white&label=release)](https://github.com/imMamdouhaboammar/unslop-preflight/releases)
+[![Socket Vulnerability](https://img.shields.io/badge/vulnerability-100%2F100-10B981?style=flat-square&logo=socket&logoColor=white)](https://socket.dev/npm/package/unslop-preflight)
+[![Socket Quality](https://img.shields.io/badge/quality-100%2F100-10B981?style=flat-square&logo=socket&logoColor=white)](https://socket.dev/npm/package/unslop-preflight)
+[![Socket Maintenance](https://img.shields.io/badge/maintenance-90%2F100-10B981?style=flat-square&logo=socket&logoColor=white)](https://socket.dev/npm/package/unslop-preflight)
+[![Socket License](https://img.shields.io/badge/license-100%2F100-10B981?style=flat-square&logo=socket&logoColor=white)](https://socket.dev/npm/package/unslop-preflight)
+
 [![skills.sh](https://img.shields.io/badge/skills.sh-published-0EA5E9?style=flat-square&logo=skillsdotsh&logoColor=white)](https://skills.sh/imMamdouhaboammar/unslop-preflight)
 [![Gates](https://img.shields.io/badge/gates-23%2B%20readiness-F59E0B?style=flat-square)](./SKILL.md)
-[![Docs v1.11.2](https://img.shields.io/badge/docs-1.11.2-3B82F6?style=flat-square)](./CHANGELOG.md)
-[![License: MIT](https://img.shields.io/badge/license-MIT-22C55E?style=flat-square)](./LICENSE)
+[![Docs v1.12.0](https://img.shields.io/badge/docs-v1.12.0-0EA5E9?style=flat-square)](./CHANGELOG.md)
+
+<br />
 
 ```bash
-npx unslop-preflight autopilot
+npx unslop-preflight autopilot --safe-fix --verify
 ```
 
-One command creates or repairs `PRODUCT.md`, `DESIGN.md`, and `AGENTS.md`, runs readiness gates, scans frontend source, writes reports, and gives the coding agent a fix list before it starts guessing.
+**One command runs 23+ readiness gates, scans frontend source code for AI-generated visual slop, plans deterministic repairs, applies low-risk safe patches, runs full lockfile-aware verification checks, and creates interactive human/agent reports.**
 
-[Quick Start](#quick-start) · [Cleanup Prompt](#copypaste-cleanup-prompt-for-vibe-coders) · [What it flags](#what-it-flags) · [Source detectors](#source-slop-detectors) · [Readiness](#readiness-bands) · [CLI](#cli-reference) · [Docs](#documentation-map)
+[Quick Start](#-quick-start) · [Autopilot Repair Loop](#-autopilot-repair-loop) · [Cleanup Prompt](#-copypaste-cleanup-prompt-for-vibe-coders) · [Slop Detectors](#-source-slop-detectors) · [Readiness Bands](#-readiness-bands) · [CLI Reference](#-cli-command-suite) · [Base Gates](#-the-23-base-gates) · [Docs Map](#-documentation--resource-map)
+
+---
 
 </div>
 
-## Why Unslop exists
+## 💡 Why Unslop Exists
 
-AI made frontend building faster.
+AI coding agents (like Claude Code, Cursor, Windsurf, and Copilot) have made frontend building **10x faster**.  
+Unfortunately, they have also made fragile, sloppy frontend decisions **10x easier to repeat and ship**.
 
-It also made weak frontend decisions easier to repeat.
+When agents "vibe code" without strict guardrails, subtle but dangerous UI regressions accumulate:
+*   **The Clickable `<div>`**: Interactive elements written without keyboard support, screen-reader landmarks, or ARIA labels.
+*   **The Blind `z-9999` Fix**: Stacking-context bugs "patched" by slapping extreme z-index values on arbitrary elements.
+*   **The Desktop-Only Modal**: Overlays that look beautiful on a 27-inch display but clip content or lock scrolling on mobile screens.
+*   **The Transition-All Slowdown**: Broad `transition-all` declarations on massive DOM elements, tanking interaction fidelity (INP).
+*   **The Sample Data Leak**: Generic placeholders, mock usernames, and dummy domains shipping directly into production bundles.
 
-The oversized hero headline. The glass card stack. The purple gradient that has no reason to exist. The modal that works on desktop and breaks on mobile. The dropdown clipped by an `overflow-hidden` parent. The `z-9999` patch that hides the real stacking problem. The form that looks finished until keyboard users try to move through it.
+**Unslop acts as a rigorous quality gate and auto-repair preflight layer.** It checks product specifications, design systems, agent instructions, and raw source code *before* deployment or handoff, giving your AI agent crystal-clear boundaries and deterministic fixes.
 
-That is the work Unslop is built to flag before it ships.
+---
 
-Unslop is a preflight layer for AI-assisted UI work. It checks the brief, design contract, agent handoff, and source code before a coding agent continues. It does not try to slow the agent down. It gives the agent sharper boundaries.
+## 💡 Benchmark Status & Limitations
 
-## Benchmark Results & Limitations
-
-> [!WARNING]
+> [!WARNING]  
 > **Torture Bench Status: ❌ FAIL (Current Score: 3.00 / 5.0)**
 >
 > The latest execution of the internal **Unslop Torture Bench** resulted in an average score of **3.00 / 5.0**, which is below our strict quality threshold of **4.0**.
->
-> This benchmark failure highlights key gaps in dynamic overlay edge-case detection and complex responsive layout scanning. Active efforts are underway to harden rule sets and tune scanners, but users should maintain realistic expectations.
+> This failure highlights key gaps in dynamic overlay edge-case detection and complex responsive layout scanning. Active hardening is underway, but users should maintain realistic expectations.
 
-Unslop is a **preflight assistant and guardrail**, not a visual or testing replacement. It cannot and does not replace:
-- **E2E Testing / Integration Tests:** Unslop checks static conditions and source patterns, but does not execute or verify runtime app behavior.
-- **Manual Accessibility Reviews:** Code pattern scanning flags missing labels and bad elements, but only manual screen-reader and keyboard testing guarantees full compliance.
-- **Browser QA & Visual Audits:** Unslop does not render the UI; visual bugs, layout overlaps, and browser compatibility issues must be validated using live browsers.
+Unslop is a **static preflight guardrail**, not a visual layout engine or runtime simulator. It does *not* replace:
+*   **Runtime E2E Testing**: Static source scanning catches structural patterns, but does not execute app logic.
+*   **Manual Accessibility Audits**: While static detectors flag bad semantics, only human keyboard and screen-reader test runs guarantee compliance.
+*   **Visual QA & Browser Compatibility**: Unslop does not render the DOM; cross-browser paint bugs must be checked manually or via screenshot-testing rigs.
 
-## What it flags
+---
 
-| Area | Examples |
-|------|----------|
-| Product handoff | vague users, missing job, unclear scope, missing risks |
-| Design contract | weak hierarchy, missing tokens, missing responsive rules, missing taste controls |
-| Agent guidance | missing `AGENTS.md`, weak handoff rules, bulk install risk |
-| Overlay behavior | modal overflow, missing focus trap, missing portal policy, blind z-index fixes |
-| Accessibility | clickable divs, missing visible labels, removed focus outlines |
-| Responsive layout | fixed widths, `100vh` mobile risk, tables without mobile handling |
-| Source slop | random React keys, index keys, sample data, broad transitions, generic visual stacks |
-| State handling | async screens without loading, error, and empty states |
-| Security and privacy UX | exposed tokens, unsafe new-tab links, weak destructive action flows |
+## 🔄 Autopilot Repair Loop
 
-## Quick Start
+Unslop Autopilot implements a robust, doctor-style source-repair loop:  
+`Scan → Diagnose → Plan Safe Patches → Apply Patches → Run Project Checks → Re-scan → Prove Improvement`
 
-Run the full loop with npx:
+```mermaid
+sequenceDiagram
+    autonumber
+    participant Developer as 💻 Developer / CI
+    participant CLI as 🛡️ Unslop CLI
+    participant Engine as ⚙️ Source Fix Engine
+    participant Safety as 🔒 Safety Validator
+    participant Verifier as 🧪 Verification Loop
+    
+    Developer->>CLI: npx unslop-preflight autopilot --safe-fix --verify
+    CLI->>CLI: Scan project (Artifacts & Source Code)
+    CLI->>CLI: Diagnose issues & assess severity
+    CLI->>Engine: Group findings & plan deterministic patches
+    Engine->>Safety: Check patch boundaries (files, lines, dirs)
+    Safety-->>Engine: Validation approved / files skipped
+    Engine->>Engine: Apply low-risk idempotent AST-free transforms
+    CLI->>Verifier: Run local checks (lint, test, build)
+    Verifier-->>CLI: Capture build status & exit codes
+    CLI->>CLI: Re-scan code to prove delta improvement
+    CLI->>Developer: Write .unslop/ report & generate visual delta table
+```
 
+---
+
+## 🚀 Quick Start
+
+### Run the full loop instantly with zero installation:
 ```bash
 npx unslop-preflight autopilot
 ```
 
-Install in a project:
-
+### Install in your project for continuous checks:
 ```bash
 npm install --save-dev unslop-preflight
-npx unslop-preflight autopilot
 ```
 
-Initialize only the docs:
-
+### Initialize documentation structures only:
 ```bash
 npx unslop-preflight init
 npx unslop-preflight audit
 npx unslop-preflight repair --dry-run --report
 ```
 
-Scan source code directly:
-
+### Direct source-code scanning:
 ```bash
-npx unslop-preflight scan src
 npx unslop-preflight scan src --strict
 ```
 
-Skip source scanning when you only want spec checks:
-
+### Skip source-code scanning (for spec-only audits):
 ```bash
 npx unslop-preflight autopilot --no-source-scan
 ```
 
-Install as a skill:
-
+### Install as an global agent skill:
 ```bash
 npx skills add imMamdouhaboammar/unslop-preflight
 ```
 
-## Copy/Paste Cleanup Prompt for Vibe Coders
+---
 
-If you are a non-technical builder using AI coding agents like Claude Code, Cursor, Codex, Antigravity, or any other agent, you can easily delegate the cleanup work to your assistant. 
+## 📝 Copy/Paste Cleanup Prompt for Vibe Coders
 
-Copy the prompt block below, paste it into your coding agent, and it will automatically inspect your project structure, install and run **Unslop Preflight**, generate detailed findings in `.unslop/report.md`, `.unslop/report.json`, and `.unslop/fix-list.md`, apply safe fixes, and walk you through any remaining manual cleanups.
+If you are a builder delegating development to AI coding agents (like Claude Code, Cursor, Codex, Antigravity, OpenCode, Windsurf, or similar), **you don't need to run these commands yourself**.
 
-> [!TIP]
-> **Not technical? Copy this prompt into your coding agent and let it clean up the AI slop for you.**
+Copy the prompt block below, paste it directly into your agent's chat, and let it handle the audit, safe source repairs, and remaining fix logs for you:
+
+> [!TIP]  
+> **Copy the prompt below to hand over the entire Unslop execution and repair process to your AI agent.**
 
 ```txt
 You are my cleanup agent.
@@ -147,14 +172,12 @@ Follow these steps carefully:
     npx unslop-preflight autopilot --plan-only --report)
 
 4. After it runs, open and read:
-
-   .unslop/report.md
-   .unslop/report.json
-   .unslop/fix-list.md
-   .unslop/source-fixes.md (if present)
+   - .unslop/report.md
+   - .unslop/report.json
+   - .unslop/fix-list.md
+   - .unslop/source-fixes.md (if present)
 
 5. Fix the project based on the fix list.
-
    Important:
    - Apply safe documentation/spec fixes first.
    - Fix source code issues carefully.
@@ -165,14 +188,14 @@ Follow these steps carefully:
    - Do not install new dependencies unless you explain why they are needed.
 
 6. Focus especially on:
-   - generic AI-looking UI
-   - broken responsive behavior
-   - modal and overlay issues
+   - generic AI-looking UI (gradient, glass, floating element slop)
+   - broken responsive behavior (fixed widths, vh risks)
+   - modal and overlay issues (z-index hacks, scroll leaks)
    - missing loading, empty, and error states
-   - accessibility problems
-   - weak focus states
-   - unsafe links
-   - hardcoded sample data
+   - accessibility problems (clickable divs, missing alt/labels)
+   - weak focus states (outline-none)
+   - unsafe target="_blank" links
+   - hardcoded sample data leaking into code
    - messy component structure
    - unclear PRODUCT.md, DESIGN.md, or AGENTS.md handoff
 
@@ -188,405 +211,221 @@ Follow these steps carefully:
 
 9. Run the project’s normal checks.
    Use the scripts available in package.json, such as:
-
-   npm run build
-   npm run test
-   npm run lint
-   npm run typecheck
-
-   Use the project’s actual package manager.
+   - npm run build
+   - npm run test
+   - npm run lint
+   - npm run typecheck
+   (Use the project’s actual package manager)
 
 10. At the end, give me a clear summary:
-
-   - What Unslop found
-   - What you fixed
-   - What files you changed
-   - What commands you ran
-   - What checks passed
-   - What still needs human review
+    - What Unslop found
+    - What you fixed
+    - What files you changed
+    - What commands you ran
+    - What checks passed
+    - What still needs human review
 
 Do not claim everything is fixed unless the report and checks prove it.
 ```
 
-### What Unslop does (and doesn't do)
+---
 
-* **Preflight Guard, Not a Magic Fixer:** Unslop acts as a preflight guard and fix-list generator. It helps your agent see problems before shipping, but it does not automatically rewrite your source files or replace real manual review.
-* **Checks, Not Replacements:** It does not replace browser QA, real tests, accessibility tooling, or human review.
-* **Sharper Handoffs:** It is designed to give your coding agent a sharper checklist, not blind permission to rewrite the project.
+## 🛠️ Repair Modes & Configuration
 
-Copy it. Paste it into your coding agent. Let the agent run the audit, read the report, apply the fix list, and come back with a clean summary.
+Autopilot supports **4 distinct modes** tailored to different levels of risk tolerance:
 
-## What is current in v1.11.2
+| Mode | Flag | Description | Default Status |
+| :--- | :--- | :--- | :--- |
+| **Plan Only** | `--plan-only` | Runs full static audits and source scans. Emits reports but makes **no** file modifications. | Safe |
+| **Doc Fix Only** | `--doc-fix` | Safe, non-destructive repair of `PRODUCT.md`, `DESIGN.md`, and `AGENTS.md`. No source code touch. | **Default** |
+| **Safe Source Fix** | `--safe-fix` | Applies doc fixes AND deterministic, idempotent source patches under strict safety guardrails. | Active Opt-In |
+| **Agent Fix Guide** | `--agent-fix` | Generates a targeted, context-rich engineering prompt in `.unslop/agent-fix-prompt.md`. | Advanced Handoff |
 
-v1.11.2 brings complete, robust CLI command standardizations (`npx unslop-preflight <command>`), seamless autopilot standards-wiring integration (`--standards=vibe-coding`), self-scanning test safety, and softened, benchmark-grounded assistance framing.
+### 🔒 Safety Validator Boundaries (For `--safe-fix` mode)
+To prevent rogue edits or broken files, our safety validator enforces:
+*   **Directory Confinement**: Files must lie strictly within the project root directory.
+*   **Excluded Directories & Files**: Never touches `node_modules`, `.env`, lockfiles, `dist`, `build`, or `.unslop` caches.
+*   **Safe Extension Whitelist**: Only operates on `.js`, `.jsx`, `.ts`, `.tsx`, `.css`, and `.md` files.
+*   **Strict Size Budgets**:
+    *   Maximum modified files per run: **20** (configurable with `--max-fix-files`)
+    *   Maximum modified lines per file: **50**
+    *   Maximum total changed lines per run: **300** (configurable with `--max-fix-lines`)
 
-v1.11.1 delivered a robust Autopilot Hardening loop (`--max-passes=N`), pass history diagnostics, and native scanner failure metadata collection, built on top of the v1.11.0 Modular Standards Packs (e.g. Vibe Coding Profile) and the v1.10.x source-level linter.
+---
 
-New in v1.10.x:
+## 🔍 Source Slop Detectors
 
-- `unslop scan` command for direct frontend source scanning
-- source slop detectors for React keys, focus states, images, links, inputs, motion, async views, empty states, color drift, sample data, and generic visual stacks
-- file-scoped scanner rules for checks that need full-file context
-- file exclusions for token, theme, test, story, fixture, and mock files where a signal would create noise
-- `--no-source-scan` works inside autopilot
-- source findings appear as code evidence in reports and fix lists
-- npm publish workflow with GitHub Actions, Trusted Publishing support, package pack verification, tests, and duplicate-version skip
+Unslop scans source trees using **14 high-precision, low-noise static detectors** calibrated for AI-generated patterns:
 
-## How it works
+| Detector ID | Focus Area | Danger Flagged | Safe Auto-Fix Action (with `--safe-fix`) |
+| :--- | :--- | :--- | :--- |
+| `unstable-random-key` | React State | Dynamic keys (`Math.random()`) causing components to unmount & lose state. | *Planned for Agent Handoff* |
+| `array-index-key-reorder-risk` | Performance | Using index as keys, causing list re-rendering glitches on sort/filter. | *Planned for Agent Handoff* |
+| `outline-none-without-focus-visible` | Accessibility | Hiding focus outlines (`outline-none`), breaking keyboard accessibility. | Appends matching `:focus-visible:outline-none focus-visible:ring-2` to restore access. |
+| `icon-only-button-review` | Accessibility | Buttons containing only SVG/icons with no text, hidden from screen readers. | *Manual Fix List* |
+| `image-without-size-review` | Layout / LCP | Image elements missing explicit width/height causing visual layout shifts. | *Manual Fix List* |
+| `target-blank-without-rel` | Security | `target="_blank"` links missing `rel="noopener noreferrer"` (tab-nabbing risk). | Automatically appends `rel="noopener noreferrer"`. |
+| `input-without-autocomplete-review` | User Experience | Form fields (email, password, search) missing native autocomplete flags. | *Manual Fix List* |
+| `motion-without-reduced-motion-review` | Accessibility | CSS animations and transitions lacking `@media (prefers-reduced-motion: reduce)`. | *Manual Fix List* |
+| `collection-map-empty-state-review` | UX Completeness | Mapping over an array in React without a fallback conditional empty state view. | *Manual Fix List* |
+| `async-view-state-review` | UX Completeness | Fetching or rendering asynchronous data without loading and error views. | *Manual Fix List* |
+| `hardcoded-color-token-drift` | Maintainability | Random hex/rgb values hardcoded outside central theme or tokens configurations. | *Manual Fix List* |
+| `generic-ai-aesthetic-stack` | Visual Taste | Generic gradients, floating overlays, heavy glassmorphism without clean structure. | *Manual Fix List* |
+| `transition-all-animation-slop` | Interaction (INP) | Heavy `transition-all` on elements containing complex children. | Maps to discrete transition rules (e.g. `transition-colors`, `transition-transform`). |
+| `sample-data-shipping-risk` | Data Privacy | Sample mock names ("John Doe", "example.com") leaking into production. | *Manual Fix List* |
+
+---
+
+## 🚦 Readiness Bands
+
+Unslop computes a consolidated **Project Readiness Score** and assigns one of 4 readiness bands to determine if your code is prepared for an AI-agent implementation pass:
 
 ```text
-Prompt or repository
-   ↓
-PRODUCT.md
-   Product strategy, audience, job, risks, localization, accessibility notes
-   ↓
-DESIGN.md
-   Design read, taste controls, tokens, components, overlay rules, responsive contract
-   ↓
-AGENTS.md
-   Project-specific rules for AI coding agents
-   ↓
-Artifact audit
-   Readiness, taste, placeholders, root cause, overlays, harness, accessibility, security
-   ↓
-Source scan
-   UI, accessibility, responsive, layering, typography, and source slop detectors
-   ↓
-Repair and report
-   Safe doc repairs, .unslop/report.md, .unslop/report.json, .unslop/fix-list.md
-   ↓
-Readiness decision
-   blocked, needs-spec-work, agent-ready-with-fix-list, or agent-ready
+ 🔴 BLOCKED               → Critical spec gaps or source blockers exist. Stop work immediately.
+ 🟡 NEEDS-SPEC-WORK       → Strategic documents exist but are too sparse. Repair specs first.
+ 🟢 READY-WITH-FIX-LIST   → Ready to move forward once the attached .unslop/fix-list.md is addressed.
+ 🔵 AGENT-READY           → Excellent context, design contracts, and safety markers. Proceed with confidence.
 ```
 
-## Autopilot
+The readiness score aggregates 23 core categories across product definition, design contracts, accessibility parameters, stacking governance, and source code health.
+
+---
+
+## 💻 CLI Command Suite
 
 ```bash
-npx unslop-preflight autopilot
+npx unslop-preflight <command> [options]
 ```
 
-The package's primary command is `npx unslop-preflight autopilot`. After installing the package locally or globally, the shorter `unslop` bin alias is also fully available:
+### Unified Command Matrix
 
+| Command | Description | Practical Usage |
+| :--- | :--- | :--- |
+| **`autopilot`** | Runs full preflight, repair, source scan, verification, and writes reports. | `npx unslop-preflight autopilot --safe-fix --verify` |
+| **`init`** | Bootstraps standard templates for `PRODUCT.md`, `DESIGN.md`, and `AGENTS.md`. | `npx unslop-preflight init` |
+| **`audit`** | Evaluates static artifacts against readiness rules and prints category breakdowns. | `npx unslop-preflight audit --verbose` |
+| **`scan`** | Runs static slop detectors against source code directories. | `npx unslop-preflight scan src --strict` |
+| **`standards`** | Inspects or lists available modular standards pack profiles. | `npx unslop-preflight standards inspect vibe-coding` |
+| **`repair`** | Executes non-destructive repair logic for specifications and markdown documents. | `npx unslop-preflight repair --dry-run --report` |
+| **`report`** | Processes findings database and emits `.unslop/` documentation files. | `npx unslop-preflight report` |
+| **`doctor`** | Checks local developer environment, node version, and lockfile configuration. | `npx unslop-preflight doctor` |
+| **`update`** | Synchronizes and updates the local CLI runner to the latest registry version. | `npx unslop-preflight update` |
+
+### Key Flags & Options
+*   `--verify`: Automatically detects lockfile (`npm`, `pnpm`, `yarn`, `bun`), runs available checks (`test`, `build`, `lint`, `typecheck`), and records delta results.
+*   `--verify-timeout=120`: Absolute synchronous verification runner timeout (default: 120s).
+*   `--max-passes=N`: Maximum recursive correction passes (1-10) autopilot is permitted to run.
+*   `--strict`: Treats warnings and static scanner failures as hard blocking errors.
+*   `--standards=vibe-coding`: Activates a strict modular standards profile (Vibe Coding profile enforces advanced type safety and architecture gates).
+
+---
+
+## 🧬 The 23 Base Gates
+
+<details>
+<summary>🔍 Click to view the full directory of Unslop Base Quality Gates</summary>
+
+| ID | Gate Name | Technical Mandate / Rule Checked |
+| :--- | :--- | :--- |
+| **1** | Design System Baseline | Restrict random asset imports; declare central baseline (e.g. Tailwind, Radix). |
+| **2** | Intake Session | Ensure audience definitions, core user actions, localization, and technical risks exist. |
+| **3** | Standards Search | Require search references or specifications (WCAG, MDN, framework guidelines). |
+| **4** | Unslop Install | Log setup runs and verify tool hooks exist before drafting layouts. |
+| **5** | PRODUCT.md Spec | Verify strategic product artifact exists, passes validation, and contains no defaults. |
+| **6** | DESIGN.md Contract | Check that typography tokens, layout grids, components, and responsive specs are configured. |
+| **7** | Rules Engine | Assure that all artifact evaluation metrics run consistently. |
+| **8** | Accessibility & RTL | Check focus indicators, color contrast baselines, LTR defaults, and explicit RTL support. |
+| **9** | UX-CRX Logic | Primary actions, secondary actions, error states, and clear escape paths for every view. |
+| **10** | Mobile & Responsive | Mobile-first layouts must be explicitly planned; no lazy desktop stacking. |
+| **11** | Popup & Feedback | Prohibit raw, blocking native `alert()` or `confirm()` methods in visual product paths. |
+| **12** | Implementation Scan | Scan source trees and block code compilation if fatal markers exist before merge. |
+| **13** | Amplify Preservation | Track existing high-value user decisions to prevent overwrite cycles. |
+| **14** | Semantic HTML | Forbid interactive `<div>` blocks; enforce native elements and landmarks. |
+| **15** | Realistic Content | Ban dummy content ("Lorem Ipsum", "test@test.com", fake customer models). |
+| **16** | Design Tokens | Block hardcoded color values; enforce strict CSS custom properties or theme configuration. |
+| **17** | Drift Control | Define single-source-of-truth rules and run gates on every branch merge. |
+| **18** | Viewport Governance | Enforce scrolling ownership, dynamic height (`dvh`) strategies, and zero root overflows. |
+| **19** | Modal & Dialog | Modals must handle focus trapping, scroll locks, and safe overlay viewport bounds. |
+| **20** | Dashboard Shell | Grid coordinates, centralized auth state shell, responsive sidebars, and form fields. |
+| **21** | Overlay Stack | Centralized overlay mounting, toast duration constraints, and toast collisions handling. |
+| **22** | Sensitive Data UX | Secure input masking, multi-factor triggers, and explicit double-step deletion gates. |
+| **23** | Popover Positioning | Floating panels must implement flip/shift layout safety and declare standard z-index indexes. |
+
+</details>
+
+---
+
+## 📦 Modular Standards Profiles
+
+Unslop supports an optional, opt-in **Modular Standards Pack System** to enforce rigorous, domain-specific coding standards. 
+
+The first integrated pack is the **Vibe Coding Standards Pack** (`vibe-coding`), enforcing:
+*   Strict TypeScript type safety (no loose `any` casts).
+*   Unified dependency structure (no duplicate libraries or bulk packages).
+*   Isolated component modularity (preventing monolithic multi-hundred line visual scripts).
+*   Centralized application storage hooks.
+*   Exposed secret and token auditing.
+
+### Commands to Run Profiles:
 ```bash
-unslop autopilot
-```
-
-`autopilot` has two levels:
-
-1. **Preflight loop**:
-   Scans, scores, repairs safe handoff docs, and creates fix-lists.
-
-2. **Safe repair loop**:
-   With `--safe-fix`, applies deterministic low-risk source patches and verifies them.
-
-### Repair Modes
-
-- `--plan-only`: Run scan, audit, and report only. Do not write or modify any files.
-- `--doc-fix` (Default): Apply safe `PRODUCT.md`, `DESIGN.md`, and `AGENTS.md` repairs only. Does not modify source code.
-- `--safe-fix`: Apply safe doc repairs AND safe source-code fixes (deterministic, low-risk, idempotent).
-- `--agent-fix`: Do not modify source code directly. Instead, generate a stronger, tailored agent patch prompt in `.unslop/agent-fix-prompt.md`.
-
-> [!NOTE]
-> **Honest Note**: Unslop does not rewrite your app. Unslop only applies low-risk deterministic fixes. Complex architectural fixes stay in the fix list for a coding agent or human.
-
-### Verification Loop
-
-With `--verify`, Unslop automatically detects your project's lockfile/package manager (`npm`, `pnpm`, `yarn`, `bun`), extracts available build-time checks from `package.json` (like `typecheck`, `lint`, `test`, `build`), runs them synchronously under a configurable timeout (`--verify-timeout=120`), and summarizes before/after improvements in `.unslop/report.md` and `.unslop/report.json`.
-
-### Options & Hardening
-
-* **Bounded Refinement Loop (`--max-passes=N`)**: Specifies the maximum number of correction passes (1 to 10) autopilot runs in a single session.
-* **Detailed Reports (`.unslop/`)**: Autopilot writes reports to `.unslop/report.md`, `.unslop/report.json`, `.unslop/fix-list.md`, and (in `--safe-fix` mode) `.unslop/source-fixes.json`, `.unslop/source-fixes.md`, and `.unslop/patch-summary.md`. The reports include:
-  * `beforeAfter`: Before/after delta tracking of scores, blockers, and findings.
-  * `verificationResults[]`: Exit codes, timeouts, status, and summary of each run check.
-  * `passes[]`: Pass-by-pass history of scores, applied repairs, and results.
-  * `stopReason`: Clean stopping motivation (`agent-ready`, `no-safe-repairs`, `no-score-improvement`, `max-passes`, or `error`).
-  * `scanStats`: Detailed statistics (files scanned/skipped, findings, scanner failures, run duration, and directories scanned).
-* **Robust Scanner Failure Handling**: Scanner execution or file-walk errors do not crash the process; they are recorded as warning metadata in reports. In `--strict` mode, scanner failures are treated as blocking evidence, causing the check to fail.
-* **Compatibility Code Fix Flag (`--apply-code-fixes`)**: The `--apply-code-fixes` flag is kept for compatibility. It correctly reports `requested: true` and `applied: false` with the reason `not-implemented` inside output metadata. Autopilot does not automatically modify or rewrite source files.
-
-Useful option syntax:
-
-```bash
-npx unslop-preflight autopilot --plan-only
-npx unslop-preflight autopilot --doc-fix
-npx unslop-preflight autopilot --safe-fix --verify
-npx unslop-preflight autopilot --agent-fix --report
-npx unslop-preflight autopilot --max-passes=5
-npx unslop-preflight autopilot --strict
-```
-
-## Source slop detectors
-
-Run source scanning directly:
-
-```bash
-npx unslop-preflight scan src
-```
-
-Current detector coverage:
-
-| Detector | What it flags |
-|----------|---------------|
-| `unstable-random-key` | React keys based on `Math.random()` or `Date.now()` |
-| `array-index-key-reorder-risk` | index keys that can break when lists change |
-| `outline-none-without-focus-visible` | removed focus style without keyboard-visible replacement |
-| `icon-only-button-review` | icon-only buttons that need accessible-name review |
-| `image-without-size-review` | images without sizing contract |
-| `target-blank-without-rel` | new-tab links missing `noopener` or `noreferrer` |
-| `input-without-autocomplete-review` | email, password, tel, or search inputs without autocomplete behavior |
-| `motion-without-reduced-motion-review` | motion without reduced-motion handling |
-| `collection-map-empty-state-review` | collection rendering without an obvious empty state |
-| `async-view-state-review` | async views missing loading, error, or empty states |
-| `hardcoded-color-token-drift` | hex colors outside accepted token or theme files |
-| `generic-ai-aesthetic-stack` | generic gradient, glass, and heavy-shadow visual stacks |
-| `transition-all-animation-slop` | broad `transition-all` usage |
-| `sample-data-shipping-risk` | sample names, placeholder copy, and dummy domains in source |
-
-More detail lives in [`docs/SOURCE_SLOP_DETECTORS.md`](./docs/SOURCE_SLOP_DETECTORS.md).
-
-## Modular Standards Packs (Profiles)
-
-Unslop supports an optional, opt-in **Modular Standards Pack System** to enforce rigorous, domain-specific or team-specific coding governance rules. By default, Unslop runs lightweight, but power users can activate strict standard profiles.
-
-The first integrated pack is the **Vibe Coding Standards Pack** (`vibe-coding`), enforcing strict TypeScript type safety, unified dependency architecture, component modularity, centralized storage, and secret exposure checks.
-
-To list and inspect available standards packs:
-```bash
+# List available profiles
 npx unslop-preflight standards list
-npx unslop-preflight standards inspect vibe-coding
-```
 
-To run audits or scans enforcing a standards pack:
-```bash
-npx unslop-preflight scan src --standards=vibe-coding
+# Inspect a specific standards pack
+npx unslop-preflight standards inspect vibe-coding
+
+# Execute autopilot enforcing the profile
 npx unslop-preflight autopilot --standards=vibe-coding
 ```
 
-Read [`docs/STANDARDS_PACKS.md`](./docs/STANDARDS_PACKS.md) and [`docs/VIBE_CODING_STANDARDS_PACK.md`](./docs/VIBE_CODING_STANDARDS_PACK.md) for more details.
+---
 
-## npm publishing
+## 📁 Documentation & Resource Map
 
-This repository is prepared for automatic npm publishing through GitHub Actions.
+Explore our detailed resource manuals to deep dive into the inner workings of Unslop:
 
-Recommended npm trusted publisher settings:
+| Target Resource | Purpose & Contents |
+| :--- | :--- |
+| [**`SKILL.md`**](./SKILL.md) | Universal behavioral definitions and runtime guidelines for AI integrations. |
+| [**`AGENTS.md`**](./AGENTS.md) | Repository-scoped rule specifications, task priorities, and coding constraints. |
+| [**`docs/SOURCE_SLOP_DETECTORS.md`**](./docs/SOURCE_SLOP_DETECTORS.md) | Architectural details on code patterns, AST representations, and heuristic rules. |
+| [**`docs/STANDARDS_PACKS.md`**](./docs/STANDARDS_PACKS.md) | Guide to extending and writing your custom Modular Standards profiles. |
+| [**`docs/VIBE_CODING_STANDARDS_PACK.md`**](./docs/VIBE_CODING_STANDARDS_PACK.md) | Remediations, details, and guidelines for the unified Vibe-Coding profile. |
+| [**`docs/ROOT_CAUSE_MODE.md`**](./docs/ROOT_CAUSE_MODE.md) | Deep analysis of the "Diagnosis-First" resolution process for bugs and layout errors. |
+| [**`docs/OVERLAY_LAYERING_GATES.md`**](./docs/OVERLAY_LAYERING_GATES.md) | Detailed rules for stacking systems, z-index indexes, and modal viewport limits. |
+| [**`docs/INSTALL_AGENT_HARNESS.md`**](./docs/INSTALL_AGENT_HARNESS.md) | Guidelines for selecting and deploying micro-tool harnesses on AI runtimes. |
+| [**`docs/AI_AGENT_READINESS.md`**](./docs/AI_AGENT_READINESS.md) | Complete explanation of score aggregation, categories, and readiness band criteria. |
+| [**`docs/NPM_PUBLISHING.md`**](./docs/NPM_PUBLISHING.md) | Secure publishing manuals using OpenID Connect (OIDC) and GitHub Trusted Publishers. |
+| [**`references/`**](./references/) | Directory of rule references, raw criteria sheets, and category criteria. |
 
-```text
-Owner: imMamdouhaboammar
-Repository: unslop-preflight
-Workflow filename: npm-publish.yml
-Allowed action: npm publish
-```
+---
 
-The workflow tests the package, runs `npm pack --dry-run`, checks whether the package version already exists on npm, and publishes only if the version is new.
-
-Read [`docs/NPM_PUBLISHING.md`](./docs/NPM_PUBLISHING.md).
-
-## Readiness bands
-
-| Band | Meaning | Action |
-|------|---------|--------|
-| `blocked` | Critical artifact, source, accessibility, security, or root-cause issue | Do not implement yet |
-| `needs-spec-work` | The docs exist but are too thin for reliable agent work | Repair or rewrite weak sections |
-| `agent-ready-with-fix-list` | The project can move forward only with the fix list attached | Apply the fix list, then rerun |
-| `agent-ready` | The handoff is specific enough for AI-assisted implementation | Proceed with normal verification |
-
-Category breakdowns show where the risk lives: product clarity, design contract, taste, placeholders, agent guidance, root cause, harness readiness, responsive behavior, overlays, stacking, accessibility, security, and source scans.
-
-## Reasoning gates
-
-### Root Cause Mode
-
-When the handoff mentions a bug, broken UI, regression, overflow, clipping, z-index, viewport, modal, popup, drawer, dropdown, tooltip, toast, focus trap, or layout failure, the agent must diagnose before editing.
-
-It must restate the failing state, separate symptom from cause, choose the smallest root fix, check regressions, and provide verification proof.
-
-Read [`docs/ROOT_CAUSE_MODE.md`](./docs/ROOT_CAUSE_MODE.md).
-
-### Modal viewport and overlay gates
-
-When `DESIGN.md` mentions modals, dialogs, popups, drawers, sheets, overlays, lightboxes, popovers, or command palettes, it must define:
-
-- width guard
-- height guard
-- internal scroll behavior
-- mobile behavior
-- viewport QA proof
-
-Read [`docs/OVERLAY_LAYERING_GATES.md`](./docs/OVERLAY_LAYERING_GATES.md).
-
-### Stacking and z-index reasoning
-
-Layered UI such as sticky headers, fixed headers, modals, drawers, dropdowns, tooltips, popovers, and toasts must include:
-
-- stacking or placement plan
-- stacking context audit
-- layer scale
-- portal policy
-- conflict matrix
-
-Blind `z-9999` or `z-index: 9999` fixes are blocked unless the root-cause analysis proves they are necessary.
-
-## Taste calibration
-
-`DESIGN.md` should include:
-
-- **Design Read**: the agent's interpretation of the product, user, tension, and visual direction.
-- **Taste Controls**: `DESIGN_VARIANCE`, `MOTION_INTENSITY`, and `VISUAL_DENSITY`, each from 1 to 10.
-- **Design System Decision**: the baseline system and why it fits.
-- **Anti-AI-Slop Guidelines**: product-specific patterns to avoid.
-- **Agent Handoff**: what the coding agent must preserve.
-- **Pre-flight Check**: proof that the design is ready before code starts.
-
-## Install Agent Harness
-
-Many users do not know which agent skills, plugins, scanners, or runtime helpers should be installed before coding.
-
-The Install Agent Harness gate asks the coding agent to inspect the project and recommend a small, relevant harness instead of installing everything.
-
-The agent should explain:
-
-- active host: Claude Code, Codex, Cursor, Gemini CLI, Copilot, Antigravity, OpenCode, Windsurf, or another host
-- project shape and current risk
-- recommended harness items
-- priority: required now, recommended now, optional later, or skip
-- why each item matters for this project now
-- setup method after source review
-- verification and rollback notes
-
-Read [`docs/INSTALL_AGENT_HARNESS.md`](./docs/INSTALL_AGENT_HARNESS.md).
-
-## CLI Reference
-
-```bash
-npx unslop-preflight <command> [args]
-```
-
-| Command | What it does |
-|---------|--------------|
-| `autopilot` | Runs init, audit, safe repair, source scans, reports, and fix-list generation |
-| `preflight` | Alias for `autopilot` |
-| `init` | Creates missing `PRODUCT.md`, `DESIGN.md`, and `AGENTS.md` |
-| `audit` | Runs artifact gates and prints score, readiness, and category breakdown |
-| `scan` | Runs source scanners against frontend code |
-| `standards` | Lists or inspects available modular standards packs (profiles) |
-| `repair` | Adds safe missing sections and prepares agent-readable fixes |
-| `report` | Writes `.unslop/report.md` and `.unslop/report.json` |
-| `doctor` | Checks runtime and project assumptions |
-| `update` | Updates the CLI package |
-
-Common usage:
-
-```bash
-npx unslop-preflight init
-npx unslop-preflight audit --verbose
-npx unslop-preflight scan src --strict
-npx unslop-preflight repair --dry-run --report
-npx unslop-preflight autopilot
-```
-
-## Base gates and readiness-layer checks
-
-| # | Gate | What it enforces |
-|---|------|------------------|
-| 1 | Design System Baseline | Select a baseline before design work |
-| 2 | Intake Session | Capture product, user, job, localization, and risk context |
-| 3 | Standards Search | Check current WCAG, MDN, web.dev, and framework guidance when possible |
-| 4 | Unslop Install | Record or run relevant setup before UI work |
-| 5 | PRODUCT.md | Strategy artifact exists and passes contract |
-| 6 | DESIGN.md Contract | Required design sections and decisions exist |
-| 7 | Rules Engine | All artifact gates run consistently |
-| 8 | Accessibility and Directionality | Focus, contrast, ARIA, LTR by default, RTL when required |
-| 9 | UX-CRX Logic | Primary action, secondary action, recovery path, and decision point per screen |
-| 10 | Mobile and Responsive | Mobile is designed deliberately, not stacked from desktop |
-| 11 | Popup and Feedback System | No native `alert()` or `confirm()` for product flows |
-| 12 | Implementation Scan | Source blockers are detected before handoff |
-| 13 | Amplify Preservation | Strong existing decisions are kept during repair |
-| 14 | Semantic HTML and Interaction | No clickable divs, broken keyboard behavior, or missing landmarks |
-| 15 | Realistic Content | No lorem ipsum, fake people, or sample-only records |
-| 16 | Design Tokens | No hardcoded hex, magic numbers, or token drift |
-| 17 | Drift Control | Single source of truth and gates rerun per merge |
-| 18 | Viewport Governance | Scroll ownership, `dvh` fallback, and no root overflow hacks |
-| 19 | Modal and Dialog | Focus trap, scroll lock, safe sizing, inert background |
-| 20 | Dashboard Shell | Declared grid, scroll ownership, auth hierarchy, form quality |
-| 21 | Overlay Stack | Centralized overlays, toast rules, collision handling |
-| 22 | Sensitive Data Display | Mask tokens, secure creation flow, destructive confirmations |
-| 23 | Popup and Floating Positioning | Strategy A/B/C, flip/shift/size, portal mounting, z-index tokens |
-
-Readiness-layer checks add AGENTS.md resolution, taste calibration, placeholder blocking, root-cause governance, modal viewport gates, stacking reasoning, install-agent-harness readiness, and source slop detectors.
-
-## Generated artifacts
-
-After a healthy run, a project can contain:
-
-```text
-PRODUCT.md               product strategy and constraints
-DESIGN.md                design contract and implementation rules
-AGENTS.md                instructions for AI coding agents
-.unslop/report.md        human-readable audit report
-.unslop/report.json      machine-readable audit result
-.unslop/fix-list.md      agent-readable fix list when source issues exist
-```
-
-## Documentation map
-
-| File | Purpose |
-|------|---------|
-| [`SKILL.md`](./SKILL.md) | Full skill behavior for agent runtimes |
-| [`AGENTS.md`](./AGENTS.md) | Repository-level guidance for AI coding agents |
-| [`CHANGELOG.md`](./CHANGELOG.md) | Release history |
-| [`CONTRIBUTING.md`](./CONTRIBUTING.md) | Gate, scanner, template, and docs update workflow |
-| [`docs/NPM_PUBLISHING.md`](./docs/NPM_PUBLISHING.md) | GitHub Actions and npm Trusted Publishing setup |
-| [`docs/AI_AGENT_READINESS.md`](./docs/AI_AGENT_READINESS.md) | Readiness, taste, placeholder, and report behavior |
-| [`docs/SOURCE_SLOP_DETECTORS.md`](./docs/SOURCE_SLOP_DETECTORS.md) | Source-level detector behavior |
-| [`docs/STANDARDS_PACKS.md`](./docs/STANDARDS_PACKS.md) | Modular profile-based standards pack system |
-| [`docs/VIBE_CODING_STANDARDS_PACK.md`](./docs/VIBE_CODING_STANDARDS_PACK.md) | Enforced Vibe Coding rules and remediation |
-| [`docs/ROOT_CAUSE_MODE.md`](./docs/ROOT_CAUSE_MODE.md) | Diagnosis-first governance for bugs and layout failures |
-| [`docs/OVERLAY_LAYERING_GATES.md`](./docs/OVERLAY_LAYERING_GATES.md) | Modal viewport, stacking, z-index, and overlay reasoning |
-| [`docs/INSTALL_AGENT_HARNESS.md`](./docs/INSTALL_AGENT_HARNESS.md) | Project-specific skill and tool harness recommendations |
-| [`references/`](./references/) | Detailed rule references |
-| [`assets/`](./assets/) | Templates used to generate project artifacts |
-
-## Repository structure
+## 🗺️ Repository Map
 
 ```text
 unslop-preflight/
-├── .github/workflows/            npm publish automation
-├── bin/                          CLI entrypoint
+├── .github/workflows/          # CI/CD and automated secure OIDC npm publishing
+├── bin/                        # CLI command-line entry scripts
 ├── src/
-│   ├── commands/                 init, audit, repair, report, autopilot, scan
-│   ├── core/                     auditor, scanners, reporter, filesystem helpers
-│   ├── rules/                    product, design, taste, placeholder, root-cause, harness, overlay, UX rules
-│   └── scanners/                 source-level UI, layout, typography, overlay, responsive detectors
-├── scripts/                      standalone scanners and validators
-├── assets/                       generated artifact templates
-├── references/                   detailed rule references
-├── docs/                         documentation for system behavior
-├── tests/                        Node test runner coverage
-├── AGENTS.md                     agent guidance for this repository
-├── SKILL.md                      skill runtime instructions
-├── CHANGELOG.md                  release history
-└── package.json
+│   ├── commands/               # CLI handlers: autopilot, init, scan, audit, standards, repair
+│   ├── core/                   # Engines: sourceFixEngine, safetyValidator, verify, report, scannerUtils
+│   ├── rules/                  # Gate definitions: product, design, UX, accessibility, overlays, z-index
+│   └── scanners/               # Code analyzers: sourceSlop, layering, responsive, typography scanners
+├── scripts/                    # Supporting validators, evaluations, and viewport-fit scripts
+├── assets/                     # Generation templates for docs, reports, and prompts
+├── references/                 # Base JSON criteria matrices and standards pack criteria
+├── docs/                       # Comprehensive documentation books and manuals
+├── tests/                      # Extensive test runner coverage suite (73+ tests)
+├── AGENTS.md                   # Agent instructions for development on this repository
+├── SKILL.md                    # Skill behavior contract for agent execution engines
+└── package.json                # Project description and dependency manifest
 ```
 
-## Recommended workflow
-
-```bash
-npx unslop-preflight autopilot
-# read the readiness band and fix list
-# apply required fixes
-npx unslop-preflight scan src --strict
-npx unslop-preflight autopilot
-# proceed only when readiness is agent-ready or the team accepts the remaining risk
-```
-
-## Contributing
-
-Read [`CONTRIBUTING.md`](./CONTRIBUTING.md) before adding a gate, scanner, template, or documentation update. Any behavior change should update tests and docs in the same pull request.
+---
 
 <div align="center">
 
-**Built for AI-first frontend workflows that need judgment before code.**
+**Crafted with care to bring rigorous architectural discipline and gorgeous visual elegance to AI-driven frontend workflows.**
 
 [GitHub](https://github.com/imMamdouhaboammar/unslop-preflight) · [npm](https://www.npmjs.com/package/unslop-preflight) · [skills.sh](https://skills.sh/imMamdouhaboammar/unslop-preflight) · [Issues](https://github.com/imMamdouhaboammar/unslop-preflight/issues)
 
