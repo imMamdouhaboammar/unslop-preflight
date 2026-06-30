@@ -8,7 +8,7 @@
 
 [![Socket Badge](https://badge.socket.dev/npm/package/unslop-preflight/1.10.0)](https://badge.socket.dev/npm/package/unslop-preflight/1.10.0)
 [![npm](https://img.shields.io/npm/v/unslop-preflight?style=flat-square&color=5B21B6&label=npm)](https://www.npmjs.com/package/unslop-preflight)
-[![skills.sh](https://img.shields.io/badge/skills.sh-install-5B21B6?style=flat-square)](https://skills.sh/imMamdouhaboammar/unslop-preflight)
+[![skills.sh](https://skills.sh/b/imMamdouhaboammar/unslop-preflight)](https://skills.sh/imMamdouhaboammar/unslop-preflight)
 [![Gates](https://img.shields.io/badge/gates-23%2B%20readiness-F59E0B?style=flat-square)](./SKILL.md)
 [![Version](https://img.shields.io/badge/docs-1.10.0-3B82F6?style=flat-square)](./CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/license-MIT-22C55E?style=flat-square)](./LICENSE)
