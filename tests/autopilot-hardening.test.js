@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { runAutopilotPipeline } from '../src/core/autopilotPlan.js';
@@ -122,3 +122,30 @@ test('strict mode treats scanner failures as blocking evidence', () => {
   assert.equal(scannerIssue.severity, 'error');
   assert.equal(result.exitCode, 1);
 });
+
+test('autopilot correctly wires and executes standards flags (vibe-coding)', () => {
+  const cwd = tempProject();
+  writeBaselineDocs(cwd);
+
+  const srcDir = join(cwd, 'src');
+  mkdirSync(srcDir, { recursive: true });
+  writeFileSync(
+    join(srcDir, 'Component.jsx'),
+    `
+    // @ts-ignore
+    const value = 'vibe';
+    `,
+    'utf8'
+  );
+
+  // Without the standards flag, the no-ts-ignore issue shouldn't be matched
+  const resultWithoutStandards = runAutopilotPipeline(cwd, { maxPasses: '1' });
+  const hasTsIgnoreWithout = resultWithoutStandards.issues.some((issue) => issue.id === 'no-ts-ignore');
+  assert.equal(hasTsIgnoreWithout, false, 'Should not detect no-ts-ignore without vibe-coding standards enabled');
+
+  // With the standards flag enabled, the no-ts-ignore issue should be detected
+  const resultWithStandards = runAutopilotPipeline(cwd, { standards: 'vibe-coding', maxPasses: '1' });
+  const hasTsIgnoreWith = resultWithStandards.issues.some((issue) => issue.id === 'no-ts-ignore');
+  assert.equal(hasTsIgnoreWith, true, 'Should detect no-ts-ignore when vibe-coding standards is enabled');
+});
+

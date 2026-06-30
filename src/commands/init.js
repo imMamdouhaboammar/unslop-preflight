@@ -19,7 +19,7 @@ export async function init({ cwd, flags }) {
     generated,
     changed: [],
     repairs: generated.map((file) => ({ file, action: 'created template' })),
-    nextCommand: 'unslop audit'
+    nextCommand: 'npx unslop-preflight audit'
   };
 
   printResult(result, flags);
