@@ -78,6 +78,19 @@ function uniqueFindingsFor(findings) {
   return uniqueFindings;
 }
 
+function collectFiles(targetDir, filesSeen, scannerResults, cwd) {
+  const startedAt = Date.now();
+
+  try {
+    for (const file of walk(targetDir)) filesSeen.add(file);
+  } catch (error) {
+    addResult(scannerResults, 'file-walk', targetDir, startedAt, {
+      status: 'failed',
+      error: messageFor(error, cwd)
+    });
+  }
+}
+
 function buildScanStats({ cwd, dirsToScan, filesSeen, findings, scannerResults, startedAt }) {
   const failures = scannerResults.filter((result) => result.status === 'failed');
   const skipped = scannerResults.filter((result) => result.status === 'skipped');
@@ -126,11 +139,7 @@ export function runSourceScanners(cwd, fingerprint) {
     const targetDir = resolveTargetDir(cwd, dir);
 
     if (existsSync(targetDir)) {
-      try {
-        for (const file of walk(targetDir)) filesSeen.add(file);
-      } catch {
-        // The scanner run below records the structured failure.
-      }
+      collectFiles(targetDir, filesSeen, scannerResults, cwd);
     }
 
     for (const scanner of scanners) {
