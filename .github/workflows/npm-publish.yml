@@ -3,26 +3,8 @@ name: Publish npm package
 on:
   workflow_dispatch:
   push:
-    branches:
-      - main
     tags:
       - 'v*'
-    paths:
-      - 'package.json'
-      - 'package-lock.json'
-      - 'bin/**'
-      - 'src/**'
-      - 'scripts/**'
-      - 'assets/**'
-      - 'references/**'
-      - 'docs/**'
-      - 'README.md'
-      - 'CHANGELOG.md'
-      - 'CONTRIBUTING.md'
-      - 'AGENTS.md'
-      - 'SKILL.md'
-      - 'skills.sh.json'
-      - '.github/workflows/npm-publish.yml'
 
 permissions:
   contents: read

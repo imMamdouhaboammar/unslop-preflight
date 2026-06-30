@@ -36,6 +36,9 @@ jobs:
       - name: Run evals
         run: npm run evals
 
+      - name: Run design gates
+        run: npm run gates
+
   lint-skill:
     name: Validate skill metadata
     runs-on: ubuntu-latest
