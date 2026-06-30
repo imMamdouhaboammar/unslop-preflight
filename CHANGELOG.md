@@ -2,7 +2,7 @@
 
 ## [Unreleased]
 
-## [Next] - Real Autopilot Source Repair
+## v1.12.0 - Real Autopilot Source Repair (2026-06-30)
 
 ### Added
 - **Safe Source Fix Engine**: Created a secure, idempotent source fixer (`src/core/sourceFixEngine.js`) to apply precise, deterministic, local, and reversible source-code repairs.
