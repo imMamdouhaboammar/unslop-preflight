@@ -30,6 +30,12 @@ function excerptFor(rule, fallback) {
   return (rule.message || fallback || rule.name || 'Review required').trim().slice(0, 220);
 }
 
+function shouldSkipRuleForFile(rule, file) {
+  if (!rule.excludeFile) return false;
+  rule.excludeFile.lastIndex = 0;
+  return rule.excludeFile.test(file);
+}
+
 export function scanWithRules(targetDir, rules) {
   const files = walk(targetDir);
   const findings = [];
@@ -39,6 +45,7 @@ export function scanWithRules(targetDir, rules) {
     const lines = content.split(/\r?\n/);
 
     for (const rule of rules) {
+      if (shouldSkipRuleForFile(rule, file)) continue;
       if (!rule.pattern || rule.scope !== 'file') continue;
       rule.pattern.lastIndex = 0;
       if (rule.pattern.test(content)) {
@@ -55,6 +62,7 @@ export function scanWithRules(targetDir, rules) {
     for (let index = 0; index < lines.length; index++) {
       const line = lines[index];
       for (const rule of rules) {
+        if (shouldSkipRuleForFile(rule, file)) continue;
         if (!rule.pattern || rule.scope === 'file') continue;
         rule.pattern.lastIndex = 0;
         if (rule.pattern.test(line)) {
@@ -70,6 +78,7 @@ export function scanWithRules(targetDir, rules) {
     }
 
     for (const rule of rules) {
+      if (shouldSkipRuleForFile(rule, file)) continue;
       if (rule.heuristic) {
         rule.heuristic(content, file, findings);
       }
