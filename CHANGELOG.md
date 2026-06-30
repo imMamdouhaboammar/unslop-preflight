@@ -1,5 +1,26 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+- **Security & Secret Hygiene Guidelines**: Added a dedicated `Secret and CI Hygiene` section to `SECURITY.md` detailing security policies, safe secret handling in GitHub Actions, instant token rotation instructions, and local `gitleaks` pre-scanning suggestions.
+
+### Changed
+- **Hardened Publish Workflow Triggers**: Restructured `.github/workflows/npm-publish.yml` to prevent automatic npm publishing on pushes to the `main` branch. Runs are now restricted to manual `workflow_dispatch` and push triggers on version tags (`v*`).
+- **Enhanced Package Hygiene**: Tightened package exclusions by ignoring `marketing/` and maintainer-only documentation (`docs/PUBLISHING.md`) from packaged npm tarballs via root `.npmignore` and `docs/.npmignore` files.
+- **CLI Commands Canonization**: Updated CLI instructions in `SECURITY.md` and other documentation files from deprecated `npx unslop` commands to use the standard `npx unslop-preflight` namespace.
+
+## v1.11.2 - Autopilot Standards Integration & Assured CLI Commands (2026-06-30)
+
+### Added
+- **Seamless Autopilot Standards-Wiring**: Restored full support for modular standards packs (like `--standards=vibe-coding`) running inside the `autopilot` command loop.
+- **Robust Test Coverage**: Added comprehensive integration testing verifying proper standards-wiring and rule executions through the entire multi-pass autopilot pipeline.
+- **Benchmark Visibility & Groundedness**: Explicitly documented the internal Unslop Torture Bench baseline results (`3.00/5.0 - FAIL`) and refined project documentation to clearly frame Unslop as a preflight assistant, rather than a visual/testing replacement.
+
+### Changed
+- **CLI Command Canonization**: Updated suggested commands in reports, doctor messages, checklists, and templates from bare/shorthand `unslop` to use the primary `npx unslop-preflight <command>` namespace, preventing confusion when the package is not installed globally or locally as an alias.
+- **CI Safety & Self-Scanning Bypass**: Updated the design-gates validation runner to safely bypass self-scanning on the `unslop-preflight` development repository itself, preventing circular regex patterns or template placeholders from causing false-positives in CI builds.
+
 ## v1.11.1 - Autopilot Hardening & Safety Controls (2026-06-30)
 
 ### Added
