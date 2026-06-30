@@ -12,6 +12,10 @@ export async function run(argv, meta = {}) {
   if (parsed.flags.version) return console.log(meta.version || '0.0.0');
   if (parsed.flags.help || parsed.command === 'help' || !parsed.command) return printHelp();
   const command = parsed.command;
+  if (command === 'scan') {
+    const mod = await import('./commands/scan.js');
+    return mod.scan(parsed);
+  }
   if (!commands[command]) return printHelp();
   const result = await commands[command](parsed);
   return result;
