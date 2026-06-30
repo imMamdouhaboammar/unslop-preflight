@@ -19,7 +19,7 @@ The package name is `unslop-preflight`.
 [![Release](https://img.shields.io/github/v/release/imMamdouhaboammar/unslop-preflight?style=flat-square&color=5B21B6&logo=github&logoColor=white&label=release)](https://github.com/imMamdouhaboammar/unslop-preflight/releases)
 [![skills.sh](https://img.shields.io/badge/skills.sh-published-0EA5E9?style=flat-square&logo=skillsdotsh&logoColor=white)](https://skills.sh/imMamdouhaboammar/unslop-preflight)
 [![Gates](https://img.shields.io/badge/gates-23%2B%20readiness-F59E0B?style=flat-square)](./SKILL.md)
-[![Docs v1.10.1](https://img.shields.io/badge/docs-1.10.1-3B82F6?style=flat-square)](./CHANGELOG.md)
+[![Docs v1.11.1](https://img.shields.io/badge/docs-1.11.1-3B82F6?style=flat-square)](./CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/license-MIT-22C55E?style=flat-square)](./LICENSE)
 
 ```bash
@@ -100,9 +100,9 @@ Install as a skill:
 npx skills add imMamdouhaboammar/unslop-preflight
 ```
 
-## What is current in v1.10.1
+## What is current in v1.11.1
 
-v1.10.1 syncs the GitHub repository and npm package metadata, adds automated npm publishing, and keeps the v1.10 source-level detector layer.
+v1.11.1 delivers a robust Autopilot Hardening loop (`--max-passes=N`), pass history diagnostics, and native scanner failure metadata collection, built on top of the v1.11.0 Modular Standards Packs (e.g. Vibe Coding Profile) and the v1.10.x source-level linter.
 
 New in v1.10.x:
 

@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased - Autopilot Hardening
+## v1.11.1 - Autopilot Hardening & Safety Controls (2026-06-30)
 
 ### Added
 - **Real Max-Passes Loop**: Robust `--max-passes=N` pass refinement loop in autopilot to resolve issues sequentially.

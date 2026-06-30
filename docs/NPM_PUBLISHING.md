@@ -8,7 +8,7 @@ This repository is configured to publish `unslop-preflight` to npm from GitHub A
 Package: unslop-preflight
 Repository: imMamdouhaboammar/unslop-preflight
 Workflow: .github/workflows/npm-publish.yml
-Current package version: 1.10.1
+Current package version: 1.11.1
 ```
 
 ## Recommended setup: npm Trusted Publishing
@@ -66,8 +66,8 @@ Trusted Publishing is still preferred because it avoids long-lived publish token
 6. Let the workflow run, or create a matching tag:
 
 ```bash
-git tag v1.10.1
-git push origin v1.10.1
+git tag v1.11.1
+git push origin v1.11.1
 ```
 
 ## Mismatch prevention
