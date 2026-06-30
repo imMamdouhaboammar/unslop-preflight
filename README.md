@@ -19,16 +19,16 @@ The package name is `unslop-preflight`.
 [![Release](https://img.shields.io/github/v/release/imMamdouhaboammar/unslop-preflight?style=flat-square&color=5B21B6&logo=github&logoColor=white&label=release)](https://github.com/imMamdouhaboammar/unslop-preflight/releases)
 [![skills.sh](https://img.shields.io/badge/skills.sh-published-0EA5E9?style=flat-square&logo=skillsdotsh&logoColor=white)](https://skills.sh/imMamdouhaboammar/unslop-preflight)
 [![Gates](https://img.shields.io/badge/gates-23%2B%20readiness-F59E0B?style=flat-square)](./SKILL.md)
-[![Docs v1.11.1](https://img.shields.io/badge/docs-1.11.1-3B82F6?style=flat-square)](./CHANGELOG.md)
+[![Docs v1.11.2](https://img.shields.io/badge/docs-1.11.2-3B82F6?style=flat-square)](./CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/license-MIT-22C55E?style=flat-square)](./LICENSE)
 
 ```bash
-npx unslop autopilot
+npx unslop-preflight autopilot
 ```
 
 One command creates or repairs `PRODUCT.md`, `DESIGN.md`, and `AGENTS.md`, runs readiness gates, scans frontend source, writes reports, and gives the coding agent a fix list before it starts guessing.
 
-[Quick Start](#quick-start) · [What it catches](#what-it-catches) · [Source detectors](#source-slop-detectors) · [Readiness](#readiness-bands) · [CLI](#cli-reference) · [Docs](#documentation-map)
+[Quick Start](#quick-start) · [Cleanup Prompt](#copypaste-cleanup-prompt-for-vibe-coders) · [What it flags](#what-it-flags) · [Source detectors](#source-slop-detectors) · [Readiness](#readiness-bands) · [CLI](#cli-reference) · [Docs](#documentation-map)
 
 </div>
 
@@ -44,7 +44,21 @@ That is the work Unslop is built to stop.
 
 Unslop is a preflight layer for AI-assisted UI work. It checks the brief, design contract, agent handoff, and source code before a coding agent continues. It does not try to slow the agent down. It gives the agent sharper boundaries.
 
-## What it catches
+## Benchmark Results & Limitations
+
+> [!WARNING]
+> **Torture Bench Status: ❌ FAIL (Current Score: 3.00 / 5.0)**
+>
+> The latest execution of the internal **Unslop Torture Bench** resulted in an average score of **3.00 / 5.0**, which is below our strict quality threshold of **4.0**.
+>
+> This benchmark failure highlights key gaps in dynamic overlay edge-case detection and complex responsive layout scanning. Active efforts are underway to harden rule sets and tune scanners, but users should maintain realistic expectations.
+
+Unslop is a **preflight assistant and guardrail**, not a visual or testing replacement. It cannot and does not replace:
+- **E2E Testing / Integration Tests:** Unslop checks static conditions and source patterns, but does not execute or verify runtime app behavior.
+- **Manual Accessibility Reviews:** Code pattern scanning flags missing labels and bad elements, but only manual screen-reader and keyboard testing guarantees full compliance.
+- **Browser QA & Visual Audits:** Unslop does not render the UI; visual bugs, layout overlaps, and browser compatibility issues must be validated using live browsers.
+
+## What it flags
 
 | Area | Examples |
 |------|----------|
@@ -63,35 +77,35 @@ Unslop is a preflight layer for AI-assisted UI work. It checks the brief, design
 Run the full loop with npx:
 
 ```bash
-npx unslop autopilot
+npx unslop-preflight autopilot
 ```
 
 Install in a project:
 
 ```bash
 npm install --save-dev unslop-preflight
-npx unslop autopilot
+npx unslop-preflight autopilot
 ```
 
 Initialize only the docs:
 
 ```bash
-npx unslop init
-npx unslop audit
-npx unslop repair --dry-run --report
+npx unslop-preflight init
+npx unslop-preflight audit
+npx unslop-preflight repair --dry-run --report
 ```
 
 Scan source code directly:
 
 ```bash
-npx unslop scan src
-npx unslop scan src --strict
+npx unslop-preflight scan src
+npx unslop-preflight scan src --strict
 ```
 
 Skip source scanning when you only want spec checks:
 
 ```bash
-npx unslop autopilot --no-source-scan
+npx unslop-preflight autopilot --no-source-scan
 ```
 
 Install as a skill:
@@ -100,9 +114,109 @@ Install as a skill:
 npx skills add imMamdouhaboammar/unslop-preflight
 ```
 
-## What is current in v1.11.1
+## Copy/Paste Cleanup Prompt for Vibe Coders
 
-v1.11.1 delivers a robust Autopilot Hardening loop (`--max-passes=N`), pass history diagnostics, and native scanner failure metadata collection, built on top of the v1.11.0 Modular Standards Packs (e.g. Vibe Coding Profile) and the v1.10.x source-level linter.
+If you are a non-technical builder using AI coding agents like Claude Code, Cursor, Codex, Antigravity, or any other agent, you can easily delegate the cleanup work to your assistant. 
+
+Copy the prompt block below, paste it into your coding agent, and it will automatically inspect your project structure, install and run **Unslop Preflight**, generate detailed findings in `.unslop/report.md`, `.unslop/report.json`, and `.unslop/fix-list.md`, apply safe fixes, and walk you through any remaining manual cleanups.
+
+> [!TIP]
+> **Not technical? Copy this prompt into your coding agent and let it clean up the AI slop for you.**
+
+```txt
+You are my cleanup agent.
+
+I want you to inspect this project, install and run Unslop Preflight, then fix the issues it reports.
+
+Follow these steps carefully:
+
+1. First, inspect the project structure.
+   Look for package.json, README, src/, app/, components/, pages/, styles, and any existing tests.
+
+2. Check which package manager this project uses.
+   If there is pnpm-lock.yaml, use pnpm.
+   If there is package-lock.json, use npm.
+   If there is yarn.lock, use yarn.
+   Do not switch package managers.
+
+3. Run Unslop Preflight with the correct direct command:
+
+   npx unslop-preflight autopilot --report --strict
+
+4. After it runs, open and read:
+
+   .unslop/report.md
+   .unslop/report.json
+   .unslop/fix-list.md
+
+5. Fix the project based on the fix list.
+
+   Important:
+   - Apply safe documentation/spec fixes first.
+   - Fix source code issues carefully.
+   - Do not rewrite the whole app.
+   - Do not delete files unless clearly necessary.
+   - Do not change product behavior unless the report clearly requires it.
+   - Do not touch secrets, .env files, tokens, or credentials.
+   - Do not install new dependencies unless you explain why they are needed.
+
+6. Focus especially on:
+   - generic AI-looking UI
+   - broken responsive behavior
+   - modal and overlay issues
+   - missing loading, empty, and error states
+   - accessibility problems
+   - weak focus states
+   - unsafe links
+   - hardcoded sample data
+   - messy component structure
+   - unclear PRODUCT.md, DESIGN.md, or AGENTS.md handoff
+
+7. After fixing, run Unslop again:
+
+   npx unslop-preflight autopilot --report --strict
+
+8. Repeat until:
+   - the report has no critical blockers
+   - the fix-list is small and clear
+   - the app still builds
+   - the changes are easy to review
+
+9. Run the project’s normal checks.
+   Use the scripts available in package.json, such as:
+
+   npm run build
+   npm run test
+   npm run lint
+   npm run typecheck
+
+   Use the project’s actual package manager.
+
+10. At the end, give me a clear summary:
+
+   - What Unslop found
+   - What you fixed
+   - What files you changed
+   - What commands you ran
+   - What checks passed
+   - What still needs human review
+
+Do not claim everything is fixed unless the report and checks prove it.
+```
+
+### What Unslop does (and doesn't do)
+
+* **Preflight Guard, Not a Magic Fixer:** Unslop acts as a preflight guard and fix-list generator. It helps your agent see problems before shipping, but it does not automatically rewrite your source files or replace real manual review.
+* **Checks, Not Replacements:** It does not replace browser QA, real tests, accessibility tooling, or human review.
+* **Sharper Handoffs:** It is designed to give your coding agent a sharper checklist, not blind permission to rewrite the project.
+
+Copy it. Paste it into your coding agent. Let the agent run the audit, read the report, apply the fix list, and come back with a clean summary.
+
+## What is current in v1.11.2
+
+v1.11.2 brings complete, robust CLI command standardizations (`npx unslop-preflight <command>`), seamless autopilot standards-wiring integration (`--standards=vibe-coding`), self-scanning test safety, and softened, benchmark-grounded assistance framing.
+
+v1.11.1 delivered a robust Autopilot Hardening loop (`--max-passes=N`), pass history diagnostics, and native scanner failure metadata collection, built on top of the v1.11.0 Modular Standards Packs (e.g. Vibe Coding Profile) and the v1.10.x source-level linter.
 
 New in v1.10.x:
 
@@ -188,7 +302,7 @@ npx unslop-preflight autopilot --strict
 Run source scanning directly:
 
 ```bash
-npx unslop scan src
+npx unslop-preflight scan src
 ```
 
 Current detector coverage:
@@ -220,14 +334,14 @@ The first integrated pack is the **Vibe Coding Standards Pack** (`vibe-coding`),
 
 To list and inspect available standards packs:
 ```bash
-npx unslop standards list
-npx unslop standards inspect vibe-coding
+npx unslop-preflight standards list
+npx unslop-preflight standards inspect vibe-coding
 ```
 
 To run audits or scans enforcing a standards pack:
 ```bash
-npx unslop scan src --standards=vibe-coding
-npx unslop autopilot --standards=vibe-coding
+npx unslop-preflight scan src --standards=vibe-coding
+npx unslop-preflight autopilot --standards=vibe-coding
 ```
 
 Read [`docs/STANDARDS_PACKS.md`](./docs/STANDARDS_PACKS.md) and [`docs/VIBE_CODING_STANDARDS_PACK.md`](./docs/VIBE_CODING_STANDARDS_PACK.md) for more details.
@@ -326,7 +440,7 @@ Read [`docs/INSTALL_AGENT_HARNESS.md`](./docs/INSTALL_AGENT_HARNESS.md).
 ## CLI Reference
 
 ```bash
-npx unslop <command> [args]
+npx unslop-preflight <command> [args]
 ```
 
 | Command | What it does |
@@ -345,11 +459,11 @@ npx unslop <command> [args]
 Common usage:
 
 ```bash
-npx unslop init
-npx unslop audit --verbose
-npx unslop scan src --strict
-npx unslop repair --dry-run --report
-npx unslop autopilot
+npx unslop-preflight init
+npx unslop-preflight audit --verbose
+npx unslop-preflight scan src --strict
+npx unslop-preflight repair --dry-run --report
+npx unslop-preflight autopilot
 ```
 
 ## Base gates and readiness-layer checks
@@ -439,11 +553,11 @@ unslop-preflight/
 ## Recommended workflow
 
 ```bash
-npx unslop autopilot
+npx unslop-preflight autopilot
 # read the readiness band and fix list
 # apply required fixes
-npx unslop scan src --strict
-npx unslop autopilot
+npx unslop-preflight scan src --strict
+npx unslop-preflight autopilot
 # proceed only when readiness is agent-ready or the team accepts the remaining risk
 ```
 

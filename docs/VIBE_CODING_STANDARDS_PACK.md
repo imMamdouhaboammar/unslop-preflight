@@ -48,8 +48,8 @@ To enforce these rules on your project, simply run the audit or scan commands wi
 
 ```bash
 # Run a quick source-level scan
-npx unslop scan --standards=vibe-coding
+npx unslop-preflight scan --standards=vibe-coding
 
 # Run a full autopilot preflight audit
-npx unslop autopilot --standards=vibe-coding
+npx unslop-preflight autopilot --standards=vibe-coding
 ```

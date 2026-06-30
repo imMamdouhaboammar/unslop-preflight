@@ -303,10 +303,10 @@ This keeps the repair loop safe.
 ## Recommended user flow
 
 ```bash
-npx unslop autopilot
+npx unslop-preflight autopilot
 # read score, readiness, categories, and fix list
 # repair PRODUCT.md, DESIGN.md, AGENTS.md, or source as needed
-npx unslop autopilot
+npx unslop-preflight autopilot
 # proceed only when readiness is agent-ready or intentionally accepted by the team
 ```
 

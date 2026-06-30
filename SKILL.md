@@ -223,12 +223,12 @@ The primary direct command is `npx unslop-preflight autopilot`. Once installed, 
 When the Unslop CLI is available, use these commands:
 
 ```bash
-npx unslop init
-npx unslop standards list
-npx unslop standards inspect vibe-coding
-npx unslop audit --verbose --standards=vibe-coding
-npx unslop scan src --strict --standards=vibe-coding
-npx unslop autopilot --standards=vibe-coding
+npx unslop-preflight init
+npx unslop-preflight standards list
+npx unslop-preflight standards inspect vibe-coding
+npx unslop-preflight audit --verbose --standards=vibe-coding
+npx unslop-preflight scan src --strict --standards=vibe-coding
+npx unslop-preflight autopilot --standards=vibe-coding
 ```
 
 For repository tests:

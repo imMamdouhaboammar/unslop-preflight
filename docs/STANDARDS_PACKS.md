@@ -33,21 +33,21 @@ Power users can leverage Standards Packs using the following CLI capabilities:
 ### 1. Registry Commands
 - **List Available Packs**:
   ```bash
-  npx unslop standards list
+  npx unslop-preflight standards list
   ```
 - **Inspect Specific Pack**:
   ```bash
-  npx unslop standards inspect [pack-id]
+  npx unslop-preflight standards inspect [pack-id]
   ```
 
 ### 2. Scanning & Auditing Flags
 You can run any scanner or preflight audit enforcing a standards profile with the `--standards` option:
 ```bash
 # Scan a directory against custom standards pack rules
-npx unslop scan src --standards=vibe-coding
+npx unslop-preflight scan src --standards=vibe-coding
 
 # Run full preflight autopilot and compile standard-aware reports
-npx unslop autopilot --standards=vibe-coding
+npx unslop-preflight autopilot --standards=vibe-coding
 ```
 
 If an invalid or unrecognized standards pack ID is provided to `--standards`, the CLI will halt execution immediately with an exit code of `1` to prevent un-governed processes from running.
