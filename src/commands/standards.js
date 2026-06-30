@@ -48,6 +48,15 @@ export async function standards({ cwd, args, flags }) {
       console.log(`    ${color ? bold : ''}Categories:${color ? reset : ''} ${pack.categories?.join(', ') || 'N/A'}`);
       console.log('');
     }
+
+    if (packs.warnings && packs.warnings.length > 0) {
+      console.warn(`${color ? yellow + bold : ''}Warnings:${color ? reset : ''}`);
+      for (const warn of packs.warnings) {
+        console.warn(`  - ${color ? yellow : ''}${warn}${color ? reset : ''}`);
+      }
+      console.warn('');
+    }
+
     return packs;
   }
 

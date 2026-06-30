@@ -251,6 +251,9 @@ export function runAutopilotPipeline(cwd, flags = {}) {
     applied: false,
     reason: codeFixesRequested(flags) ? 'not-implemented' : 'not-requested'
   };
+  if (flags.standards) {
+    finalResult.selectedStandards = flags.standards;
+  }
   finalResult.reportFiles = writeReports(cwd, finalResult, flags);
   finalResult.exitCode = exitCodeFor(finalResult);
   finalResult.nextCommand = finalResult.summary.errors > 0

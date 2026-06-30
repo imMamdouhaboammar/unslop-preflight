@@ -2,7 +2,19 @@
 
 ## [Unreleased]
 
+## v1.11.3 - Maintainability & CLI Truth Pass (2026-06-30)
+
 ### Added
+- **Audit Standards Integration**: Fully implemented and wired `--standards=vibe-coding` support inside the `audit` command.
+- **Robust Integration Testing**: Added comprehensive integration tests covering CLI help output, standards commands, malformed pack manifests, and autopilot/audit standards integration.
+
+### Changed
+- **CLI Help Canonization**: Updated CLI help output to list `scan`, `standards list`, and `standards inspect` commands with truthful direct `npx` examples.
+- **Standards Pack Warnings**: Surfaced corrupt or malformed standards pack manifests as warnings instead of silently hiding them.
+- **Maintainability & Formatting**: Reformatted compressed files for better code readability.
+- **Softened Documentation Overclaims**: Replaced overly strong language in `README.md` to truthfully position Unslop as a tool that flags and gates issues rather than stopping them.
+
+### Added (earlier unreleased)
 - **Security & Secret Hygiene Guidelines**: Added a dedicated `Secret and CI Hygiene` section to `SECURITY.md` detailing security policies, safe secret handling in GitHub Actions, instant token rotation instructions, and local `gitleaks` pre-scanning suggestions.
 
 ### Changed

@@ -210,7 +210,7 @@ Do not bulk-install every skill or tool.
 
 ## Autopilot Hardening and Execution
 
-The primary direct command is `npx unslop-preflight autopilot`. Once installed, `unslop` is available as a shorter binary alias (e.g., `npx unslop autopilot`).
+The primary direct command is `npx unslop-preflight autopilot`. Once installed, `unslop` is available as a shorter binary alias (e.g., `unslop autopilot`).
 
 ### Key hardiness features:
 - **Max Passes (`--max-passes=N`)**: Specifies the maximum refinement passes (1-10, default 1) to run, allowing progressive safe repairs.

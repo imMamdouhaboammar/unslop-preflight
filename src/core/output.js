@@ -49,10 +49,23 @@ ${c.bold('Commands:')}
   ${c.green('autopilot')}    Run init, audit, safe repair, and final report
   ${c.green('init')}         Create missing PRODUCT.md, DESIGN.md, and AGENTS.md
   ${c.green('audit')}        Run quality gates against artifact docs
+  ${c.green('scan')}         Scan frontend source files for common slop patterns
   ${c.green('repair')}       Append safe missing sections and checklists
   ${c.green('report')}       Write .unslop/report.md and report.json
   ${c.green('doctor')}       Check runtime and project assumptions
+  ${c.green('standards')}    Manage opt-in engineering standards packs
   ${c.green('update')}       Update the CLI to the latest version
+
+${c.bold('Standards Commands:')}
+  standards list                List all available standards packs
+  standards inspect <pack-id>   Inspect details of a specific pack
+
+${c.bold('Examples:')}
+  Scan a directory:
+    npx unslop-preflight scan src
+
+  Run autopilot with standard controls:
+    npx unslop-preflight autopilot --report --strict
 
 ${c.bold('Flags:')}
   --dry-run      Preview writes without changing files

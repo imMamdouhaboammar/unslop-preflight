@@ -40,7 +40,7 @@ It also made weak frontend decisions easier to repeat.
 
 The oversized hero headline. The glass card stack. The purple gradient that has no reason to exist. The modal that works on desktop and breaks on mobile. The dropdown clipped by an `overflow-hidden` parent. The `z-9999` patch that hides the real stacking problem. The form that looks finished until keyboard users try to move through it.
 
-That is the work Unslop is built to stop.
+That is the work Unslop is built to flag before it ships.
 
 Unslop is a preflight layer for AI-assisted UI work. It checks the brief, design contract, agent handoff, and source code before a coding agent continues. It does not try to slow the agent down. It gives the agent sharper boundaries.
 
@@ -264,7 +264,7 @@ npx unslop-preflight autopilot
 The package's primary command is `npx unslop-preflight autopilot`. After installing the package locally or globally, the shorter `unslop` bin alias is also fully available:
 
 ```bash
-npx unslop autopilot
+unslop autopilot
 ```
 
 Autopilot does the full preflight pass:

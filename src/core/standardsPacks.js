@@ -14,6 +14,7 @@ const PACKS_DIR = join(PROJECT_ROOT, 'references', 'standards-packs');
 export function listStandardsPacks() {
   if (!existsSync(PACKS_DIR)) return [];
   const packs = [];
+  const warnings = [];
   try {
     for (const entry of readdirSync(PACKS_DIR, { withFileTypes: true })) {
       if (entry.isDirectory()) {
@@ -23,9 +24,11 @@ export function listStandardsPacks() {
             const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
             if (manifest && manifest.id && manifest.name) {
               packs.push(manifest);
+            } else {
+              warnings.push(`Standards pack "${entry.name}" manifest is missing required properties (id, name).`);
             }
           } catch (e) {
-            // Silently ignore corrupted pack manifests to prevent CLI crash
+            warnings.push(`Failed to parse manifest for standards pack "${entry.name}": ${e.message}`);
           }
         }
       }
@@ -33,6 +36,23 @@ export function listStandardsPacks() {
   } catch (e) {
     // Return empty list if reading references/standards-packs fails
   }
+
+  packs.warnings = warnings;
+  Object.defineProperty(packs, 'toJSON', {
+    value: function () {
+      if (this.warnings && this.warnings.length > 0) {
+        return {
+          packs: [...this],
+          warnings: this.warnings
+        };
+      }
+      return [...this];
+    },
+    configurable: true,
+    enumerable: false,
+    writable: true
+  });
+
   return packs;
 }
 
