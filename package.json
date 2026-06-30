@@ -1,6 +1,6 @@
 {
   "name": "unslop-preflight",
-  "version": "1.10.0",
+  "version": "1.10.1",
   "description": "Autopilot design quality gates and source-level UI slop detectors for AI-assisted frontend work before implementation handoff.",
   "type": "module",
   "exports": {
@@ -16,6 +16,7 @@
     "autopilot": "node bin/cli.js autopilot",
     "repair": "node bin/cli.js repair",
     "scan": "node bin/cli.js scan",
+    "pack:dry-run": "npm pack --dry-run",
     "evals": "node scripts/run-evals.mjs",
     "validate:design": "node scripts/validate-design-md.mjs DESIGN.md",
     "score:design": "node scripts/score-design-md.mjs DESIGN.md PRODUCT.md",
