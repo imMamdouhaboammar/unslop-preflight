@@ -1,0 +1,135 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag. Leave empty to use v<package.json version>.'
+        required: false
+        type: string
+      publish_npm:
+        description: 'Publish to npm if this version is not already published.'
+        required: false
+        default: true
+        type: boolean
+      prerelease:
+        description: 'Mark GitHub release as prerelease.'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+  id-token: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Create GitHub release and publish package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+          package-manager-cache: false
+
+      - name: Resolve release metadata
+        id: meta
+        shell: bash
+        run: |
+          PACKAGE_NAME=$(node -p "JSON.parse(require('fs').readFileSync('package.json', 'utf8')).name")
+          PACKAGE_VERSION=$(node -p "JSON.parse(require('fs').readFileSync('package.json', 'utf8')).version")
+          INPUT_TAG="${{ inputs.tag }}"
+          if [ -z "$INPUT_TAG" ]; then
+            TAG="v$PACKAGE_VERSION"
+          else
+            TAG="$INPUT_TAG"
+          fi
+          TAG_VERSION="${TAG#v}"
+          if [ "$TAG_VERSION" != "$PACKAGE_VERSION" ]; then
+            echo "Release tag $TAG does not match package.json version $PACKAGE_VERSION"
+            exit 1
+          fi
+          echo "package_name=$PACKAGE_NAME" >> "$GITHUB_OUTPUT"
+          echo "package_version=$PACKAGE_VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "release_name=$PACKAGE_NAME $TAG" >> "$GITHUB_OUTPUT"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: Verify package can be packed
+        run: npm pack --dry-run
+
+      - name: Create tag if missing
+        shell: bash
+        run: |
+          TAG="${{ steps.meta.outputs.tag }}"
+          if git rev-parse "$TAG" >/dev/null 2>&1; then
+            echo "$TAG already exists locally."
+          elif git ls-remote --tags origin "refs/tags/$TAG" | grep -q "$TAG"; then
+            echo "$TAG already exists on origin. Fetching it."
+            git fetch origin "refs/tags/$TAG:refs/tags/$TAG"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git tag "$TAG"
+            git push origin "$TAG"
+          fi
+
+      - name: Check npm version status
+        id: npm_status
+        shell: bash
+        run: |
+          PACKAGE_NAME="${{ steps.meta.outputs.package_name }}"
+          PACKAGE_VERSION="${{ steps.meta.outputs.package_version }}"
+          if npm view "$PACKAGE_NAME@$PACKAGE_VERSION" version >/dev/null 2>&1; then
+            echo "published=true" >> "$GITHUB_OUTPUT"
+            echo "$PACKAGE_NAME@$PACKAGE_VERSION already exists on npm."
+          else
+            echo "published=false" >> "$GITHUB_OUTPUT"
+            echo "$PACKAGE_NAME@$PACKAGE_VERSION is not on npm yet."
+          fi
+
+      - name: Publish to npm
+        if: inputs.publish_npm == true && steps.npm_status.outputs.published == 'false'
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create GitHub release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="${{ steps.meta.outputs.tag }}"
+          RELEASE_NAME="${{ steps.meta.outputs.release_name }}"
+          FLAGS="--generate-notes --latest"
+          if [ "${{ inputs.prerelease }}" = "true" ]; then
+            FLAGS="--generate-notes --prerelease"
+          fi
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "Release $TAG already exists. Updating generated notes."
+            gh release edit "$TAG" --title "$RELEASE_NAME" $FLAGS
+          else
+            gh release create "$TAG" --title "$RELEASE_NAME" $FLAGS
+          fi
+
+      - name: Summary
+        run: |
+          echo "Release: ${{ steps.meta.outputs.tag }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "Package: ${{ steps.meta.outputs.package_name }}@${{ steps.meta.outputs.package_version }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "npm already published before this run: ${{ steps.npm_status.outputs.published }}" >> "$GITHUB_STEP_SUMMARY"
