@@ -6,12 +6,12 @@ import { tmpdir } from 'node:os';
 import { scanWithRules } from '../src/core/scannerUtils.js';
 import { sourceSlopRules } from '../src/scanners/sourceSlopScanner.js';
 
-function withFixture(source, fn) {
+function withFixture(source, fn, filename = 'Component.jsx') {
   const dir = mkdtempSync(join(tmpdir(), 'unslop-source-'));
   try {
     const src = join(dir, 'src');
     mkdirSync(src, { recursive: true });
-    writeFileSync(join(src, 'Component.jsx'), source, 'utf8');
+    writeFileSync(join(src, filename), source, 'utf8');
     return fn(src);
   } finally {
     rmSync(dir, { recursive: true, force: true });
@@ -85,4 +85,13 @@ test('source slop scanner catches unsafe target blank links and missing autocomp
     assert.ok(rules.includes('target-blank-without-rel'));
     assert.ok(rules.includes('input-without-autocomplete-review'));
   });
+});
+
+test('scanner rule file exclusions prevent token false positives', () => {
+  withFixture(`
+    export const colors = { brand: '#ff5500' };
+  `, (src) => {
+    const findings = scanWithRules(src, sourceSlopRules);
+    assert.ok(!ruleNames(findings).includes('hardcoded-color-token-drift'));
+  }, 'theme.ts');
 });
