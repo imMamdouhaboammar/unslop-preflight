@@ -1,4 +1,6 @@
 import { writeText } from './filesystem.js';
+import { loadStandardsPack } from './standardsPacks.js';
+
 
 function buildEvidenceTable(evidences) {
   if (!evidences || !evidences.length) return 'No issues found.';
@@ -15,12 +17,22 @@ function buildEvidenceTable(evidences) {
   return [headers, divider, ...rows].join('\n');
 }
 
-export function buildMarkdownReport(result) {
+export function buildMarkdownReport(result, flags = {}) {
   const summary = result.summary || {};
   const evidences = result.evidences || [];
   
   const blockers = evidences.filter(e => e.severity === 'error' || e.severity === 'blocker');
   const topBlockers = blockers.slice(0, 5);
+
+  let standardsLine = '';
+  if (flags.standards) {
+    try {
+      const { manifest } = loadStandardsPack(flags.standards);
+      standardsLine = `${manifest.name} (\`${flags.standards}\`)`;
+    } catch (e) {
+      standardsLine = `\`${flags.standards}\``;
+    }
+  }
 
   const lines = [
     '# Unslop Autopilot Report', 
@@ -29,6 +41,7 @@ export function buildMarkdownReport(result) {
     `**Score:** ${summary.score}/100`, 
     `**Readiness:** ${summary.readiness || 'unknown'}`,
     summary.readinessMessage ? `> **Decision:** ${summary.readinessMessage}` : '',
+    standardsLine ? `> **Enforced Standards:** ${standardsLine}` : '',
     '',
     `**Totals:** ${summary.errors} Blockers | ${summary.warnings} Warnings | ${summary.info} Info`, 
     ''
@@ -71,11 +84,21 @@ export function buildMarkdownReport(result) {
   return lines.join('\n');
 }
 
-export function buildFixList(result) {
+export function buildFixList(result, flags = {}) {
   const evidences = result.evidences || [];
   // Skip info and docs fixes that were auto-applied
   const manualFixes = evidences.filter(e => e.severity !== 'info' && e.type !== 'spec');
   const summary = result.summary || {};
+
+  let standardsLine = '';
+  if (flags.standards) {
+    try {
+      const { manifest } = loadStandardsPack(flags.standards);
+      standardsLine = `${manifest.name} (\`${flags.standards}\`)`;
+    } catch (e) {
+      standardsLine = `\`${flags.standards}\``;
+    }
+  }
   
   const lines = [
     'You are an expert AI frontend engineer.',
@@ -83,6 +106,7 @@ export function buildFixList(result) {
     '',
     `Current readiness: ${summary.readiness || 'unknown'}`,
     summary.readinessMessage ? `Decision: ${summary.readinessMessage}` : '',
+    standardsLine ? `Enforced Standards: ${standardsLine}` : '',
     '',
     'Please review PRODUCT.md, DESIGN.md, AGENTS.md, and the files listed below before implementing:',
     ''
@@ -105,14 +129,15 @@ export function buildFixList(result) {
 }
 
 export function writeReports(cwd, result, flags = {}) {
-  const md = buildMarkdownReport(result);
-  const fixList = buildFixList(result);
+  const md = buildMarkdownReport(result, flags);
+  const fixList = buildFixList(result, flags);
   
   writeText(cwd, '.unslop/report.md', md, flags);
   
   // Clean circular/complex objects before JSON stringify
   const safeResult = {
     ...result,
+    standards: flags.standards || null,
     evidences: result.evidences?.map(e => e.toReportObject ? e.toReportObject() : e)
   };
   writeText(cwd, '.unslop/report.json', JSON.stringify(safeResult, null, 2), flags);

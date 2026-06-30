@@ -7,12 +7,13 @@ import { typographyRules } from '../scanners/typographyScanner.js';
 import { layeringRules } from '../scanners/layeringScanner.js';
 import { responsiveRules } from '../scanners/responsiveScanner.js';
 import { sourceSlopRules } from '../scanners/sourceSlopScanner.js';
+import { vibeCodingRules } from '../scanners/standardsPackScanner.js';
 
 function resolveTargetDir(cwd, dir) {
   return isAbsolute(dir) ? dir : join(cwd, dir);
 }
 
-export function runSourceScanners(cwd, fingerprint) {
+export function runSourceScanners(cwd, fingerprint, flags = {}) {
   const allFindings = [];
 
   const dirsToScan = fingerprint.srcDirs.length > 0 ? fingerprint.srcDirs : ['src', 'app', 'components'];
@@ -32,6 +33,9 @@ export function runSourceScanners(cwd, fingerprint) {
 
     try {
       const modularRules = [...overlayRules, ...typographyRules, ...layeringRules, ...responsiveRules, ...sourceSlopRules];
+      if (flags.standards === 'vibe-coding') {
+        modularRules.push(...vibeCodingRules);
+      }
       const modularFindings = scanWithRules(targetDir, modularRules);
       allFindings.push(...modularFindings.map(f => ({ ...f, type: 'modular' })));
     } catch (e) {}

@@ -194,6 +194,26 @@ Current detector coverage:
 
 More detail lives in [`docs/SOURCE_SLOP_DETECTORS.md`](./docs/SOURCE_SLOP_DETECTORS.md).
 
+## Modular Standards Packs (Profiles)
+
+Unslop supports an optional, opt-in **Modular Standards Pack System** to enforce rigorous, domain-specific or team-specific coding governance rules. By default, Unslop runs lightweight, but power users can activate strict standard profiles.
+
+The first integrated pack is the **Vibe Coding Standards Pack** (`vibe-coding`), enforcing strict TypeScript type safety, unified dependency architecture, component modularity, centralized storage, and secret exposure checks.
+
+To list and inspect available standards packs:
+```bash
+npx unslop standards list
+npx unslop standards inspect vibe-coding
+```
+
+To run audits or scans enforcing a standards pack:
+```bash
+npx unslop scan src --standards=vibe-coding
+npx unslop autopilot --standards=vibe-coding
+```
+
+Read [`docs/STANDARDS_PACKS.md`](./docs/STANDARDS_PACKS.md) and [`docs/VIBE_CODING_STANDARDS_PACK.md`](./docs/VIBE_CODING_STANDARDS_PACK.md) for more details.
+
 ## npm publishing
 
 This repository is prepared for automatic npm publishing through GitHub Actions.
@@ -298,6 +318,7 @@ npx unslop <command> [args]
 | `init` | Creates missing `PRODUCT.md`, `DESIGN.md`, and `AGENTS.md` |
 | `audit` | Runs artifact gates and prints score, readiness, and category breakdown |
 | `scan` | Runs source scanners against frontend code |
+| `standards` | Lists or inspects available modular standards packs (profiles) |
 | `repair` | Adds safe missing sections and prepares agent-readable fixes |
 | `report` | Writes `.unslop/report.md` and `.unslop/report.json` |
 | `doctor` | Checks runtime and project assumptions |
@@ -367,6 +388,8 @@ AGENTS.md                instructions for AI coding agents
 | [`docs/NPM_PUBLISHING.md`](./docs/NPM_PUBLISHING.md) | GitHub Actions and npm Trusted Publishing setup |
 | [`docs/AI_AGENT_READINESS.md`](./docs/AI_AGENT_READINESS.md) | Readiness, taste, placeholder, and report behavior |
 | [`docs/SOURCE_SLOP_DETECTORS.md`](./docs/SOURCE_SLOP_DETECTORS.md) | Source-level detector behavior |
+| [`docs/STANDARDS_PACKS.md`](./docs/STANDARDS_PACKS.md) | Modular profile-based standards pack system |
+| [`docs/VIBE_CODING_STANDARDS_PACK.md`](./docs/VIBE_CODING_STANDARDS_PACK.md) | Enforced Vibe Coding rules and remediation |
 | [`docs/ROOT_CAUSE_MODE.md`](./docs/ROOT_CAUSE_MODE.md) | Diagnosis-first governance for bugs and layout failures |
 | [`docs/OVERLAY_LAYERING_GATES.md`](./docs/OVERLAY_LAYERING_GATES.md) | Modal viewport, stacking, z-index, and overlay reasoning |
 | [`docs/INSTALL_AGENT_HARNESS.md`](./docs/INSTALL_AGENT_HARNESS.md) | Project-specific skill and tool harness recommendations |

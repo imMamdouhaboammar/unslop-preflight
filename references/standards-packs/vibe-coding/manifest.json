@@ -1,0 +1,20 @@
+{
+  "id": "vibe-coding",
+  "name": "Vibe Coding Standards Pack",
+  "description": "A high-governance standards pack enforcing strict component modularity, unidirectional imports, centralized typing, secure local storage, rigorous business logic testing, and semantic accessibility.",
+  "status": "experimental",
+  "defaultEnabled": false,
+  "source": "vibe-coding-standards-skill",
+  "appliesTo": ["react", "typescript", "frontend"],
+  "recommendedFor": ["React dashboards", "TypeScript apps", "agentic coding reviews"],
+  "notRecommendedFor": ["backend-only tasks", "non-React projects", "mature projects with their own standards"],
+  "risk": "opinionated",
+  "categories": [
+    "architecture",
+    "security",
+    "component-modularity",
+    "type-system",
+    "testing",
+    "accessibility"
+  ]
+}

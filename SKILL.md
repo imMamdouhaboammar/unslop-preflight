@@ -161,6 +161,10 @@ When source code exists, scan for risks such as:
 
 Source issues that cannot be safely auto-fixed should be written to a fix list for the coding agent.
 
+## Modular Standards Packs (Profiles)
+
+For high-governance projects, you can opt-in to strict, profile-based engineering standard checks (such as `--standards=vibe-coding` to enforce strict component layering, TypeScript types, modularity limits, centralized storage, and credentials scanning).
+
 ## Root Cause Mode
 
 When a request mentions a bug, issue, broken UI, regression, overflow, clipping, z-index, viewport, modal, popup, drawer, dropdown, tooltip, toast, focus trap, or layout failure, diagnose before editing.
@@ -210,10 +214,11 @@ When the Unslop CLI is available, use these commands:
 
 ```bash
 npx unslop init
-npx unslop audit --verbose
-npx unslop scan src --strict
-npx unslop repair --dry-run --report
-npx unslop autopilot
+npx unslop standards list
+npx unslop standards inspect vibe-coding
+npx unslop audit --verbose --standards=vibe-coding
+npx unslop scan src --strict --standards=vibe-coding
+npx unslop autopilot --standards=vibe-coding
 ```
 
 For repository tests:

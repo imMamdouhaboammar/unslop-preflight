@@ -47,7 +47,7 @@ export function runAutopilotPipeline(cwd, flags = {}) {
   const fingerprint = fingerprintProject(cwd);
   const firstAudit = runAudit(cwd);
 
-  const sourceIssues = sourceScanEnabled(flags) ? runSourceScanners(cwd, fingerprint) : [];
+  const sourceIssues = sourceScanEnabled(flags) ? runSourceScanners(cwd, fingerprint, flags) : [];
   const formattedSourceIssues = sourceIssues.map(toSourceEvidence);
   const harnessRecommendations = adviseHarnesses(fingerprint);
 

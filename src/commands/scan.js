@@ -27,7 +27,7 @@ export async function scan({ cwd, args, flags }) {
     fingerprint.srcDirs = [target.replace(/^\.\//, '')];
   }
 
-  const findings = flags.noSourceScan ? [] : runSourceScanners(cwd, fingerprint);
+  const findings = flags.noSourceScan ? [] : runSourceScanners(cwd, fingerprint, flags);
   const issues = findings.map(toIssue);
   const result = summarize({
     issues,

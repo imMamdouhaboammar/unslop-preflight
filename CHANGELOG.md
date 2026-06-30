@@ -1,5 +1,29 @@
 # Changelog
 
+## v1.11.0 - Modular Standards Packs System & Vibe Coding Profile (2026-06-30)
+
+### Added
+
+- **Modular Standards Packs (Profiles)**: An optional, opt-in governance layer for highly-opinionated, domain-specific or team-specific coding rules.
+- **Vibe Coding Standards Pack (`vibe-coding`)**: Native source-level linter enforcing strict TypeScript type system rules, unified unidirectional dependency flow, component modularity (max 150 lines soft limit, 250 lines hard blocker), centralized storage hygiene (no raw `localStorage`/`sessionStorage`), and credential secrets exposure scanning.
+- **Standards Commands**:
+  - `unslop standards list` to list registered standards profiles.
+  - `unslop standards inspect [pack-id]` to view category-level principles and guidelines of a profile.
+- **Enforced Standards Option**: `--standards=[pack-id]` flag supported globally on `scan`, `audit`, and `autopilot`.
+- **Comprehensive Reports Metadata**: Standard profile name and rules are displayed in the Markdown preflight report, agent fix list, and JSON report metadata.
+- **Product Documentation**:
+  - `docs/STANDARDS_PACKS.md` (architecture, loaders, and extension guide).
+  - `docs/VIBE_CODING_STANDARDS_PACK.md` (vibe coding rule descriptions and remediation).
+
+### Changed
+
+- Updated project `README.md` and `SKILL.md` to reference modular standards capabilities and commands.
+- Configured CLI runner to globally validate `--standards` pack IDs, failing with clean outputs and exit code 1 on unknown standards to enforce strict compliance.
+
+### Why it matters
+
+Unslop remains lightweight and universally applicable by default, but complex repositories can now toggle strict standards profiles during preflight. This ensures AI-generated frontend implementations meet high-governance standards without requiring heavy, fragile shell or Python linters.
+
 ## v1.10.1 - npm Publishing Automation & Release Workflow (2026-06-30)
 
 ### Added
