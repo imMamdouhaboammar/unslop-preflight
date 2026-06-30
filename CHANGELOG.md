@@ -1,5 +1,48 @@
 # Changelog
 
+## v1.10.1 - npm Publishing Automation & Package Sync (2026-06-30)
+
+### Added
+
+- GitHub Actions npm publish workflow at `.github/workflows/npm-publish.yml`.
+- Trusted Publishing support through GitHub Actions OIDC with `id-token: write`.
+- Duplicate-version guard that checks whether `unslop-preflight@version` already exists on npm before publishing.
+- `npm pack --dry-run` verification before publish.
+- `pack:dry-run` npm script.
+- `docs/NPM_PUBLISHING.md` with setup instructions for npm Trusted Publishing and token fallback.
+
+### Changed
+
+- Bumped package metadata to `1.10.1` so GitHub publishable state can sync cleanly to npm.
+- Synced `package-lock.json` with `package.json`.
+- Added `preflight` as a real CLI alias for `autopilot`.
+- Updated README badges, npm publishing docs, and release notes for the automated publish flow.
+
+### Why it matters
+
+This release closes the mismatch between the GitHub repository and npm package by making publication reproducible from the repository itself. The workflow can publish from tags, manual dispatch, or relevant pushes to `main`, while skipping already-published versions to avoid noisy failed runs.
+
+## v1.10.0 - Source Slop Detector Layer (2026-06-30)
+
+### Added
+
+- `unslop scan` command for direct frontend source scanning.
+- Source slop detectors for unstable React keys, index-key reorder risk, focus outline removal, icon-only buttons, image sizing, unsafe new-tab links, missing autocomplete behavior, reduced-motion coverage, empty states, async view states, token drift, generic visual stacks, broad transitions, and placeholder content.
+- File-scoped scanner rules for checks that require whole-file context.
+- File exclusion support for token, theme, test, story, fixture, and mock files.
+- Tests for source slop scanner behavior.
+- `docs/SOURCE_SLOP_DETECTORS.md`.
+
+### Changed
+
+- Autopilot now respects `--no-source-scan`.
+- Source findings are mapped into code evidence and printable fix-list items.
+- README and Skills.sh metadata now describe v1.10 source detector behavior.
+
+### Why it matters
+
+The original gates caught weak product and design handoffs. v1.10 adds implementation-level checks for the code patterns AI agents commonly ship after the handoff, giving the coding agent a concrete fix list before UI polish begins.
+
 ## v1.9.8 - Strict Gates & Torture Bench Alignment (2026-06-14)
 
 ### Changed
