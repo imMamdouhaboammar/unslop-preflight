@@ -6,11 +6,18 @@
 
 **A preflight system for AI-built frontends. It checks `PRODUCT.md`, `DESIGN.md`, `AGENTS.md`, and source code before implementation moves forward.**
 
-[![Socket Badge](https://badge.socket.dev/npm/package/unslop-preflight/1.10.1)](https://badge.socket.dev/npm/package/unslop-preflight/1.10.1)
-[![npm](https://img.shields.io/npm/v/unslop-preflight?style=flat-square&color=5B21B6&label=npm)](https://www.npmjs.com/package/unslop-preflight)
-[![skills.sh](https://skills.sh/b/imMamdouhaboammar/unslop-preflight)](https://skills.sh/imMamdouhaboammar/unslop-preflight)
+[![npm](https://img.shields.io/npm/v/unslop-preflight?style=flat-square&color=5B21B6&logo=npm&logoColor=white)](https://www.npmjs.com/package/unslop-preflight)
+[![npm downloads](https://img.shields.io/npm/dm/unslop-preflight?style=flat-square&color=5B21B6&logo=npm&logoColor=white&label=installs)](https://www.npmjs.com/package/unslop-preflight)
+[![Socket Supply Chain](https://img.shields.io/badge/supply%20chain-78%2F100-F59E0B?style=flat-square&logo=socket&logoColor=white)](https://socket.dev/npm/package/unslop-preflight)
+[![Socket Vulnerability](https://img.shields.io/badge/vulnerability-100%2F100-22C55E?style=flat-square&logo=socket&logoColor=white)](https://socket.dev/npm/package/unslop-preflight)
+[![Socket Quality](https://img.shields.io/badge/quality-100%2F100-22C55E?style=flat-square&logo=socket&logoColor=white)](https://socket.dev/npm/package/unslop-preflight)
+[![Socket Maintenance](https://img.shields.io/badge/maintenance-90%2F100-22C55E?style=flat-square&logo=socket&logoColor=white)](https://socket.dev/npm/package/unslop-preflight)
+[![Socket License](https://img.shields.io/badge/license-100%2F100-22C55E?style=flat-square&logo=socket&logoColor=white)](https://socket.dev/npm/package/unslop-preflight)
+[![CI](https://img.shields.io/github/actions/workflow/status/imMamdouhaboammar/unslop-preflight/ci.yml?style=flat-square&logo=githubactions&logoColor=white&label=CI)](https://github.com/imMamdouhaboammar/unslop-preflight/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/imMamdouhaboammar/unslop-preflight?style=flat-square&color=5B21B6&logo=github&logoColor=white&label=release)](https://github.com/imMamdouhaboammar/unslop-preflight/releases)
+[![skills.sh](https://img.shields.io/badge/skills.sh-published-0EA5E9?style=flat-square&logo=skillsdotsh&logoColor=white)](https://skills.sh/imMamdouhaboammar/unslop-preflight)
 [![Gates](https://img.shields.io/badge/gates-23%2B%20readiness-F59E0B?style=flat-square)](./SKILL.md)
-[![Version](https://img.shields.io/badge/docs-1.10.1-3B82F6?style=flat-square)](./CHANGELOG.md)
+[![Docs v1.10.1](https://img.shields.io/badge/docs-1.10.1-3B82F6?style=flat-square)](./CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/license-MIT-22C55E?style=flat-square)](./LICENSE)
 
 ```bash
