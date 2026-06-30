@@ -1,66 +1,92 @@
-name: Publish to npm
+name: Publish npm package
 
 on:
+  workflow_dispatch:
   push:
+    branches:
+      - main
     tags:
       - 'v*'
+    paths:
+      - 'package.json'
+      - 'package-lock.json'
+      - 'bin/**'
+      - 'src/**'
+      - 'scripts/**'
+      - 'assets/**'
+      - 'references/**'
+      - 'docs/**'
+      - 'README.md'
+      - 'CHANGELOG.md'
+      - 'CONTRIBUTING.md'
+      - 'AGENTS.md'
+      - 'SKILL.md'
+      - 'skills.sh.json'
+      - '.github/workflows/npm-publish.yml'
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: npm-publish-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   publish:
-    name: Publish package to npm
+    name: Test, pack, and publish
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: read
-      id-token: write  # for npm provenance
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v6
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
         with:
-          node-version: '20'
+          node-version: '24'
           registry-url: 'https://registry.npmjs.org'
+          package-manager-cache: false
 
-      - name: Verify package.json version matches tag
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: Verify package can be packed
+        run: npm pack --dry-run
+
+      - name: Verify tag matches package version
+        if: startsWith(github.ref, 'refs/tags/v')
+        shell: bash
         run: |
-          PKG_VERSION=$(node -e "process.stdout.write(require('./package.json').version)")
+          PACKAGE_VERSION=$(node -p "JSON.parse(require('fs').readFileSync('package.json', 'utf8')).version")
           TAG_VERSION="${GITHUB_REF_NAME#v}"
-          echo "Package version: $PKG_VERSION"
+          echo "Package version: $PACKAGE_VERSION"
           echo "Tag version: $TAG_VERSION"
-          if [ "$PKG_VERSION" != "$TAG_VERSION" ]; then
-            echo "ERROR: package.json version ($PKG_VERSION) does not match tag ($TAG_VERSION)"
+          if [ "$PACKAGE_VERSION" != "$TAG_VERSION" ]; then
+            echo "package.json version does not match tag"
             exit 1
           fi
-          echo "Version match confirmed ✓"
 
-      - name: Validate SKILL.md frontmatter
+      - name: Check npm version status
+        id: version
+        shell: bash
         run: |
-          grep -q "^name:" SKILL.md || (echo "ERROR: missing name in SKILL.md" && exit 1)
-          grep -q "^description:" SKILL.md || (echo "ERROR: missing description in SKILL.md" && exit 1)
-          echo "SKILL.md frontmatter OK ✓"
+          PACKAGE_NAME=$(node -p "JSON.parse(require('fs').readFileSync('package.json', 'utf8')).name")
+          PACKAGE_VERSION=$(node -p "JSON.parse(require('fs').readFileSync('package.json', 'utf8')).version")
+          echo "package_name=$PACKAGE_NAME" >> "$GITHUB_OUTPUT"
+          echo "package_version=$PACKAGE_VERSION" >> "$GITHUB_OUTPUT"
+          if npm view "$PACKAGE_NAME@$PACKAGE_VERSION" version >/dev/null 2>&1; then
+            echo "published=true" >> "$GITHUB_OUTPUT"
+            echo "$PACKAGE_NAME@$PACKAGE_VERSION already exists on npm. Skipping publish."
+          else
+            echo "published=false" >> "$GITHUB_OUTPUT"
+            echo "$PACKAGE_NAME@$PACKAGE_VERSION is not on npm yet. Publishing is allowed."
+          fi
 
-      - name: Check all gate scripts exist
-        run: |
-          for s in \
-            scripts/autopilot.mjs \
-            scripts/repair-design-md.mjs \
-            scripts/intake-session.mjs \
-            scripts/run-gates.mjs \
-            scripts/scan-ui-implementation.mjs \
-            scripts/scan-accessibility.mjs \
-            scripts/run-evals.mjs \
-            bin/cli.js; do
-            [ -f "$s" ] || (echo "MISSING: $s" && exit 1)
-          done
-          echo "All scripts present ✓"
-
-      - name: Run evals
-        run: node scripts/run-evals.mjs
-
-      - name: Publish to npm (with provenance)
+      - name: Publish to npm
+        if: steps.version.outputs.published == 'false'
         run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
