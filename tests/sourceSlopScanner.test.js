@@ -87,6 +87,40 @@ test('source slop scanner catches unsafe target blank links and missing autocomp
   });
 });
 
+test('icon-only button detector accepts explicit accessible names', () => {
+  withFixture(`
+    export function Toolbar() {
+      return (
+        <div>
+          <button aria-label="Close"><svg /></button>
+          <button aria-labelledby="save-label"><SaveIcon /></button>
+          <button title="Refresh"><RefreshIcon /></button>
+        </div>
+      );
+    }
+  `, (src) => {
+    const findings = scanWithRules(src, sourceSlopRules);
+    assert.ok(!ruleNames(findings).includes('icon-only-button-review'));
+  });
+});
+
+test('target blank detector requires a complete rel token', () => {
+  withFixture(`
+    export function Links() {
+      return (
+        <div>
+          <a href="/safe" target="_blank" rel="external noopener">Safe</a>
+          <a href="/unsafe" target="_blank" rel="notnoopener">Unsafe</a>
+        </div>
+      );
+    }
+  `, (src) => {
+    const findings = scanWithRules(src, sourceSlopRules);
+    const targetFindings = findings.filter((finding) => finding.rule === 'target-blank-without-rel');
+    assert.equal(targetFindings.length, 1);
+  });
+});
+
 test('scanner rule file exclusions prevent token false positives', () => {
   withFixture(`
     export const colors = { brand: '#ff5500' };
@@ -160,4 +194,3 @@ test('source slop scanner passes sidebar heuristics on a properly designed sideb
     assert.ok(!rules.includes('sidebar-missing-active-state'));
   }, 'Sidebar.jsx');
 });
-

@@ -20,7 +20,7 @@ export const sourceSlopRules = [
   {
     name: 'icon-only-button-review',
     level: 'warning',
-    pattern: /<button\b[^>]*>\s*(<svg\b|<\w*Icon\b)/i,
+    pattern: /<button\b(?![^>]*(?:aria-label|aria-labelledby|title)=["'][^"']+["'])[^>]*>\s*(<svg\b|<\w*Icon\b)/i,
     message: 'Icon-only button detected. Verify it has aria-label, aria-labelledby, sr-only text, or a visible label.'
   },
   {
@@ -32,7 +32,7 @@ export const sourceSlopRules = [
   {
     name: 'target-blank-without-rel',
     level: 'blocker',
-    pattern: /<a\b(?=[^>]*target=["']_blank["'])(?![^>]*rel=["'][^"']*(noopener|noreferrer)[^"']*["'])/i,
+    pattern: /<a\b(?=[^>]*target=["']_blank["'])(?![^>]*rel=["'][^"']*\b(noopener|noreferrer)\b[^"']*["'])/i,
     message: 'target="_blank" link lacks rel="noopener" or rel="noreferrer".'
   },
   {
@@ -154,4 +154,3 @@ export const sourceSlopRules = [
     }
   }
 ];
-
