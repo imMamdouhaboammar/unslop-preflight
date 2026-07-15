@@ -101,7 +101,7 @@ function collectFiles(targetDir, filesSeen, scannerResults, cwd) {
   }
 }
 
-function buildScanStats({ dirsToScan, filesSeen, findings, scannerResults, startedAt }) {
+function buildScanStats({ dirsScanned, filesSeen, findings, scannerResults, startedAt }) {
   const failures = scannerResults.filter((result) => result.status === 'failed');
   const skipped = scannerResults.filter((result) => result.status === 'skipped');
 
@@ -113,7 +113,7 @@ function buildScanStats({ dirsToScan, filesSeen, findings, scannerResults, start
     durationMs: Date.now() - startedAt,
     scannersRun: [...new Set(scannerResults.filter((result) => result.status === 'ok').map((result) => result.scanner))],
     scannersSkipped: skipped.map((result) => `${result.scanner}:${result.targetDir}`),
-    dirsScanned: dirsToScan
+    dirsScanned
   };
 }
 
@@ -138,6 +138,7 @@ export function runSourceScanners(cwd, fingerprint, flags = {}) {
   const scannerResults = [];
   const filesSeen = new Set();
   const dirsToScan = fingerprint.srcDirs.length > 0 ? fingerprint.srcDirs : ['src', 'app', 'components'];
+  const dirsScanned = dirsToScan.map((dir) => targetLabel(cwd, resolveTargetDir(cwd, dir)));
   const modularRules = [...overlayRules, ...typographyRules, ...layeringRules, ...responsiveRules, ...sourceSlopRules];
   if (flags.standards === 'vibe-coding') {
     modularRules.push(...vibeCodingRules);
@@ -161,7 +162,7 @@ export function runSourceScanners(cwd, fingerprint, flags = {}) {
   }
 
   const uniqueFindings = uniqueFindingsFor(allFindings);
-  const scanStats = buildScanStats({ dirsToScan, filesSeen, findings: uniqueFindings, scannerResults, startedAt });
+  const scanStats = buildScanStats({ dirsScanned, filesSeen, findings: uniqueFindings, scannerResults, startedAt });
 
   return attachMetadata(uniqueFindings, { scannerResults, scanStats });
 }
