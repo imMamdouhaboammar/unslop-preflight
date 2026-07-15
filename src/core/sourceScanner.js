@@ -1,5 +1,5 @@
 import { existsSync } from 'node:fs';
-import { isAbsolute, join, relative } from 'node:path';
+import { basename, isAbsolute, join, relative } from 'node:path';
 import { scanUi } from '../../scripts/scan-ui-implementation.mjs';
 import { scanA11y } from '../../scripts/scan-accessibility.mjs';
 import { scanWithRules, walk } from './scannerUtils.js';
@@ -12,6 +12,14 @@ import { vibeCodingRules } from '../scanners/standardsPackScanner.js';
 
 function resolveTargetDir(cwd, dir) {
   return isAbsolute(dir) ? dir : join(cwd, dir);
+}
+
+function targetLabel(cwd, targetDir) {
+  const target = relative(cwd, targetDir);
+
+  if (!target) return '.';
+  if (target.startsWith('..') || isAbsolute(target)) return `<external>/${basename(targetDir)}`;
+  return target;
 }
 
 function messageFor(error, cwd) {
@@ -46,18 +54,19 @@ function addResult(scannerResults, scanner, targetDir, startedAt, extra = {}) {
 
 function runScanner({ name, type, run }, targetDir, cwd, allFindings, scannerResults) {
   const startedAt = Date.now();
+  const displayTarget = targetLabel(cwd, targetDir);
 
   if (!existsSync(targetDir)) {
-    addSkipped(scannerResults, name, targetDir, 'target directory not found', startedAt);
+    addSkipped(scannerResults, name, displayTarget, 'target directory not found', startedAt);
     return;
   }
 
   try {
     const findings = run(targetDir) || [];
     allFindings.push(...findings.map((finding) => ({ ...finding, type })));
-    addResult(scannerResults, name, targetDir, startedAt);
+    addResult(scannerResults, name, displayTarget, startedAt);
   } catch (error) {
-    addResult(scannerResults, name, targetDir, startedAt, {
+    addResult(scannerResults, name, displayTarget, startedAt, {
       status: 'failed',
       error: messageFor(error, cwd)
     });
@@ -85,14 +94,14 @@ function collectFiles(targetDir, filesSeen, scannerResults, cwd) {
   try {
     for (const file of walk(targetDir)) filesSeen.add(file);
   } catch (error) {
-    addResult(scannerResults, 'file-walk', targetDir, startedAt, {
+    addResult(scannerResults, 'file-walk', targetLabel(cwd, targetDir), startedAt, {
       status: 'failed',
       error: messageFor(error, cwd)
     });
   }
 }
 
-function buildScanStats({ cwd, dirsToScan, filesSeen, findings, scannerResults, startedAt }) {
+function buildScanStats({ dirsScanned, filesSeen, findings, scannerResults, startedAt }) {
   const failures = scannerResults.filter((result) => result.status === 'failed');
   const skipped = scannerResults.filter((result) => result.status === 'skipped');
 
@@ -103,8 +112,8 @@ function buildScanStats({ cwd, dirsToScan, filesSeen, findings, scannerResults, 
     scannerFailures: failures.length,
     durationMs: Date.now() - startedAt,
     scannersRun: [...new Set(scannerResults.filter((result) => result.status === 'ok').map((result) => result.scanner))],
-    scannersSkipped: skipped.map((result) => `${result.scanner}:${relative(cwd, result.targetDir) || result.targetDir}`),
-    dirsScanned: dirsToScan
+    scannersSkipped: skipped.map((result) => `${result.scanner}:${result.targetDir}`),
+    dirsScanned
   };
 }
 
@@ -129,6 +138,7 @@ export function runSourceScanners(cwd, fingerprint, flags = {}) {
   const scannerResults = [];
   const filesSeen = new Set();
   const dirsToScan = fingerprint.srcDirs.length > 0 ? fingerprint.srcDirs : ['src', 'app', 'components'];
+  const dirsScanned = dirsToScan.map((dir) => targetLabel(cwd, resolveTargetDir(cwd, dir)));
   const modularRules = [...overlayRules, ...typographyRules, ...layeringRules, ...responsiveRules, ...sourceSlopRules];
   if (flags.standards === 'vibe-coding') {
     modularRules.push(...vibeCodingRules);
@@ -152,7 +162,7 @@ export function runSourceScanners(cwd, fingerprint, flags = {}) {
   }
 
   const uniqueFindings = uniqueFindingsFor(allFindings);
-  const scanStats = buildScanStats({ cwd, dirsToScan, filesSeen, findings: uniqueFindings, scannerResults, startedAt });
+  const scanStats = buildScanStats({ dirsScanned, filesSeen, findings: uniqueFindings, scannerResults, startedAt });
 
   return attachMetadata(uniqueFindings, { scannerResults, scanStats });
 }

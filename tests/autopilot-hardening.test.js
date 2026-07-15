@@ -60,6 +60,21 @@ test('scanner failures are collected instead of swallowed', () => {
   assert.equal(findings.metadata.scanStats.scannerFailures, failures.length);
   assert.ok(failures.length > 0);
   assert.match(failures[0].error, /ENOTDIR|not a directory/i);
+  assert.equal(failures[0].targetDir, 'src');
+  assert.doesNotMatch(JSON.stringify(findings.metadata), new RegExp(cwd.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+});
+
+test('external scanner targets use a redacted stable label', () => {
+  const cwd = tempProject();
+  const externalRoot = tempProject();
+  const externalTarget = join(externalRoot, 'external-src');
+  mkdirSync(externalTarget, { recursive: true });
+
+  const findings = runSourceScanners(cwd, { srcDirs: [externalTarget] });
+  const targets = findings.metadata.scannerResults.map((result) => result.targetDir);
+
+  assert.deepEqual([...new Set(targets)], ['<external>/external-src']);
+  assert.doesNotMatch(JSON.stringify(findings.metadata), new RegExp(externalRoot.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
 });
 
 test('autopilot report includes scanStats and scanner failures', () => {
@@ -148,4 +163,3 @@ test('autopilot correctly wires and executes standards flags (vibe-coding)', () 
   const hasTsIgnoreWith = resultWithStandards.issues.some((issue) => issue.id === 'no-ts-ignore');
   assert.equal(hasTsIgnoreWith, true, 'Should detect no-ts-ignore when vibe-coding standards is enabled');
 });
-
