@@ -6,7 +6,7 @@ import { join } from 'node:path';
 import { runAutopilotPipeline } from '../src/core/autopilotPlan.js';
 import { applyRepairs } from '../src/core/repair.js';
 import { Evidence } from '../src/core/findings.js';
-import { runSourceScanners } from '../src/core/sourceScanner.js';
+import { deduplicateFindings, runSourceScanners } from '../src/core/sourceScanner.js';
 
 function tempProject() {
   return mkdtempSync(join(tmpdir(), 'unslop-autopilot-'));
@@ -75,6 +75,35 @@ test('external scanner targets use a redacted stable label', () => {
 
   assert.deepEqual([...new Set(targets)], ['<external>/external-src']);
   assert.doesNotMatch(JSON.stringify(findings.metadata), new RegExp(externalRoot.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+});
+
+test('finding deduplication preserves distinct violations on the same line', () => {
+  const shared = {
+    rule: 'same-line-rule',
+    file: '/project/src/App.jsx',
+    line: 12,
+    level: 'blocker'
+  };
+  const first = { ...shared, excerpt: 'First actionable violation' };
+  const duplicate = { ...first, type: 'modular' };
+  const second = { ...shared, excerpt: 'Second actionable violation', type: 'ui' };
+
+  const findings = deduplicateFindings([first, duplicate, second]);
+
+  assert.deepEqual(findings, [first, second]);
+});
+
+test('finding deduplication preserves severity differences', () => {
+  const shared = {
+    rule: 'same-line-rule',
+    file: '/project/src/App.jsx',
+    line: 12,
+    excerpt: 'Review this source location'
+  };
+  const blocker = { ...shared, level: 'blocker' };
+  const warning = { ...shared, level: 'warning' };
+
+  assert.deepEqual(deduplicateFindings([blocker, warning]), [blocker, warning]);
 });
 
 test('autopilot report includes scanStats and scanner failures', () => {
@@ -153,12 +182,10 @@ test('autopilot correctly wires and executes standards flags (vibe-coding)', () 
     'utf8'
   );
 
-  // Without the standards flag, the no-ts-ignore issue shouldn't be matched
   const resultWithoutStandards = runAutopilotPipeline(cwd, { maxPasses: '1' });
   const hasTsIgnoreWithout = resultWithoutStandards.issues.some((issue) => issue.id === 'no-ts-ignore');
   assert.equal(hasTsIgnoreWithout, false, 'Should not detect no-ts-ignore without vibe-coding standards enabled');
 
-  // With the standards flag enabled, the no-ts-ignore issue should be detected
   const resultWithStandards = runAutopilotPipeline(cwd, { standards: 'vibe-coding', maxPasses: '1' });
   const hasTsIgnoreWith = resultWithStandards.issues.some((issue) => issue.id === 'no-ts-ignore');
   assert.equal(hasTsIgnoreWith, true, 'Should detect no-ts-ignore when vibe-coding standards is enabled');
