@@ -73,8 +73,14 @@ function runScanner({ name, type, run }, targetDir, cwd, allFindings, scannerRes
   }
 }
 
-function findingIdentity({ rule = '', file = '', line = null, level = '', excerpt = '' }) {
-  return JSON.stringify([rule, file, line, level, excerpt]);
+function findingIdentity(finding) {
+  return JSON.stringify([
+    finding.rule ?? '',
+    finding.file ?? '',
+    finding.line ?? null,
+    finding.level ?? '',
+    finding.excerpt ?? ''
+  ]);
 }
 
 export function deduplicateFindings(findings) {
