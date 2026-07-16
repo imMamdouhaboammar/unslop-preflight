@@ -73,12 +73,22 @@ function runScanner({ name, type, run }, targetDir, cwd, allFindings, scannerRes
   }
 }
 
-function uniqueFindingsFor(findings) {
+function findingIdentity(finding) {
+  return JSON.stringify([
+    finding.rule ?? '',
+    finding.file ?? '',
+    finding.line ?? null,
+    finding.level ?? '',
+    finding.excerpt ?? ''
+  ]);
+}
+
+export function deduplicateFindings(findings) {
   const uniqueFindings = [];
   const seen = new Set();
 
   for (const finding of findings) {
-    const key = `${finding.rule}:${finding.file}:${finding.line}`;
+    const key = findingIdentity(finding);
     if (!seen.has(key)) {
       seen.add(key);
       uniqueFindings.push(finding);
@@ -161,7 +171,7 @@ export function runSourceScanners(cwd, fingerprint, flags = {}) {
     }
   }
 
-  const uniqueFindings = uniqueFindingsFor(allFindings);
+  const uniqueFindings = deduplicateFindings(allFindings);
   const scanStats = buildScanStats({ dirsScanned, filesSeen, findings: uniqueFindings, scannerResults, startedAt });
 
   return attachMetadata(uniqueFindings, { scannerResults, scanStats });
