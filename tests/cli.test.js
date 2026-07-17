@@ -27,6 +27,14 @@ test('version works', () => {
   assert.match(r.stdout.trim(), /\d+\.\d+\.\d+/);
 });
 
+test('unknown commands fail with an actionable error', () => {
+  const r = run(['definitely-not-a-command']);
+
+  assert.equal(r.status, 1);
+  assert.match(r.stderr, /Unknown command: definitely-not-a-command/);
+  assert.match(r.stdout, /Commands/);
+});
+
 test('init creates missing files', () => {
   const cwd = temp();
   const r = run(['init'], cwd);
