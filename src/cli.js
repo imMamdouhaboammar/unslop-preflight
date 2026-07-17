@@ -11,6 +11,11 @@ const commands = { autopilot, preflight: autopilot, init, audit, repair, report,
 function applyExitCode(parsed, result) {
   if ((parsed.flags.ci || parsed.flags.strict) && result?.summary?.errors > 0) process.exitCode = 1;
 }
+function rejectUnknownCommand(command) {
+  console.error(`Unknown command: ${command}`);
+  process.exitCode = 1;
+  return printHelp();
+}
 export async function run(argv, meta = {}) {
   const parsed = parseArgs(argv);
   if (parsed.flags.version) return console.log(meta.version || '0.0.0');
@@ -34,7 +39,7 @@ export async function run(argv, meta = {}) {
     applyExitCode(parsed, result);
     return result;
   }
-  if (!commands[command]) return printHelp();
+  if (!commands[command]) return rejectUnknownCommand(command);
   const result = await commands[command](parsed);
   applyExitCode(parsed, result);
   return result;
