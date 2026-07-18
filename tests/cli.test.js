@@ -54,7 +54,7 @@ test('max-passes rejects malformed and out-of-range values', () => {
 });
 
 test('max-passes accepts values within the documented range', () => {
-  const r = run(['autopilot', '--max-passes=1', '--plan-only', '--no-source-scan']);
+  const r = run(['doctor', '--max-passes=1']);
 
   assert.equal(r.status, 0);
   assert.doesNotMatch(r.stderr, /Invalid option/);
