@@ -35,6 +35,31 @@ test('unknown commands fail with an actionable error', () => {
   assert.match(r.stdout, /Commands/);
 });
 
+test('max-passes requires an explicit value', () => {
+  const r = run(['autopilot', '--max-passes']);
+
+  assert.equal(r.status, 1);
+  assert.match(r.stderr, /Invalid option: --max-passes requires a value/);
+  assert.equal(r.stdout, '');
+});
+
+test('max-passes rejects malformed and out-of-range values', () => {
+  for (const value of ['2x', '0', '11', '-1', '1.5']) {
+    const r = run(['autopilot', `--max-passes=${value}`]);
+
+    assert.equal(r.status, 1, `expected ${value} to fail`);
+    assert.match(r.stderr, /--max-passes must be a whole number between 1 and 10/);
+    assert.equal(r.stdout, '');
+  }
+});
+
+test('max-passes accepts values within the documented range', () => {
+  const r = run(['autopilot', '--max-passes=1', '--plan-only', '--no-source-scan']);
+
+  assert.equal(r.status, 0);
+  assert.doesNotMatch(r.stderr, /Invalid option/);
+});
+
 test('init creates missing files', () => {
   const cwd = temp();
   const r = run(['init'], cwd);
