@@ -16,10 +16,30 @@ function rejectUnknownCommand(command) {
   process.exitCode = 1;
   return printHelp();
 }
+function maxPassesError(flags) {
+  const raw = flags.maxPasses;
+  if (raw === undefined) return null;
+  if (raw === true) return '--max-passes requires a value. Use --max-passes=<number>.';
+  if (typeof raw !== 'string' || !/^\d+$/.test(raw)) return '--max-passes must be a whole number between 1 and 10.';
+
+  const value = Number(raw);
+  if (!Number.isSafeInteger(value) || value < 1 || value > 10) {
+    return '--max-passes must be a whole number between 1 and 10.';
+  }
+  return null;
+}
+function rejectInvalidFlags(parsed) {
+  const error = maxPassesError(parsed.flags);
+  if (!error) return false;
+  console.error(`Invalid option: ${error}`);
+  process.exitCode = 1;
+  return true;
+}
 export async function run(argv, meta = {}) {
   const parsed = parseArgs(argv);
   if (parsed.flags.version) return console.log(meta.version || '0.0.0');
   if (parsed.flags.help || parsed.command === 'help' || !parsed.command) return printHelp();
+  if (rejectInvalidFlags(parsed)) return null;
 
   if (parsed.flags.standards) {
     try {
