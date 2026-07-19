@@ -28,8 +28,22 @@ function maxPassesError(flags) {
   }
   return null;
 }
+function verifyTimeoutError(flags) {
+  const raw = flags.verifyTimeout;
+  if (raw === undefined) return null;
+  if (raw === true) return '--verify-timeout requires a value. Use --verify-timeout=<seconds>.';
+  if (typeof raw !== 'string' || !/^\d+$/.test(raw)) {
+    return '--verify-timeout must be a whole number between 1 and 3600 seconds.';
+  }
+
+  const value = Number(raw);
+  if (!Number.isSafeInteger(value) || value < 1 || value > 3600) {
+    return '--verify-timeout must be a whole number between 1 and 3600 seconds.';
+  }
+  return null;
+}
 function rejectInvalidFlags(parsed) {
-  const error = maxPassesError(parsed.flags);
+  const error = maxPassesError(parsed.flags) || verifyTimeoutError(parsed.flags);
   if (!error) return false;
   console.error(`Invalid option: ${error}`);
   process.exitCode = 1;
