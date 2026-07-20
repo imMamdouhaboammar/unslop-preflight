@@ -28,8 +28,27 @@ function maxPassesError(flags) {
   }
   return null;
 }
-function rejectInvalidFlags(parsed) {
-  const error = maxPassesError(parsed.flags);
+function verifyTimeoutError(flags, argv) {
+  const rawArg = argv.find((item) => item.startsWith('--verify-timeout='));
+  if (rawArg && rawArg.indexOf('=', rawArg.indexOf('=') + 1) !== -1) {
+    return '--verify-timeout must be a positive whole number of seconds.';
+  }
+
+  const raw = flags.verifyTimeout;
+  if (raw === undefined) return null;
+  if (raw === true) return '--verify-timeout requires a value. Use --verify-timeout=<seconds>.';
+  if (typeof raw !== 'string' || !/^\d+$/.test(raw)) {
+    return '--verify-timeout must be a positive whole number of seconds.';
+  }
+
+  const value = Number(raw);
+  if (!Number.isSafeInteger(value) || value < 1) {
+    return '--verify-timeout must be a positive whole number of seconds.';
+  }
+  return null;
+}
+function rejectInvalidFlags(parsed, argv) {
+  const error = maxPassesError(parsed.flags) || verifyTimeoutError(parsed.flags, argv);
   if (!error) return false;
   console.error(`Invalid option: ${error}`);
   process.exitCode = 1;
@@ -39,7 +58,7 @@ export async function run(argv, meta = {}) {
   const parsed = parseArgs(argv);
   if (parsed.flags.version) return console.log(meta.version || '0.0.0');
   if (parsed.flags.help || parsed.command === 'help' || !parsed.command) return printHelp();
-  if (rejectInvalidFlags(parsed)) return null;
+  if (rejectInvalidFlags(parsed, argv)) return null;
 
   if (parsed.flags.standards) {
     try {

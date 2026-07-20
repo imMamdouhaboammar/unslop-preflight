@@ -60,6 +60,31 @@ test('max-passes accepts values within the documented range', () => {
   assert.doesNotMatch(r.stderr, /Invalid option/);
 });
 
+test('verify-timeout requires an explicit value', () => {
+  const r = run(['doctor', '--verify-timeout']);
+
+  assert.equal(r.status, 1);
+  assert.match(r.stderr, /Invalid option: --verify-timeout requires a value/);
+  assert.equal(r.stdout, '');
+});
+
+test('verify-timeout rejects malformed and non-positive values', () => {
+  for (const value of ['2x', '0', '-1', '1.5', '120=garbage', '9007199254740992']) {
+    const r = run(['doctor', `--verify-timeout=${value}`]);
+
+    assert.equal(r.status, 1, `expected ${value} to fail`);
+    assert.match(r.stderr, /--verify-timeout must be a positive whole number of seconds/);
+    assert.equal(r.stdout, '');
+  }
+});
+
+test('verify-timeout accepts positive whole seconds', () => {
+  const r = run(['doctor', '--verify-timeout=3601']);
+
+  assert.equal(r.status, 0);
+  assert.doesNotMatch(r.stderr, /Invalid option/);
+});
+
 test('init creates missing files', () => {
   const cwd = temp();
   const r = run(['init'], cwd);
