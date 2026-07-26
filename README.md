@@ -45,29 +45,31 @@ npx unslop-preflight autopilot --safe-fix --verify
 
 <!-- project-story:start -->
 <details open>
-  <summary><strong>Why I built Unslop Preflight</strong></summary>
+  <summary><strong>Problem to project: Why I built Unslop Preflight</strong></summary>
   <br />
+  <p align="center"><img src="https://raw.githubusercontent.com/imMamdouhaboammar/imMamdouhaboammar/main/assets/profile/project-badges.svg" width="488" alt="Real friction, building in public, daily pulse" /></p>
   <table>
     <tr>
-      <td width="118" align="center" valign="top">
-        <img src="./assets/readme/project-mark.svg" width="88" alt="Unslop Preflight repository mark" />
-      </td>
-      <td valign="top">
-        <p><strong>What is Unslop Preflight?</strong> A preflight quality gate and bounded repair loop for AI-built frontend repositories.</p>
-        <p><strong>Built from a recurring problem:</strong> AI-generated frontends can look finished while hiding accessibility errors, fragile layout fixes, sample-data leaks, and repeatable visual regressions.</p>
-        <p><strong>Practical goal:</strong> Detect common frontend slop before shipping, apply only low-risk deterministic repairs, and leave evidence for the remaining human review.</p>
-        <p><strong>Who it is for:</strong> Vibe coders, frontend developers, agencies, and coding agents preparing React, Vue, or web projects for handoff.</p>
-        <p><strong>Topics:</strong> AI frontend quality checks · vibe coding guardrails · frontend preflight · UI regression detection</p>
-      </td>
+      <td width="104" align="center" valign="middle"><img src="./assets/readme/project-mark.svg" width="76" alt="Unslop Preflight repository mark" /></td>
+      <td valign="middle"><strong>Unslop Preflight</strong><br />A preflight quality gate and bounded repair loop for AI-built frontend repositories.</td>
     </tr>
   </table>
-  <p><strong>Daily development summary</strong></p>
+  <table>
+    <tr>
+      <td width="50%" valign="top"><strong>Recurring problem</strong><br />AI-generated frontends can look finished while hiding accessibility errors, fragile layout fixes, sample-data leaks, and repeatable visual regressions.</td>
+      <td width="50%" valign="top"><strong>Practical goal</strong><br />Detect common frontend slop before shipping, apply only low-risk deterministic repairs, and leave evidence for the remaining human review.</td>
+    </tr>
+    <tr>
+      <td width="50%" valign="top"><strong>Built for</strong><br />Vibe coders, frontend developers, agencies, and coding agents preparing React, Vue, or web projects for handoff.</td>
+      <td width="50%" valign="top"><strong>Search terms</strong><br />AI frontend quality checks · vibe coding guardrails · frontend preflight · UI regression detection</td>
+    </tr>
+  </table>
+  <p><strong>Daily build pulse</strong></p>
   <ul>
-      <li>1 commit landed: Add Semgrep CI.</li>
-      <li>Daily summary covers 1 public activity item from the last 1 day.</li>
-      <li>Documentation and project status remain aligned with the repository’s current public state.</li>
+      <li>3 commits landed: ci: refresh minimal story card after workflow changes; docs: add dynamic project story card.</li>
+      <li>2 pull requests updated, led by #10: docs: add dynamic project story card.</li>
+      <li>Daily summary covers 5 public activity items from the last 1 day.</li>
   </ul>
-  <p><sub>Updated 2026-07-26T06:35:04.160Z · Deterministic public-activity summary</sub></p>
 </details>
 <!-- project-story:end -->
 
