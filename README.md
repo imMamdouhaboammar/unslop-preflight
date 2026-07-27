@@ -68,7 +68,7 @@ npx unslop-preflight autopilot --safe-fix --verify
   <ul>
       <li>3 commits landed: ci: refresh minimal story card after workflow changes; docs: add dynamic project story card.</li>
       <li>2 pull requests updated, led by #10: docs: add dynamic project story card.</li>
-      <li>Daily summary covers 5 public activity items from the last 1 day.</li>
+      <li>Daily summary covers 5 public activity items from the last 7 days.</li>
   </ul>
 </details>
 <!-- project-story:end -->
