@@ -66,9 +66,9 @@ npx unslop-preflight autopilot --safe-fix --verify
   </table>
   <p><strong>Daily build pulse</strong></p>
   <ul>
-      <li>3 commits landed: ci: refresh minimal story card after workflow changes; docs: add dynamic project story card.</li>
-      <li>2 pull requests updated, led by #10: docs: add dynamic project story card.</li>
-      <li>Daily summary covers 5 public activity items from the last 7 days.</li>
+      <li>2 commits landed: Merge pull request #11 from imMamdouhaboammar/ecc-tools/unslop-preflight-1785049152076; Add files via upload.</li>
+      <li>1 pull request updated, led by #11: feat: add unslop-preflight ECC bundle.</li>
+      <li>Daily summary covers 3 public activity items from the last 1 day.</li>
   </ul>
 </details>
 <!-- project-story:end -->
