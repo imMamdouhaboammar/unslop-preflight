@@ -66,9 +66,9 @@ npx unslop-preflight autopilot --safe-fix --verify
   </table>
   <p><strong>Daily build pulse</strong></p>
   <ul>
-      <li>2 commits landed: Merge pull request #11 from imMamdouhaboammar/ecc-tools/unslop-preflight-1785049152076; Add files via upload.</li>
-      <li>1 pull request updated, led by #11: feat: add unslop-preflight ECC bundle.</li>
-      <li>Daily summary covers 3 public activity items from the last 1 day.</li>
+      <li>5 commits landed: Merge pull request #11 from imMamdouhaboammar/ecc-tools/unslop-preflight-1785049152076; Add files via upload.</li>
+      <li>2 pull requests updated, led by #11: feat: add unslop-preflight ECC bundle.</li>
+      <li>Daily summary covers 7 public activity items from the last 7 days.</li>
   </ul>
 </details>
 <!-- project-story:end -->
