@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+## v1.15.0 - Enhanced Documentation, GitHub Stats & Security Hardening (2026-08-01)
+
+### Added
+- **Revamped README.md & SKILL.md**: Completely redesigned documentation featuring GitHub Readme Stats cards, dynamic language distribution, repository pins, GFM admonitions, sequence diagrams, and clean command matrices following `awesome-copilot/create-readme` and `beautify-github-readme` standards.
+- **npm Security & Supply Chain Hardening**: Integrated security rules following `npm-security-best-practices` (`.npmrc` ignore-scripts compatibility, Bun trustedDependencies, lockfile integrity verification, secret leak pre-checks, and OIDC trusted publishing).
+- **pnpm & Bun Workspace Governance**: Documented multi-package manager setup with Bun as primary mandatory test/script engine (`bun test`) and pnpm catalog/workspace compatibility.
+- **Enhanced Agent Guidance**: Updated `SKILL.md` and `AGENTS.md` to reflect the complete 7-engine architecture, 23+ readiness gates, and CLI subcommand matrix.
+
+
 ## v1.14.0 - Evolution: 7 Integrated AI, UI, UX & Loop Engines (2026-08-01)
 
 ### Added
