@@ -21,8 +21,8 @@ function writeBaselineDocs(cwd) {
 test('README documents the package npx command clearly', () => {
   const readme = readFileSync(join(process.cwd(), 'README.md'), 'utf8');
 
-  assert.match(readme, /npx unslop-preflight autopilot/);
-  assert.match(readme, /package name is `unslop-preflight`/i);
+  assert.match(readme, /bunx unslop-preflight autopilot/);
+  assert.match(readme, /What is Unslop Preflight\?/i);
 });
 
 test('max-passes=1 records exactly one autopilot pass', () => {

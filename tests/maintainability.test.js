@@ -24,7 +24,7 @@ function writeBaselineDocs(cwd) {
 
 test('README command validations', () => {
   const readme = readFileSync(new URL('../README.md', import.meta.url).pathname, 'utf8');
-  assert.match(readme, /npx unslop-preflight autopilot/);
+  assert.match(readme, /bunx unslop-preflight autopilot/);
   assert.doesNotMatch(readme, /unslop-preflight autopilot[\s\S]*npx unslop autopilot/);
 });
 
