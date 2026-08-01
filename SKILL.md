@@ -14,6 +14,13 @@ Unslop Preflight turns a vague product or UI request into a safer implementation
 - `PRODUCT.md` for product context and constraints
 - `DESIGN.md` for implementation-facing design decisions
 - `AGENTS.md` for repository-specific agent instructions
+- `no-ai-slop` copy & prose slop scanning and refactoring (`unslop scan --prose`)
+- `loop-engineering` continuous L1/L2 autonomous engineering loops (`unslop loop`)
+- `ui-review-loop` browser UI review recording and coverage audits (`unslop review`)
+- `browser-use` headless automation and viewport layout overflow scanning
+- `make-interfaces-feel-better` 19 design engineering polish principles (`unslop scan --feel`)
+- `ui-skills` baseline UI and motion performance rules
+- `ux-ui-agent-skills` design tokens governance and taste calibration
 - source scan findings for UI, accessibility, responsive, overlay, and source slop risks
 - `.unslop/` reports and fix lists when the CLI is available
 

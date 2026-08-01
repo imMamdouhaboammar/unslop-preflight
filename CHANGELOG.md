@@ -2,6 +2,18 @@
 
 ## [Unreleased]
 
+## v1.14.0 - Evolution: 7 Integrated AI, UI, UX & Loop Engines (2026-08-01)
+
+### Added
+- **`no-ai-slop` Prose & Copy Scanner (`petergyang/no-ai-slop`)**: Integrated `proseScanner.js` and `proseSlopRules.js` for auditing and refactoring copy, text literals, `DESIGN.md`, `PRODUCT.md`, and documentation slop (detects banned words like *delve, foster, leverage, utilize, robust* and anti-patterns like binary contrasts, throat-clearing, colon reveals, and superficial `-ing` clauses).
+- **`loop-engineering` Continuous Loop Engine (`cobusgreyling/loop-engineering`)**: Integrated `unslop loop` CLI suite (`src/commands/loop.js`, `src/core/loopGate.js`, `src/core/loopState.js`) supporting L1/L2 autonomous engineering loops, token budget enforcement (`loop-budget.md`), gate policies (`gate.yaml`), and state tracking (`STATE.md`).
+- **`ui-review-loop` Visual UI Review Engine (`amElnagdy/ui-review-loop`)**: Integrated `unslop review` CLI suite (`src/commands/review.js`, `src/core/reviewRecorder.js`) supporting recorded browser review rounds (video + DOM timeline + HAR network evidence), timestamped operator comments, 100% UI coverage audits (`coverage.json`), and local review server.
+- **`browser-use` Automation Engine (`browser-use/browser-use`)**: Integrated `src/scanners/browserAutomation.js` for headless browser automation, DOM tree parsing, accessibility tree extraction, and viewport layout overflow verification.
+- **`make-interfaces-feel-better` Polish Engine (`jakubkrehel/make-interfaces-feel-better`)**: Integrated `interfaceFeelScanner.js` and `interfaceFeelRules.js` for auditing 19 design engineering polish principles (concentric border radius, optical alignment, layered box shadows, interruptible transitions, scale on press, font smoothing, tabular numbers, touch hit area boundaries).
+- **`ui-skills` Quality Rules (`ibelick/ui-skills`)**: Integrated `motionRules.js` for baseline UI rules, motion performance restraints, and metadata governance.
+- **`ux-ui-agent-skills` Multi-Agent Harness (`plugin87/ux-ui-agent-skills`)**: Integrated design tokens discipline, taste calibration matrix, WCAG 2.2 accessibility rules, and multi-agent harness manifests for Claude Code, Cursor, Gemini CLI, Windsurf, Codex, and Cline.
+
+
 ## v1.12.0 - Real Autopilot Source Repair (2026-06-30)
 
 ### Added

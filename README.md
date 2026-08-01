@@ -27,7 +27,7 @@ The package name is `unslop-preflight`.
 
 [![skills.sh](https://img.shields.io/badge/skills.sh-published-0EA5E9?style=flat-square&logo=skillsdotsh&logoColor=white)](https://skills.sh/imMamdouhaboammar/unslop-preflight)
 [![Gates](https://img.shields.io/badge/gates-23%2B%20readiness-F59E0B?style=flat-square)](./SKILL.md)
-[![Docs v1.12.0](https://img.shields.io/badge/docs-v1.12.0-0EA5E9?style=flat-square)](./CHANGELOG.md)
+[![Docs v1.14.0](https://img.shields.io/badge/docs-v1.14.0-0EA5E9?style=flat-square)](./CHANGELOG.md)
 
 <br />
 
