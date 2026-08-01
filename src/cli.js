@@ -6,16 +6,22 @@ import { report } from './commands/report.js';
 import { doctor } from './commands/doctor.js';
 import { update } from './commands/update.js';
 import { standards } from './commands/standards.js';
+import { loopCommand as loop } from './commands/loop.js';
+import { reviewCommand as review } from './commands/review.js';
 import { parseArgs, printHelp } from './core/output.js';
-const commands = { autopilot, preflight: autopilot, init, audit, repair, report, doctor, update, standards };
+
+const commands = { autopilot, preflight: autopilot, init, audit, repair, report, doctor, update, standards, loop, review };
+
 function applyExitCode(parsed, result) {
   if ((parsed.flags.ci || parsed.flags.strict) && result?.summary?.errors > 0) process.exitCode = 1;
 }
+
 function rejectUnknownCommand(command) {
   console.error(`Unknown command: ${command}`);
   process.exitCode = 1;
   return printHelp();
 }
+
 function maxPassesError(flags) {
   const raw = flags.maxPasses;
   if (raw === undefined) return null;
@@ -28,6 +34,7 @@ function maxPassesError(flags) {
   }
   return null;
 }
+
 function verifyTimeoutError(flags, argv) {
   const rawArg = argv.find((item) => item.startsWith('--verify-timeout='));
   if (rawArg && rawArg.indexOf('=', rawArg.indexOf('=') + 1) !== -1) {
@@ -47,6 +54,7 @@ function verifyTimeoutError(flags, argv) {
   }
   return null;
 }
+
 function rejectInvalidFlags(parsed, argv) {
   const error = maxPassesError(parsed.flags) || verifyTimeoutError(parsed.flags, argv);
   if (!error) return false;
@@ -54,6 +62,7 @@ function rejectInvalidFlags(parsed, argv) {
   process.exitCode = 1;
   return true;
 }
+
 export async function run(argv, meta = {}) {
   const parsed = parseArgs(argv);
   if (parsed.flags.version) return console.log(meta.version || '0.0.0');
