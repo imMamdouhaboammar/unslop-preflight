@@ -13,7 +13,10 @@ import { parseArgs, printHelp } from './core/output.js';
 const commands = { autopilot, preflight: autopilot, init, audit, repair, report, doctor, update, standards, loop, review };
 
 function applyExitCode(parsed, result) {
-  if ((parsed.flags.ci || parsed.flags.strict) && result?.summary?.errors > 0) process.exitCode = 1;
+  const errors = result?.summary?.errors > 0;
+  const warnings = result?.summary?.warnings > 0;
+  if (parsed.flags.strict && (errors || warnings)) process.exitCode = 1;
+  else if (parsed.flags.ci && errors) process.exitCode = 1;
 }
 
 function rejectUnknownCommand(command) {
