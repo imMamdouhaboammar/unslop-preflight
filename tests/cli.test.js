@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, existsSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
@@ -205,6 +205,26 @@ test('doctor works and finds package.json missing', () => {
   const r = run(['doctor'], cwd);
   assert.equal(r.status, 0);
   assert.match(r.stdout, /package.json not found/i);
+});
+
+test('strict exits non-zero on warning-only scans', () => {
+  const cwd = temp();
+  const src = join(cwd, 'src');
+  mkdirSync(src);
+  writeFileSync(join(src, 'warn.jsx'), 'export function App() {\n  return Content\n}\n');
+
+  const plain = run(['scan', 'src', '--no-color'], cwd);
+  assert.equal(plain.status, 0);
+  assert.match(plain.stdout, /Warnings: [1-9]/);
+
+  const ci = run(['scan', 'src', '--ci'], cwd);
+  assert.equal(ci.status, 0);
+
+  const strict = run(['scan', 'src', '--strict'], cwd);
+  assert.notEqual(strict.status, 0);
+
+  const both = run(['scan', 'src', '--ci', '--strict'], cwd);
+  assert.notEqual(both.status, 0);
 });
 
 test('agent-prompt flag outputs prompt', () => {
