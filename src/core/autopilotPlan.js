@@ -330,6 +330,7 @@ export function runAutopilotPipeline(cwd, flags = {}) {
   }
 
   if (finalResult) {
+    const repairMode = getRepairMode(flags);
     finalResult.generated = unique(allGenerated);
     finalResult.changed = unique(allChanged);
     finalResult.repairs = allRepairs;
@@ -353,17 +354,20 @@ export function runAutopilotPipeline(cwd, flags = {}) {
     if (flags.standards) {
       finalResult.selectedStandards = flags.standards;
     }
-    finalResult.reportFiles = writeReports(cwd, finalResult, flags);
+    finalResult.reportFiles = repairMode === 'plan-only'
+      ? []
+      : writeReports(cwd, finalResult, flags);
     finalResult.exitCode = exitCodeFor(finalResult);
     finalResult.nextCommand = finalResult.summary.errors > 0
       ? 'npx unslop-preflight scan --strict'
       : 'npx unslop-preflight audit --strict';
 
-    const repairMode = getRepairMode(flags);
     if (repairMode === 'safe-fix') {
       finalResult.suggestedPrompt = 'Review `.unslop/report.md` and `.unslop/patch-summary.md`. Automatic fixes have been applied and verified; run remaining manual checks.';
     } else if (repairMode === 'agent-fix') {
       finalResult.suggestedPrompt = 'A customized coding agent prompt has been written to `.unslop/agent-fix-prompt.md`. Pass it to your agent to resolve the remaining source issues.';
+    } else if (repairMode === 'plan-only') {
+      finalResult.suggestedPrompt = 'Review the printed assessment and proposed repairs. No files were written in plan-only mode.';
     } else {
       finalResult.suggestedPrompt = 'Review `.unslop/report.md` and `.unslop/fix-list.md`. Apply manual source fixes separately; autopilot only applies safe documentation repairs.';
     }

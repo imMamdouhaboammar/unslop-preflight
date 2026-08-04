@@ -36,7 +36,7 @@
   - Focus outline none (adds focus ring helpers only if Tailwind is detected).
   - Standalone production console.log remover.
 - **Repair Mode Options**:
-  - `--plan-only`: Run scans and reports without file modification.
+  - `--plan-only`: Print scans and proposed repairs without writing project files or `.unslop` reports; JSON output returns an empty `reportFiles` list.
   - `--doc-fix` (Default): Apply safe documentation/spec repairs only.
   - `--safe-fix`: Apply safe doc repairs and approved deterministic source fixes.
   - `--agent-fix`: Write optimized developer instructions to `.unslop/agent-fix-prompt.md`.

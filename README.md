@@ -90,6 +90,10 @@ pnpm add -D unslop-preflight
 | `repair` | Executes safe, non-destructive AST transformations. | `bunx unslop-preflight repair --safe-fix` |
 | `doctor` | Checks environment health and lockfile configuration. | `bunx unslop-preflight doctor` |
 
+Use `autopilot --plan-only` for a zero-write preview. It prints the assessment
+and proposed repairs without modifying project files or creating `.unslop`
+reports, even when `--report` or a fix-mode flag is also present.
+
 ## Security & Supply Chain Defense
 
 > [!IMPORTANT]
