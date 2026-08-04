@@ -100,6 +100,11 @@ function topCategories(categories = {}) {
     .slice(0, 3);
 }
 
+function formatCount(count, singular, plural = `${singular}s`) {
+  const label = count === 1 ? singular : plural;
+  return `${count} ${label}`;
+}
+
 export function printResult(result, flags = {}) {
   const useColor = !flags.noColor;
 
@@ -131,7 +136,7 @@ export function printResult(result, flags = {}) {
 
   if (result.scanStats) {
     const stats = result.scanStats;
-    console.log(`Scan: ${stats.filesScanned} files | ${stats.findings} findings | ${stats.scannerFailures} scanner failures | ${stats.durationMs}ms`);
+    console.log(`Scan: ${formatCount(stats.filesScanned, 'file')} | ${formatCount(stats.findings, 'finding')} | ${formatCount(stats.scannerFailures, 'scanner failure')} | ${stats.durationMs}ms`);
   }
 
   if (result.codeFixes?.requested && !result.codeFixes.applied) {
