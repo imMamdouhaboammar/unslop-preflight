@@ -15,8 +15,10 @@ const commands = { autopilot, preflight: autopilot, init, audit, repair, report,
 function applyExitCode(parsed, result) {
   const errors = result?.summary?.errors > 0;
   const warnings = result?.summary?.warnings > 0;
-  if (parsed.flags.strict && (errors || warnings)) process.exitCode = 1;
-  else if (parsed.flags.ci && errors) process.exitCode = 1;
+  const shouldFail = (parsed.flags.strict && (errors || warnings)) || (parsed.flags.ci && errors);
+  if (!shouldFail) return;
+  const current = typeof process.exitCode === 'number' ? process.exitCode : 0;
+  process.exitCode = Math.max(current, 1);
 }
 
 function rejectUnknownCommand(command) {

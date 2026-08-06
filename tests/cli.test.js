@@ -187,7 +187,7 @@ test('anti-ai-slop rule catches sparkle icons', () => {
 test('anti-ai-slop rule catches brain icons', () => {
   const cwd = temp();
   run(['init'], cwd);
-  writeFileSync(join(cwd, 'DESIGN.md'), '# DESIGN.md\nAdd a 🧠 brain icon for AI.');
+  writeFileSync(join(cwd, 'DESIGN.md'), '# DESIGN.md\nAdd a \ud83e\udde0 brain icon for AI.');
   const data = JSON.parse(run(['audit', '--json'], cwd).stdout);
   assert.ok(data.issues.some((i) => i.id === 'no-brain-icons'));
 });
@@ -195,7 +195,7 @@ test('anti-ai-slop rule catches brain icons', () => {
 test('anti-ai-slop rule catches emojis', () => {
   const cwd = temp();
   run(['init'], cwd);
-  writeFileSync(join(cwd, 'DESIGN.md'), '# DESIGN.md\nMake it look happy 😊');
+  writeFileSync(join(cwd, 'DESIGN.md'), '# DESIGN.md\nMake it look happy \ud83d\ude0a');
   const data = JSON.parse(run(['audit', '--json'], cwd).stdout);
   assert.ok(data.issues.some((i) => i.id === 'no-emojis'));
 });
@@ -211,20 +211,55 @@ test('strict exits non-zero on warning-only scans', () => {
   const cwd = temp();
   const src = join(cwd, 'src');
   mkdirSync(src);
-  writeFileSync(join(src, 'warn.jsx'), 'export function App() {\n  return Content\n}\n');
+  writeFileSync(
+    join(src, 'warn.jsx'),
+    'export function App() {\n  return (\n    <table>\n      <tbody>\n        <tr><td>Hi</td></tr>\n      </tbody>\n    </table>\n  );\n}\n'
+  );
 
   const plain = run(['scan', 'src', '--no-color'], cwd);
   assert.equal(plain.status, 0);
+  assert.match(plain.stdout, /Errors: 0/);
   assert.match(plain.stdout, /Warnings: [1-9]/);
 
-  const ci = run(['scan', 'src', '--ci'], cwd);
+  const ci = run(['scan', 'src', '--ci', '--no-color'], cwd);
   assert.equal(ci.status, 0);
+  assert.match(ci.stdout, /Warnings: [1-9]/);
 
-  const strict = run(['scan', 'src', '--strict'], cwd);
+  const strict = run(['scan', 'src', '--strict', '--no-color'], cwd);
   assert.notEqual(strict.status, 0);
+  assert.match(strict.stdout, /Errors: 0/);
+  assert.match(strict.stdout, /Warnings: [1-9]/);
 
-  const both = run(['scan', 'src', '--ci', '--strict'], cwd);
+  const both = run(['scan', 'src', '--ci', '--strict', '--no-color'], cwd);
   assert.notEqual(both.status, 0);
+  assert.match(both.stdout, /Errors: 0/);
+  assert.match(both.stdout, /Warnings: [1-9]/);
+});
+
+test('ci and strict exit non-zero on scans with errors', () => {
+  const cwd = temp();
+  const src = join(cwd, 'src');
+  mkdirSync(src);
+  writeFileSync(
+    join(src, 'error.jsx'),
+    'export function List({ items }) {\n  return (\n    <ul>\n      {items.map((item) => (\n        <li key={Math.random()}>{item}</li>\n      ))}\n    </ul>\n  );\n}\n'
+  );
+
+  const plain = run(['scan', 'src', '--no-color'], cwd);
+  assert.equal(plain.status, 0);
+  assert.match(plain.stdout, /Errors: [1-9]/);
+
+  const ci = run(['scan', 'src', '--ci', '--no-color'], cwd);
+  assert.notEqual(ci.status, 0);
+  assert.match(ci.stdout, /Errors: [1-9]/);
+
+  const strict = run(['scan', 'src', '--strict', '--no-color'], cwd);
+  assert.notEqual(strict.status, 0);
+  assert.match(strict.stdout, /Errors: [1-9]/);
+
+  const both = run(['scan', 'src', '--ci', '--strict', '--no-color'], cwd);
+  assert.notEqual(both.status, 0);
+  assert.match(both.stdout, /Errors: [1-9]/);
 });
 
 test('agent-prompt flag outputs prompt', () => {
