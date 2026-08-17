@@ -1,9 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
+import { loadContext } from '../src/core/auditor.js';
+import { applyRepairs } from '../src/core/repair.js';
 
 const cli = new URL('../bin/cli.js', import.meta.url).pathname;
 
@@ -49,6 +51,35 @@ test('doctor prefers AGENTS.md when both files exist and reports AGENTS.md when 
   const missing = doctorIssues(neither).filter((issue) => /agent.*missing/i.test(issue.id));
   assert.equal(missing.length, 1);
   assert.match(missing[0].title, /AGENTS\.md/);
+});
+
+test('audit context loads only the canonical instruction content when both files exist', () => {
+  const cwd = temp();
+  write(cwd, 'PRODUCT.md', '# Product\n');
+  write(cwd, 'DESIGN.md', '# Design\n');
+  write(cwd, 'AGENTS.md', 'CANONICAL-INSTRUCTIONS\n');
+  write(cwd, 'AGENT.md', 'LEGACY-SHOULD-BE-IGNORED\n');
+
+  const context = loadContext(cwd);
+  assert.equal(context.agentInstructionFile, 'AGENTS.md');
+  assert.match(context.agentInstructions, /CANONICAL-INSTRUCTIONS/);
+  assert.match(context.all, /CANONICAL-INSTRUCTIONS/);
+  assert.doesNotMatch(context.all, /LEGACY-SHOULD-BE-IGNORED/);
+});
+
+test('repair writes agent sections only to the active canonical file when both exist', () => {
+  const cwd = temp();
+  write(cwd, 'PRODUCT.md', '# Product\n');
+  write(cwd, 'DESIGN.md', '# Design\n');
+  write(cwd, 'AGENTS.md', '# Canonical\n');
+  write(cwd, 'AGENT.md', '# Legacy\n');
+
+  applyRepairs(cwd, { safeDocs: [{ ruleName: 'missing-do-not-break' }], suggestedPatches: [] });
+
+  const canonical = readFileSync(join(cwd, 'AGENTS.md'), 'utf8');
+  const legacy = readFileSync(join(cwd, 'AGENT.md'), 'utf8');
+  assert.match(canonical, /unslop:start missing-do-not-break/);
+  assert.equal(legacy, '# Legacy\n');
 });
 
 test('report prompt references canonical AGENTS.md when present', () => {
