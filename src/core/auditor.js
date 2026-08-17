@@ -1,20 +1,21 @@
-import { readText } from './filesystem.js';
+import { exists, readText } from './filesystem.js';
 import { rules } from '../rules/index.js';
 import { calculateScore, readinessBand, readinessMessage } from './scoring.js';
 import { convertLegacyIssueToEvidence } from './findings.js';
 import { verifyScoringIntegrity } from './integrity.js';
+import { activeAgentInstructionFile } from './agentInstructions.js';
 
 export function loadContext(cwd) {
+  const selectedAgentInstructionFile = activeAgentInstructionFile(cwd);
+  const hasAgentInstructionFile = exists(cwd, selectedAgentInstructionFile);
+  const agentInstructionFile = hasAgentInstructionFile ? selectedAgentInstructionFile : null;
+  const agentInstructions = agentInstructionFile ? readText(cwd, agentInstructionFile) : '';
   const files = {
     'PRODUCT.md': readText(cwd, 'PRODUCT.md'),
     'DESIGN.md': readText(cwd, 'DESIGN.md'),
-    'AGENTS.md': readText(cwd, 'AGENTS.md'),
-    'AGENT.md': readText(cwd, 'AGENT.md')
+    ...(agentInstructionFile ? { [agentInstructionFile]: agentInstructions } : {})
   };
-
-  const agentInstructionFile = files['AGENTS.md'] ? 'AGENTS.md' : (files['AGENT.md'] ? 'AGENT.md' : null);
-  const agentInstructions = agentInstructionFile ? files[agentInstructionFile] : '';
-  const all = Object.values(files).filter(Boolean).join('\n\n');
+  const all = [files['PRODUCT.md'], files['DESIGN.md'], agentInstructions].filter(Boolean).join('\n\n');
 
   return { cwd, files, all, agentInstructionFile, agentInstructions };
 }
@@ -39,7 +40,6 @@ function categorySummary(issues) {
 
 export function summarize(result) {
   verifyScoringIntegrity();
-  // Convert all incoming issues to Evidence objects for the new scoring engine
   const evidences = result.issues.map(i => {
     if (i.constructor.name === 'Evidence') return i;
     return convertLegacyIssueToEvidence(i, i.type || 'spec');
@@ -54,10 +54,10 @@ export function summarize(result) {
   
   return {
     ...result,
-    evidences, // Attach the full Evidence objects
+    evidences,
     summary: {
       score,
-      checks: rules.length, // Does not include source scanners count dynamically yet
+      checks: rules.length,
       errors,
       warnings,
       info,

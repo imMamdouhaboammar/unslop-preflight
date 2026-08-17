@@ -1,5 +1,6 @@
 import { appendMarkdownBlock, exists, writeText, readText } from './filesystem.js';
 import { templateFor } from './templates.js';
+import { activeAgentInstructionFile } from './agentInstructions.js';
 
 const AGENT_INSTRUCTION_TARGET = '__AGENT_INSTRUCTIONS__';
 
@@ -33,12 +34,6 @@ const autoSections = {
   'missing-verification-checklist': [AGENT_INSTRUCTION_TARGET, `## Verification Checklist\n- [ ] Build passes.\n- [ ] Tests pass.\n- [ ] Main flows checked.\n- [ ] Mobile behavior checked.\n- [ ] Accessibility basics checked.`],
   'missing-agent-handoff': ['DESIGN.md', `## Agent Handoff Instructions\n- Inspect before coding.\n- Summarize planned edits.\n- Verify responsive and accessibility behavior after changes.`]
 };
-
-function activeAgentInstructionFile(cwd) {
-  if (exists(cwd, 'AGENTS.md')) return 'AGENTS.md';
-  if (exists(cwd, 'AGENT.md')) return 'AGENT.md';
-  return 'AGENTS.md';
-}
 
 function resolveSectionFile(cwd, file) {
   return file === AGENT_INSTRUCTION_TARGET ? activeAgentInstructionFile(cwd) : file;
