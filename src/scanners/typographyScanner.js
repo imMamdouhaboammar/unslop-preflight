@@ -2,6 +2,7 @@ const ARABIC_SCRIPT = /[\u0600-\u06FF]/;
 const SIMPLE_HTML_ENTITY = /&(?:#\d+|#x[\da-f]+|[a-z][a-z\d]+);/gi;
 const VOID_ELEMENTS = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr']);
 const RAW_TEXT_ELEMENTS = new Set(['script', 'style']);
+const MIN_VISIBLE_ARABIC_CHARACTERS = 80;
 
 function readTagAt(content, start) {
   if (content[start] !== '<') return null;
@@ -107,16 +108,33 @@ function skipBlockComment(content, start) {
   return end === -1 ? content.length - 1 : end + 1;
 }
 
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function findRawTextClosingTag(content, openingTag) {
+  const expectedClosingName = openingTag.name.toLowerCase();
+  const closePattern = new RegExp(`</${escapeRegExp(expectedClosingName)}`, 'gi');
+  closePattern.lastIndex = openingTag.end + 1;
+
+  for (let match = closePattern.exec(content); match; match = closePattern.exec(content)) {
+    const closingTag = readTagAt(content, match.index);
+    if (closingTag?.kind === 'close' && closingTag.name.toLowerCase() === expectedClosingName) {
+      return closingTag.end;
+    }
+    closePattern.lastIndex = match.index + 2;
+  }
+
+  return -1;
+}
+
 function collectJsxElementTags(content, openingTag, tags) {
   tags.push(openingTag);
   if (openingTag.selfClosing) return openingTag.end;
 
   const expectedClosingName = openingTag.name.toLowerCase();
   if (RAW_TEXT_ELEMENTS.has(expectedClosingName)) {
-    const closeStart = content.toLowerCase().indexOf(`</${expectedClosingName}`, openingTag.end + 1);
-    if (closeStart === -1) return -1;
-    const closingTag = readTagAt(content, closeStart);
-    return closingTag?.kind === 'close' ? closingTag.end : -1;
+    return findRawTextClosingTag(content, openingTag);
   }
 
   let cursor = openingTag.end + 1;
@@ -220,13 +238,22 @@ function collectMarkupTags(content) {
   return tags;
 }
 
+function uniqueOpeningTags(tags) {
+  const seenStarts = new Set();
+  return tags.filter((tag) => {
+    if (seenStarts.has(tag.start)) return false;
+    seenStarts.add(tag.start);
+    return true;
+  });
+}
+
 function candidateOpeningTags(content, file) {
   if (/\.(?:jsx?|tsx)$/i.test(file)) {
     const tags = [];
     collectTagsFromCode(content, 0, tags);
-    return tags;
+    return uniqueOpeningTags(tags);
   }
-  if (/\.(?:html|vue|svelte|mdx)$/i.test(file)) return collectMarkupTags(content);
+  if (/\.(?:html|vue|svelte|mdx)$/i.test(file)) return uniqueOpeningTags(collectMarkupTags(content));
   return [];
 }
 
@@ -298,7 +325,7 @@ function findLongArabicTextHeight(content, file, findings) {
 
     const directText = extractDirectLiteralText(content, tag);
     if (directText === null || !ARABIC_SCRIPT.test(directText)) continue;
-    if (visibleCharacterCount(directText) < 80) continue;
+    if (visibleCharacterCount(directText) < MIN_VISIBLE_ARABIC_CHARACTERS) continue;
 
     findings.push({
       file,
