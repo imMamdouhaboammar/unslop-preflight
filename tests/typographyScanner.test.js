@@ -119,3 +119,13 @@ test('does not inspect markup-like strings inside HTML script elements', () => {
   const findings = scanMarkup(`<script>const sample = '<p class="text-center leading-none">${arabic80}</p>';</script>`, 'index.html');
   assert.equal(findings.length, 0);
 });
+
+test('ignores markup in unsupported TypeScript files', () => {
+  const findings = scanMarkup(`<p className="leading-none text-center">${arabic80}</p>`, 'tokens.ts');
+  assert.equal(findings.length, 0);
+});
+
+test('does not duplicate a valid nested candidate when an outer closing tag is omitted', () => {
+  const findings = scanMarkup(`<div><p class="leading-none text-center">${arabic80}</p>`, 'page.html');
+  assert.equal(findings.length, 1);
+});
