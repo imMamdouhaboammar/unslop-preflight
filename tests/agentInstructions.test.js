@@ -3,11 +3,12 @@ import assert from 'node:assert/strict';
 import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { loadContext } from '../src/core/auditor.js';
 import { applyRepairs } from '../src/core/repair.js';
 
-const cli = new URL('../bin/cli.js', import.meta.url).pathname;
+const cli = fileURLToPath(new URL('../bin/cli.js', import.meta.url));
 
 function temp() {
   return mkdtempSync(join(tmpdir(), 'unslop-agent-file-'));
@@ -53,7 +54,7 @@ test('doctor prefers AGENTS.md when both files exist and reports AGENTS.md when 
   assert.match(missing[0].title, /AGENTS\.md/);
 });
 
-test('audit context loads only the canonical instruction content when both files exist', () => {
+test('audit context loads only the canonical instruction file when both files exist', () => {
   const cwd = temp();
   write(cwd, 'PRODUCT.md', '# Product\n');
   write(cwd, 'DESIGN.md', '# Design\n');
@@ -63,7 +64,22 @@ test('audit context loads only the canonical instruction content when both files
   const context = loadContext(cwd);
   assert.equal(context.agentInstructionFile, 'AGENTS.md');
   assert.match(context.agentInstructions, /CANONICAL-INSTRUCTIONS/);
+  assert.equal(context.files['AGENTS.md'], 'CANONICAL-INSTRUCTIONS\n');
+  assert.equal(Object.hasOwn(context.files, 'AGENT.md'), false);
   assert.match(context.all, /CANONICAL-INSTRUCTIONS/);
+  assert.doesNotMatch(context.all, /LEGACY-SHOULD-BE-IGNORED/);
+});
+
+test('audit preserves an existing empty canonical file instead of falling back to legacy content', () => {
+  const cwd = temp();
+  write(cwd, 'AGENTS.md', '');
+  write(cwd, 'AGENT.md', 'LEGACY-SHOULD-BE-IGNORED\n');
+
+  const context = loadContext(cwd);
+  assert.equal(context.agentInstructionFile, 'AGENTS.md');
+  assert.equal(context.agentInstructions, '');
+  assert.equal(context.files['AGENTS.md'], '');
+  assert.equal(Object.hasOwn(context.files, 'AGENT.md'), false);
   assert.doesNotMatch(context.all, /LEGACY-SHOULD-BE-IGNORED/);
 });
 
