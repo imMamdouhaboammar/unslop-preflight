@@ -36,7 +36,7 @@ For each candidate it extracts only direct literal text. Nested element content 
 
 The finding is attached to the opening-tag line.
 
-## Failure case
+## Failure cases
 
 Adversarial review found a false positive that the issue's basic acceptance list did not mention:
 
@@ -45,6 +45,10 @@ const example = '<p className="text-center leading-none">...</p>';
 ```
 
 A naive markup search treated this string as rendered JSX. The candidate locator was tightened to skip JavaScript quoted literals/comments. A similar HTML `<script>` string case was also added to the regression suite.
+
+A second independent review exposed a parser-recovery problem with malformed or HTML-style optional markup. `collectJsxElementTags()` could collect a valid nested opening tag, fail later because an outer closing tag was missing, and then allow the caller to scan the nested tag again. That produced duplicate evidence for one source location.
+
+The regression test deliberately added only the failing malformed-markup case first. CI reported two findings where one was expected. Candidate opening tags are now deduplicated by source start position before rule evaluation, so recovery paths cannot multiply the same evidence.
 
 ## Test proving behavior
 
@@ -62,10 +66,14 @@ A naive markup search treated this string as rendered JSX. The candidate locator
 - `>` inside JSX attribute expressions;
 - JavaScript string false positives;
 - HTML `script` raw-text false positives;
-- simple HTML entity counting.
+- simple HTML entity counting;
+- unsupported file extensions;
+- malformed outer markup without duplicate findings.
 
 ## What I should remember
 
 A shared scanner's pre-heuristic behavior is part of every detector's contract. Do not attach a broad `pattern` merely as a cheap prefilter if the scanner automatically turns it into a finding.
 
 When a detector only needs a narrow piece of syntax, a small bounded tokenizer can be safer than either a giant regex or a premature full parser dependency. But its unsupported dynamic cases must be documented explicitly rather than implied away.
+
+Recovery behavior is also part of a static-analysis contract. A tolerant tokenizer may revisit malformed source, so downstream candidates need a stable identity such as source position. Recovery must never turn one physical defect into duplicate findings merely because parsing took more than one path.
