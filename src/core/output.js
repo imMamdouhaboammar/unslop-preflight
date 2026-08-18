@@ -79,7 +79,7 @@ ${c.bold('Flags:')}
   --verify-timeout=<seconds> Timeout in seconds for verification checks (default: 120)
   --report       Write reports to .unslop
   --ci           Exit non-zero on errors
-  --strict       Treat errors as failing
+  --strict       Exit non-zero on errors or warnings
   --verbose      Show extra details
   --no-color     Disable color output
   --debug        Show stack traces

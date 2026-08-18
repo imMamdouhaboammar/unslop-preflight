@@ -83,7 +83,7 @@ pnpm add -D unslop-preflight
 | Command | Description | Example |
 |---|---|---|
 | `autopilot` | Full preflight, source scan, repair, and verification. | `bunx unslop-preflight autopilot --safe-fix --verify` |
-| `scan` | Scans source code, prose, interface feel, and a11y. | `bunx unslop-preflight scan src --strict` |
+| `scan` | Scans source code, prose, interface feel, and a11y. With `--strict`, exits non-zero on errors or warnings. | `bunx unslop-preflight scan src --strict` |
 | `loop` | Continuous engineering loop runner (PR triage, CI sweep). | `bunx unslop-preflight loop status` |
 | `review` | Browser UI review recorder (DOM, HAR, network). | `bunx unslop-preflight review start --url http://localhost:3000` |
 | `init` | Bootstraps `PRODUCT.md`, `DESIGN.md`, and `AGENTS.md`. | `bunx unslop-preflight init` |

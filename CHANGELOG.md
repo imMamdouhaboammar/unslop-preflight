@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+### Changed
+- **`--strict` now fails on warning-only runs**: `scan`, `audit`, and `autopilot` exit non-zero when the summary contains errors or warnings under `--strict`; `--ci` continues to fail only on errors. Strict/CI failures now preserve an already-set higher exit code (such as autopilot's needs-spec-work exit code `2`) instead of overwriting it with `1`.
+
 ## v1.15.0 - Enhanced Documentation, GitHub Stats & Security Hardening (2026-08-01)
 
 ### Added
