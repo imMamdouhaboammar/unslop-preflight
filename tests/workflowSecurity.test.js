@@ -4,7 +4,7 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 
 const workflowsDir = join(process.cwd(), '.github', 'workflows');
-const externalUsePattern = /^\s*uses:\s*([^./\s][^@\s]*)@([^\s#]+)(?:\s+#\s*(.+))?\s*$/gm;
+const externalUsePattern = /^\s*(?:-\s*)?uses:\s*([^./\s][^@\s]*)@([^\s#]+)(?:\s+#\s*(.+))?\s*$/gm;
 const fullShaPattern = /^[0-9a-f]{40}$/i;
 
 function externalUses() {
