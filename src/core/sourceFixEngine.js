@@ -33,8 +33,16 @@ export class SourceFixEngine {
     if (hasRule('target-blank-without-rel') && /target=["']_blank["']/i.test(currentContent)) {
       const before = currentContent;
       currentContent = currentContent.replace(/<a\s+([^>]*target=["']_blank["'][^>]*)>/g, (match, attrs) => {
-        if (/rel=/i.test(attrs)) {
-          return match; // Skip if already has rel
+        const relMatch = attrs.match(/\brel=(["'])([^"']*)\1/i);
+        if (relMatch) {
+          const tokens = relMatch[2].trim().split(/\s+/).filter(Boolean);
+          const lowerTokens = new Set(tokens.map(token => token.toLowerCase()));
+          if (lowerTokens.has('noopener') || lowerTokens.has('noreferrer')) {
+            return match;
+          }
+          const updatedRel = [...tokens, 'noopener', 'noreferrer'].join(' ');
+          const updatedAttrs = attrs.replace(relMatch[0], `rel=${relMatch[1]}${updatedRel}${relMatch[1]}`);
+          return `<a ${updatedAttrs}>`;
         }
         return `<a ${attrs} rel="noopener noreferrer">`;
       });
