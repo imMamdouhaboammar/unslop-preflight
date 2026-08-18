@@ -8,11 +8,11 @@ function repair(content) {
   return new SourceFixEngine('/tmp').applyFixes('src/Link.jsx', content, finding);
 }
 
-test('target blank repair preserves existing rel tokens and adds security tokens', () => {
+test('target blank repair preserves existing rel tokens and adds only noopener', () => {
   const input = '<a href="/docs" target="_blank" rel="nofollow ugc">Docs</a>';
   const { content, fixes } = repair(input);
 
-  assert.equal(content, '<a href="/docs" target="_blank" rel="nofollow ugc noopener noreferrer">Docs</a>');
+  assert.equal(content, '<a href="/docs" target="_blank" rel="nofollow ugc noopener">Docs</a>');
   assert.equal(fixes.length, 1);
 });
 
@@ -20,7 +20,7 @@ test('target blank repair preserves single-quoted rel attributes', () => {
   const input = "<a rel='external' target='_blank' href='/docs'>Docs</a>";
   const { content } = repair(input);
 
-  assert.equal(content, "<a rel='external noopener noreferrer' target='_blank' href='/docs'>Docs</a>");
+  assert.equal(content, "<a rel='external noopener' target='_blank' href='/docs'>Docs</a>");
 });
 
 test('target blank repair leaves already-safe rel tokens unchanged', () => {
@@ -36,13 +36,13 @@ test('target blank repair is idempotent after extending an existing rel attribut
   const first = repair(input).content;
   const second = repair(first).content;
 
-  assert.equal(first, '<a target="_blank" rel="nofollow noopener noreferrer">Docs</a>');
+  assert.equal(first, '<a target="_blank" rel="nofollow noopener">Docs</a>');
   assert.equal(second, first);
 });
 
-test('target blank repair matches detector case-insensitivity', () => {
+test('target blank repair matches detector case-insensitivity without rewriting tag case', () => {
   const input = '<A href="/docs" TARGET="_BLANK" rel="nofollow">Docs</A>';
   const { content } = repair(input);
 
-  assert.equal(content, '<a href="/docs" TARGET="_BLANK" rel="nofollow noopener noreferrer">Docs</A>');
+  assert.equal(content, '<A href="/docs" TARGET="_BLANK" rel="nofollow noopener">Docs</A>');
 });
