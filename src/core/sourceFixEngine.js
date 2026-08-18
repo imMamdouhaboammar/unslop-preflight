@@ -32,7 +32,7 @@ export class SourceFixEngine {
     // 1. Unsafe target blank (Rule: target-blank-without-rel)
     if (hasRule('target-blank-without-rel') && /target=["']_blank["']/i.test(currentContent)) {
       const before = currentContent;
-      currentContent = currentContent.replace(/<a\s+([^>]*target=["']_blank["'][^>]*)>/g, (match, attrs) => {
+      currentContent = currentContent.replace(/<a\s+([^>]*target=["']_blank["'][^>]*)>/gi, (match, attrs) => {
         const relMatch = attrs.match(/\brel=(["'])([^"']*)\1/i);
         if (relMatch) {
           const tokens = relMatch[2].trim().split(/\s+/).filter(Boolean);
@@ -40,11 +40,10 @@ export class SourceFixEngine {
           if (lowerTokens.has('noopener') || lowerTokens.has('noreferrer')) {
             return match;
           }
-          const updatedRel = [...tokens, 'noopener', 'noreferrer'].join(' ');
-          const updatedAttrs = attrs.replace(relMatch[0], `rel=${relMatch[1]}${updatedRel}${relMatch[1]}`);
-          return `<a ${updatedAttrs}>`;
+          const updatedRel = [...tokens, 'noopener'].join(' ');
+          return match.replace(relMatch[0], `rel=${relMatch[1]}${updatedRel}${relMatch[1]}`);
         }
-        return `<a ${attrs} rel="noopener noreferrer">`;
+        return match.replace(/>$/, ' rel="noopener noreferrer">');
       });
       if (before !== currentContent) {
         fixes.push({
