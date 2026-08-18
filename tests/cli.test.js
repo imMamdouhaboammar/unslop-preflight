@@ -1,11 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 
-const cli = new URL('../bin/cli.js', import.meta.url).pathname;
+const cli = fileURLToPath(new URL('../bin/cli.js', import.meta.url));
 
 function temp() {
   return mkdtempSync(join(tmpdir(), 'unslop-'));
@@ -13,6 +14,21 @@ function temp() {
 
 function run(args, cwd = temp()) {
   return spawnSync(process.execPath, [cli, ...args], { cwd, encoding: 'utf8' });
+}
+
+function snapshotTree(root, current = root) {
+  const snapshot = {};
+  for (const name of readdirSync(current).sort()) {
+    const absolute = join(current, name);
+    const relative = absolute.slice(root.length + 1).replaceAll('\\', '/');
+    if (statSync(absolute).isDirectory()) {
+      snapshot[`${relative}/`] = null;
+      Object.assign(snapshot, snapshotTree(root, absolute));
+    } else {
+      snapshot[relative] = readFileSync(absolute, 'utf8');
+    }
+  }
+  return snapshot;
 }
 
 test('help works', () => {
@@ -106,6 +122,20 @@ test('autopilot writes reports', () => {
   const r = run(['autopilot', '--report'], cwd);
   assert.ok(existsSync(join(cwd, '.unslop/report.json')));
 });
+
+for (const extraFlags of [[], ['--safe-fix']]) {
+  test(`autopilot plan-only writes nothing${extraFlags.length ? ' when safe-fix is also passed' : ''}`, () => {
+    const cwd = temp();
+    writeFileSync(join(cwd, 'DESIGN.md'), '# Design\nOpen the API key settings.\n');
+    const before = snapshotTree(cwd);
+
+    const r = run(['autopilot', '--plan-only', '--report', '--json', ...extraFlags], cwd);
+
+    assert.deepEqual(snapshotTree(cwd), before);
+    const data = JSON.parse(r.stdout);
+    assert.deepEqual(data.reportFiles, []);
+  });
+}
 
 test('json report is valid', () => {
   const cwd = temp();
