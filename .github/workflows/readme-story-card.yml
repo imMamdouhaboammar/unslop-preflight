@@ -17,6 +17,6 @@ permissions:
 
 jobs:
   update:
-    uses: imMamdouhaboammar/imMamdouhaboammar/.github/workflows/update-project-story-card.yml@main
+    uses: imMamdouhaboammar/imMamdouhaboammar/.github/workflows/update-project-story-card.yml@5499a28505a3a1aa5357ba677ef2248381461400 # main resolved 2026-08-18
     secrets:
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
