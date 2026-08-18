@@ -94,6 +94,89 @@ Use `autopilot --plan-only` for a zero-write preview. It prints the assessment
 and proposed repairs without modifying project files or creating `.unslop`
 reports, even when `--report` or a fix-mode flag is also present.
 
+## Example Gate Output
+
+### Blocked Scan (Errors & Layout Regressions Detected)
+
+```text
+$ bunx unslop-preflight scan src
+
+Unslop Output
+Score: 0/100 | Checks: 64 | Errors: 3 | Warnings: 14 | Info: 0
+Readiness: blocked
+Decision: Do not hand this to an AI coding agent yet. Resolve errors and blocked source issues first.
+Scan: 1 file | 17 findings | 0 scanner failures | 10ms
+Top categories: source-modular (17)
+
+Issues:
+  ✕ [ERROR] fixed-width-mobile-risk: Fixed wide width without a max-width constraint or responsive breakpoint. Will cause horizontal scroll on mobile.
+  ⚠ [WARNING] arbitrary-z-index-slop: Extreme arbitrary z-index detected (e.g. z-9999). Use structured layers (e.g., z-40, z-50) or stacking contexts.
+  ⚠ [WARNING] height-100vh-mobile-risk: `h-screen` or `100vh` detected. On mobile Safari/Chrome, this ignores the browser address bar. Use `h-dvh` or `min-h-screen`.
+  ⚠ [WARNING] oversized-typography-mobile-risk: Oversized text utility found without a responsive constraint. This will break mobile layouts.
+
+Next steps:
+  Run: bunx unslop-preflight autopilot --report
+```
+
+### Passing / Agent-Ready Scan
+
+```text
+$ bunx unslop-preflight scan src
+
+Unslop Output
+Score: 100/100 | Checks: 64 | Errors: 0 | Warnings: 0 | Info: 0
+Readiness: agent-ready
+Decision: Ready for AI-assisted implementation with standard verification.
+Scan: 12 files | 0 findings | 0 scanner failures | 8ms
+
+✓ No issues found! Your design spec is robust.
+
+Next steps:
+  Run: bunx unslop-preflight autopilot --report
+```
+
+## CLI Flags & Common Recipes
+
+### CLI Flags
+
+| Flag | Scope | Description |
+|---|---|---|
+| `--strict` | `scan`, `autopilot`, `audit` | Exits non-zero (`1`) if errors **or** warnings are detected. |
+| `--ci` | `scan`, `autopilot`, `audit` | Exits non-zero (`1`) on errors only; ignores warning-only results. |
+| `--plan-only` | `autopilot` | Zero-write preview: prints assessment and planned fixes without writing any files or `.unslop` reports. |
+| `--safe-fix` | `autopilot`, `repair` | Performs non-destructive AST repairs (`rel="noopener"`, button types, `loading="lazy"`, etc.). |
+| `--verify` | `autopilot` | Runs package-manager-detected build and test suites to verify repairs. |
+| `--report` | `autopilot`, `audit` | Generates `.unslop/report.md` and `.unslop/report.json` artifacts. |
+| `--json` | All commands | Emits machine-readable JSON to stdout. |
+| `--agent-prompt` | `audit`, `autopilot` | Outputs copy-paste instructions for Claude Code, Cursor, or Gemini CLI. |
+
+### Common Recipes
+
+- **Quick Health & Spec Check:**
+  ```bash
+  bunx unslop-preflight doctor
+  ```
+- **CI Build & Quality Gate:**
+  ```bash
+  bunx unslop-preflight scan src --ci
+  ```
+- **Strict Pre-Merge Gate (Errors + Warnings):**
+  ```bash
+  bunx unslop-preflight scan src --strict
+  ```
+- **Zero-Write Dry-Run Plan:**
+  ```bash
+  bunx unslop-preflight autopilot --plan-only
+  ```
+- **Full Autonomous Repair & Verification Loop:**
+  ```bash
+  bunx unslop-preflight autopilot --safe-fix --verify --report --strict
+  ```
+- **Agent Handoff Instructions:**
+  ```bash
+  bunx unslop-preflight audit --agent-prompt
+  ```
+
 ## Security & Supply Chain Defense
 
 > [!IMPORTANT]
