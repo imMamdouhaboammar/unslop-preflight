@@ -39,3 +39,10 @@ test('target blank repair is idempotent after extending an existing rel attribut
   assert.equal(first, '<a target="_blank" rel="nofollow noopener noreferrer">Docs</a>');
   assert.equal(second, first);
 });
+
+test('target blank repair matches detector case-insensitivity', () => {
+  const input = '<A href="/docs" TARGET="_BLANK" rel="nofollow">Docs</A>';
+  const { content } = repair(input);
+
+  assert.equal(content, '<a href="/docs" TARGET="_BLANK" rel="nofollow noopener noreferrer">Docs</A>');
+});
