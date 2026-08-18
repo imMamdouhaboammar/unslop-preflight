@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, existsSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
@@ -205,6 +205,20 @@ test('doctor works and finds package.json missing', () => {
   const r = run(['doctor'], cwd);
   assert.equal(r.status, 0);
   assert.match(r.stdout, /package.json not found/i);
+});
+
+test('scan stats pluralize correctly for a single file', () => {
+  const cwd = temp();
+  const src = join(cwd, 'src');
+  mkdirSync(src);
+  writeFileSync(join(src, 'one.jsx'), 'export function App() {\n  return Content\n}\n');
+
+  const r = run(['scan', 'src', '--no-color'], cwd);
+  assert.match(r.stdout, /Scan: 1 file \|/);
+  assert.doesNotMatch(r.stdout, /\b1 files\b/);
+  assert.doesNotMatch(r.stdout, /\b1 findings\b/);
+  assert.doesNotMatch(r.stdout, /\b1 scanner failures\b/);
+  assert.match(r.stdout, /\| 0 scanner failures \|/);
 });
 
 test('agent-prompt flag outputs prompt', () => {
