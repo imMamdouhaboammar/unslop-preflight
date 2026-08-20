@@ -255,12 +255,34 @@ export class SourceFixEngine {
   }
 
   /**
-   * Helper to estimate changed lines count.
+   * Counts a conservative changed-line range by trimming unchanged prefix/suffix lines.
+   * This is exact for contiguous local rewrites and intentionally over-counts disjoint edits.
    */
+  countChangedLineRange(before = '', after = '') {
+    const beforeLines = before.split(/\r?\n/);
+    const afterLines = after.split(/\r?\n/);
+    let start = 0;
+
+    while (start < beforeLines.length && start < afterLines.length && beforeLines[start] === afterLines[start]) {
+      start += 1;
+    }
+
+    let beforeEnd = beforeLines.length - 1;
+    let afterEnd = afterLines.length - 1;
+    while (beforeEnd >= start && afterEnd >= start && beforeLines[beforeEnd] === afterLines[afterEnd]) {
+      beforeEnd -= 1;
+      afterEnd -= 1;
+    }
+
+    return {
+      addedLines: Math.max(0, afterEnd - start + 1),
+      removedLines: Math.max(0, beforeEnd - start + 1)
+    };
+  }
+
   countDiffLines(before = '', after = '') {
-    const beforeLines = before.split(/\r?\n/).length;
-    const afterLines = after.split(/\r?\n/).length;
-    return Math.abs(beforeLines - afterLines) || 1; // Default minimum 1 line changed
+    const { addedLines, removedLines } = this.countChangedLineRange(before, after);
+    return Math.max(1, addedLines + removedLines);
   }
 }
 
@@ -342,10 +364,10 @@ export function runSourceFixEngine(cwd, findings = [], flags = {}) {
       }
 
       // Check validation again for specific changes
+      const changedLines = engine.countChangedLineRange(originalContent, updatedContent);
       const patchObj = {
         filePath: absolutePath,
-        addedLines: updatedContent.split(/\r?\n/).length,
-        removedLines: originalContent.split(/\r?\n/).length
+        ...changedLines
       };
       
       const patchSafety = engine.validator.validatePatches([patchObj]);
