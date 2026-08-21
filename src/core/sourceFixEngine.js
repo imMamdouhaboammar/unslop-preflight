@@ -139,7 +139,7 @@ export class SourceFixEngine {
         }
         const lowerAttrs = attrs.toLowerCase();
         // High confidence decorative markers
-        const isDecorative = lowerAttrs.includes('icon') || lowerAttrs.includes('decor') || lowerAttrs.includes('pattern') || lowerAttrs.includes('bg-') || lowerAttrs.includes('divider') || lowerAttrs.includes('spacer') || lowerAttrs.includes('avatar') || lowerAttrs.includes('decorative');
+        const isDecorative = lowerAttrs.includes('icon') || lowerAttrs.includes('decor') || lowerAttrs.includes('pattern') || lowerAttrs.includes('bg-') || lowerAttrs.includes('divider') || lowerAttrs.includes('spacer') || lowerAttrs.includes('decorative');
         if (isDecorative) {
           return `<img${attrs} alt=""${selfClose || ''}>`;
         }
