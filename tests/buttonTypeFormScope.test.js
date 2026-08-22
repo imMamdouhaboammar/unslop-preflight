@@ -59,3 +59,20 @@ export function SignupForm() {
   assert.match(result.content, /<button className="menu-trigger" type="button">Menu<\/button>/);
   assert.equal(result.fixes.length, 1);
 });
+
+test('a self-closing form sibling does not create false form containment', () => {
+  const content = `
+export function EmptyForm() {
+  return <form aria-label="empty" />;
+}
+
+export function Toolbar() {
+  return <button className="menu-trigger">Menu</button>;
+}
+`;
+
+  const result = repair(content);
+
+  assert.match(result.content, /<button className="menu-trigger" type="button">Menu<\/button>/);
+  assert.equal(result.fixes.length, 1);
+});
