@@ -64,7 +64,19 @@ export class SourceFixEngine {
     const isJsxFile = filePath.endsWith('.jsx') || filePath.endsWith('.tsx') || filePath.endsWith('.js') || filePath.endsWith('.ts');
     if (isJsxFile && hasRule('missing-button-type') && /<button\b/i.test(currentContent)) {
       const before = currentContent;
-      currentContent = currentContent.replace(/<button\b([^>]*)>([\s\S]*?)<\/button>/gi, (match, attrs, body) => {
+      const isInsideForm = (offset) => {
+        const precedingFormTags = currentContent.slice(0, offset).match(/<\/?form\b[^>]*>/gi) || [];
+        let depth = 0;
+        for (const tag of precedingFormTags) {
+          if (/^<\/form\b/i.test(tag)) {
+            depth = Math.max(0, depth - 1);
+          } else {
+            depth += 1;
+          }
+        }
+        return depth > 0;
+      };
+      currentContent = currentContent.replace(/<button\b([^>]*)>([\s\S]*?)<\/button>/gi, (match, attrs, body, offset) => {
         if (/type=/i.test(attrs)) {
           return match; // Skip if already has type
         }
@@ -75,9 +87,8 @@ export class SourceFixEngine {
             lowerBody.includes('submit') || lowerBody.includes('save') || lowerBody.includes('delete') || lowerBody.includes('create') || lowerBody.includes('form')) {
           return match; // Skip
         }
-        // Skip if inside form or onSubmit is in the file (high precaution)
-        if (currentContent.includes('onSubmit') || currentContent.includes('<form')) {
-          // Let's skip if we aren't completely confident
+        // Skip only when this button is structurally inside a form.
+        if (isInsideForm(offset)) {
           return match;
         }
         return `<button${attrs} type="button">${body}</button>`;
