@@ -70,7 +70,7 @@ export class SourceFixEngine {
         for (const tag of precedingFormTags) {
           if (/^<\/form\b/i.test(tag)) {
             depth = Math.max(0, depth - 1);
-          } else {
+          } else if (!/\/\s*>$/.test(tag)) {
             depth += 1;
           }
         }
