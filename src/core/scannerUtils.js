@@ -36,53 +36,60 @@ function shouldSkipRuleForFile(rule, file) {
   return rule.excludeFile.test(file);
 }
 
+export function scanFileWithRules(file, rules) {
+  const findings = [];
+  const content = readFileSync(file, 'utf8');
+  const lines = content.split(/\r?\n/);
+
+  for (const rule of rules) {
+    if (shouldSkipRuleForFile(rule, file)) continue;
+    if (!rule.pattern || rule.scope !== 'file') continue;
+    rule.pattern.lastIndex = 0;
+    if (rule.pattern.test(content)) {
+      findings.push({
+        file,
+        line: findLine(content, rule.pattern),
+        level: rule.level || 'blocker',
+        rule: rule.name,
+        excerpt: excerptFor(rule, rule.pattern.source)
+      });
+    }
+  }
+
+  for (let index = 0; index < lines.length; index++) {
+    const line = lines[index];
+    for (const rule of rules) {
+      if (shouldSkipRuleForFile(rule, file)) continue;
+      if (!rule.pattern || rule.scope === 'file') continue;
+      rule.pattern.lastIndex = 0;
+      if (rule.pattern.test(line)) {
+        findings.push({
+          file,
+          line: index + 1,
+          level: rule.level || 'blocker',
+          rule: rule.name,
+          excerpt: excerptFor(rule, line.trim())
+        });
+      }
+    }
+  }
+
+  for (const rule of rules) {
+    if (shouldSkipRuleForFile(rule, file)) continue;
+    if (rule.heuristic) {
+      rule.heuristic(content, file, findings);
+    }
+  }
+
+  return findings;
+}
+
 export function scanWithRules(targetDir, rules) {
   const files = walk(targetDir);
   const findings = [];
 
   for (const file of files) {
-    const content = readFileSync(file, 'utf8');
-    const lines = content.split(/\r?\n/);
-
-    for (const rule of rules) {
-      if (shouldSkipRuleForFile(rule, file)) continue;
-      if (!rule.pattern || rule.scope !== 'file') continue;
-      rule.pattern.lastIndex = 0;
-      if (rule.pattern.test(content)) {
-        findings.push({
-          file,
-          line: findLine(content, rule.pattern),
-          level: rule.level || 'blocker',
-          rule: rule.name,
-          excerpt: excerptFor(rule, rule.pattern.source)
-        });
-      }
-    }
-    
-    for (let index = 0; index < lines.length; index++) {
-      const line = lines[index];
-      for (const rule of rules) {
-        if (shouldSkipRuleForFile(rule, file)) continue;
-        if (!rule.pattern || rule.scope === 'file') continue;
-        rule.pattern.lastIndex = 0;
-        if (rule.pattern.test(line)) {
-          findings.push({ 
-            file, 
-            line: index + 1, 
-            level: rule.level || 'blocker', 
-            rule: rule.name, 
-            excerpt: excerptFor(rule, line.trim()) 
-          });
-        }
-      }
-    }
-
-    for (const rule of rules) {
-      if (shouldSkipRuleForFile(rule, file)) continue;
-      if (rule.heuristic) {
-        rule.heuristic(content, file, findings);
-      }
-    }
+    findings.push(...scanFileWithRules(file, rules));
   }
 
   return findings;
