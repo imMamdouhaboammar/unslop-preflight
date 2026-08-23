@@ -1,6 +1,8 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { resolve, relative } from 'node:path';
 import { SafetyValidator } from './safetyValidator.js';
+import { scanFileWithRules } from './scannerUtils.js';
+import { sourceSlopRules } from '../scanners/sourceSlopScanner.js';
 
 /**
  * SourceFixEngine resolves safe, local, deterministic source code fixes forAI-generated frontend slop.
@@ -297,6 +299,21 @@ export class SourceFixEngine {
   }
 }
 
+function verificationFailure(finding, relativePath) {
+  return {
+    id: `fail_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+    findingId: finding.rule,
+    file: relativePath,
+    status: 'failed',
+    reason: 'verification-failed',
+    beforeSnippet: finding.excerpt || '',
+    afterSnippet: '',
+    changedLines: 0,
+    risk: 'medium',
+    fixStrategy: finding.suggestedFix || 'Review repair manually'
+  };
+}
+
 /**
  * High-level runner that executes safe source code fixes.
  * 
@@ -327,10 +344,12 @@ export function runSourceFixEngine(cwd, findings = [], flags = {}) {
     removedLines: 2
   }));
 
-  const batchValidation = engine.validator.validatePatches(patchesToValidate);
+  engine.validator.validatePatches(patchesToValidate);
 
   for (const [absolutePath, fileFindings] of Object.entries(findingsByFile)) {
     const relativePath = relative(cwd, absolutePath);
+    let originalContent;
+    let candidateWritten = false;
     
     // Check individual file safety
     const fileSafety = engine.validator.validateFile(absolutePath);
@@ -353,7 +372,7 @@ export function runSourceFixEngine(cwd, findings = [], flags = {}) {
     }
 
     try {
-      const originalContent = readFileSync(absolutePath, 'utf8');
+      originalContent = readFileSync(absolutePath, 'utf8');
       const { content: updatedContent, fixes } = engine.applyFixes(relativePath, originalContent, fileFindings);
 
       if (fixes.length === 0) {
@@ -394,6 +413,24 @@ export function runSourceFixEngine(cwd, findings = [], flags = {}) {
         }
       } else if (mode && !flags.dryRun && !flags['dry-run']) {
         writeFileSync(absolutePath, updatedContent, 'utf8');
+        candidateWritten = true;
+
+        const persistedContent = readFileSync(absolutePath, 'utf8');
+        const triggeringRules = new Set(fileFindings.map((finding) => finding.rule));
+        const persistentFindings = scanFileWithRules(absolutePath, sourceSlopRules)
+          .filter((finding) => triggeringRules.has(finding.rule));
+        const secondPass = engine.applyFixes(relativePath, persistedContent, fileFindings);
+        const isIdempotent = secondPass.content === persistedContent && secondPass.fixes.length === 0;
+
+        if (persistentFindings.length > 0 || !isIdempotent) {
+          writeFileSync(absolutePath, originalContent, 'utf8');
+          candidateWritten = false;
+          for (const finding of fileFindings) {
+            failed.push(verificationFailure(finding, relativePath));
+          }
+          continue;
+        }
+
         for (const fix of fixes) {
           applied.push(fix);
         }
@@ -408,6 +445,9 @@ export function runSourceFixEngine(cwd, findings = [], flags = {}) {
         }
       }
     } catch (err) {
+      if (candidateWritten && originalContent !== undefined) {
+        writeFileSync(absolutePath, originalContent, 'utf8');
+      }
       for (const finding of fileFindings) {
         failed.push({
           id: `fail_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
