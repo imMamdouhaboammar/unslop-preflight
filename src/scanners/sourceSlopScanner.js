@@ -31,9 +31,15 @@ export const sourceSlopRules = [
   },
   {
     name: 'target-blank-without-rel',
+    level: 'info',
+    pattern: /<a\b(?=[^>]*target=["']_blank["'])(?![^>]*rel=["'][^"']*\b(noopener|noreferrer|opener)\b[^"']*["'])/i,
+    message: 'target="_blank" relies on implicit noopener behavior in modern browsers. Add explicit rel="noopener" when compatibility or hardening policy requires it.'
+  },
+  {
+    name: 'target-blank-with-explicit-opener',
     level: 'blocker',
-    pattern: /<a\b(?=[^>]*target=["']_blank["'])(?![^>]*rel=["'][^"']*\b(noopener|noreferrer)\b[^"']*["'])/i,
-    message: 'target="_blank" link lacks rel="noopener" or rel="noreferrer".'
+    pattern: /<a\b(?=[^>]*target=["']_blank["'])(?=[^>]*rel=["'][^"']*\bopener\b[^"']*["'])/i,
+    message: 'target="_blank" explicitly opts into window.opener with rel="opener". Remove opener unless cross-window access is intentional and reviewed.'
   },
   {
     name: 'input-without-autocomplete-review',
