@@ -109,7 +109,7 @@ export class SourceFixEngine {
     }
 
     // 3. Image missing loading lazy (Rule: image-without-loading)
-    if ((hasRule('image-without-loading') || hasRule('image-without-size-review')) && /<img\b/i.test(currentContent)) {
+    if (hasRule('image-without-loading') && /<img\b/i.test(currentContent)) {
       // Safety exclusion: Skip Next.js Image component
       const hasNextImage = currentContent.includes('next/image') || currentContent.includes('<Image');
       if (!hasNextImage) {
