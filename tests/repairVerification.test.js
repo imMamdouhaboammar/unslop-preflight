@@ -30,3 +30,22 @@ test('safe repair rolls back when the triggering detector still fires', () => {
   assert.equal(result.failed[0].findingId, 'image-without-size-review');
   assert.equal(result.failed[0].reason, 'verification-failed');
 });
+
+test('safe repair keeps a mutation after detector and idempotency verification pass', () => {
+  const root = tempProject();
+  const file = join(root, 'src', 'Link.jsx');
+  const original = '<a href="/docs" target="_blank">Docs</a>\n';
+  writeFileSync(file, original);
+
+  const result = runSourceFixEngine(root, [{
+    file: 'src/Link.jsx',
+    rule: 'target-blank-without-rel',
+    level: 'blocker',
+    excerpt: 'target="_blank" link lacks rel="noopener" or rel="noreferrer".'
+  }], { safeFix: true });
+
+  assert.equal(readFileSync(file, 'utf8'), '<a href="/docs" target="_blank" rel="noopener noreferrer">Docs</a>\n');
+  assert.equal(result.applied.length, 1);
+  assert.equal(result.applied[0].findingId, 'target-blank-without-rel');
+  assert.equal(result.failed.length, 0);
+});
