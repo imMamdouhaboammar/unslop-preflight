@@ -51,9 +51,9 @@ test('explicit noopener does not trigger target blank policy findings', () => {
   assert.deepEqual(targetBlankFindings, []);
 });
 
-test('opener token matching does not treat unrelated rel tokens as opener', () => {
+test('opener token matching requires a complete rel token', () => {
   const findings = findingsFor(
-    '<a href="https://example.com" target="_blank" rel="developer">Docs</a>',
+    '<a href="https://example.com" target="_blank" rel="openerish">Docs</a>',
     'target-blank-with-explicit-opener'
   );
 
