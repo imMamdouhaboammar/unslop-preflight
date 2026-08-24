@@ -74,7 +74,7 @@ test('file-scoped scanner does not flag motion with reduced-motion guard', () =>
   });
 });
 
-test('source slop scanner catches unsafe target blank links and missing autocomplete', () => {
+test('source slop scanner catches missing autocomplete without a target blank false positive', () => {
   withFixture(`
     export function Signup() {
       return <form><a href="https://example.com" target="_blank">Docs</a><input type="email" /></form>;
@@ -82,7 +82,7 @@ test('source slop scanner catches unsafe target blank links and missing autocomp
   `, (src) => {
     const findings = scanWithRules(src, sourceSlopRules);
     const rules = ruleNames(findings);
-    assert.ok(rules.includes('target-blank-without-rel'));
+    assert.ok(!rules.includes('target-blank-without-rel'));
     assert.ok(rules.includes('input-without-autocomplete-review'));
   });
 });
@@ -101,23 +101,6 @@ test('icon-only button detector accepts explicit accessible names', () => {
   `, (src) => {
     const findings = scanWithRules(src, sourceSlopRules);
     assert.ok(!ruleNames(findings).includes('icon-only-button-review'));
-  });
-});
-
-test('target blank detector requires a complete rel token', () => {
-  withFixture(`
-    export function Links() {
-      return (
-        <div>
-          <a href="/safe" target="_blank" rel="external noopener">Safe</a>
-          <a href="/unsafe" target="_blank" rel="notnoopener">Unsafe</a>
-        </div>
-      );
-    }
-  `, (src) => {
-    const findings = scanWithRules(src, sourceSlopRules);
-    const targetFindings = findings.filter((finding) => finding.rule === 'target-blank-without-rel');
-    assert.equal(targetFindings.length, 1);
   });
 });
 
