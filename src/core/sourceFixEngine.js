@@ -29,38 +29,7 @@ export class SourceFixEngine {
       return findings.some(f => f.rule === ruleId);
     };
 
-    // 1. Unsafe target blank (Rule: target-blank-without-rel)
-    if (hasRule('target-blank-without-rel') && /target=["']_blank["']/i.test(currentContent)) {
-      const before = currentContent;
-      currentContent = currentContent.replace(/<a\s+([^>]*target=["']_blank["'][^>]*)>/gi, (match, attrs) => {
-        const relMatch = attrs.match(/\brel=(["'])([^"']*)\1/i);
-        if (relMatch) {
-          const tokens = relMatch[2].trim().split(/\s+/).filter(Boolean);
-          const lowerTokens = new Set(tokens.map(token => token.toLowerCase()));
-          if (lowerTokens.has('noopener') || lowerTokens.has('noreferrer')) {
-            return match;
-          }
-          const updatedRel = [...tokens, 'noopener'].join(' ');
-          return match.replace(relMatch[0], `rel=${relMatch[1]}${updatedRel}${relMatch[1]}`);
-        }
-        return match.replace(/>$/, ' rel="noopener noreferrer">');
-      });
-      if (before !== currentContent) {
-        fixes.push({
-          id: `fix_target_blank_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
-          findingId: 'target-blank-without-rel',
-          file: filePath,
-          status: 'applied',
-          reason: 'safe-fix-applied',
-          beforeSnippet: before,
-          afterSnippet: currentContent,
-          changedLines: this.countDiffLines(before, currentContent),
-          risk: 'low'
-        });
-      }
-    }
-
-    // 2. Missing button type (Rule: missing-button-type)
+    // 1. Missing button type (Rule: missing-button-type)
     const isJsxFile = filePath.endsWith('.jsx') || filePath.endsWith('.tsx') || filePath.endsWith('.js') || filePath.endsWith('.ts');
     if (isJsxFile && hasRule('missing-button-type') && /<button\b/i.test(currentContent)) {
       const before = currentContent;
@@ -108,7 +77,7 @@ export class SourceFixEngine {
       }
     }
 
-    // 3. Image missing loading lazy (Rule: image-without-loading)
+    // 2. Image missing loading lazy (Rule: image-without-loading)
     if (hasRule('image-without-loading') && /<img\b/i.test(currentContent)) {
       // Safety exclusion: Skip Next.js Image component
       const hasNextImage = currentContent.includes('next/image') || currentContent.includes('<Image');
@@ -141,7 +110,7 @@ export class SourceFixEngine {
       }
     }
 
-    // 4. Missing alt on decorative-looking images
+    // 3. Missing alt on decorative-looking images
     if (hasRule('image-without-alt') && /<img\b/i.test(currentContent)) {
       const before = currentContent;
       currentContent = currentContent.replace(/<img\b([^>]*?)(\s*\/)?>/gi, (match, attrs, selfClose) => {
@@ -171,7 +140,7 @@ export class SourceFixEngine {
       }
     }
 
-    // 5. Tailwind transition-all (Rule: transition-all-animation-slop)
+    // 4. Tailwind transition-all (Rule: transition-all-animation-slop)
     if (hasRule('transition-all-animation-slop') && /transition-all/i.test(currentContent)) {
       const before = currentContent;
       currentContent = currentContent.replace(/(class(?:Name)?=["'])([^"']*\btransition-all\b[^"']*)(["'])/g, (match, prefix, classList, suffix) => {
@@ -203,7 +172,7 @@ export class SourceFixEngine {
       }
     }
 
-    // 6. Focus outline none (Rule: outline-none-without-focus-visible)
+    // 5. Focus outline none (Rule: outline-none-without-focus-visible)
     if (hasRule('outline-none-without-focus-visible') && /outline-none/i.test(currentContent)) {
       const tailwindDetected = currentContent.includes('tailwindcss') || currentContent.includes('bg-') || currentContent.includes('text-') || currentContent.includes('p-') || currentContent.includes('m-');
       if (tailwindDetected) {
@@ -231,7 +200,7 @@ export class SourceFixEngine {
       }
     }
 
-    // 7. console.log in source
+    // 6. console.log in source
     if (hasRule('console-log-in-source') && /console\.log\(/i.test(currentContent)) {
       const isTestFile = filePath.includes('.test.') || filePath.includes('.spec.') || filePath.includes('tests/') || filePath.includes('scripts/') || filePath.includes('benchmarks/');
       if (!isTestFile) {

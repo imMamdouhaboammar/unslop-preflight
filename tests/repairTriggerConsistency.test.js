@@ -16,19 +16,3 @@ test('image sizing findings do not trigger an unrelated lazy-loading repair', ()
   assert.equal(result.content, input);
   assert.deepEqual(result.fixes, []);
 });
-
-test('target blank repair removes its detector condition and is idempotent', () => {
-  const input = '<a href="/docs" target="_blank">Docs</a>';
-  const finding = [{ rule: 'target-blank-without-rel' }];
-  const detector = rule('target-blank-without-rel').pattern;
-
-  assert.equal(detector.test(input), true);
-  const first = engine.applyFixes('src/Docs.jsx', input, finding);
-  assert.match(first.content, /rel="noopener noreferrer"/);
-  assert.equal(first.fixes.length, 1);
-  assert.equal(detector.test(first.content), false);
-
-  const second = engine.applyFixes('src/Docs.jsx', first.content, finding);
-  assert.equal(second.content, first.content);
-  assert.deepEqual(second.fixes, []);
-});
