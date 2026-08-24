@@ -41,3 +41,12 @@ test('legacy target-blank findings no longer authorize source mutation', () => {
   assert.equal(result.content, input);
   assert.equal(result.fixes.length, 0);
 });
+
+test('explicit rel=opener remains author-controlled rather than auto-rewritten', () => {
+  const input = '<a href="https://example.com" target="_blank" rel="opener">Preview</a>';
+  const findings = scan(input);
+  const result = new SourceFixEngine('/tmp').applyFixes('src/Link.jsx', input, []);
+
+  assert.ok(!findings.some((finding) => finding.rule === 'target-blank-without-rel'));
+  assert.equal(result.content, input);
+});
