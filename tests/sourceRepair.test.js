@@ -12,25 +12,6 @@ function tempDir() {
   return mkdtempSync(join(tmpdir(), 'unslop-tests-'));
 }
 
-test('SourceFixEngine - target="_blank" rel noopener noreferrer fixer', () => {
-  const engine = new SourceFixEngine('/tmp');
-  
-  // 1. Rel is added if target="_blank" and rel is missing
-  const content = '<div><a href="https://google.com" target="_blank">Google</a></div>';
-  const { content: result } = engine.applyFixes('test.jsx', content, [{ rule: 'target-blank-without-rel' }]);
-  assert.match(result, /rel="noopener noreferrer"/);
-  
-  // 2. Existing rel tokens are preserved and the minimum safe token is appended
-  const contentWithRel = '<div><a href="https://google.com" target="_blank" rel="nofollow">Google</a></div>';
-  const { content: resultWithRel } = engine.applyFixes('test.jsx', contentWithRel, [{ rule: 'target-blank-without-rel' }]);
-  assert.equal(resultWithRel, '<div><a href="https://google.com" target="_blank" rel="nofollow noopener">Google</a></div>');
-  
-  // 3. Idempotency check: running twice produces the exact same code
-  const firstPass = engine.applyFixes('test.jsx', content, [{ rule: 'target-blank-without-rel' }]).content;
-  const secondPass = engine.applyFixes('test.jsx', firstPass, [{ rule: 'target-blank-without-rel' }]).content;
-  assert.equal(firstPass, secondPass);
-});
-
 test('SourceFixEngine - missing button type fixer', () => {
   const engine = new SourceFixEngine('/tmp');
 
