@@ -87,7 +87,7 @@ pnpm add -D unslop-preflight
 | `loop` | Continuous engineering loop runner (PR triage, CI sweep). | `bunx unslop-preflight loop status` |
 | `review` | Browser UI review recorder (DOM, HAR, network). | `bunx unslop-preflight review start --url http://localhost:3000` |
 | `init` | Bootstraps `PRODUCT.md`, `DESIGN.md`, and `AGENTS.md`. | `bunx unslop-preflight init` |
-| `repair` | Executes safe, non-destructive AST transformations. | `bunx unslop-preflight repair --safe-fix` |
+| `repair` | Executes safe, deterministic, bounded text rewrites. | `bunx unslop-preflight repair --safe-fix` |
 | `doctor` | Checks environment health and lockfile configuration. | `bunx unslop-preflight doctor` |
 
 Use `autopilot --plan-only` for a zero-write preview. It prints the assessment
@@ -144,7 +144,7 @@ Next steps:
 | `--strict` | `scan`, `autopilot`, `audit` | Exits non-zero (`1`) if errors **or** warnings are detected. |
 | `--ci` | `scan`, `autopilot`, `audit` | Exits non-zero (`1`) on errors only; ignores warning-only results. |
 | `--plan-only` | `autopilot` | Zero-write preview: prints assessment and planned fixes without writing any files or `.unslop` reports. |
-| `--safe-fix` | `autopilot`, `repair` | Performs non-destructive AST repairs (`rel="noopener"`, button types, `loading="lazy"`, etc.). |
+| `--safe-fix` | `autopilot`, `repair` | Applies bounded deterministic source rewrites (button types, `loading="lazy"`, focus treatment, etc.). |
 | `--verify` | `autopilot` | Runs package-manager-detected build and test suites to verify repairs. |
 | `--report` | `autopilot`, `audit` | Generates `.unslop/report.md` and `.unslop/report.json` artifacts. |
 | `--json` | All commands | Emits machine-readable JSON to stdout. |
