@@ -23,11 +23,8 @@ export class SourceFixEngine {
     let currentContent = content;
     const fixes = [];
 
-    // Helper to determine if a rule is requested
-    const hasRule = (ruleId) => {
-      if (!findings || findings.length === 0) return true; // If no findings are specified, run all fixers
-      return findings.some(f => f.rule === ruleId);
-    };
+    // A source mutation must be authorized by an explicit matching finding.
+    const hasRule = (ruleId) => Array.isArray(findings) && findings.some(f => f.rule === ruleId);
 
     // 1. Missing button type (Rule: missing-button-type)
     const isJsxFile = filePath.endsWith('.jsx') || filePath.endsWith('.tsx') || filePath.endsWith('.js') || filePath.endsWith('.ts');
