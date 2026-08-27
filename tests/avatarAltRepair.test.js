@@ -30,3 +30,12 @@ test('semantic icon markers are not automatically hidden from assistive technolo
   assert.equal(result.content, content);
   assert.equal(result.fixes.length, 0);
 });
+
+test('ambiguous decor markers are not treated as author intent to hide an image', () => {
+  const engine = new SourceFixEngine('/tmp');
+  const content = '<img className="decor-preview" src="/catalog/decor-chair.jpg" />';
+  const result = engine.applyFixes('CatalogCard.jsx', content, finding);
+
+  assert.equal(result.content, content);
+  assert.equal(result.fixes.length, 0);
+});
