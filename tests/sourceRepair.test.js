@@ -58,12 +58,12 @@ test('SourceFixEngine - image loading="lazy" fixer', () => {
 test('SourceFixEngine - alt="" on decorative images fixer', () => {
   const engine = new SourceFixEngine('/tmp');
 
-  // 1. Adds alt="" if name indicates decorative/icon
-  const content = '<div><img src="/icons/checkmark.svg" /></div>';
+  // 1. Adds alt="" only when author intent explicitly marks the image decorative
+  const content = '<div><img className="decorative" src="/ui/checkmark.svg" /></div>';
   const { content: result } = engine.applyFixes('test.jsx', content, [{ rule: 'image-without-alt' }]);
   assert.match(result, /alt=""/);
 
-  // 2. Skips if not clearly decorative and doesn\'t contain icon/decor keyword
+  // 2. Skips if not clearly decorative
   const contentNormal = '<div><img src="/photos/scenery.jpg" /></div>';
   const { content: resultNormal } = engine.applyFixes('test.jsx', contentNormal, [{ rule: 'image-without-alt' }]);
   assert.equal(resultNormal, contentNormal);
