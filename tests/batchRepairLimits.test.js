@@ -56,3 +56,23 @@ test('safe repair fails closed when aggregate changed lines exceed maxFixLines',
   assert.equal(readFileSync(join(root, files[0]), 'utf8'), '<button>Open</button>\n');
   assert.equal(readFileSync(join(root, files[1]), 'utf8'), '<button>Open</button>\n');
 });
+
+test('batch file limits count only concrete candidate mutations', () => {
+  const root = tempDir();
+  writeFileSync(join(root, 'Button.jsx'), '<button>Open</button>\n', 'utf8');
+  writeFileSync(join(root, 'Photo.jsx'), '<img src="photo.jpg" />\n', 'utf8');
+
+  const result = runSourceFixEngine(root, [
+    { rule: 'missing-button-type', file: 'Button.jsx', excerpt: '<button>Open</button>' },
+    { rule: 'image-without-alt', file: 'Photo.jsx', excerpt: '<img src="photo.jpg" />' }
+  ], {
+    safeFix: true,
+    maxFixFiles: 1,
+    maxFixLines: 10,
+    maxLinesPerFile: 10
+  });
+
+  assert.equal(result.applied.length, 1);
+  assert.match(readFileSync(join(root, 'Button.jsx'), 'utf8'), /type="button"/);
+  assert.equal(readFileSync(join(root, 'Photo.jsx'), 'utf8'), '<img src="photo.jpg" />\n');
+});
