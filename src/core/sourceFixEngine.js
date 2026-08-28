@@ -265,19 +265,24 @@ export class SourceFixEngine {
 
 /**
  * High-level runner that executes safe source code fixes.
- * 
+ *
+ * All candidate source mutations are planned first, then the real aggregate patch is
+ * validated before any file is written. This keeps batch limits fail-closed and avoids
+ * partially applying a repair set that exceeds the configured safety budget.
+ *
  * @param {string} cwd Project root path.
  * @param {Array<object>} findings All scanner findings.
  * @param {object} flags Command line flags.
- * @returns {Promise<{ applied: Array<object>, skipped: Array<object>, failed: Array<object> }>} Fix results datasets.
+ * @returns {{ applied: Array<object>, skipped: Array<object>, failed: Array<object> }} Fix results datasets.
  */
 export function runSourceFixEngine(cwd, findings = [], flags = {}) {
   const engine = new SourceFixEngine(cwd, flags);
   const applied = [];
   const skipped = [];
   const failed = [];
+  const planned = [];
 
-  // Group findings by file
+  // Group findings by file.
   const findingsByFile = {};
   for (const finding of findings) {
     if (!finding.file) continue;
@@ -286,20 +291,11 @@ export function runSourceFixEngine(cwd, findings = [], flags = {}) {
     findingsByFile[resolvedPath].push(finding);
   }
 
-  // Pre-validate patch list
-  const patchesToValidate = Object.entries(findingsByFile).map(([filePath]) => ({
-    filePath,
-    addedLines: 2, // estimation
-    removedLines: 2
-  }));
-
-  const batchValidation = engine.validator.validatePatches(patchesToValidate);
-
+  // Build the complete set of concrete candidate mutations before authorizing writes.
   for (const [absolutePath, fileFindings] of Object.entries(findingsByFile)) {
     const relativePath = relative(cwd, absolutePath);
-    
-    // Check individual file safety
     const fileSafety = engine.validator.validateFile(absolutePath);
+
     if (!fileSafety.valid) {
       for (const finding of fileFindings) {
         skipped.push({
@@ -340,16 +336,12 @@ export function runSourceFixEngine(cwd, findings = [], flags = {}) {
         continue;
       }
 
-      // Check validation again for specific changes
-      const changedLines = engine.countChangedLineRange(originalContent, updatedContent);
-      const patchObj = {
+      const patch = {
         filePath: absolutePath,
-        ...changedLines
+        ...engine.countChangedLineRange(originalContent, updatedContent)
       };
-      
-      const patchSafety = engine.validator.validatePatches([patchObj]);
-      const mode = flags.safeFix || flags['safe-fix'] || flags.repairMode === 'safe-fix';
-      
+      const patchSafety = engine.validator.validatePatches([patch]);
+
       if (!patchSafety.valid) {
         for (const fix of fixes) {
           skipped.push({
@@ -358,21 +350,10 @@ export function runSourceFixEngine(cwd, findings = [], flags = {}) {
             reason: 'unsafe'
           });
         }
-      } else if (mode && !flags.dryRun && !flags['dry-run']) {
-        writeFileSync(absolutePath, updatedContent, 'utf8');
-        for (const fix of fixes) {
-          applied.push(fix);
-        }
-      } else {
-        // Mode is plan-only, doc-fix or dry-run, so skip writing but record the planned fixes as skipped due to mode
-        for (const fix of fixes) {
-          skipped.push({
-            ...fix,
-            status: 'skipped',
-            reason: flags.dryRun ? 'dry-run-preview' : 'mode-restriction'
-          });
-        }
+        continue;
       }
+
+      planned.push({ absolutePath, updatedContent, fixes, patch });
     } catch (err) {
       for (const finding of fileFindings) {
         failed.push({
@@ -385,6 +366,39 @@ export function runSourceFixEngine(cwd, findings = [], flags = {}) {
           afterSnippet: '',
           changedLines: 0,
           risk: 'medium'
+        });
+      }
+    }
+  }
+
+  // Enforce maxFixFiles and aggregate maxFixLines against the actual planned mutations.
+  const batchSafety = engine.validator.validatePatches(planned.map(({ patch }) => patch));
+  if (!batchSafety.valid) {
+    for (const { fixes } of planned) {
+      for (const fix of fixes) {
+        skipped.push({
+          ...fix,
+          status: 'skipped',
+          reason: 'unsafe'
+        });
+      }
+    }
+    return { applied, skipped, failed };
+  }
+
+  const mode = flags.safeFix || flags['safe-fix'] || flags.repairMode === 'safe-fix';
+  const dryRun = flags.dryRun || flags['dry-run'];
+
+  for (const { absolutePath, updatedContent, fixes } of planned) {
+    if (mode && !dryRun) {
+      writeFileSync(absolutePath, updatedContent, 'utf8');
+      applied.push(...fixes);
+    } else {
+      for (const fix of fixes) {
+        skipped.push({
+          ...fix,
+          status: 'skipped',
+          reason: dryRun ? 'dry-run-preview' : 'mode-restriction'
         });
       }
     }
