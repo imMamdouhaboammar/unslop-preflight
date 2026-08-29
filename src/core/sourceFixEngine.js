@@ -44,16 +44,14 @@ export class SourceFixEngine {
       };
       currentContent = currentContent.replace(/<button\b([^>]*)>([\s\S]*?)<\/button>/gi, (match, attrs, body, offset) => {
         if (/type=/i.test(attrs)) {
-          return match; // Skip if already has type
+          return match;
         }
         const lowerAttrs = attrs.toLowerCase();
         const lowerBody = body.toLowerCase();
-        // Skip if attrs or button children indicate submit, save, delete, or forms
         if (lowerAttrs.includes('submit') || lowerAttrs.includes('save') || lowerAttrs.includes('delete') || lowerAttrs.includes('create') || lowerAttrs.includes('form') ||
             lowerBody.includes('submit') || lowerBody.includes('save') || lowerBody.includes('delete') || lowerBody.includes('create') || lowerBody.includes('form')) {
-          return match; // Skip
+          return match;
         }
-        // Skip only when this button is structurally inside a form.
         if (isInsideForm(offset)) {
           return match;
         }
@@ -76,18 +74,16 @@ export class SourceFixEngine {
 
     // 2. Image missing loading lazy (Rule: image-without-loading)
     if (hasRule('image-without-loading') && /<img\b/i.test(currentContent)) {
-      // Safety exclusion: Skip Next.js Image component
       const hasNextImage = currentContent.includes('next/image') || currentContent.includes('<Image');
       if (!hasNextImage) {
         const before = currentContent;
         currentContent = currentContent.replace(/<img\b([^>]*?)(\s*\/)?>/gi, (match, attrs, selfClose) => {
           if (/loading=/i.test(attrs)) {
-            return match; // Skip if already has loading
+            return match;
           }
           const lowerAttrs = attrs.toLowerCase();
-          // Skip hero/above-the-fold/fetchpriority
           if (lowerAttrs.includes('priority') || lowerAttrs.includes('hero') || lowerAttrs.includes('above-the-fold') || lowerAttrs.includes('fetchpriority')) {
-            return match; // Skip
+            return match;
           }
           return `<img${attrs} loading="lazy"${selfClose || ''}>`;
         });
@@ -112,15 +108,14 @@ export class SourceFixEngine {
       const before = currentContent;
       currentContent = currentContent.replace(/<img\b([^>]*?)(\s*\/)?>/gi, (match, attrs, selfClose) => {
         if (/alt=/i.test(attrs)) {
-          return match; // Skip if already has alt
+          return match;
         }
         const lowerAttrs = attrs.toLowerCase();
-        // High confidence decorative markers
         const isDecorative = lowerAttrs.includes('pattern') || lowerAttrs.includes('bg-') || lowerAttrs.includes('divider') || lowerAttrs.includes('spacer') || lowerAttrs.includes('decorative');
         if (isDecorative) {
           return `<img${attrs} alt=""${selfClose || ''}>`;
         }
-        return match; // Skip otherwise
+        return match;
       });
       if (before !== currentContent) {
         fixes.push({
@@ -144,7 +139,7 @@ export class SourceFixEngine {
         const lowerList = classList.toLowerCase();
         const hasColors = /\b(text|bg|border|ring|divide|from|via|to|decoration|outline)-\w+/.test(lowerList);
         const hasTransform = /\b(scale|translate|rotate|skew|transform)\b/.test(lowerList);
-        
+
         if (hasColors && !hasTransform) {
           const updatedList = classList.replace(/\btransition-all\b/, 'transition-colors');
           return `${prefix}${updatedList}${suffix}`;
@@ -152,7 +147,7 @@ export class SourceFixEngine {
           const updatedList = classList.replace(/\btransition-all\b/, 'transition-transform');
           return `${prefix}${updatedList}${suffix}`;
         }
-        return match; // Skip if complex
+        return match;
       });
       if (before !== currentContent) {
         fixes.push({
@@ -176,7 +171,7 @@ export class SourceFixEngine {
         const before = currentContent;
         currentContent = currentContent.replace(/(class(?:Name)?=["'])([^"']*\boutline-none\b[^"']*)(["'])/g, (match, prefix, classList, suffix) => {
           if (classList.includes('focus-visible:ring')) {
-            return match; // Already has focus-visible ring
+            return match;
           }
           const updatedList = classList.replace(/\boutline-none\b/, 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2');
           return `${prefix}${updatedList}${suffix}`;
@@ -206,9 +201,9 @@ export class SourceFixEngine {
           const trimmed = line.trim();
           if (trimmed.startsWith('console.log(') && (trimmed.endsWith(');') || trimmed.endsWith(')'))) {
             if (trimmed.includes('//') || trimmed.includes('/*') || trimmed.includes('debug') || trimmed.includes('process.env')) {
-              return line; // Skip intentional/debug comments
+              return line;
             }
-            return ''; // Remove standalone simple console.log
+            return '';
           }
           return line;
         }).join('\n');
@@ -231,10 +226,6 @@ export class SourceFixEngine {
     return { content: currentContent, fixes };
   }
 
-  /**
-   * Counts a conservative changed-line range by trimming unchanged prefix/suffix lines.
-   * This is exact for contiguous local rewrites and intentionally over-counts disjoint edits.
-   */
   countChangedLineRange(before = '', after = '') {
     const beforeLines = before.split(/\r?\n/);
     const afterLines = after.split(/\r?\n/);
@@ -282,7 +273,6 @@ export function runSourceFixEngine(cwd, findings = [], flags = {}) {
   const failed = [];
   const planned = [];
 
-  // Group findings by file.
   const findingsByFile = {};
   for (const finding of findings) {
     if (!finding.file) continue;
@@ -291,7 +281,6 @@ export function runSourceFixEngine(cwd, findings = [], flags = {}) {
     findingsByFile[resolvedPath].push(finding);
   }
 
-  // Build the complete set of concrete candidate mutations before authorizing writes.
   for (const [absolutePath, fileFindings] of Object.entries(findingsByFile)) {
     const relativePath = relative(cwd, absolutePath);
     const fileSafety = engine.validator.validateFile(absolutePath);
@@ -344,16 +333,12 @@ export function runSourceFixEngine(cwd, findings = [], flags = {}) {
 
       if (!patchSafety.valid) {
         for (const fix of fixes) {
-          skipped.push({
-            ...fix,
-            status: 'skipped',
-            reason: 'unsafe'
-          });
+          skipped.push({ ...fix, status: 'skipped', reason: 'unsafe' });
         }
         continue;
       }
 
-      planned.push({ absolutePath, updatedContent, fixes, patch });
+      planned.push({ absolutePath, originalContent, updatedContent, fixes, patch });
     } catch (err) {
       for (const finding of fileFindings) {
         failed.push({
@@ -371,16 +356,11 @@ export function runSourceFixEngine(cwd, findings = [], flags = {}) {
     }
   }
 
-  // Enforce maxFixFiles and aggregate maxFixLines against the actual planned mutations.
   const batchSafety = engine.validator.validatePatches(planned.map(({ patch }) => patch));
   if (!batchSafety.valid) {
     for (const { fixes } of planned) {
       for (const fix of fixes) {
-        skipped.push({
-          ...fix,
-          status: 'skipped',
-          reason: 'unsafe'
-        });
+        skipped.push({ ...fix, status: 'skipped', reason: 'unsafe' });
       }
     }
     return { applied, skipped, failed };
@@ -389,11 +369,48 @@ export function runSourceFixEngine(cwd, findings = [], flags = {}) {
   const mode = flags.safeFix || flags['safe-fix'] || flags.repairMode === 'safe-fix';
   const dryRun = flags.dryRun || flags['dry-run'];
 
-  for (const { absolutePath, updatedContent, fixes } of planned) {
-    if (mode && !dryRun) {
-      writeFileSync(absolutePath, updatedContent, 'utf8');
-      applied.push(...fixes);
-    } else {
+  if (mode && !dryRun) {
+    const written = [];
+    try {
+      for (const entry of planned) {
+        writeFileSync(entry.absolutePath, entry.updatedContent, 'utf8');
+        written.push(entry);
+      }
+      for (const { fixes } of planned) {
+        applied.push(...fixes);
+      }
+    } catch (err) {
+      for (let index = written.length - 1; index >= 0; index -= 1) {
+        const entry = written[index];
+        try {
+          writeFileSync(entry.absolutePath, entry.originalContent, 'utf8');
+        } catch (rollbackError) {
+          failed.push({
+            id: `fail_rollback_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+            findingId: entry.fixes[0]?.findingId || 'repair-rollback',
+            file: relative(cwd, entry.absolutePath),
+            status: 'failed',
+            reason: 'rollback-failed',
+            beforeSnippet: entry.updatedContent,
+            afterSnippet: entry.originalContent,
+            changedLines: 0,
+            risk: 'high'
+          });
+        }
+      }
+      for (const { fixes } of planned) {
+        for (const fix of fixes) {
+          failed.push({
+            ...fix,
+            status: 'failed',
+            reason: 'write-failed',
+            risk: 'high'
+          });
+        }
+      }
+    }
+  } else {
+    for (const { fixes } of planned) {
       for (const fix of fixes) {
         skipped.push({
           ...fix,
