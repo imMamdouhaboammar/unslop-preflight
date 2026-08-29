@@ -353,7 +353,7 @@ export function runSourceFixEngine(cwd, findings = [], flags = {}) {
         continue;
       }
 
-      planned.push({ absolutePath, updatedContent, fixes, patch });
+      planned.push({ absolutePath, originalContent, updatedContent, fixes, patch });
     } catch (err) {
       for (const finding of fileFindings) {
         failed.push({
@@ -389,11 +389,48 @@ export function runSourceFixEngine(cwd, findings = [], flags = {}) {
   const mode = flags.safeFix || flags['safe-fix'] || flags.repairMode === 'safe-fix';
   const dryRun = flags.dryRun || flags['dry-run'];
 
-  for (const { absolutePath, updatedContent, fixes } of planned) {
-    if (mode && !dryRun) {
-      writeFileSync(absolutePath, updatedContent, 'utf8');
-      applied.push(...fixes);
-    } else {
+  if (mode && !dryRun) {
+    const written = [];
+    try {
+      for (const entry of planned) {
+        writeFileSync(entry.absolutePath, entry.updatedContent, 'utf8');
+        written.push(entry);
+      }
+      for (const { fixes } of planned) {
+        applied.push(...fixes);
+      }
+    } catch (err) {
+      for (let index = written.length - 1; index >= 0; index -= 1) {
+        const entry = written[index];
+        try {
+          writeFileSync(entry.absolutePath, entry.originalContent, 'utf8');
+        } catch (rollbackError) {
+          failed.push({
+            id: `fail_rollback_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+            findingId: entry.fixes[0]?.findingId || 'repair-rollback',
+            file: relative(cwd, entry.absolutePath),
+            status: 'failed',
+            reason: 'rollback-failed',
+            beforeSnippet: entry.updatedContent,
+            afterSnippet: entry.originalContent,
+            changedLines: 0,
+            risk: 'high'
+          });
+        }
+      }
+      for (const { fixes } of planned) {
+        for (const fix of fixes) {
+          failed.push({
+            ...fix,
+            status: 'failed',
+            reason: 'write-failed',
+            risk: 'high'
+          });
+        }
+      }
+    }
+  } else {
+    for (const { fixes } of planned) {
       for (const fix of fixes) {
         skipped.push({
           ...fix,
