@@ -1,3 +1,4 @@
+import { existsSync, realpathSync } from 'node:fs';
 import { resolve, extname, sep, basename } from 'node:path';
 
 /**
@@ -18,6 +19,7 @@ export class SafetyValidator {
       throw new Error('Project root path is required for SafetyValidator');
     }
     this.projectRoot = resolve(projectRoot);
+    this.realProjectRoot = existsSync(this.projectRoot) ? realpathSync(this.projectRoot) : this.projectRoot;
     
     // Parse limits with proper flag mapping and fallback values
     this.maxFixFiles = Number(options.maxFixFiles ?? options['max-fix-files'] ?? 20);
@@ -55,7 +57,7 @@ export class SafetyValidator {
     // Resolve path to make it absolute
     const resolvedPath = resolve(this.projectRoot, filePath);
 
-    // 1. Path traversal protection: Ensure file is strictly under the project root
+    // 1. Path traversal protection: Ensure the lexical path is strictly under the project root.
     if (!resolvedPath.startsWith(this.projectRoot + sep) && resolvedPath !== this.projectRoot) {
       return {
         valid: false,
@@ -63,8 +65,30 @@ export class SafetyValidator {
       };
     }
 
-    // Compute relative parts for sub-directory scanning
-    const relativePath = resolvedPath.slice(this.projectRoot.length);
+    // Existing targets must also remain contained after resolving symlinks. writeFileSync follows
+    // symlinks, so lexical containment alone is not sufficient repair authority.
+    let effectivePath = resolvedPath;
+    if (existsSync(resolvedPath)) {
+      try {
+        effectivePath = realpathSync(resolvedPath);
+      } catch {
+        return {
+          valid: false,
+          reason: `File path '${filePath}' could not be resolved safely on the filesystem`
+        };
+      }
+
+      if (!effectivePath.startsWith(this.realProjectRoot + sep) && effectivePath !== this.realProjectRoot) {
+        return {
+          valid: false,
+          reason: `File path '${filePath}' resolves through a symlink outside the project root directory '${this.realProjectRoot}'`
+        };
+      }
+    }
+
+    // Compute relative parts from the canonical target when it exists so symlinks cannot bypass
+    // forbidden-directory or protected-file checks either.
+    const relativePath = effectivePath.slice(this.realProjectRoot.length);
     const segments = relativePath.split(sep).filter(Boolean);
 
     // 2. Check for forbidden directories in path segments (node_modules, dist, build)
@@ -84,7 +108,7 @@ export class SafetyValidator {
       }
     }
 
-    const filename = basename(resolvedPath);
+    const filename = basename(effectivePath);
     const lowerFilename = filename.toLowerCase();
 
     // 3. Prevent modification of environment configuration files (.env)
@@ -104,7 +128,7 @@ export class SafetyValidator {
     }
 
     // 5. Ensure file extension is within the safe list (.js, .jsx, .ts, .tsx, .css, .md)
-    const ext = extname(resolvedPath).toLowerCase();
+    const ext = extname(effectivePath).toLowerCase();
     if (!this.safeExtensions.has(ext)) {
       return {
         valid: false,
