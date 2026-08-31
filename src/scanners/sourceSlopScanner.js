@@ -32,8 +32,8 @@ export const sourceSlopRules = [
   {
     name: 'input-without-autocomplete-review',
     level: 'warning',
-    pattern: /<input\b(?=[^>]*type=["'](email|password|tel|search)["'])(?![^>]*(autoComplete=|autocomplete=))/i,
-    message: 'Input for email, password, tel, or search should declare autocomplete behavior.'
+    pattern: /<input\b(?=[^>]*type=["'](email|password|tel)["'])(?![^>]*(autoComplete=|autocomplete=))/i,
+    message: 'Input for email, password, or tel should declare autocomplete behavior.'
   },
   {
     name: 'motion-without-reduced-motion-review',
