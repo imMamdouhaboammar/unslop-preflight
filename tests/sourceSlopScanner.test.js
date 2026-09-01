@@ -87,6 +87,17 @@ test('source slop scanner catches missing autocomplete without a target blank fa
   });
 });
 
+test('search inputs are not treated as missing personal-information autocomplete metadata', () => {
+  withFixture(`
+    export function SiteSearch() {
+      return <form role="search"><label htmlFor="q">Search</label><input id="q" name="q" type="search" /></form>;
+    }
+  `, (src) => {
+    const findings = scanWithRules(src, sourceSlopRules);
+    assert.ok(!ruleNames(findings).includes('input-without-autocomplete-review'));
+  });
+});
+
 test('icon-only button detector accepts explicit accessible names', () => {
   withFixture(`
     export function Toolbar() {
