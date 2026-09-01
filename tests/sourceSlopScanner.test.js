@@ -87,6 +87,28 @@ test('source slop scanner catches missing autocomplete without a target blank fa
   });
 });
 
+test('autocomplete detector recognizes type attributes with surrounding whitespace', () => {
+  withFixture(`
+    export function Signup() {
+      return <input type = "email" />;
+    }
+  `, (src) => {
+    const findings = scanWithRules(src, sourceSlopRules);
+    assert.ok(ruleNames(findings).includes('input-without-autocomplete-review'));
+  });
+});
+
+test('autocomplete detector accepts autocomplete attributes with surrounding whitespace', () => {
+  withFixture(`
+    export function Signup() {
+      return <input type="email" autoComplete = "email" />;
+    }
+  `, (src) => {
+    const findings = scanWithRules(src, sourceSlopRules);
+    assert.ok(!ruleNames(findings).includes('input-without-autocomplete-review'));
+  });
+});
+
 test('search inputs are not treated as missing personal-information autocomplete metadata', () => {
   withFixture(`
     export function SiteSearch() {
