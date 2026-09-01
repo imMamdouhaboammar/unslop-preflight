@@ -32,7 +32,7 @@ export const sourceSlopRules = [
   {
     name: 'input-without-autocomplete-review',
     level: 'warning',
-    pattern: /<input\b(?=[^>]*type=["'](email|password|tel)["'])(?![^>]*(autoComplete=|autocomplete=))/i,
+    pattern: /<input\b(?=[^>]*type\s*=\s*["'](email|password|tel)["'])(?![^>]*(autoComplete|autocomplete)\s*=)/i,
     message: 'Input for email, password, or tel should declare autocomplete behavior.'
   },
   {
