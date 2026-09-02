@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdirSync, mkdtempSync, readFileSync, symlinkSync, writeFileSync } from 'node:fs';
+import { linkSync, mkdirSync, mkdtempSync, readFileSync, symlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { SafetyValidator } from '../src/core/safetyValidator.js';
@@ -80,4 +80,29 @@ test('symlinks cannot disguise forbidden in-root directories', { skip: process.p
   const safety = validator.validateFile(alias);
   assert.equal(safety.valid, false);
   assert.match(safety.reason, /node_modules/);
+});
+
+test('safe repair rejects hard-linked files whose other aliases may escape the project root', { skip: process.platform === 'win32' }, () => {
+  const root = tempDir('unslop-hardlink-root-');
+  const outside = tempDir('unslop-hardlink-outside-');
+  const outsideFile = join(outside, 'External.jsx');
+  const linkedFile = join(root, 'LooksLocal.jsx');
+  const original = '<button>Open</button>\n';
+
+  writeFileSync(outsideFile, original, 'utf8');
+  linkSync(outsideFile, linkedFile);
+
+  const validator = new SafetyValidator(root);
+  const safety = validator.validateFile(linkedFile);
+  assert.equal(safety.valid, false, 'multi-link files must not receive safe mutation authority');
+
+  const result = runSourceFixEngine(root, [buttonFinding('LooksLocal.jsx')], {
+    safeFix: true,
+    maxFixFiles: 10,
+    maxFixLines: 100,
+    maxLinesPerFile: 10
+  });
+
+  assert.equal(result.applied.length, 0);
+  assert.equal(readFileSync(outsideFile, 'utf8'), original, 'safe repair must not mutate an external hard-link alias');
 });

@@ -1,4 +1,4 @@
-import { existsSync, realpathSync } from 'node:fs';
+import { existsSync, realpathSync, statSync } from 'node:fs';
 import { resolve, extname, sep, basename } from 'node:path';
 
 /**
@@ -82,6 +82,23 @@ export class SafetyValidator {
         return {
           valid: false,
           reason: `File path '${filePath}' resolves through a symlink outside the project root directory '${this.realProjectRoot}'`
+        };
+      }
+
+      // Hard links are not visible to realpath: multiple directory entries can reference the
+      // same inode, including an alias outside the repository. A safe repair cannot prove that
+      // mutating a multiply-linked inode is repository-local, so fail closed.
+      try {
+        if (statSync(effectivePath).nlink > 1) {
+          return {
+            valid: false,
+            reason: `File '${filePath}' has multiple hard links and cannot be safely mutated`
+          };
+        }
+      } catch {
+        return {
+          valid: false,
+          reason: `File path '${filePath}' could not be inspected safely on the filesystem`
         };
       }
     }
