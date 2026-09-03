@@ -390,6 +390,34 @@ export function runSourceFixEngine(cwd, findings = [], flags = {}) {
   const dryRun = flags.dryRun || flags['dry-run'];
 
   if (mode && !dryRun) {
+    // A valid plan is only authoritative for the exact source bytes it was derived from.
+    // Check every candidate before the first write so a concurrent edit aborts the whole
+    // transaction instead of being silently overwritten by stale repair evidence.
+    const stalePaths = new Set();
+    for (const entry of planned) {
+      try {
+        if (readFileSync(entry.absolutePath, 'utf8') !== entry.originalContent) {
+          stalePaths.add(entry.absolutePath);
+        }
+      } catch {
+        stalePaths.add(entry.absolutePath);
+      }
+    }
+
+    if (stalePaths.size > 0) {
+      for (const { absolutePath, fixes } of planned) {
+        for (const fix of fixes) {
+          skipped.push({
+            ...fix,
+            status: 'skipped',
+            reason: stalePaths.has(absolutePath) ? 'stale-source' : 'transaction-aborted',
+            risk: stalePaths.has(absolutePath) ? 'high' : fix.risk
+          });
+        }
+      }
+      return { applied, skipped, failed };
+    }
+
     const written = [];
     try {
       for (const entry of planned) {
