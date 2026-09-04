@@ -5,11 +5,11 @@ import path from 'path';
 const PACKAGE_NAME = 'unslop-preflight';
 const LATEST_PACKAGE = `${PACKAGE_NAME}@latest`;
 
-export function npmExecutable(platform = process.platform) {
-  return platform === 'win32' ? 'npm.cmd' : 'npm';
-}
-
-export function planUpdate(cwd = process.cwd(), platform = process.platform) {
+export function planUpdate(
+  cwd = process.cwd(),
+  platform = process.platform,
+  comspec = process.env.ComSpec
+) {
   let isLocal = false;
   const pkgPath = path.join(cwd, 'package.json');
 
@@ -27,21 +27,24 @@ export function planUpdate(cwd = process.cwd(), platform = process.platform) {
     }
   }
 
-  const command = npmExecutable(platform);
+  const installArgs = isLocal
+    ? ['install', LATEST_PACKAGE]
+    : ['install', '-g', LATEST_PACKAGE];
 
-  if (isLocal) {
+  if (platform === 'win32') {
     return {
-      scope: 'local',
-      command,
-      args: ['install', LATEST_PACKAGE],
-      cwd
+      scope: isLocal ? 'local' : 'global',
+      command: comspec || 'cmd.exe',
+      args: ['/d', '/s', '/c', 'npm.cmd', ...installArgs],
+      ...(isLocal ? { cwd } : {})
     };
   }
 
   return {
-    scope: 'global',
-    command,
-    args: ['install', '-g', LATEST_PACKAGE]
+    scope: isLocal ? 'local' : 'global',
+    command: 'npm',
+    args: installArgs,
+    ...(isLocal ? { cwd } : {})
   };
 }
 
