@@ -2,6 +2,8 @@ import { execSync } from 'child_process';
 import { readFileSync, existsSync } from 'fs';
 import path from 'path';
 
+const PACKAGE_NAME = 'unslop-preflight';
+
 export async function update(parsed) {
   const cwd = parsed.cwd || process.cwd();
   
@@ -10,11 +12,11 @@ export async function update(parsed) {
   if (existsSync(pkgPath)) {
     try {
       const pkg = JSON.parse(readFileSync(pkgPath, 'utf8'));
-      // Don't run local update if we are inside the unslop repo itself
-      if (pkg.name !== 'unslop') {
+      // Don't run local update if we are inside the unslop-preflight repo itself
+      if (pkg.name !== PACKAGE_NAME) {
         if (
-          (pkg.dependencies && pkg.dependencies['unslop']) ||
-          (pkg.devDependencies && pkg.devDependencies['unslop'])
+          (pkg.dependencies && pkg.dependencies[PACKAGE_NAME]) ||
+          (pkg.devDependencies && pkg.devDependencies[PACKAGE_NAME])
         ) {
           isLocal = true;
         }
@@ -27,10 +29,10 @@ export async function update(parsed) {
   try {
     if (isLocal) {
       console.log('\x1b[33m📦 Updating local project dependency...\x1b[0m');
-      execSync('npm install unslop@latest', { stdio: 'inherit', cwd });
+      execSync(`npm install ${PACKAGE_NAME}@latest`, { stdio: 'inherit', cwd });
     } else {
       console.log('\x1b[34m🌍 Updating global installation...\x1b[0m');
-      execSync('npm install -g unslop@latest', { stdio: 'inherit' });
+      execSync(`npm install -g ${PACKAGE_NAME}@latest`, { stdio: 'inherit' });
     }
     
     return {
