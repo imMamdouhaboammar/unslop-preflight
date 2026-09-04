@@ -11,24 +11,25 @@ export function planUpdate(
   comspec = process.env.ComSpec
 ) {
   let isLocal = false;
+  let isDevOnly = false;
   const pkgPath = path.join(cwd, 'package.json');
 
   if (existsSync(pkgPath)) {
     try {
       const pkg = JSON.parse(readFileSync(pkgPath, 'utf8'));
       const isPackageRepository = pkg.name === PACKAGE_NAME;
-      const hasLocalPackage = Boolean(
-        pkg.dependencies?.[PACKAGE_NAME] || pkg.devDependencies?.[PACKAGE_NAME]
-      );
+      const hasDependency = Boolean(pkg.dependencies?.[PACKAGE_NAME]);
+      const hasDevDependency = Boolean(pkg.devDependencies?.[PACKAGE_NAME]);
 
-      isLocal = !isPackageRepository && hasLocalPackage;
+      isLocal = !isPackageRepository && (hasDependency || hasDevDependency);
+      isDevOnly = isLocal && !hasDependency && hasDevDependency;
     } catch {
       // Invalid project metadata cannot safely authorize a local dependency mutation.
     }
   }
 
   const installArgs = isLocal
-    ? ['install', LATEST_PACKAGE]
+    ? ['install', ...(isDevOnly ? ['--save-dev'] : []), LATEST_PACKAGE]
     : ['install', '-g', LATEST_PACKAGE];
 
   if (platform === 'win32') {
