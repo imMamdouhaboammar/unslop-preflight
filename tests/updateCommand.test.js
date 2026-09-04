@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { planUpdate } from '../src/commands/update.js';
+import { npmExecutable, planUpdate } from '../src/commands/update.js';
 
 function temp() {
   return mkdtempSync(join(tmpdir(), 'unslop-update-'));
@@ -66,4 +66,10 @@ test('devDependency installations are updated locally', () => {
   assert.equal(plan.scope, 'local');
   assert.equal(plan.cwd, cwd);
   assert.deepEqual(plan.args, ['install', 'unslop-preflight@latest']);
+});
+
+test('shell-free npm execution uses the Windows command shim', () => {
+  assert.equal(npmExecutable('win32'), 'npm.cmd');
+  assert.equal(npmExecutable('linux'), 'npm');
+  assert.equal(npmExecutable('darwin'), 'npm');
 });
