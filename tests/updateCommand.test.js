@@ -20,7 +20,7 @@ test('local projects update the canonical unslop-preflight package', () => {
     dependencies: { 'unslop-preflight': '^1.15.2' }
   });
 
-  assert.deepEqual(planUpdate(cwd), {
+  assert.deepEqual(planUpdate(cwd, 'linux'), {
     scope: 'local',
     command: 'npm',
     args: ['install', 'unslop-preflight@latest'],
@@ -35,7 +35,7 @@ test('the unslop binary alias is not treated as npm package identity', () => {
     dependencies: { unslop: '^0.1.7' }
   });
 
-  const plan = planUpdate(cwd);
+  const plan = planUpdate(cwd, 'linux');
   assert.equal(plan.scope, 'global');
   assert.deepEqual(plan.args, ['install', '-g', 'unslop-preflight@latest']);
   assert.equal(plan.args.some((arg) => arg === 'unslop@latest'), false);
@@ -48,24 +48,24 @@ test('running from the package repository never self-adds a local dependency', (
     devDependencies: { 'unslop-preflight': '^1.15.2' }
   });
 
-  assert.deepEqual(planUpdate(cwd), {
+  assert.deepEqual(planUpdate(cwd, 'linux'), {
     scope: 'global',
     command: 'npm',
     args: ['install', '-g', 'unslop-preflight@latest']
   });
 });
 
-test('devDependency installations are updated locally', () => {
+test('devDependency installations remain devDependencies after update', () => {
   const cwd = temp();
   writePackage(cwd, {
     name: 'example-app',
     devDependencies: { 'unslop-preflight': '^1.15.2' }
   });
 
-  const plan = planUpdate(cwd);
+  const plan = planUpdate(cwd, 'linux');
   assert.equal(plan.scope, 'local');
   assert.equal(plan.cwd, cwd);
-  assert.deepEqual(plan.args, ['install', 'unslop-preflight@latest']);
+  assert.deepEqual(plan.args, ['install', '--save-dev', 'unslop-preflight@latest']);
 });
 
 test('Windows invokes npm.cmd through cmd.exe instead of execFileSync directly', () => {
