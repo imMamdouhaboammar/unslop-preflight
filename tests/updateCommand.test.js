@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { npmExecutable, planUpdate } from '../src/commands/update.js';
+import { executeUpdatePlan, npmExecutable, planUpdate } from '../src/commands/update.js';
 
 function temp() {
   return mkdtempSync(join(tmpdir(), 'unslop-update-'));
@@ -72,4 +72,25 @@ test('shell-free npm execution uses the Windows command shim', () => {
   assert.equal(npmExecutable('win32'), 'npm.cmd');
   assert.equal(npmExecutable('linux'), 'npm');
   assert.equal(npmExecutable('darwin'), 'npm');
+});
+
+test('update execution uses the planned argv without a shell', () => {
+  const cwd = temp();
+  const plan = {
+    scope: 'local',
+    command: 'npm',
+    args: ['install', 'unslop-preflight@latest'],
+    cwd
+  };
+  const calls = [];
+
+  executeUpdatePlan(plan, (command, args, options) => {
+    calls.push({ command, args, options });
+  });
+
+  assert.deepEqual(calls, [{
+    command: 'npm',
+    args: ['install', 'unslop-preflight@latest'],
+    options: { stdio: 'inherit', cwd }
+  }]);
 });
