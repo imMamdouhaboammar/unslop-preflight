@@ -45,6 +45,13 @@ export function planUpdate(cwd = process.cwd(), platform = process.platform) {
   };
 }
 
+export function executeUpdatePlan(plan, execute = execFileSync) {
+  execute(plan.command, plan.args, {
+    stdio: 'inherit',
+    ...(plan.cwd ? { cwd: plan.cwd } : {})
+  });
+}
+
 export async function update(parsed) {
   const cwd = parsed.cwd || process.cwd();
   const plan = planUpdate(cwd);
@@ -58,10 +65,7 @@ export async function update(parsed) {
       console.log('\x1b[34m🌍 Updating global unslop-preflight installation...\x1b[0m');
     }
 
-    execFileSync(plan.command, plan.args, {
-      stdio: 'inherit',
-      ...(plan.cwd ? { cwd: plan.cwd } : {})
-    });
+    executeUpdatePlan(plan);
 
     return {
       summary: { score: 100, checks: 1, errors: 0, warnings: 0, info: 1 },
