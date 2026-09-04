@@ -1,12 +1,12 @@
 import assert from 'node:assert/strict';
-import { mkdtempSync, writeFileSync, chmodSync, readFileSync, rmSync } from 'node:fs';
+import { chmodSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 
 import { update } from '../src/commands/update.js';
 
-function withFakeNpm(run) {
+async function withFakeNpm(run) {
   const root = mkdtempSync(path.join(tmpdir(), 'unslop-update-'));
   const binDir = path.join(root, 'bin');
   const capturePath = path.join(root, 'npm-args.txt');
@@ -15,33 +15,20 @@ function withFakeNpm(run) {
   const originalCapture = process.env.CAPTURE_PATH;
 
   try {
-    awaitableMkdir(binDir);
-    awaitableMkdir(projectDir);
+    mkdirSync(binDir, { recursive: true });
+    mkdirSync(projectDir, { recursive: true });
     const npmPath = path.join(binDir, 'npm');
     writeFileSync(npmPath, '#!/bin/sh\nprintf "%s" "$*" > "$CAPTURE_PATH"\n', 'utf8');
     chmodSync(npmPath, 0o755);
     process.env.PATH = `${binDir}${path.delimiter}${originalPath || ''}`;
     process.env.CAPTURE_PATH = capturePath;
-    return run({ root, projectDir, capturePath });
+    await run({ projectDir, capturePath });
   } finally {
     process.env.PATH = originalPath;
     if (originalCapture === undefined) delete process.env.CAPTURE_PATH;
     else process.env.CAPTURE_PATH = originalCapture;
     rmSync(root, { recursive: true, force: true });
   }
-}
-
-function awaitableMkdir(dir) {
-  const { mkdirSync } = requireFs();
-  mkdirSync(dir, { recursive: true });
-}
-
-function requireFs() {
-  return { mkdirSync: (dir, options) => {
-    const { mkdirSync } = globalThis.__unslopFs || {};
-    if (mkdirSync) return mkdirSync(dir, options);
-    throw new Error('mkdirSync unavailable');
-  } };
 }
 
 test('update targets the local unslop-preflight dependency, not the unslop binary alias', async () => {
