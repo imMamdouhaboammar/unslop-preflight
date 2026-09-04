@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { executeUpdatePlan, npmExecutable, planUpdate } from '../src/commands/update.js';
+import { executeUpdatePlan, planUpdate } from '../src/commands/update.js';
 
 function temp() {
   return mkdtempSync(join(tmpdir(), 'unslop-update-'));
@@ -68,10 +68,15 @@ test('devDependency installations are updated locally', () => {
   assert.deepEqual(plan.args, ['install', 'unslop-preflight@latest']);
 });
 
-test('shell-free npm execution uses the Windows command shim', () => {
-  assert.equal(npmExecutable('win32'), 'npm.cmd');
-  assert.equal(npmExecutable('linux'), 'npm');
-  assert.equal(npmExecutable('darwin'), 'npm');
+test('Windows invokes npm.cmd through cmd.exe instead of execFileSync directly', () => {
+  const cwd = temp();
+  const comspec = 'C:\\Windows\\System32\\cmd.exe';
+
+  assert.deepEqual(planUpdate(cwd, 'win32', comspec), {
+    scope: 'global',
+    command: comspec,
+    args: ['/d', '/s', '/c', 'npm.cmd', 'install', '-g', 'unslop-preflight@latest']
+  });
 });
 
 test('update execution uses the planned argv without a shell', () => {
