@@ -5,7 +5,11 @@ import path from 'path';
 const PACKAGE_NAME = 'unslop-preflight';
 const LATEST_PACKAGE = `${PACKAGE_NAME}@latest`;
 
-export function planUpdate(cwd = process.cwd()) {
+export function npmExecutable(platform = process.platform) {
+  return platform === 'win32' ? 'npm.cmd' : 'npm';
+}
+
+export function planUpdate(cwd = process.cwd(), platform = process.platform) {
   let isLocal = false;
   const pkgPath = path.join(cwd, 'package.json');
 
@@ -23,10 +27,12 @@ export function planUpdate(cwd = process.cwd()) {
     }
   }
 
+  const command = npmExecutable(platform);
+
   if (isLocal) {
     return {
       scope: 'local',
-      command: 'npm',
+      command,
       args: ['install', LATEST_PACKAGE],
       cwd
     };
@@ -34,7 +40,7 @@ export function planUpdate(cwd = process.cwd()) {
 
   return {
     scope: 'global',
-    command: 'npm',
+    command,
     args: ['install', '-g', LATEST_PACKAGE]
   };
 }
