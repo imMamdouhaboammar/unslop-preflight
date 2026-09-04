@@ -31,28 +31,35 @@ async function withFakeNpm(run) {
   }
 }
 
-test('update targets the local unslop-preflight dependency, not the unslop binary alias', async () => {
+async function captureUpdateCommand(packageJson) {
+  let command;
   await withFakeNpm(async ({ projectDir, capturePath }) => {
-    writeFileSync(
-      path.join(projectDir, 'package.json'),
-      JSON.stringify({ dependencies: { 'unslop-preflight': '^1.15.2' } }),
-      'utf8'
-    );
+    writeFileSync(path.join(projectDir, 'package.json'), JSON.stringify(packageJson), 'utf8');
 
     const result = await update({ cwd: projectDir });
 
     assert.equal(result.summary.errors, 0);
-    assert.equal(readFileSync(capturePath, 'utf8'), 'install unslop-preflight@latest');
+    command = readFileSync(capturePath, 'utf8');
   });
+  return command;
+}
+
+test('update targets the local unslop-preflight dependency, not the unslop binary alias', async () => {
+  const command = await captureUpdateCommand({ dependencies: { 'unslop-preflight': '^1.15.2' } });
+  assert.equal(command, 'install unslop-preflight@latest');
+});
+
+test('update recognizes unslop-preflight when it is installed as a dev dependency', async () => {
+  const command = await captureUpdateCommand({ devDependencies: { 'unslop-preflight': '^1.15.2' } });
+  assert.equal(command, 'install unslop-preflight@latest');
+});
+
+test('an unrelated unslop dependency does not grant local self-update identity', async () => {
+  const command = await captureUpdateCommand({ dependencies: { unslop: '^0.1.7' } });
+  assert.equal(command, 'install -g unslop-preflight@latest');
 });
 
 test('update targets the global unslop-preflight package when no local dependency exists', async () => {
-  await withFakeNpm(async ({ projectDir, capturePath }) => {
-    writeFileSync(path.join(projectDir, 'package.json'), JSON.stringify({ name: 'demo-app' }), 'utf8');
-
-    const result = await update({ cwd: projectDir });
-
-    assert.equal(result.summary.errors, 0);
-    assert.equal(readFileSync(capturePath, 'utf8'), 'install -g unslop-preflight@latest');
-  });
+  const command = await captureUpdateCommand({ name: 'demo-app' });
+  assert.equal(command, 'install -g unslop-preflight@latest');
 });
