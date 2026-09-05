@@ -62,6 +62,8 @@ test('decorative text outside an exact static class token fails closed', () => {
     '<img src="/catalog/decorative-chair.jpg" />',
     '<img className="decorative-card" src="/catalog/chair.jpg" />',
     '<img data-purpose="decorative" src="/catalog/chair.jpg" />',
+    '<img data-class="decorative" src="/catalog/chair.jpg" />',
+    '<img aria-class="decorative" src="/catalog/chair.jpg" />',
     '<img className={isDecorative ? "decorative" : "photo"} src="/catalog/chair.jpg" />'
   ];
 
