@@ -39,3 +39,31 @@ test('ambiguous decor markers are not treated as author intent to hide an image'
   assert.equal(result.content, content);
   assert.equal(result.fixes.length, 0);
 });
+
+test('ambiguous decorative-looking substrings do not authorize null alt repair', () => {
+  const engine = new SourceFixEngine('/tmp');
+  const cases = [
+    '<img src="/patterns/checkout-flow.png" />',
+    '<img className="bg-cover product-photo" src="/products/chair.jpg" />',
+    '<img data-section="divider-report" src="/reports/q3.png" />',
+    '<img id="spacer-mission-patch" src="/missions/spacer-patch.png" />'
+  ];
+
+  for (const content of cases) {
+    const result = engine.applyFixes('MeaningfulImage.jsx', content, finding);
+    assert.equal(result.content, content);
+    assert.equal(result.fixes.length, 0);
+  }
+});
+
+test('explicit decorative null-alt repair is idempotent', () => {
+  const engine = new SourceFixEngine('/tmp');
+  const content = '<img className="decorative flourish" src="/ui/flourish.svg" />';
+  const first = engine.applyFixes('Decoration.jsx', content, finding);
+  const second = engine.applyFixes('Decoration.jsx', first.content, finding);
+
+  assert.match(first.content, /alt=""/);
+  assert.equal(first.fixes.length, 1);
+  assert.equal(second.content, first.content);
+  assert.equal(second.fixes.length, 0);
+});
