@@ -117,10 +117,10 @@ export class SourceFixEngine {
         // Null alt changes accessibility semantics, so only an explicit static
         // class/className token may authorize this automatic repair. Incidental
         // substrings in src, ids, data attributes, or other classes fail closed.
-        const classMatch = attrs.match(/\bclass(?:Name)?\s*=\s*(["'])([^"']*)\1/i);
-        const isDecorative = classMatch?.[2]
-          .split(/\s+/)
-          .some(token => token.toLowerCase() === 'decorative') || false;
+        const classMatch = attrs.match(/(?:^|\s)class(?:Name)?\s*=\s*(["'])([^"']*)\1/i);
+        const isDecorative = classMatch
+          ? classMatch[2].split(/\s+/).some(token => token.toLowerCase() === 'decorative')
+          : false;
         if (isDecorative) {
           return `<img${attrs} alt=""${selfClose || ''}>`;
         }
