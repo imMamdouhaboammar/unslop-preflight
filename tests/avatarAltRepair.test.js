@@ -56,6 +56,22 @@ test('ambiguous decorative-looking substrings do not authorize null alt repair',
   }
 });
 
+test('decorative text outside an exact static class token fails closed', () => {
+  const engine = new SourceFixEngine('/tmp');
+  const cases = [
+    '<img src="/catalog/decorative-chair.jpg" />',
+    '<img className="decorative-card" src="/catalog/chair.jpg" />',
+    '<img data-purpose="decorative" src="/catalog/chair.jpg" />',
+    '<img className={isDecorative ? "decorative" : "photo"} src="/catalog/chair.jpg" />'
+  ];
+
+  for (const content of cases) {
+    const result = engine.applyFixes('MeaningfulImage.jsx', content, finding);
+    assert.equal(result.content, content);
+    assert.equal(result.fixes.length, 0);
+  }
+});
+
 test('explicit decorative null-alt repair is idempotent', () => {
   const engine = new SourceFixEngine('/tmp');
   const content = '<img className="decorative flourish" src="/ui/flourish.svg" />';
