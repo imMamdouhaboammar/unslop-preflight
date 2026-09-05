@@ -107,16 +107,20 @@ export class SourceFixEngine {
       }
     }
 
-    // 3. Missing alt on decorative-looking images
+    // 3. Missing alt on explicitly decorative native images
     if (hasRule('image-without-alt') && /<img\b/i.test(currentContent)) {
       const before = currentContent;
       currentContent = currentContent.replace(/<img\b([^>]*?)(\s*\/)?>/gi, (match, attrs, selfClose) => {
         if (/alt=/i.test(attrs)) {
           return match; // Skip if already has alt
         }
-        const lowerAttrs = attrs.toLowerCase();
-        // High confidence decorative markers
-        const isDecorative = lowerAttrs.includes('pattern') || lowerAttrs.includes('bg-') || lowerAttrs.includes('divider') || lowerAttrs.includes('spacer') || lowerAttrs.includes('decorative');
+        // Null alt changes accessibility semantics, so only an explicit static
+        // class/className token may authorize this automatic repair. Incidental
+        // substrings in src, ids, data attributes, or other classes fail closed.
+        const classMatch = attrs.match(/(?:^|\s)class(?:Name)?\s*=\s*(["'])([^"']*)\1/i);
+        const isDecorative = classMatch
+          ? classMatch[2].split(/\s+/).some(token => token.toLowerCase() === 'decorative')
+          : false;
         if (isDecorative) {
           return `<img${attrs} alt=""${selfClose || ''}>`;
         }
